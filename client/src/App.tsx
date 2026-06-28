@@ -93,9 +93,11 @@ const Loading = () => (
   </div>
 )
 
+const routerBasename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '')
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <ErrorBoundary>
       <Suspense fallback={<Loading />}>
         <Routes>

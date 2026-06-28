@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.GITHUB_PAGES === 'true' ? '/jiaoyuzhimei/' : '/',
   plugins: [react(), tailwindcss(), compression({ threshold: 1024 })],
   resolve: {
     alias: {

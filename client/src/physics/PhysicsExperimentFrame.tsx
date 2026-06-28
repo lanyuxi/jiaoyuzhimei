@@ -96,7 +96,7 @@ export default function PhysicsExperimentFrame() {
   }
 
   const primaryFormula = getPrimaryFormula(experiment.slug)
-  const frameSrc = `/physics-original/index.html?route=${encodeURIComponent(`/${experiment.slug}`)}`
+  const frameSrc = `${import.meta.env.BASE_URL}physics-original/index.html?route=${encodeURIComponent(`/${experiment.slug}`)}`
 
   return (
     <div className="space-y-5">
