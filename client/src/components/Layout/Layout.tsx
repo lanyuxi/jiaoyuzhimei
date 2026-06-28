@@ -11,19 +11,32 @@ function LayoutContent() {
   const isNarrationMode = narration?.playbackState.isNarrationMode || false
   const isPresenterMode = narration?.playbackState.isPresenterMode || false
   const experimentPath = location.pathname
-  const isExperimentPage = experimentPath !== '/' && experimentPath.length > 1
+  const nonExperimentPaths = new Set([
+    '/',
+    '/math',
+    '/physics',
+    '/chemistry',
+    '/chinese',
+    '/english',
+    '/biology',
+    '/history',
+    '/geography',
+    '/sports',
+    '/art',
+  ])
+  const isExperimentPage = experimentPath.length > 1 && !nonExperimentPaths.has(experimentPath)
   const navItems = [
-    { label: '首页', to: '/', active: location.pathname === '/' && !location.hash },
-    { label: '语文之美', to: '/#chinese-beauty', active: location.hash === '#chinese-beauty' },
-    { label: '数学之美', to: '/#course-map', active: location.hash === '#course-map' },
-    { label: '英语之美', to: '/#english-beauty', active: location.hash === '#english-beauty' },
+    { label: '首页', to: '/', active: location.pathname === '/' },
+    { label: '语文之美', to: '/chinese', active: location.pathname.startsWith('/chinese') },
+    { label: '数学之美', to: '/math', active: location.pathname === '/math' },
+    { label: '英语之美', to: '/english', active: location.pathname.startsWith('/english') },
     { label: '物理之美', to: '/physics', active: location.pathname.startsWith('/physics') },
     { label: '化学之美', to: '/chemistry', active: location.pathname.startsWith('/chemistry') },
-    { label: '生物之美', to: '/#biology-beauty', active: location.hash === '#biology-beauty' },
-    { label: '历史之美', to: '/#history-beauty', active: location.hash === '#history-beauty' },
-    { label: '地理之美', to: '/#geography-beauty', active: location.hash === '#geography-beauty' },
-    { label: '体育之美', to: '/#sports-beauty', active: location.hash === '#sports-beauty' },
-    { label: '艺术之美', to: '/#art-beauty', active: location.hash === '#art-beauty' },
+    { label: '生物之美', to: '/biology', active: location.pathname.startsWith('/biology') },
+    { label: '历史之美', to: '/history', active: location.pathname.startsWith('/history') },
+    { label: '地理之美', to: '/geography', active: location.pathname.startsWith('/geography') },
+    { label: '体育之美', to: '/sports', active: location.pathname.startsWith('/sports') },
+    { label: '艺术之美', to: '/art', active: location.pathname.startsWith('/art') },
   ]
 
   return (

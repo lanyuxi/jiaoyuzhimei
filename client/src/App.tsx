@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import ErrorBoundary from './components/ErrorBoundary'
 import Home from './experiments/HomeDashboard'
+import MathHome from './experiments/Home'
 
 // lazy 加载失败时自动重试（网络不稳定的手机端常见）
 function lazyRetry<T extends { default: React.ComponentType }>(
@@ -83,6 +84,7 @@ const ChemistrySessionsPage = lazyRetry(() => import('./chemistry/ChemistrySessi
 const ChemistryReportPage = lazyRetry(() => import('./chemistry/ChemistryReportPage'))
 const PhysicsHome = lazyRetry(() => import('./physics/PhysicsHome'))
 const PhysicsExperimentFrame = lazyRetry(() => import('./physics/PhysicsExperimentFrame'))
+const ComingSoonPage = lazyRetry(() => import('./pages/ComingSoonPage'))
 const BugAdminPage = lazyRetry(() => import('./pages/BugAdminPage'))
 const ValentineMobile = lazyRetry(() => import('./components/ValentineMobile/ValentineMobile'))
 
@@ -103,6 +105,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="math" element={<MathHome />} />
+            <Route path="chinese" element={<ComingSoonPage />} />
+            <Route path="english" element={<ComingSoonPage />} />
+            <Route path="biology" element={<ComingSoonPage />} />
+            <Route path="history" element={<ComingSoonPage />} />
+            <Route path="geography" element={<ComingSoonPage />} />
+            <Route path="sports" element={<ComingSoonPage />} />
+            <Route path="art" element={<ComingSoonPage />} />
             <Route path="fourier" element={<FourierExperiment />} />
             <Route path="trigonometry" element={<TrigExperiment />} />
             <Route path="calculus" element={<CalculusExperiment />} />
