@@ -16,30 +16,25 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: client
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.7.0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: client/pnpm-lock.yaml
+
+      - name: Setup pnpm
+        run: npm install -g pnpm@11.7.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: client
 
       - name: Build
         run: pnpm build
+        working-directory: client
         env:
           GITHUB_PAGES: 'true'
 
@@ -48,10 +43,18 @@ jobs:
           cp dist/index.html dist/404.html
           touch dist/.nojekyll
           find dist -type f \( -name '*.br' -o -name '*.gz' \) -delete
+        working-directory: client
 
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./client/dist
-          force_orphan: true
+        run: |
+          cd client/dist
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b gh-pages
+          git add .
+          git commit -m "Deploy GitHub Pages"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
