@@ -3,6 +3,8 @@ import { NarrationProvider, useNarrationOptional } from '../../contexts/Narratio
 import { NarrationController } from '../NarrationController'
 import { BugReportButton } from '../BugReport'
 
+const logoSrc = `${import.meta.env.BASE_URL}education-beauty-logo.png`
+
 function LayoutContent() {
   const narration = useNarrationOptional()
   const location = useLocation()
@@ -30,7 +32,7 @@ function LayoutContent() {
         <div className="mx-auto flex h-16 max-w-[1420px] items-center gap-5 px-5 md:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="返回首页">
             <img
-              src="/education-beauty-logo.png"
+              src={logoSrc}
               alt="教育之美"
               className="h-11 w-11 rounded-[8px] object-contain"
             />
