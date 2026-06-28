@@ -1,0 +1,262 @@
+{
+  "script_id": "projectile-motion",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 225.32,
+  "files": [
+    {
+      "script_id": "projectile-motion",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%89%A9%E7%90%86%E4%B9%8B%E7%BE%8E%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E6%9C%89%E8%B6%A3%E7%9A%84%E8%AF%9D%E9%A2%98%E2%80%94%E2%80%94%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/projectile-motion/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%89%A9%E7%90%86%E4%B9%8B%E7%BE%8E%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E6%9C%89%E8%B6%A3%E7%9A%84%E8%AF%9D%E9%A2%98%E2%80%94%E2%80%94%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "欢迎来到物理之美！今天我们要探索一个非常有趣的话题——抛体运动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%BD%93%E4%BD%A0%E6%89%94%E5%87%BA%E4%B8%80%E4%B8%AA%E7%AF%AE%E7%90%83%E3%80%81%E8%B8%A2%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B6%B3%E7%90%83%EF%BC%8C%E6%88%96%E8%80%85%E5%8F%91%E5%B0%84%E4%B8%80%E6%9E%9A%E7%82%AE%E5%BC%B9%E6%97%B6%EF%BC%8C%E5%AE%83%E4%BB%AC%E9%83%BD%E5%9C%A8%E5%81%9A%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/projectile-motion/intro-intro-2.speech?text=%E5%BD%93%E4%BD%A0%E6%89%94%E5%87%BA%E4%B8%80%E4%B8%AA%E7%AF%AE%E7%90%83%E3%80%81%E8%B8%A2%E5%87%BA%E4%B8%80%E4%B8%AA%E8%B6%B3%E7%90%83%EF%BC%8C%E6%88%96%E8%80%85%E5%8F%91%E5%B0%84%E4%B8%80%E6%9E%9A%E7%82%AE%E5%BC%B9%E6%97%B6%EF%BC%8C%E5%AE%83%E4%BB%AC%E9%83%BD%E5%9C%A8%E5%81%9A%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "当你扔出一个篮球、踢出一个足球，或者发射一枚炮弹时，它们都在做抛体运动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E4%B8%80%E8%B5%B7%E6%9D%A5%E6%8F%AD%E5%BC%80%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E5%A5%A5%E7%A7%98%E5%90%A7%EF%BC%81",
+      "path": "audio/narrations/projectile-motion/intro-intro-3.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E4%B8%80%E8%B5%B7%E6%9D%A5%E6%8F%AD%E5%BC%80%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E5%A5%A5%E7%A7%98%E5%90%A7%EF%BC%81",
+      "duration": 5.31,
+      "size": 0,
+      "text": "让我们一起来揭开抛体运动的奥秘吧！",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E6%98%AF%E6%8C%87%E7%89%A9%E4%BD%93%E5%9C%A8%E9%87%8D%E5%8A%9B%E4%BD%9C%E7%94%A8%E4%B8%8B%EF%BC%8C%E6%B2%BF%E6%9B%B2%E7%BA%BF%E8%BF%90%E5%8A%A8%E7%9A%84%E8%BF%87%E7%A8%8B%E3%80%82",
+      "path": "audio/narrations/projectile-motion/concept-concept-1.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E6%98%AF%E6%8C%87%E7%89%A9%E4%BD%93%E5%9C%A8%E9%87%8D%E5%8A%9B%E4%BD%9C%E7%94%A8%E4%B8%8B%EF%BC%8C%E6%B2%BF%E6%9B%B2%E7%BA%BF%E8%BF%90%E5%8A%A8%E7%9A%84%E8%BF%87%E7%A8%8B%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "抛体运动是指物体在重力作用下，沿曲线运动的过程。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%9C%A8%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%88%91%E4%BB%AC%E5%BF%BD%E7%95%A5%E7%A9%BA%E6%B0%94%E9%98%BB%E5%8A%9B%EF%BC%8C%E5%8F%AA%E8%80%83%E8%99%91%E9%87%8D%E5%8A%9B%E7%9A%84%E4%BD%9C%E7%94%A8%E3%80%82",
+      "path": "audio/narrations/projectile-motion/concept-concept-2.speech?text=%E5%9C%A8%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%88%91%E4%BB%AC%E5%BF%BD%E7%95%A5%E7%A9%BA%E6%B0%94%E9%98%BB%E5%8A%9B%EF%BC%8C%E5%8F%AA%E8%80%83%E8%99%91%E9%87%8D%E5%8A%9B%E7%9A%84%E4%BD%9C%E7%94%A8%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "在理想情况下，我们忽略空气阻力，只考虑重力的作用。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E5%8F%AF%E4%BB%A5%E5%88%86%E8%A7%A3%E4%B8%BA%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E7%9A%84%E8%BF%90%E5%8A%A8%EF%BC%9A%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E7%9A%84%E5%8C%80%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%EF%BC%8C%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E8%87%AA%E7%94%B1%E8%90%BD%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/projectile-motion/concept-concept-3.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E5%8F%AF%E4%BB%A5%E5%88%86%E8%A7%A3%E4%B8%BA%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E7%9A%84%E8%BF%90%E5%8A%A8%EF%BC%9A%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E7%9A%84%E5%8C%80%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%EF%BC%8C%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E8%87%AA%E7%94%B1%E8%90%BD%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "duration": 13.13,
+      "size": 0,
+      "text": "抛体运动可以分解为两个独立的运动：水平方向的匀速直线运动，和竖直方向的自由落体运动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BF%99%E7%A7%8D%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95%E6%98%AF%E4%BC%BD%E5%88%A9%E7%95%A5%E9%A6%96%E5%85%88%E6%8F%90%E5%87%BA%E7%9A%84%EF%BC%8C%E8%A2%AB%E7%A7%B0%E4%B8%BA%E8%BF%90%E5%8A%A8%E7%9A%84%E7%8B%AC%E7%AB%8B%E6%80%A7%E5%8E%9F%E7%90%86%E3%80%82",
+      "path": "audio/narrations/projectile-motion/concept-concept-4.speech?text=%E8%BF%99%E7%A7%8D%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95%E6%98%AF%E4%BC%BD%E5%88%A9%E7%95%A5%E9%A6%96%E5%85%88%E6%8F%90%E5%87%BA%E7%9A%84%EF%BC%8C%E8%A2%AB%E7%A7%B0%E4%B8%BA%E8%BF%90%E5%8A%A8%E7%9A%84%E7%8B%AC%E7%AB%8B%E6%80%A7%E5%8E%9F%E7%90%86%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "这种分解方法是伽利略首先提出的，被称为运动的独立性原理。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E4%B8%8A%EF%BC%8C%E7%89%A9%E4%BD%93%E5%81%9A%E5%8C%80%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%EF%BC%8C%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E6%98%AF%20x%20%E7%AD%89%E4%BA%8E%20v0%20%E4%B9%98%E4%BB%A5%20cos%20%CE%B8%20%E5%86%8D%E4%B9%98%E4%BB%A5%20t%E3%80%82",
+      "path": "audio/narrations/projectile-motion/formula-formula-1.speech?text=%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E4%B8%8A%EF%BC%8C%E7%89%A9%E4%BD%93%E5%81%9A%E5%8C%80%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%EF%BC%8C%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E6%98%AF%20x%20%E7%AD%89%E4%BA%8E%20v0%20%E4%B9%98%E4%BB%A5%20cos%20%CE%B8%20%E5%86%8D%E4%B9%98%E4%BB%A5%20t%E3%80%82",
+      "duration": 14.06,
+      "size": 0,
+      "text": "水平方向上，物体做匀速直线运动，位移公式是 x 等于 v0 乘以 cos θ 再乘以 t。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E4%B8%8A%EF%BC%8C%E7%89%A9%E4%BD%93%E5%81%9A%E5%8C%80%E5%8F%98%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%EF%BC%8C%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E6%98%AF%20y%20%E7%AD%89%E4%BA%8E%20v0%20%E4%B9%98%E4%BB%A5%20sin%20%CE%B8%20%E4%B9%98%E4%BB%A5%20t%EF%BC%8C%E5%87%8F%E5%8E%BB%E4%BA%8C%E5%88%86%E4%B9%8B%E4%B8%80%20g%20t%20%E5%B9%B3%E6%96%B9%E3%80%82",
+      "path": "audio/narrations/projectile-motion/formula-formula-2.speech?text=%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E4%B8%8A%EF%BC%8C%E7%89%A9%E4%BD%93%E5%81%9A%E5%8C%80%E5%8F%98%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%EF%BC%8C%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E6%98%AF%20y%20%E7%AD%89%E4%BA%8E%20v0%20%E4%B9%98%E4%BB%A5%20sin%20%CE%B8%20%E4%B9%98%E4%BB%A5%20t%EF%BC%8C%E5%87%8F%E5%8E%BB%E4%BA%8C%E5%88%86%E4%B9%8B%E4%B8%80%20g%20t%20%E5%B9%B3%E6%96%B9%E3%80%82",
+      "duration": 18.44,
+      "size": 0,
+      "text": "竖直方向上，物体做匀变速直线运动，位移公式是 y 等于 v0 乘以 sin θ 乘以 t，减去二分之一 g t 平方。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%B6%88%E5%8E%BB%E6%97%B6%E9%97%B4%20t%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%BE%97%E5%88%B0%E6%8A%9B%E7%89%A9%E7%BA%BF%E6%96%B9%E7%A8%8B%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%9A%84%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%82",
+      "path": "audio/narrations/projectile-motion/formula-formula-3.speech?text=%E6%B6%88%E5%8E%BB%E6%97%B6%E9%97%B4%20t%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%BE%97%E5%88%B0%E6%8A%9B%E7%89%A9%E7%BA%BF%E6%96%B9%E7%A8%8B%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%9A%84%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "消去时间 t，我们可以得到抛物线方程，这就是抛体运动轨迹的数学表达式。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "animation",
+      "line_id": "animation-1",
+      "filename": "animation-animation-1.speech?text=%E7%8E%B0%E5%9C%A8%E8%AE%A9%E6%88%91%E4%BB%AC%E9%80%9A%E8%BF%87%E5%8A%A8%E7%94%BB%E6%9D%A5%E8%A7%82%E5%AF%9F%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82%E8%AF%B7%E6%B3%A8%E6%84%8F%E7%89%A9%E4%BD%93%E7%9A%84%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "path": "audio/narrations/projectile-motion/animation-animation-1.speech?text=%E7%8E%B0%E5%9C%A8%E8%AE%A9%E6%88%91%E4%BB%AC%E9%80%9A%E8%BF%87%E5%8A%A8%E7%94%BB%E6%9D%A5%E8%A7%82%E5%AF%9F%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82%E8%AF%B7%E6%B3%A8%E6%84%8F%E7%89%A9%E4%BD%93%E7%9A%84%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "现在让我们通过动画来观察抛体运动。请注意物体的运动轨迹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "animation",
+      "line_id": "animation-2",
+      "filename": "animation-animation-2.speech?text=%E4%BD%A0%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%EF%BC%8C%E7%89%A9%E4%BD%93%E6%B2%BF%E7%9D%80%E4%B8%80%E6%9D%A1%E6%8A%9B%E7%89%A9%E7%BA%BF%E8%BF%90%E5%8A%A8%E3%80%82%E8%BF%99%E6%9D%A1%E6%9B%B2%E7%BA%BF%E5%B0%B1%E6%98%AF%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "path": "audio/narrations/projectile-motion/animation-animation-2.speech?text=%E4%BD%A0%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%EF%BC%8C%E7%89%A9%E4%BD%93%E6%B2%BF%E7%9D%80%E4%B8%80%E6%9D%A1%E6%8A%9B%E7%89%A9%E7%BA%BF%E8%BF%90%E5%8A%A8%E3%80%82%E8%BF%99%E6%9D%A1%E6%9B%B2%E7%BA%BF%E5%B0%B1%E6%98%AF%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "你可以看到，物体沿着一条抛物线运动。这条曲线就是抛体运动的轨迹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "animation",
+      "line_id": "animation-3",
+      "filename": "animation-animation-3.speech?text=%E6%B3%A8%E6%84%8F%E8%A7%82%E5%AF%9F%EF%BC%8C%E5%9C%A8%E6%9C%80%E9%AB%98%E7%82%B9%E6%97%B6%EF%BC%8C%E7%89%A9%E4%BD%93%E7%9A%84%E7%AB%96%E7%9B%B4%E9%80%9F%E5%BA%A6%E4%B8%BA%E9%9B%B6%EF%BC%8C%E4%BD%86%E6%B0%B4%E5%B9%B3%E9%80%9F%E5%BA%A6%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/projectile-motion/animation-animation-3.speech?text=%E6%B3%A8%E6%84%8F%E8%A7%82%E5%AF%9F%EF%BC%8C%E5%9C%A8%E6%9C%80%E9%AB%98%E7%82%B9%E6%97%B6%EF%BC%8C%E7%89%A9%E4%BD%93%E7%9A%84%E7%AB%96%E7%9B%B4%E9%80%9F%E5%BA%A6%E4%B8%BA%E9%9B%B6%EF%BC%8C%E4%BD%86%E6%B0%B4%E5%B9%B3%E9%80%9F%E5%BA%A6%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "注意观察，在最高点时，物体的竖直速度为零，但水平速度保持不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E7%8E%B0%E5%9C%A8%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%B0%9D%E8%AF%95%E8%B0%83%E6%95%B4%E5%88%9D%E9%80%9F%E5%BA%A6%E5%92%8C%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%83%E4%BB%AC%E5%AF%B9%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%9A%84%E5%BD%B1%E5%93%8D%E3%80%82",
+      "path": "audio/narrations/projectile-motion/interaction-interaction-1.speech?text=%E7%8E%B0%E5%9C%A8%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%B0%9D%E8%AF%95%E8%B0%83%E6%95%B4%E5%88%9D%E9%80%9F%E5%BA%A6%E5%92%8C%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%83%E4%BB%AC%E5%AF%B9%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%9A%84%E5%BD%B1%E5%93%8D%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "现在你可以尝试调整初速度和发射角度，观察它们对运动轨迹的影响。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%BD%93%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%E4%B8%BA%2045%20%E5%BA%A6%E6%97%B6%EF%BC%8C%E5%9C%A8%E7%9B%B8%E5%90%8C%E5%88%9D%E9%80%9F%E5%BA%A6%E4%B8%8B%EF%BC%8C%E5%B0%84%E7%A8%8B%E8%BE%BE%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E3%80%82",
+      "path": "audio/narrations/projectile-motion/interaction-interaction-2.speech?text=%E5%BD%93%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%E4%B8%BA%2045%20%E5%BA%A6%E6%97%B6%EF%BC%8C%E5%9C%A8%E7%9B%B8%E5%90%8C%E5%88%9D%E9%80%9F%E5%BA%A6%E4%B8%8B%EF%BC%8C%E5%B0%84%E7%A8%8B%E8%BE%BE%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "当发射角度为 45 度时，在相同初速度下，射程达到最大值。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%A2%9E%E5%A4%A7%E5%88%9D%E9%80%9F%E5%BA%A6%E4%BC%9A%E5%90%8C%E6%97%B6%E5%A2%9E%E5%8A%A0%E5%B0%84%E7%A8%8B%E5%92%8C%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E3%80%82%E8%AF%95%E7%9D%80%E8%B0%83%E6%95%B4%E6%BB%91%E5%9D%97%E6%9D%A5%E9%AA%8C%E8%AF%81%E8%BF%99%E4%B8%80%E7%82%B9%E3%80%82",
+      "path": "audio/narrations/projectile-motion/interaction-interaction-3.speech?text=%E5%A2%9E%E5%A4%A7%E5%88%9D%E9%80%9F%E5%BA%A6%E4%BC%9A%E5%90%8C%E6%97%B6%E5%A2%9E%E5%8A%A0%E5%B0%84%E7%A8%8B%E5%92%8C%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E3%80%82%E8%AF%95%E7%9D%80%E8%B0%83%E6%95%B4%E6%BB%91%E5%9D%97%E6%9D%A5%E9%AA%8C%E8%AF%81%E8%BF%99%E4%B8%80%E7%82%B9%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "增大初速度会同时增加射程和最大高度。试着调整滑块来验证这一点。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E5%9C%A8%E7%94%9F%E6%B4%BB%E4%B8%AD%E6%9C%89%E5%BE%88%E5%A4%9A%E5%BA%94%E7%94%A8%E3%80%82%E6%AF%94%E5%A6%82%E7%AF%AE%E7%90%83%E6%8A%95%E7%AF%AE%E6%97%B6%EF%BC%8C%E8%BF%90%E5%8A%A8%E5%91%98%E9%9C%80%E8%A6%81%E8%AE%A1%E7%AE%97%E6%9C%80%E4%BD%B3%E7%9A%84%E5%87%BA%E6%89%8B%E8%A7%92%E5%BA%A6%E5%92%8C%E5%8A%9B%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/projectile-motion/application-application-1.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E5%9C%A8%E7%94%9F%E6%B4%BB%E4%B8%AD%E6%9C%89%E5%BE%88%E5%A4%9A%E5%BA%94%E7%94%A8%E3%80%82%E6%AF%94%E5%A6%82%E7%AF%AE%E7%90%83%E6%8A%95%E7%AF%AE%E6%97%B6%EF%BC%8C%E8%BF%90%E5%8A%A8%E5%91%98%E9%9C%80%E8%A6%81%E8%AE%A1%E7%AE%97%E6%9C%80%E4%BD%B3%E7%9A%84%E5%87%BA%E6%89%8B%E8%A7%92%E5%BA%A6%E5%92%8C%E5%8A%9B%E5%BA%A6%E3%80%82",
+      "duration": 12.5,
+      "size": 0,
+      "text": "抛体运动在生活中有很多应用。比如篮球投篮时，运动员需要计算最佳的出手角度和力度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%9C%A8%E5%86%9B%E4%BA%8B%E4%B8%8A%EF%BC%8C%E7%82%AE%E5%85%B5%E9%9C%80%E8%A6%81%E6%A0%B9%E6%8D%AE%E7%9B%AE%E6%A0%87%E8%B7%9D%E7%A6%BB%E5%92%8C%E5%9C%B0%E5%BD%A2%EF%BC%8C%E8%AE%A1%E7%AE%97%E7%82%AE%E5%BC%B9%E7%9A%84%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/projectile-motion/application-application-2.speech?text=%E5%9C%A8%E5%86%9B%E4%BA%8B%E4%B8%8A%EF%BC%8C%E7%82%AE%E5%85%B5%E9%9C%80%E8%A6%81%E6%A0%B9%E6%8D%AE%E7%9B%AE%E6%A0%87%E8%B7%9D%E7%A6%BB%E5%92%8C%E5%9C%B0%E5%BD%A2%EF%BC%8C%E8%AE%A1%E7%AE%97%E7%82%AE%E5%BC%B9%E7%9A%84%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "在军事上，炮兵需要根据目标距离和地形，计算炮弹的发射角度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%96%B7%E6%B3%89%E7%9A%84%E6%B0%B4%E6%9F%B1%E3%80%81%E7%83%9F%E8%8A%B1%E7%9A%84%E8%BD%A8%E8%BF%B9%EF%BC%8C%E9%83%BD%E9%81%B5%E5%BE%AA%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/projectile-motion/application-application-3.speech?text=%E5%96%B7%E6%B3%89%E7%9A%84%E6%B0%B4%E6%9F%B1%E3%80%81%E7%83%9F%E8%8A%B1%E7%9A%84%E8%BD%A8%E8%BF%B9%EF%BC%8C%E9%83%BD%E9%81%B5%E5%BE%AA%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "喷泉的水柱、烟花的轨迹，都遵循抛体运动的规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%9D%A5%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "path": "audio/narrations/projectile-motion/summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%9D%A5%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "让我们来总结一下今天学到的内容。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E5%8F%AF%E4%BB%A5%E5%88%86%E8%A7%A3%E4%B8%BA%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E7%9A%84%E5%8C%80%E9%80%9F%E8%BF%90%E5%8A%A8%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E8%87%AA%E7%94%B1%E8%90%BD%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/projectile-motion/summary-summary-2.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E5%8F%AF%E4%BB%A5%E5%88%86%E8%A7%A3%E4%B8%BA%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E7%9A%84%E5%8C%80%E9%80%9F%E8%BF%90%E5%8A%A8%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E8%87%AA%E7%94%B1%E8%90%BD%E4%BD%93%E8%BF%90%E5%8A%A8%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "抛体运动可以分解为水平方向的匀速运动和竖直方向的自由落体运动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E8%BD%A8%E8%BF%B9%E6%98%AF%E4%B8%80%E6%9D%A1%E6%8A%9B%E7%89%A9%E7%BA%BF%EF%BC%8C%E5%B0%84%E7%A8%8B%E5%92%8C%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%8F%96%E5%86%B3%E4%BA%8E%E5%88%9D%E9%80%9F%E5%BA%A6%E5%92%8C%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/projectile-motion/summary-summary-3.speech?text=%E6%8A%9B%E4%BD%93%E8%BF%90%E5%8A%A8%E7%9A%84%E8%BD%A8%E8%BF%B9%E6%98%AF%E4%B8%80%E6%9D%A1%E6%8A%9B%E7%89%A9%E7%BA%BF%EF%BC%8C%E5%B0%84%E7%A8%8B%E5%92%8C%E6%9C%80%E5%A4%A7%E9%AB%98%E5%BA%A6%E5%8F%96%E5%86%B3%E4%BA%8E%E5%88%9D%E9%80%9F%E5%BA%A6%E5%92%8C%E5%8F%91%E5%B0%84%E8%A7%92%E5%BA%A6%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "抛体运动的轨迹是一条抛物线，射程和最大高度取决于初速度和发射角度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "projectile-motion",
+      "section_id": "summary",
+      "line_id": "summary-4",
+      "filename": "summary-summary-4.speech?text=%E6%84%9F%E8%B0%A2%E4%BD%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%EF%BC%81%E4%B8%8B%E6%AC%A1%E6%88%91%E4%BB%AC%E5%B0%86%E6%8E%A2%E7%B4%A2%E6%9B%B4%E5%A4%9A%E6%9C%89%E8%B6%A3%E7%9A%84%E7%89%A9%E7%90%86%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/projectile-motion/summary-summary-4.speech?text=%E6%84%9F%E8%B0%A2%E4%BD%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%EF%BC%81%E4%B8%8B%E6%AC%A1%E6%88%91%E4%BB%AC%E5%B0%86%E6%8E%A2%E7%B4%A2%E6%9B%B4%E5%A4%9A%E6%9C%89%E8%B6%A3%E7%9A%84%E7%89%A9%E7%90%86%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "感谢你的学习！下次我们将探索更多有趣的物理现象。",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

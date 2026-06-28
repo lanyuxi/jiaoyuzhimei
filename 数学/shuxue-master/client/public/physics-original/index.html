@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>物理之美实验</title>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const route = params.get('route') || '/'
+      if (route.startsWith('/')) {
+        window.history.replaceState(null, '', route)
+      }
+    </script>
+    <script src="/physics-original/physics-narration-fallback.js"></script>
+    <script type="module" crossorigin src="/physics-original/assets/index-B9SOS4Fp.js"></script>
+    <link rel="stylesheet" crossorigin href="/physics-original/assets/index-CRp6zjtV.css" />
+    <link rel="stylesheet" crossorigin href="/physics-original/embedded-experiment-overrides.css" />
+  </head>
+  <body class="embedded-experiment-runtime">
+    <div id="root"></div>
+  </body>
+</html>

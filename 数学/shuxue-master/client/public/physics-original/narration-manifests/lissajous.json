@@ -1,0 +1,229 @@
+{
+  "script_id": "lissajous",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 181.3,
+  "files": [
+    {
+      "script_id": "lissajous",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E5%AE%9E%E9%AA%8C%EF%BC%81%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%B8%80%E4%B8%AA%E7%82%B9%E5%90%8C%E6%97%B6%E5%9C%A8%E6%B0%B4%E5%B9%B3%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E5%81%9A%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%EF%BC%8C%E4%BC%9A%E7%94%BB%E5%87%BA%E4%BB%80%E4%B9%88%E8%BD%A8%E8%BF%B9%EF%BC%9F",
+      "path": "audio/narrations/lissajous/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E5%AE%9E%E9%AA%8C%EF%BC%81%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%B8%80%E4%B8%AA%E7%82%B9%E5%90%8C%E6%97%B6%E5%9C%A8%E6%B0%B4%E5%B9%B3%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E5%81%9A%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%EF%BC%8C%E4%BC%9A%E7%94%BB%E5%87%BA%E4%BB%80%E4%B9%88%E8%BD%A8%E8%BF%B9%EF%BC%9F",
+      "duration": 13.13,
+      "size": 0,
+      "text": "欢迎来到李萨如图形实验！如果让一个点同时在水平和竖直方向做简谐振动，会画出什么轨迹？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E7%AD%94%E6%A1%88%E6%98%AF%E5%90%84%E7%A7%8D%E4%BC%98%E7%BE%8E%E7%9A%84%E6%9B%B2%E7%BA%BF%EF%BC%9A%E7%9B%B4%E7%BA%BF%E3%80%81%E6%A4%AD%E5%9C%86%E3%80%818%20%E5%AD%97%E5%BD%A2%EF%BC%8C%E7%94%9A%E8%87%B3%E5%A4%8D%E6%9D%82%E7%9A%84%E8%8A%B1%E7%BA%B9%E3%80%82",
+      "path": "audio/narrations/lissajous/intro-intro-2.speech?text=%E7%AD%94%E6%A1%88%E6%98%AF%E5%90%84%E7%A7%8D%E4%BC%98%E7%BE%8E%E7%9A%84%E6%9B%B2%E7%BA%BF%EF%BC%9A%E7%9B%B4%E7%BA%BF%E3%80%81%E6%A4%AD%E5%9C%86%E3%80%818%20%E5%AD%97%E5%BD%A2%EF%BC%8C%E7%94%9A%E8%87%B3%E5%A4%8D%E6%9D%82%E7%9A%84%E8%8A%B1%E7%BA%B9%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "答案是各种优美的曲线：直线、椭圆、8 字形，甚至复杂的花纹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%BA%9B%E5%9B%BE%E5%BD%A2%E4%BB%A5%E6%B3%95%E5%9B%BD%E7%89%A9%E7%90%86%E5%AD%A6%E5%AE%B6%E6%9D%8E%E8%90%A8%E5%A6%82%E5%91%BD%E5%90%8D%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E5%AE%83%E4%BB%AC%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/lissajous/intro-intro-3.speech?text=%E8%BF%99%E4%BA%9B%E5%9B%BE%E5%BD%A2%E4%BB%A5%E6%B3%95%E5%9B%BD%E7%89%A9%E7%90%86%E5%AD%A6%E5%AE%B6%E6%9D%8E%E8%90%A8%E5%A6%82%E5%91%BD%E5%90%8D%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E5%AE%83%E4%BB%AC%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "这些图形以法国物理学家李萨如命名，今天我们就来探索它们的规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E6%98%AF%E4%B8%A4%E4%B8%AA%E7%9B%B8%E4%BA%92%E5%9E%82%E7%9B%B4%E7%9A%84%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E5%90%88%E6%88%90%E7%9A%84%E7%BB%93%E6%9E%9C%E3%80%82",
+      "path": "audio/narrations/lissajous/concept-concept-1.speech?text=%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E6%98%AF%E4%B8%A4%E4%B8%AA%E7%9B%B8%E4%BA%92%E5%9E%82%E7%9B%B4%E7%9A%84%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E5%90%88%E6%88%90%E7%9A%84%E7%BB%93%E6%9E%9C%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "李萨如图形是两个相互垂直的简谐振动合成的结果。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E5%90%84%E8%87%AA%E5%81%9A%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%EF%BC%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E9%A2%91%E7%8E%87%E5%92%8C%E7%9B%B8%E4%BD%8D%E5%8F%AF%E4%BB%A5%E4%B8%8D%E5%90%8C%E3%80%82",
+      "path": "audio/narrations/lissajous/concept-concept-2.speech?text=%E6%B0%B4%E5%B9%B3%E6%96%B9%E5%90%91%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E5%90%84%E8%87%AA%E5%81%9A%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%EF%BC%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E9%A2%91%E7%8E%87%E5%92%8C%E7%9B%B8%E4%BD%8D%E5%8F%AF%E4%BB%A5%E4%B8%8D%E5%90%8C%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "水平方向和竖直方向各自做简谐振动，它们的频率和相位可以不同。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%9B%BE%E5%BD%A2%E7%9A%84%E5%BD%A2%E7%8A%B6%E4%B8%BB%E8%A6%81%E7%94%B1%E4%B8%A4%E4%B8%AA%E6%8C%AF%E5%8A%A8%E7%9A%84%E9%A2%91%E7%8E%87%E6%AF%94%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/lissajous/concept-concept-3.speech?text=%E5%9B%BE%E5%BD%A2%E7%9A%84%E5%BD%A2%E7%8A%B6%E4%B8%BB%E8%A6%81%E7%94%B1%E4%B8%A4%E4%B8%AA%E6%8C%AF%E5%8A%A8%E7%9A%84%E9%A2%91%E7%8E%87%E6%AF%94%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "图形的形状主要由两个振动的频率比决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%BD%93%E9%A2%91%E7%8E%87%E6%AF%94%E6%98%AF%E7%AE%80%E5%8D%95%E6%95%B4%E6%95%B0%E6%AF%94%E6%97%B6%EF%BC%8C%E5%9B%BE%E5%BD%A2%E9%97%AD%E5%90%88%E8%80%8C%E7%A8%B3%E5%AE%9A%EF%BC%9B%E5%90%A6%E5%88%99%E5%9B%BE%E5%BD%A2%E4%BC%9A%E4%B8%8D%E6%96%AD%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/lissajous/concept-concept-4.speech?text=%E5%BD%93%E9%A2%91%E7%8E%87%E6%AF%94%E6%98%AF%E7%AE%80%E5%8D%95%E6%95%B4%E6%95%B0%E6%AF%94%E6%97%B6%EF%BC%8C%E5%9B%BE%E5%BD%A2%E9%97%AD%E5%90%88%E8%80%8C%E7%A8%B3%E5%AE%9A%EF%BC%9B%E5%90%A6%E5%88%99%E5%9B%BE%E5%BD%A2%E4%BC%9A%E4%B8%8D%E6%96%AD%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "当频率比是简单整数比时，图形闭合而稳定；否则图形会不断变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%B0%B4%E5%B9%B3%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E6%8C%AF%E5%8A%A8%E5%88%86%E5%88%AB%E7%94%A8%E5%A6%82%E4%B8%8B%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "path": "audio/narrations/lissajous/formula-formula-1.speech?text=%E6%B0%B4%E5%B9%B3%E5%92%8C%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E6%8C%AF%E5%8A%A8%E5%88%86%E5%88%AB%E7%94%A8%E5%A6%82%E4%B8%8B%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "水平和竖直方向的振动分别用如下方程描述。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20a%20%E6%AF%94%20b%20%E5%B0%B1%E6%98%AF%E4%B8%A4%E6%96%B9%E5%90%91%E7%9A%84%E9%A2%91%E7%8E%87%E6%AF%94%EF%BC%8C%CE%B4%20%E6%98%AF%E5%AE%83%E4%BB%AC%E7%9A%84%E7%9B%B8%E4%BD%8D%E5%B7%AE%E3%80%82",
+      "path": "audio/narrations/lissajous/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20a%20%E6%AF%94%20b%20%E5%B0%B1%E6%98%AF%E4%B8%A4%E6%96%B9%E5%90%91%E7%9A%84%E9%A2%91%E7%8E%87%E6%AF%94%EF%BC%8C%CE%B4%20%E6%98%AF%E5%AE%83%E4%BB%AC%E7%9A%84%E7%9B%B8%E4%BD%8D%E5%B7%AE%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "其中 a 比 b 就是两方向的频率比，δ 是它们的相位差。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%BD%93%E9%A2%91%E7%8E%87%E6%AF%94%E4%B8%BA%201%20%E6%AF%94%201%20%E6%97%B6%EF%BC%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%E4%B8%BA%E9%9B%B6%E6%98%AF%E4%B8%80%E6%9D%A1%E7%9B%B4%E7%BA%BF%EF%BC%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%2090%20%E5%BA%A6%E5%88%99%E6%98%AF%E6%A4%AD%E5%9C%86%E6%88%96%E5%9C%86%E3%80%82",
+      "path": "audio/narrations/lissajous/formula-formula-3.speech?text=%E5%BD%93%E9%A2%91%E7%8E%87%E6%AF%94%E4%B8%BA%201%20%E6%AF%94%201%20%E6%97%B6%EF%BC%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%E4%B8%BA%E9%9B%B6%E6%98%AF%E4%B8%80%E6%9D%A1%E7%9B%B4%E7%BA%BF%EF%BC%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%2090%20%E5%BA%A6%E5%88%99%E6%98%AF%E6%A4%AD%E5%9C%86%E6%88%96%E5%9C%86%E3%80%82",
+      "duration": 12.5,
+      "size": 0,
+      "text": "当频率比为 1 比 1 时，相位差为零是一条直线，相位差 90 度则是椭圆或圆。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E9%A2%91%E7%8E%87%E6%AF%94%E8%B6%8A%E5%A4%8D%E6%9D%82%EF%BC%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E7%8E%AF%E5%92%8C%E4%BA%A4%E7%82%B9%E5%B0%B1%E8%B6%8A%E5%A4%9A%E3%80%82",
+      "path": "audio/narrations/lissajous/formula-formula-4.speech?text=%E9%A2%91%E7%8E%87%E6%AF%94%E8%B6%8A%E5%A4%8D%E6%9D%82%EF%BC%8C%E5%9B%BE%E5%BD%A2%E7%9A%84%E7%8E%AF%E5%92%8C%E4%BA%A4%E7%82%B9%E5%B0%B1%E8%B6%8A%E5%A4%9A%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "频率比越复杂，图形的环和交点就越多。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E9%A2%91%E7%8E%87%E6%AF%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%9B%BE%E5%BD%A2%E4%BB%8E%E6%A4%AD%E5%9C%86%E5%8F%98%E6%88%90%208%20%E5%AD%97%E5%BD%A2%E3%80%81%E5%86%8D%E5%8F%98%E6%88%90%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E8%8A%B1%E6%A0%B7%E3%80%82",
+      "path": "audio/narrations/lissajous/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E9%A2%91%E7%8E%87%E6%AF%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%9B%BE%E5%BD%A2%E4%BB%8E%E6%A4%AD%E5%9C%86%E5%8F%98%E6%88%90%208%20%E5%AD%97%E5%BD%A2%E3%80%81%E5%86%8D%E5%8F%98%E6%88%90%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E8%8A%B1%E6%A0%B7%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "调整频率比，观察图形从椭圆变成 8 字形、再变成更复杂的花样。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E7%9B%B8%E4%BD%8D%E5%B7%AE%EF%BC%8C%E7%9C%8B%201%20%E6%AF%94%201%20%E6%97%B6%E5%9B%BE%E5%BD%A2%E5%A6%82%E4%BD%95%E5%9C%A8%E7%9B%B4%E7%BA%BF%E3%80%81%E6%A4%AD%E5%9C%86%E5%92%8C%E5%9C%86%E4%B9%8B%E9%97%B4%E8%BF%9E%E7%BB%AD%E5%8F%98%E6%8D%A2%E3%80%82",
+      "path": "audio/narrations/lissajous/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E7%9B%B8%E4%BD%8D%E5%B7%AE%EF%BC%8C%E7%9C%8B%201%20%E6%AF%94%201%20%E6%97%B6%E5%9B%BE%E5%BD%A2%E5%A6%82%E4%BD%95%E5%9C%A8%E7%9B%B4%E7%BA%BF%E3%80%81%E6%A4%AD%E5%9C%86%E5%92%8C%E5%9C%86%E4%B9%8B%E9%97%B4%E8%BF%9E%E7%BB%AD%E5%8F%98%E6%8D%A2%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "改变相位差，看 1 比 1 时图形如何在直线、椭圆和圆之间连续变换。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%95%B0%E4%B8%80%E6%95%B0%E5%9B%BE%E5%BD%A2%E4%B8%8E%E6%B0%B4%E5%B9%B3%E3%80%81%E7%AB%96%E7%9B%B4%E8%BE%B9%E7%95%8C%E7%9A%84%E5%88%87%E7%82%B9%E6%95%B0%EF%BC%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E6%AF%94%E6%AD%A3%E5%A5%BD%E7%AD%89%E4%BA%8E%E9%A2%91%E7%8E%87%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/lissajous/interaction-interaction-3.speech?text=%E6%95%B0%E4%B8%80%E6%95%B0%E5%9B%BE%E5%BD%A2%E4%B8%8E%E6%B0%B4%E5%B9%B3%E3%80%81%E7%AB%96%E7%9B%B4%E8%BE%B9%E7%95%8C%E7%9A%84%E5%88%87%E7%82%B9%E6%95%B0%EF%BC%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E6%AF%94%E6%AD%A3%E5%A5%BD%E7%AD%89%E4%BA%8E%E9%A2%91%E7%8E%87%E6%AF%94%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "数一数图形与水平、竖直边界的切点数，它们的比正好等于频率比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%9C%A8%E7%A4%BA%E6%B3%A2%E5%99%A8%E4%B8%8A%EF%BC%8C%E6%8A%8A%E4%B8%A4%E4%B8%AA%E4%BF%A1%E5%8F%B7%E5%88%86%E5%88%AB%E6%8E%A5%E5%88%B0%E6%B0%B4%E5%B9%B3%E5%92%8C%E7%AB%96%E7%9B%B4%E8%BE%93%E5%85%A5%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%BE%97%E5%88%B0%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E3%80%82",
+      "path": "audio/narrations/lissajous/application-application-1.speech?text=%E5%9C%A8%E7%A4%BA%E6%B3%A2%E5%99%A8%E4%B8%8A%EF%BC%8C%E6%8A%8A%E4%B8%A4%E4%B8%AA%E4%BF%A1%E5%8F%B7%E5%88%86%E5%88%AB%E6%8E%A5%E5%88%B0%E6%B0%B4%E5%B9%B3%E5%92%8C%E7%AB%96%E7%9B%B4%E8%BE%93%E5%85%A5%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%BE%97%E5%88%B0%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "在示波器上，把两个信号分别接到水平和竖直输入，就能得到李萨如图形。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%8D%AE%E6%AD%A4%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%A2%91%E7%8E%87%E6%AF%94%E5%92%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%EF%BC%8C%E6%98%AF%E7%BB%8F%E5%85%B8%E7%9A%84%E9%A2%91%E7%8E%87%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%95%E3%80%82",
+      "path": "audio/narrations/lissajous/application-application-2.speech?text=%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%8D%AE%E6%AD%A4%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%A2%91%E7%8E%87%E6%AF%94%E5%92%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%EF%BC%8C%E6%98%AF%E7%BB%8F%E5%85%B8%E7%9A%84%E9%A2%91%E7%8E%87%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%95%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "工程师据此比较两个信号的频率比和相位差，是经典的频率测量方法。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E4%B9%9F%E5%B8%B8%E7%94%A8%E4%BA%8E%E8%89%BA%E6%9C%AF%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%8C%E5%B1%95%E7%8E%B0%E6%95%B0%E5%AD%A6%E7%9A%84%E5%AF%B9%E7%A7%B0%E4%B9%8B%E7%BE%8E%E3%80%82",
+      "path": "audio/narrations/lissajous/application-application-3.speech?text=%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E4%B9%9F%E5%B8%B8%E7%94%A8%E4%BA%8E%E8%89%BA%E6%9C%AF%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%8C%E5%B1%95%E7%8E%B0%E6%95%B0%E5%AD%A6%E7%9A%84%E5%AF%B9%E7%A7%B0%E4%B9%8B%E7%BE%8E%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "李萨如图形也常用于艺术与可视化，展现数学的对称之美。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E6%98%AF%E4%B8%A4%E4%B8%AA%E5%9E%82%E7%9B%B4%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E7%9A%84%E5%90%88%E6%88%90%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "path": "audio/narrations/lissajous/summary-summary-1.speech?text=%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E6%98%AF%E4%B8%A4%E4%B8%AA%E5%9E%82%E7%9B%B4%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E7%9A%84%E5%90%88%E6%88%90%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "李萨如图形是两个垂直简谐振动的合成轨迹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E9%A2%91%E7%8E%87%E6%AF%94%E5%86%B3%E5%AE%9A%E5%9B%BE%E5%BD%A2%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BD%A2%E6%80%81%EF%BC%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%E5%86%B3%E5%AE%9A%E5%AE%83%E7%9A%84%E5%85%B7%E4%BD%93%E5%BD%A2%E7%8A%B6%E3%80%82",
+      "path": "audio/narrations/lissajous/summary-summary-2.speech?text=%E9%A2%91%E7%8E%87%E6%AF%94%E5%86%B3%E5%AE%9A%E5%9B%BE%E5%BD%A2%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BD%A2%E6%80%81%EF%BC%8C%E7%9B%B8%E4%BD%8D%E5%B7%AE%E5%86%B3%E5%AE%9A%E5%AE%83%E7%9A%84%E5%85%B7%E4%BD%93%E5%BD%A2%E7%8A%B6%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "频率比决定图形的基本形态，相位差决定它的具体形状。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lissajous",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E7%A4%BA%E6%B3%A2%E5%99%A8%E6%B5%8B%E9%87%8F%E5%88%B0%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E%EF%BC%8C%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E8%BF%9E%E6%8E%A5%E4%BA%86%E7%A7%91%E5%AD%A6%E4%B8%8E%E8%89%BA%E6%9C%AF%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E9%A2%86%E7%95%A5%E5%AE%83%E7%9A%84%E5%A5%87%E5%A6%99%EF%BC%81",
+      "path": "audio/narrations/lissajous/summary-summary-3.speech?text=%E4%BB%8E%E7%A4%BA%E6%B3%A2%E5%99%A8%E6%B5%8B%E9%87%8F%E5%88%B0%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E%EF%BC%8C%E6%9D%8E%E8%90%A8%E5%A6%82%E5%9B%BE%E5%BD%A2%E8%BF%9E%E6%8E%A5%E4%BA%86%E7%A7%91%E5%AD%A6%E4%B8%8E%E8%89%BA%E6%9C%AF%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E9%A2%86%E7%95%A5%E5%AE%83%E7%9A%84%E5%A5%87%E5%A6%99%EF%BC%81",
+      "duration": 11.88,
+      "size": 0,
+      "text": "从示波器测量到数学之美，李萨如图形连接了科学与艺术。希望你已经领略它的奇妙！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

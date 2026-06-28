@@ -1,0 +1,10 @@
+.agents/
+.pnpm-store/
+
+**/.codex/
+**/.vite/
+**/dist/
+**/node_modules/
+
+*.log
+*.zip

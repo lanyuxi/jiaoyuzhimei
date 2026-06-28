@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, "SF Pro Display", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  --color-primary: #165DFF;
+  --color-primary-dark: #0E42D2;
+  --color-primary-light: #6EA8FF;
+  --color-accent: #4d8df7;
+  --color-accent-dark: #276fe0;
+  --bg-gradient-start: #f8f8f6;
+  --bg-gradient-end: #f1f0ec;
+  --card-shadow: 0 14px 32px rgba(43, 43, 43, 0.04);
+  --card-shadow-hover: 0 18px 44px rgba(43, 43, 43, 0.08);
+
+  color: #242424;
+  background: #f7f7f5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+}
+
+button,
+a,
+input,
+select {
+  letter-spacing: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f1ea;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ddd7cb;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c9c1b4;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e9e5dc;
+  height: 6px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #e9e5dc;
+  border-radius: 999px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(255, 174, 0, 0.32);
+  margin-top: -6px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(255, 174, 0, 0.38);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: #e9e5dc;
+  border: none;
+  border-radius: 999px;
+}
+
+input[type="range"]::-moz-range-progress {
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 999px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--color-primary);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(255, 174, 0, 0.32);
+}
+
+.card-hover {
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #165DFF 0%, #5EB5FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(255, 174, 0, 0.24);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 174, 0, 0.34);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.from-indigo-500,
+.from-indigo-600,
+.from-purple-500,
+.from-purple-600 {
+  --tw-gradient-from: #165DFF !important;
+  --tw-gradient-to: rgb(22 93 255 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-purple-500,
+.to-purple-600,
+.to-pink-500,
+.to-pink-600 {
+  --tw-gradient-to: #5EB5FF !important;
+}
+
+.bg-indigo-50 {
+  background-color: #EAF2FF !important;
+}
+
+.bg-indigo-500,
+.bg-indigo-600,
+.bg-purple-500,
+.bg-purple-600,
+.bg-green-500,
+.bg-green-600 {
+  background-color: #165DFF !important;
+}
+
+.hover\:bg-indigo-600:hover,
+.hover\:bg-purple-600:hover,
+.hover\:bg-green-600:hover {
+  background-color: #0E42D2 !important;
+}
+
+.text-indigo-600,
+.text-indigo-700,
+.text-purple-600,
+.text-purple-700,
+.text-green-600,
+.text-emerald-600 {
+  color: #165DFF !important;
+}
+
+.border-indigo-200,
+.border-indigo-300,
+.border-indigo-400 {
+  border-color: #8FB3FF !important;
+}
+
+.border-t-indigo-600 {
+  border-top-color: #165DFF !important;
+}
+
+.focus\:border-indigo-400:focus {
+  border-color: #165DFF !important;
+}
