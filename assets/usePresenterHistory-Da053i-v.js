@@ -1,0 +1,1 @@
+import{c as s}from"./vendor-react-E7DqfmSU.js";function l(e){const[r,t]=s.useState(!1),o=s.useCallback(()=>{e&&(e.startNarration(),e.setPresenterMode(!0),t(!0))},[e]),u=s.useCallback(()=>{e?.setPresenterMode(!1),t(!1)},[e]);return{showPresenter:r,openPresenter:o,handleExit:u}}export{l as u};

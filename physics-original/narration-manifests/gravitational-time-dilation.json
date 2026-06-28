@@ -1,0 +1,229 @@
+{
+  "script_id": "gravitational-time-dilation",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 127.19,
+  "files": [
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA%EF%BC%81%E4%B8%8D%E5%8F%AA%E6%98%AF%E8%BF%90%E5%8A%A8%EF%BC%8C%E5%BC%95%E5%8A%9B%E4%B9%9F%E4%BC%9A%E8%AE%A9%E6%97%B6%E9%97%B4%E5%8F%98%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA%EF%BC%81%E4%B8%8D%E5%8F%AA%E6%98%AF%E8%BF%90%E5%8A%A8%EF%BC%8C%E5%BC%95%E5%8A%9B%E4%B9%9F%E4%BC%9A%E8%AE%A9%E6%97%B6%E9%97%B4%E5%8F%98%E6%85%A2%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "欢迎进入广义相对论！不只是运动，引力也会让时间变慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%9C%A8%E5%BC%BA%E5%BC%95%E5%8A%9B%E5%9C%BA%E4%B8%AD%EF%BC%8C%E6%97%B6%E9%92%9F%E8%B5%B0%E5%BE%97%E6%AF%94%E8%BF%9C%E5%A4%84%E6%9B%B4%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/intro-intro-2.speech?text=%E5%9C%A8%E5%BC%BA%E5%BC%95%E5%8A%9B%E5%9C%BA%E4%B8%AD%EF%BC%8C%E6%97%B6%E9%92%9F%E8%B5%B0%E5%BE%97%E6%AF%94%E8%BF%9C%E5%A4%84%E6%9B%B4%E6%85%A2%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "在强引力场中，时钟走得比远处更慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%B6%8A%E9%9D%A0%E8%BF%91%E9%BB%91%E6%B4%9E%EF%BC%8C%E6%97%B6%E9%97%B4%E5%8F%98%E6%85%A2%E5%B0%B1%E8%B6%8A%E6%9E%81%E7%AB%AF%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/intro-intro-3.speech?text=%E8%B6%8A%E9%9D%A0%E8%BF%91%E9%BB%91%E6%B4%9E%EF%BC%8C%E6%97%B6%E9%97%B4%E5%8F%98%E6%85%A2%E5%B0%B1%E8%B6%8A%E6%9E%81%E7%AB%AF%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "越靠近黑洞，时间变慢就越极端。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA%E6%8A%8A%E5%BC%95%E5%8A%9B%E8%A7%A3%E9%87%8A%E4%B8%BA%E6%97%B6%E7%A9%BA%E7%9A%84%E5%BC%AF%E6%9B%B2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/concept-concept-1.speech?text=%E5%B9%BF%E4%B9%89%E7%9B%B8%E5%AF%B9%E8%AE%BA%E6%8A%8A%E5%BC%95%E5%8A%9B%E8%A7%A3%E9%87%8A%E4%B8%BA%E6%97%B6%E7%A9%BA%E7%9A%84%E5%BC%AF%E6%9B%B2%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "广义相对论把引力解释为时空的弯曲。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%B4%A8%E9%87%8F%E8%B6%8A%E5%A4%A7%E3%80%81%E8%B6%8A%E9%9D%A0%E8%BF%91%EF%BC%8C%E6%97%B6%E7%A9%BA%E5%BC%AF%E6%9B%B2%E8%B6%8A%E5%89%A7%E7%83%88%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/concept-concept-2.speech?text=%E8%B4%A8%E9%87%8F%E8%B6%8A%E5%A4%A7%E3%80%81%E8%B6%8A%E9%9D%A0%E8%BF%91%EF%BC%8C%E6%97%B6%E7%A9%BA%E5%BC%AF%E6%9B%B2%E8%B6%8A%E5%89%A7%E7%83%88%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "质量越大、越靠近，时空弯曲越剧烈。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%9C%A8%E6%B7%B1%E5%BC%95%E5%8A%9B%E5%8A%BF%E9%98%B1%E4%B8%AD%EF%BC%8C%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%92%9F%E7%9B%B8%E5%AF%B9%E8%BF%9C%E6%96%B9%E8%B5%B0%E5%BE%97%E6%9B%B4%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/concept-concept-3.speech?text=%E5%9C%A8%E6%B7%B1%E5%BC%95%E5%8A%9B%E5%8A%BF%E9%98%B1%E4%B8%AD%EF%BC%8C%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%92%9F%E7%9B%B8%E5%AF%B9%E8%BF%9C%E6%96%B9%E8%B5%B0%E5%BE%97%E6%9B%B4%E6%85%A2%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "在深引力势阱中，本地时钟相对远方走得更慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%9C%A8%E9%BB%91%E6%B4%9E%E8%A7%86%E7%95%8C%E5%A4%84%EF%BC%8C%E4%BB%8E%E8%BF%9C%E5%A4%84%E7%9C%8B%E6%97%B6%E9%97%B4%E4%BB%BF%E4%BD%9B%E5%AE%8C%E5%85%A8%E5%81%9C%E6%BB%9E%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/concept-concept-4.speech?text=%E5%9C%A8%E9%BB%91%E6%B4%9E%E8%A7%86%E7%95%8C%E5%A4%84%EF%BC%8C%E4%BB%8E%E8%BF%9C%E5%A4%84%E7%9C%8B%E6%97%B6%E9%97%B4%E4%BB%BF%E4%BD%9B%E5%AE%8C%E5%85%A8%E5%81%9C%E6%BB%9E%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "在黑洞视界处，从远处看时间仿佛完全停滞。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%8F%B2%E7%93%A6%E8%A5%BF%E6%97%B6%E7%A9%BA%E4%B8%AD%E7%9A%84%E5%BC%95%E5%8A%9B%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%9B%A0%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/formula-formula-1.speech?text=%E5%8F%B2%E7%93%A6%E8%A5%BF%E6%97%B6%E7%A9%BA%E4%B8%AD%E7%9A%84%E5%BC%95%E5%8A%9B%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%9B%A0%E5%AD%90%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "史瓦西时空中的引力时间膨胀因子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=rs%20%E6%98%AF%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%EF%BC%8Cr%20%E6%98%AF%E7%A6%BB%E4%B8%AD%E5%BF%83%E7%9A%84%E8%B7%9D%E7%A6%BB%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/formula-formula-2.speech?text=rs%20%E6%98%AF%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%EF%BC%8Cr%20%E6%98%AF%E7%A6%BB%E4%B8%AD%E5%BF%83%E7%9A%84%E8%B7%9D%E7%A6%BB%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "rs 是史瓦西半径，r 是离中心的距离。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=r%20%E8%BF%9C%E5%A4%A7%E4%BA%8E%20rs%20%E6%97%B6%EF%BC%8C%E5%9B%A0%E5%AD%90%E6%8E%A5%E8%BF%91%201%EF%BC%8C%E6%97%B6%E9%97%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/formula-formula-3.speech?text=r%20%E8%BF%9C%E5%A4%A7%E4%BA%8E%20rs%20%E6%97%B6%EF%BC%8C%E5%9B%A0%E5%AD%90%E6%8E%A5%E8%BF%91%201%EF%BC%8C%E6%97%B6%E9%97%B4%E5%87%A0%E4%B9%8E%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "r 远大于 rs 时，因子接近 1，时间几乎不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=r%20%E8%B6%8B%E8%BF%91%20rs%20%E6%97%B6%EF%BC%8C%E5%9B%A0%E5%AD%90%E8%B6%8B%E4%BA%8E%200%EF%BC%8C%E6%97%B6%E9%97%B4%E8%B6%8B%E4%BA%8E%E5%81%9C%E6%BB%9E%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/formula-formula-4.speech?text=r%20%E8%B6%8B%E8%BF%91%20rs%20%E6%97%B6%EF%BC%8C%E5%9B%A0%E5%AD%90%E8%B6%8B%E4%BA%8E%200%EF%BC%8C%E6%97%B6%E9%97%B4%E8%B6%8B%E4%BA%8E%E5%81%9C%E6%BB%9E%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "r 趋近 rs 时，因子趋于 0，时间趋于停滞。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E6%97%B6%E9%92%9F%E7%A6%BB%E9%BB%91%E6%B4%9E%E7%9A%84%E8%B7%9D%E7%A6%BB%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%97%B6%E9%97%B4%E6%B5%81%E9%80%9D%E9%80%9F%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E6%97%B6%E9%92%9F%E7%A6%BB%E9%BB%91%E6%B4%9E%E7%9A%84%E8%B7%9D%E7%A6%BB%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%97%B6%E9%97%B4%E6%B5%81%E9%80%9D%E9%80%9F%E7%8E%87%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "调节时钟离黑洞的距离，观察时间流逝速率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E9%9D%A0%E8%BF%91%E8%A7%86%E7%95%8C%EF%BC%8C%E7%9C%8B%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4%E7%9B%B8%E5%AF%B9%E8%BF%9C%E6%96%B9%E6%80%A5%E5%89%A7%E5%8F%98%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/interaction-interaction-2.speech?text=%E9%9D%A0%E8%BF%91%E8%A7%86%E7%95%8C%EF%BC%8C%E7%9C%8B%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4%E7%9B%B8%E5%AF%B9%E8%BF%9C%E6%96%B9%E6%80%A5%E5%89%A7%E5%8F%98%E6%85%A2%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "靠近视界，看本地时间相对远方急剧变慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%AF%B9%E6%AF%94%E8%BF%91%E5%A4%84%E4%B8%8E%E8%BF%9C%E5%A4%84%E4%B8%A4%E4%B8%AA%E6%97%B6%E9%92%9F%E7%9A%84%E5%BF%AB%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/interaction-interaction-3.speech?text=%E5%AF%B9%E6%AF%94%E8%BF%91%E5%A4%84%E4%B8%8E%E8%BF%9C%E5%A4%84%E4%B8%A4%E4%B8%AA%E6%97%B6%E9%92%9F%E7%9A%84%E5%BF%AB%E6%85%A2%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "对比近处与远处两个时钟的快慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=GPS%20%E5%8D%AB%E6%98%9F%E5%A4%84%E4%BA%8E%E8%BE%83%E5%BC%B1%E5%BC%95%E5%8A%9B%E5%9C%BA%EF%BC%8C%E9%92%9F%E8%B5%B0%E5%BE%97%E6%9B%B4%E5%BF%AB%EF%BC%8C%E9%A1%BB%E4%BF%AE%E6%AD%A3%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/application-application-1.speech?text=GPS%20%E5%8D%AB%E6%98%9F%E5%A4%84%E4%BA%8E%E8%BE%83%E5%BC%B1%E5%BC%95%E5%8A%9B%E5%9C%BA%EF%BC%8C%E9%92%9F%E8%B5%B0%E5%BE%97%E6%9B%B4%E5%BF%AB%EF%BC%8C%E9%A1%BB%E4%BF%AE%E6%AD%A3%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "GPS 卫星处于较弱引力场，钟走得更快，须修正。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E7%94%B5%E5%BD%B1%E6%98%9F%E9%99%85%E7%A9%BF%E8%B6%8A%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E5%B7%AE%E6%AD%A3%E6%BA%90%E4%BA%8E%E5%BC%95%E5%8A%9B%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/application-application-2.speech?text=%E7%94%B5%E5%BD%B1%E6%98%9F%E9%99%85%E7%A9%BF%E8%B6%8A%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E5%B7%AE%E6%AD%A3%E6%BA%90%E4%BA%8E%E5%BC%95%E5%8A%9B%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "电影星际穿越中的时间差正源于引力时间膨胀。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%83%E5%B7%B2%E8%A2%AB%E7%B2%BE%E5%AF%86%E5%8E%9F%E5%AD%90%E9%92%9F%E5%9C%A8%E4%B8%8D%E5%90%8C%E9%AB%98%E5%BA%A6%E7%9B%B4%E6%8E%A5%E6%B5%8B%E9%87%8F%E9%AA%8C%E8%AF%81%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/application-application-3.speech?text=%E5%AE%83%E5%B7%B2%E8%A2%AB%E7%B2%BE%E5%AF%86%E5%8E%9F%E5%AD%90%E9%92%9F%E5%9C%A8%E4%B8%8D%E5%90%8C%E9%AB%98%E5%BA%A6%E7%9B%B4%E6%8E%A5%E6%B5%8B%E9%87%8F%E9%AA%8C%E8%AF%81%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "它已被精密原子钟在不同高度直接测量验证。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%BC%95%E5%8A%9B%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E4%BD%BF%E5%BC%BA%E5%BC%95%E5%8A%9B%E5%9C%BA%E4%B8%AD%E7%9A%84%E6%97%B6%E9%92%9F%E8%B5%B0%E5%BE%97%E6%9B%B4%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/summary-summary-1.speech?text=%E5%BC%95%E5%8A%9B%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E4%BD%BF%E5%BC%BA%E5%BC%95%E5%8A%9B%E5%9C%BA%E4%B8%AD%E7%9A%84%E6%97%B6%E9%92%9F%E8%B5%B0%E5%BE%97%E6%9B%B4%E6%85%A2%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "引力时间膨胀使强引力场中的时钟走得更慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%9B%A0%E5%AD%90%20%E2%88%9A(1-rs%2Fr)%EF%BC%8C%E9%9D%A0%E8%BF%91%E9%BB%91%E6%B4%9E%E8%A7%86%E7%95%8C%E6%97%B6%E9%97%B4%E8%B6%8B%E4%BA%8E%E5%81%9C%E6%BB%9E%E3%80%82",
+      "path": "audio/narrations/gravitational-time-dilation/summary-summary-2.speech?text=%E5%9B%A0%E5%AD%90%20%E2%88%9A(1-rs%2Fr)%EF%BC%8C%E9%9D%A0%E8%BF%91%E9%BB%91%E6%B4%9E%E8%A7%86%E7%95%8C%E6%97%B6%E9%97%B4%E8%B6%8B%E4%BA%8E%E5%81%9C%E6%BB%9E%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "因子 √(1-rs/r)，靠近黑洞视界时间趋于停滞。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gravitational-time-dilation",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=GPS%20%E4%B8%8E%E5%8E%9F%E5%AD%90%E9%92%9F%E5%AE%9E%E9%AA%8C%E9%83%BD%E8%AF%81%E5%AE%9E%E4%BA%86%E5%AE%83%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/gravitational-time-dilation/summary-summary-3.speech?text=GPS%20%E4%B8%8E%E5%8E%9F%E5%AD%90%E9%92%9F%E5%AE%9E%E9%AA%8C%E9%83%BD%E8%AF%81%E5%AE%9E%E4%BA%86%E5%AE%83%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.5,
+      "size": 0,
+      "text": "GPS 与原子钟实验都证实了它。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "script_id": "seismic-waves",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 131.29,
+  "files": [
+    {
+      "script_id": "seismic-waves",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%9C%B0%E7%90%83%E7%89%A9%E7%90%86%EF%BC%81%E5%9C%B0%E9%9C%87%E5%8F%91%E7%94%9F%E6%97%B6%EF%BC%8C%E4%BC%9A%E5%90%91%E5%9B%9B%E9%9D%A2%E5%85%AB%E6%96%B9%E5%8F%91%E5%87%BA%E5%9C%B0%E9%9C%87%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/seismic-waves/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%9C%B0%E7%90%83%E7%89%A9%E7%90%86%EF%BC%81%E5%9C%B0%E9%9C%87%E5%8F%91%E7%94%9F%E6%97%B6%EF%BC%8C%E4%BC%9A%E5%90%91%E5%9B%9B%E9%9D%A2%E5%85%AB%E6%96%B9%E5%8F%91%E5%87%BA%E5%9C%B0%E9%9C%87%E6%B3%A2%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "欢迎来到地球物理！地震发生时，会向四面八方发出地震波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E6%B3%A2%E5%88%86%E4%B8%A4%E7%A7%8D%EF%BC%9A%E8%B7%91%E5%BE%97%E5%BF%AB%E7%9A%84%20P%20%E6%B3%A2%E5%92%8C%E8%B7%91%E5%BE%97%E6%85%A2%E7%9A%84%20S%20%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/seismic-waves/intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E6%B3%A2%E5%88%86%E4%B8%A4%E7%A7%8D%EF%BC%9A%E8%B7%91%E5%BE%97%E5%BF%AB%E7%9A%84%20P%20%E6%B3%A2%E5%92%8C%E8%B7%91%E5%BE%97%E6%85%A2%E7%9A%84%20S%20%E6%B3%A2%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "这些波分两种：跑得快的 P 波和跑得慢的 S 波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E6%AD%A3%E6%98%AF%E5%AE%83%E4%BB%AC%EF%BC%8C%E8%AE%A9%E7%A7%91%E5%AD%A6%E5%AE%B6%E7%9C%8B%E6%B8%85%E4%BA%86%E5%9C%B0%E7%90%83%E6%B7%B1%E5%A4%84%E7%9A%84%E7%BB%93%E6%9E%84%E3%80%82",
+      "path": "audio/narrations/seismic-waves/intro-intro-3.speech?text=%E6%AD%A3%E6%98%AF%E5%AE%83%E4%BB%AC%EF%BC%8C%E8%AE%A9%E7%A7%91%E5%AD%A6%E5%AE%B6%E7%9C%8B%E6%B8%85%E4%BA%86%E5%9C%B0%E7%90%83%E6%B7%B1%E5%A4%84%E7%9A%84%E7%BB%93%E6%9E%84%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "正是它们，让科学家看清了地球深处的结构。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=P%20%E6%B3%A2%E6%98%AF%E7%BA%B5%E6%B3%A2%EF%BC%8C%E4%BB%8B%E8%B4%A8%E6%B2%BF%E4%BC%A0%E6%92%AD%E6%96%B9%E5%90%91%E5%8E%8B%E7%BC%A9%E4%B8%8E%E6%8B%89%E4%BC%B8%EF%BC%8C%E9%80%9F%E5%BA%A6%E6%9C%80%E5%BF%AB%E3%80%82",
+      "path": "audio/narrations/seismic-waves/concept-concept-1.speech?text=P%20%E6%B3%A2%E6%98%AF%E7%BA%B5%E6%B3%A2%EF%BC%8C%E4%BB%8B%E8%B4%A8%E6%B2%BF%E4%BC%A0%E6%92%AD%E6%96%B9%E5%90%91%E5%8E%8B%E7%BC%A9%E4%B8%8E%E6%8B%89%E4%BC%B8%EF%BC%8C%E9%80%9F%E5%BA%A6%E6%9C%80%E5%BF%AB%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "P 波是纵波，介质沿传播方向压缩与拉伸，速度最快。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=S%20%E6%B3%A2%E6%98%AF%E6%A8%AA%E6%B3%A2%EF%BC%8C%E4%BB%8B%E8%B4%A8%E5%9E%82%E7%9B%B4%E4%BA%8E%E4%BC%A0%E6%92%AD%E6%96%B9%E5%90%91%E6%8C%AF%E5%8A%A8%EF%BC%8C%E9%80%9F%E5%BA%A6%E8%BE%83%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/seismic-waves/concept-concept-2.speech?text=S%20%E6%B3%A2%E6%98%AF%E6%A8%AA%E6%B3%A2%EF%BC%8C%E4%BB%8B%E8%B4%A8%E5%9E%82%E7%9B%B4%E4%BA%8E%E4%BC%A0%E6%92%AD%E6%96%B9%E5%90%91%E6%8C%AF%E5%8A%A8%EF%BC%8C%E9%80%9F%E5%BA%A6%E8%BE%83%E6%85%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "S 波是横波，介质垂直于传播方向振动，速度较慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=P%20%E6%B3%A2%E5%85%88%E5%88%B0%EF%BC%8CS%20%E6%B3%A2%E5%90%8E%E5%88%B0%EF%BC%8C%E4%B8%A4%E8%80%85%E6%9C%89%E6%98%8E%E6%98%BE%E7%9A%84%E5%88%B0%E6%97%B6%E5%B7%AE%E3%80%82",
+      "path": "audio/narrations/seismic-waves/concept-concept-3.speech?text=P%20%E6%B3%A2%E5%85%88%E5%88%B0%EF%BC%8CS%20%E6%B3%A2%E5%90%8E%E5%88%B0%EF%BC%8C%E4%B8%A4%E8%80%85%E6%9C%89%E6%98%8E%E6%98%BE%E7%9A%84%E5%88%B0%E6%97%B6%E5%B7%AE%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "P 波先到，S 波后到，两者有明显的到时差。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=S%20%E6%B3%A2%E6%97%A0%E6%B3%95%E7%A9%BF%E8%BF%87%E6%B6%B2%E4%BD%93%EF%BC%8C%E7%94%B1%E6%AD%A4%E5%8F%91%E7%8E%B0%E5%9C%B0%E7%90%83%E6%9C%89%E6%B6%B2%E6%80%81%E7%9A%84%E5%A4%96%E6%A0%B8%E3%80%82",
+      "path": "audio/narrations/seismic-waves/concept-concept-4.speech?text=S%20%E6%B3%A2%E6%97%A0%E6%B3%95%E7%A9%BF%E8%BF%87%E6%B6%B2%E4%BD%93%EF%BC%8C%E7%94%B1%E6%AD%A4%E5%8F%91%E7%8E%B0%E5%9C%B0%E7%90%83%E6%9C%89%E6%B6%B2%E6%80%81%E7%9A%84%E5%A4%96%E6%A0%B8%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "S 波无法穿过液体，由此发现地球有液态的外核。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=P%20%E6%B3%A2%E9%80%9F%E5%BA%A6%E7%BA%A6%E4%B8%BA%20S%20%E6%B3%A2%E7%9A%84%201.7%20%E5%80%8D%E3%80%82",
+      "path": "audio/narrations/seismic-waves/formula-formula-1.speech?text=P%20%E6%B3%A2%E9%80%9F%E5%BA%A6%E7%BA%A6%E4%B8%BA%20S%20%E6%B3%A2%E7%9A%84%201.7%20%E5%80%8D%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "P 波速度约为 S 波的 1.7 倍。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E9%9C%87%E6%BA%90%E8%B7%9D%E7%A6%BB%E5%8F%AF%E7%94%B1%20P%E3%80%81S%20%E5%88%B0%E6%97%B6%E5%B7%AE%E4%BC%B0%E7%AE%97%E3%80%82",
+      "path": "audio/narrations/seismic-waves/formula-formula-2.speech?text=%E9%9C%87%E6%BA%90%E8%B7%9D%E7%A6%BB%E5%8F%AF%E7%94%B1%20P%E3%80%81S%20%E5%88%B0%E6%97%B6%E5%B7%AE%E4%BC%B0%E7%AE%97%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "震源距离可由 P、S 到时差估算。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%88%B0%E6%97%B6%E5%B7%AE%E8%B6%8A%E5%A4%A7%EF%BC%8C%E8%AF%B4%E6%98%8E%E9%9C%87%E6%BA%90%E7%A6%BB%E5%BE%97%E8%B6%8A%E8%BF%9C%E3%80%82",
+      "path": "audio/narrations/seismic-waves/formula-formula-3.speech?text=%E5%88%B0%E6%97%B6%E5%B7%AE%E8%B6%8A%E5%A4%A7%EF%BC%8C%E8%AF%B4%E6%98%8E%E9%9C%87%E6%BA%90%E7%A6%BB%E5%BE%97%E8%B6%8A%E8%BF%9C%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "到时差越大，说明震源离得越远。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E4%B8%89%E4%B8%AA%E5%8F%B0%E7%AB%99%E7%9A%84%E8%B7%9D%E7%A6%BB%E5%9C%86%E7%9B%B8%E4%BA%A4%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AE%9A%E5%87%BA%E9%9C%87%E4%B8%AD%E3%80%82",
+      "path": "audio/narrations/seismic-waves/formula-formula-4.speech?text=%E4%B8%89%E4%B8%AA%E5%8F%B0%E7%AB%99%E7%9A%84%E8%B7%9D%E7%A6%BB%E5%9C%86%E7%9B%B8%E4%BA%A4%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AE%9A%E5%87%BA%E9%9C%87%E4%B8%AD%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "三个台站的距离圆相交，就能定出震中。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%A7%A6%E5%8F%91%E5%9C%B0%E9%9C%87%EF%BC%8C%E8%A7%82%E5%AF%9F%20P%20%E6%B3%A2%E5%92%8C%20S%20%E6%B3%A2%E5%85%88%E5%90%8E%E5%90%91%E5%A4%96%E6%89%A9%E6%95%A3%E3%80%82",
+      "path": "audio/narrations/seismic-waves/interaction-interaction-1.speech?text=%E8%A7%A6%E5%8F%91%E5%9C%B0%E9%9C%87%EF%BC%8C%E8%A7%82%E5%AF%9F%20P%20%E6%B3%A2%E5%92%8C%20S%20%E6%B3%A2%E5%85%88%E5%90%8E%E5%90%91%E5%A4%96%E6%89%A9%E6%95%A3%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "触发地震，观察 P 波和 S 波先后向外扩散。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%20P%20%E6%B3%A2%E6%80%BB%E6%98%AF%E8%B7%91%E5%9C%A8%20S%20%E6%B3%A2%E5%89%8D%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/seismic-waves/interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%20P%20%E6%B3%A2%E6%80%BB%E6%98%AF%E8%B7%91%E5%9C%A8%20S%20%E6%B3%A2%E5%89%8D%E9%9D%A2%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "注意 P 波总是跑在 S 波前面。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%9F%A5%E7%9C%8B%E5%8F%B0%E7%AB%99%E8%AE%B0%E5%BD%95%E7%9A%84%E5%88%B0%E6%97%B6%E5%B7%AE%EF%BC%8C%E4%BC%B0%E7%AE%97%E9%9C%87%E6%BA%90%E8%B7%9D%E7%A6%BB%E3%80%82",
+      "path": "audio/narrations/seismic-waves/interaction-interaction-3.speech?text=%E6%9F%A5%E7%9C%8B%E5%8F%B0%E7%AB%99%E8%AE%B0%E5%BD%95%E7%9A%84%E5%88%B0%E6%97%B6%E5%B7%AE%EF%BC%8C%E4%BC%B0%E7%AE%97%E9%9C%87%E6%BA%90%E8%B7%9D%E7%A6%BB%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "查看台站记录的到时差，估算震源距离。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%9C%B0%E9%9C%87%E9%A2%84%E8%AD%A6%E7%B3%BB%E7%BB%9F%E5%88%A9%E7%94%A8%E5%BF%AB%E9%80%9F%E7%9A%84%20P%20%E6%B3%A2%E6%8A%A2%E5%85%88%E5%8F%91%E5%87%BA%E8%AD%A6%E6%8A%A5%E3%80%82",
+      "path": "audio/narrations/seismic-waves/application-application-1.speech?text=%E5%9C%B0%E9%9C%87%E9%A2%84%E8%AD%A6%E7%B3%BB%E7%BB%9F%E5%88%A9%E7%94%A8%E5%BF%AB%E9%80%9F%E7%9A%84%20P%20%E6%B3%A2%E6%8A%A2%E5%85%88%E5%8F%91%E5%87%BA%E8%AD%A6%E6%8A%A5%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "地震预警系统利用快速的 P 波抢先发出警报。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%9C%B0%E9%9C%87%E6%B3%A2%E5%B1%82%E6%9E%90%E6%88%90%E5%83%8F%E6%8F%AD%E7%A4%BA%E4%BA%86%E5%9C%B0%E5%B9%94%E5%92%8C%E5%9C%B0%E6%A0%B8%E7%9A%84%E7%BB%93%E6%9E%84%E3%80%82",
+      "path": "audio/narrations/seismic-waves/application-application-2.speech?text=%E5%9C%B0%E9%9C%87%E6%B3%A2%E5%B1%82%E6%9E%90%E6%88%90%E5%83%8F%E6%8F%AD%E7%A4%BA%E4%BA%86%E5%9C%B0%E5%B9%94%E5%92%8C%E5%9C%B0%E6%A0%B8%E7%9A%84%E7%BB%93%E6%9E%84%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "地震波层析成像揭示了地幔和地核的结构。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%9F%B3%E6%B2%B9%E5%8B%98%E6%8E%A2%E4%B9%9F%E7%94%A8%E4%BA%BA%E5%B7%A5%E5%9C%B0%E9%9C%87%E6%B3%A2%E6%8E%A2%E6%B5%8B%E5%9C%B0%E4%B8%8B%E6%B2%B9%E6%B0%94%E3%80%82",
+      "path": "audio/narrations/seismic-waves/application-application-3.speech?text=%E7%9F%B3%E6%B2%B9%E5%8B%98%E6%8E%A2%E4%B9%9F%E7%94%A8%E4%BA%BA%E5%B7%A5%E5%9C%B0%E9%9C%87%E6%B3%A2%E6%8E%A2%E6%B5%8B%E5%9C%B0%E4%B8%8B%E6%B2%B9%E6%B0%94%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "石油勘探也用人工地震波探测地下油气。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%9C%B0%E9%9C%87%E6%B3%A2%E5%88%86%E4%B8%BA%E5%BF%AB%E7%9A%84%E7%BA%B5%E6%B3%A2%20P%20%E5%92%8C%E6%85%A2%E7%9A%84%E6%A8%AA%E6%B3%A2%20S%E3%80%82",
+      "path": "audio/narrations/seismic-waves/summary-summary-1.speech?text=%E5%9C%B0%E9%9C%87%E6%B3%A2%E5%88%86%E4%B8%BA%E5%BF%AB%E7%9A%84%E7%BA%B5%E6%B3%A2%20P%20%E5%92%8C%E6%85%A2%E7%9A%84%E6%A8%AA%E6%B3%A2%20S%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "地震波分为快的纵波 P 和慢的横波 S。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=P-S%20%E5%88%B0%E6%97%B6%E5%B7%AE%E5%8F%AF%E6%B5%8B%E9%9C%87%E6%BA%90%E8%B7%9D%E7%A6%BB%EF%BC%8CS%20%E6%B3%A2%E7%BC%BA%E5%A4%B1%E6%8F%AD%E7%A4%BA%E6%B6%B2%E6%80%81%E5%A4%96%E6%A0%B8%E3%80%82",
+      "path": "audio/narrations/seismic-waves/summary-summary-2.speech?text=P-S%20%E5%88%B0%E6%97%B6%E5%B7%AE%E5%8F%AF%E6%B5%8B%E9%9C%87%E6%BA%90%E8%B7%9D%E7%A6%BB%EF%BC%8CS%20%E6%B3%A2%E7%BC%BA%E5%A4%B1%E6%8F%AD%E7%A4%BA%E6%B6%B2%E6%80%81%E5%A4%96%E6%A0%B8%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "P-S 到时差可测震源距离，S 波缺失揭示液态外核。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "seismic-waves",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%9C%B0%E9%9C%87%E6%B3%A2%E6%98%AF%E6%8E%A2%E6%B5%8B%E5%9C%B0%E7%90%83%E5%86%85%E9%83%A8%E7%9A%84%E6%8E%A2%E9%92%88%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/seismic-waves/summary-summary-3.speech?text=%E5%9C%B0%E9%9C%87%E6%B3%A2%E6%98%AF%E6%8E%A2%E6%B5%8B%E5%9C%B0%E7%90%83%E5%86%85%E9%83%A8%E7%9A%84%E6%8E%A2%E9%92%88%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.88,
+      "size": 0,
+      "text": "地震波是探测地球内部的探针。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

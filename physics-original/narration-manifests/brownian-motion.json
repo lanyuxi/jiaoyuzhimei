@@ -1,0 +1,229 @@
+{
+  "script_id": "brownian-motion",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 162.5,
+  "files": [
+    {
+      "script_id": "brownian-motion",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E5%AE%9E%E9%AA%8C%EF%BC%811827%20%E5%B9%B4%EF%BC%8C%E6%A4%8D%E7%89%A9%E5%AD%A6%E5%AE%B6%E5%B8%83%E6%9C%97%E5%9C%A8%E6%98%BE%E5%BE%AE%E9%95%9C%E4%B8%8B%E8%A7%82%E5%AF%9F%E8%8A%B1%E7%B2%89%E9%A2%97%E7%B2%92%E3%80%82",
+      "path": "audio/narrations/brownian-motion/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E5%AE%9E%E9%AA%8C%EF%BC%811827%20%E5%B9%B4%EF%BC%8C%E6%A4%8D%E7%89%A9%E5%AD%A6%E5%AE%B6%E5%B8%83%E6%9C%97%E5%9C%A8%E6%98%BE%E5%BE%AE%E9%95%9C%E4%B8%8B%E8%A7%82%E5%AF%9F%E8%8A%B1%E7%B2%89%E9%A2%97%E7%B2%92%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "欢迎来到布朗运动实验！1827 年，植物学家布朗在显微镜下观察花粉颗粒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%BB%96%E5%8F%91%E7%8E%B0%E8%BF%99%E4%BA%9B%E5%BE%AE%E7%B2%92%E5%9C%A8%E6%B0%B4%E4%B8%AD%E4%B8%8D%E5%81%9C%E5%9C%B0%E3%80%81%E6%AF%AB%E6%97%A0%E8%A7%84%E5%BE%8B%E5%9C%B0%E9%A2%A4%E5%8A%A8%EF%BC%8C%E5%8D%B4%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8E%9F%E5%9B%A0%E3%80%82",
+      "path": "audio/narrations/brownian-motion/intro-intro-2.speech?text=%E4%BB%96%E5%8F%91%E7%8E%B0%E8%BF%99%E4%BA%9B%E5%BE%AE%E7%B2%92%E5%9C%A8%E6%B0%B4%E4%B8%AD%E4%B8%8D%E5%81%9C%E5%9C%B0%E3%80%81%E6%AF%AB%E6%97%A0%E8%A7%84%E5%BE%8B%E5%9C%B0%E9%A2%A4%E5%8A%A8%EF%BC%8C%E5%8D%B4%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8E%9F%E5%9B%A0%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "他发现这些微粒在水中不停地、毫无规律地颤动，却找不到原因。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%91%E5%85%AB%E5%8D%81%E5%B9%B4%E5%90%8E%EF%BC%8C%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%BB%99%E5%87%BA%E4%BA%86%E8%A7%A3%E9%87%8A%EF%BC%8C%E5%B9%B6%E7%94%B1%E6%AD%A4%E4%B8%BA%E5%8E%9F%E5%AD%90%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%AD%98%E5%9C%A8%E6%8F%90%E4%BE%9B%E4%BA%86%E9%93%81%E8%AF%81%E3%80%82",
+      "path": "audio/narrations/brownian-motion/intro-intro-3.speech?text=%E8%BF%91%E5%85%AB%E5%8D%81%E5%B9%B4%E5%90%8E%EF%BC%8C%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%BB%99%E5%87%BA%E4%BA%86%E8%A7%A3%E9%87%8A%EF%BC%8C%E5%B9%B6%E7%94%B1%E6%AD%A4%E4%B8%BA%E5%8E%9F%E5%AD%90%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%AD%98%E5%9C%A8%E6%8F%90%E4%BE%9B%E4%BA%86%E9%93%81%E8%AF%81%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "近八十年后，爱因斯坦给出了解释，并由此为原子的真实存在提供了铁证。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%82%AC%E6%B5%AE%E5%9C%A8%E6%B6%B2%E4%BD%93%E4%B8%AD%E7%9A%84%E5%BE%AE%E7%B2%92%EF%BC%8C%E6%97%B6%E5%88%BB%E8%A2%AB%E5%91%A8%E5%9B%B4%E5%A4%A7%E9%87%8F%E5%81%9A%E7%83%AD%E8%BF%90%E5%8A%A8%E7%9A%84%E5%88%86%E5%AD%90%E6%92%9E%E5%87%BB%E3%80%82",
+      "path": "audio/narrations/brownian-motion/concept-concept-1.speech?text=%E6%82%AC%E6%B5%AE%E5%9C%A8%E6%B6%B2%E4%BD%93%E4%B8%AD%E7%9A%84%E5%BE%AE%E7%B2%92%EF%BC%8C%E6%97%B6%E5%88%BB%E8%A2%AB%E5%91%A8%E5%9B%B4%E5%A4%A7%E9%87%8F%E5%81%9A%E7%83%AD%E8%BF%90%E5%8A%A8%E7%9A%84%E5%88%86%E5%AD%90%E6%92%9E%E5%87%BB%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "悬浮在液体中的微粒，时刻被周围大量做热运动的分子撞击。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%9F%90%E4%B8%80%E7%9E%AC%E9%97%B4%EF%BC%8C%E5%90%84%E6%96%B9%E5%90%91%E7%9A%84%E6%92%9E%E5%87%BB%E9%9A%BE%E4%BB%A5%E5%AE%8C%E5%85%A8%E6%8A%B5%E6%B6%88%EF%BC%8C%E5%BE%AE%E7%B2%92%E4%BE%BF%E8%A2%AB%E6%8E%A8%E5%90%91%E6%9F%90%E4%B8%AA%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/brownian-motion/concept-concept-2.speech?text=%E6%9F%90%E4%B8%80%E7%9E%AC%E9%97%B4%EF%BC%8C%E5%90%84%E6%96%B9%E5%90%91%E7%9A%84%E6%92%9E%E5%87%BB%E9%9A%BE%E4%BB%A5%E5%AE%8C%E5%85%A8%E6%8A%B5%E6%B6%88%EF%BC%8C%E5%BE%AE%E7%B2%92%E4%BE%BF%E8%A2%AB%E6%8E%A8%E5%90%91%E6%9F%90%E4%B8%AA%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "某一瞬间，各方向的撞击难以完全抵消，微粒便被推向某个方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E4%B8%8B%E4%B8%80%E7%9E%AC%E9%97%B4%E6%92%9E%E5%87%BB%E7%9A%84%E5%90%88%E5%8A%9B%E5%8F%88%E6%8C%87%E5%90%91%E5%88%AB%E5%A4%84%EF%BC%8C%E4%BA%8E%E6%98%AF%E5%BE%AE%E7%B2%92%E8%B5%B0%E5%87%BA%E6%9B%B2%E6%8A%98%E7%9A%84%E9%9A%8F%E6%9C%BA%E8%B7%AF%E5%BE%84%E3%80%82",
+      "path": "audio/narrations/brownian-motion/concept-concept-3.speech?text=%E4%B8%8B%E4%B8%80%E7%9E%AC%E9%97%B4%E6%92%9E%E5%87%BB%E7%9A%84%E5%90%88%E5%8A%9B%E5%8F%88%E6%8C%87%E5%90%91%E5%88%AB%E5%A4%84%EF%BC%8C%E4%BA%8E%E6%98%AF%E5%BE%AE%E7%B2%92%E8%B5%B0%E5%87%BA%E6%9B%B2%E6%8A%98%E7%9A%84%E9%9A%8F%E6%9C%BA%E8%B7%AF%E5%BE%84%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "下一瞬间撞击的合力又指向别处，于是微粒走出曲折的随机路径。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%EF%BC%8C%E5%88%86%E5%AD%90%E8%BF%90%E5%8A%A8%E8%B6%8A%E5%89%A7%E7%83%88%EF%BC%8C%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E4%B9%9F%E8%B6%8A%E6%98%BE%E8%91%97%E3%80%82",
+      "path": "audio/narrations/brownian-motion/concept-concept-4.speech?text=%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%EF%BC%8C%E5%88%86%E5%AD%90%E8%BF%90%E5%8A%A8%E8%B6%8A%E5%89%A7%E7%83%88%EF%BC%8C%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E4%B9%9F%E8%B6%8A%E6%98%BE%E8%91%97%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "温度越高，分子运动越剧烈，布朗运动也越显著。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E5%8F%91%E7%8E%B0%EF%BC%8C%E5%BE%AE%E7%B2%92%E4%BD%8D%E7%A7%BB%E7%9A%84%E5%B9%B3%E6%96%B9%E5%B9%B3%E5%9D%87%E5%80%BC%E9%9A%8F%E6%97%B6%E9%97%B4%E7%BA%BF%E6%80%A7%E5%A2%9E%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/brownian-motion/formula-formula-1.speech?text=%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E5%8F%91%E7%8E%B0%EF%BC%8C%E5%BE%AE%E7%B2%92%E4%BD%8D%E7%A7%BB%E7%9A%84%E5%B9%B3%E6%96%B9%E5%B9%B3%E5%9D%87%E5%80%BC%E9%9A%8F%E6%97%B6%E9%97%B4%E7%BA%BF%E6%80%A7%E5%A2%9E%E9%95%BF%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "爱因斯坦发现，微粒位移的平方平均值随时间线性增长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20D%20%E6%98%AF%E6%89%A9%E6%95%A3%E7%B3%BB%E6%95%B0%EF%BC%8C%E6%8F%8F%E8%BF%B0%E5%BE%AE%E7%B2%92%E6%89%A9%E6%95%A3%E7%9A%84%E5%BF%AB%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/brownian-motion/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20D%20%E6%98%AF%E6%89%A9%E6%95%A3%E7%B3%BB%E6%95%B0%EF%BC%8C%E6%8F%8F%E8%BF%B0%E5%BE%AE%E7%B2%92%E6%89%A9%E6%95%A3%E7%9A%84%E5%BF%AB%E6%85%A2%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "其中 D 是扩散系数，描述微粒扩散的快慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%89%A9%E6%95%A3%E7%B3%BB%E6%95%B0%E4%B8%8E%E6%B8%A9%E5%BA%A6%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E4%B8%8E%E9%BB%8F%E5%BA%A6%E5%92%8C%E7%B2%92%E5%BE%84%E6%88%90%E5%8F%8D%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/brownian-motion/formula-formula-3.speech?text=%E6%89%A9%E6%95%A3%E7%B3%BB%E6%95%B0%E4%B8%8E%E6%B8%A9%E5%BA%A6%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E4%B8%8E%E9%BB%8F%E5%BA%A6%E5%92%8C%E7%B2%92%E5%BE%84%E6%88%90%E5%8F%8D%E6%AF%94%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "扩散系数与温度成正比，与黏度和粒径成反比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BF%99%E4%B8%AA%E5%85%B3%E7%B3%BB%E6%8A%8A%E5%AE%8F%E8%A7%82%E5%8F%AF%E6%B5%8B%E7%9A%84%E6%89%A9%E6%95%A3%EF%BC%8C%E5%92%8C%E5%BE%AE%E8%A7%82%E7%9A%84%E5%88%86%E5%AD%90%E8%BF%90%E5%8A%A8%E8%81%94%E7%B3%BB%E4%BA%86%E8%B5%B7%E6%9D%A5%E3%80%82",
+      "path": "audio/narrations/brownian-motion/formula-formula-4.speech?text=%E8%BF%99%E4%B8%AA%E5%85%B3%E7%B3%BB%E6%8A%8A%E5%AE%8F%E8%A7%82%E5%8F%AF%E6%B5%8B%E7%9A%84%E6%89%A9%E6%95%A3%EF%BC%8C%E5%92%8C%E5%BE%AE%E8%A7%82%E7%9A%84%E5%88%86%E5%AD%90%E8%BF%90%E5%8A%A8%E8%81%94%E7%B3%BB%E4%BA%86%E8%B5%B7%E6%9D%A5%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "这个关系把宏观可测的扩散，和微观的分子运动联系了起来。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E5%A4%9A%E4%B8%AA%E5%BE%AE%E7%B2%92%E5%90%8C%E6%97%B6%E5%81%9A%E6%97%A0%E8%A7%84%E5%88%99%E6%B8%B8%E8%B5%B0%EF%BC%8C%E7%94%BB%E5%87%BA%E5%90%84%E8%87%AA%E6%9B%B2%E6%8A%98%E7%9A%84%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "path": "audio/narrations/brownian-motion/interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E5%A4%9A%E4%B8%AA%E5%BE%AE%E7%B2%92%E5%90%8C%E6%97%B6%E5%81%9A%E6%97%A0%E8%A7%84%E5%88%99%E6%B8%B8%E8%B5%B0%EF%BC%8C%E7%94%BB%E5%87%BA%E5%90%84%E8%87%AA%E6%9B%B2%E6%8A%98%E7%9A%84%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "观察多个微粒同时做无规则游走，画出各自曲折的轨迹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%8F%90%E9%AB%98%E6%B8%A9%E5%BA%A6%EF%BC%8C%E5%BE%AE%E7%B2%92%E8%BF%90%E5%8A%A8%E6%98%8E%E6%98%BE%E5%8A%A0%E5%89%A7%EF%BC%8C%E6%89%A9%E6%95%A3%E6%9B%B4%E5%BF%AB%E3%80%82",
+      "path": "audio/narrations/brownian-motion/interaction-interaction-2.speech?text=%E6%8F%90%E9%AB%98%E6%B8%A9%E5%BA%A6%EF%BC%8C%E5%BE%AE%E7%B2%92%E8%BF%90%E5%8A%A8%E6%98%8E%E6%98%BE%E5%8A%A0%E5%89%A7%EF%BC%8C%E6%89%A9%E6%95%A3%E6%9B%B4%E5%BF%AB%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "提高温度，微粒运动明显加剧，扩散更快。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E4%BD%8D%E7%A7%BB%E5%B9%B3%E6%96%B9%E7%9A%84%E5%B9%B3%E5%9D%87%E5%80%BC%E9%9A%8F%E6%97%B6%E9%97%B4%E7%BA%BF%E6%80%A7%E5%A2%9E%E9%95%BF%EF%BC%8C%E7%AC%A6%E5%90%88%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/brownian-motion/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E4%BD%8D%E7%A7%BB%E5%B9%B3%E6%96%B9%E7%9A%84%E5%B9%B3%E5%9D%87%E5%80%BC%E9%9A%8F%E6%97%B6%E9%97%B4%E7%BA%BF%E6%80%A7%E5%A2%9E%E9%95%BF%EF%BC%8C%E7%AC%A6%E5%90%88%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "注意位移平方的平均值随时间线性增长，符合爱因斯坦关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E6%98%AF%E6%B5%8B%E5%AE%9A%E9%98%BF%E4%BC%8F%E4%BC%BD%E5%BE%B7%E7%BD%97%E5%B8%B8%E6%95%B0%E7%9A%84%E7%BB%8F%E5%85%B8%E9%80%94%E5%BE%84%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/brownian-motion/application-application-1.speech?text=%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E6%98%AF%E6%B5%8B%E5%AE%9A%E9%98%BF%E4%BC%8F%E4%BC%BD%E5%BE%B7%E7%BD%97%E5%B8%B8%E6%95%B0%E7%9A%84%E7%BB%8F%E5%85%B8%E9%80%94%E5%BE%84%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "布朗运动是测定阿伏伽德罗常数的经典途径之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%9A%8F%E6%9C%BA%E6%B8%B8%E8%B5%B0%E6%A8%A1%E5%9E%8B%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E6%89%A9%E6%95%A3%E3%80%81%E8%81%9A%E5%90%88%E7%89%A9%E5%92%8C%E9%87%91%E8%9E%8D%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E3%80%82",
+      "path": "audio/narrations/brownian-motion/application-application-2.speech?text=%E9%9A%8F%E6%9C%BA%E6%B8%B8%E8%B5%B0%E6%A8%A1%E5%9E%8B%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E6%89%A9%E6%95%A3%E3%80%81%E8%81%9A%E5%90%88%E7%89%A9%E5%92%8C%E9%87%91%E8%9E%8D%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "随机游走模型广泛用于扩散、聚合物和金融市场分析。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%9C%A8%E7%94%9F%E7%89%A9%E5%AD%A6%E4%B8%AD%EF%BC%8C%E5%AE%83%E8%A7%A3%E9%87%8A%E4%BA%86%E7%BB%86%E8%83%9E%E5%86%85%E5%88%86%E5%AD%90%E7%9A%84%E8%BE%93%E8%BF%90%E8%BF%87%E7%A8%8B%E3%80%82",
+      "path": "audio/narrations/brownian-motion/application-application-3.speech?text=%E5%9C%A8%E7%94%9F%E7%89%A9%E5%AD%A6%E4%B8%AD%EF%BC%8C%E5%AE%83%E8%A7%A3%E9%87%8A%E4%BA%86%E7%BB%86%E8%83%9E%E5%86%85%E5%88%86%E5%AD%90%E7%9A%84%E8%BE%93%E8%BF%90%E8%BF%87%E7%A8%8B%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "在生物学中，它解释了细胞内分子的输运过程。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E6%BA%90%E4%BA%8E%E6%B6%B2%E4%BD%93%E5%88%86%E5%AD%90%E5%AF%B9%E6%82%AC%E6%B5%AE%E5%BE%AE%E7%B2%92%E7%9A%84%E6%97%A0%E8%A7%84%E5%88%99%E6%92%9E%E5%87%BB%E3%80%82",
+      "path": "audio/narrations/brownian-motion/summary-summary-1.speech?text=%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8%E6%BA%90%E4%BA%8E%E6%B6%B2%E4%BD%93%E5%88%86%E5%AD%90%E5%AF%B9%E6%82%AC%E6%B5%AE%E5%BE%AE%E7%B2%92%E7%9A%84%E6%97%A0%E8%A7%84%E5%88%99%E6%92%9E%E5%87%BB%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "布朗运动源于液体分子对悬浮微粒的无规则撞击。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%BE%AE%E7%B2%92%E4%BD%8D%E7%A7%BB%E5%B9%B3%E6%96%B9%E7%9A%84%E5%B9%B3%E5%9D%87%E5%80%BC%E9%9A%8F%E6%97%B6%E9%97%B4%E7%BA%BF%E6%80%A7%E5%A2%9E%E9%95%BF%EF%BC%8C%E7%AC%A6%E5%90%88%202Dt%20%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/brownian-motion/summary-summary-2.speech?text=%E5%BE%AE%E7%B2%92%E4%BD%8D%E7%A7%BB%E5%B9%B3%E6%96%B9%E7%9A%84%E5%B9%B3%E5%9D%87%E5%80%BC%E9%9A%8F%E6%97%B6%E9%97%B4%E7%BA%BF%E6%80%A7%E5%A2%9E%E9%95%BF%EF%BC%8C%E7%AC%A6%E5%90%88%202Dt%20%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "微粒位移平方的平均值随时间线性增长，符合 2Dt 关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "brownian-motion",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E8%BF%99%E4%B8%80%E7%8E%B0%E8%B1%A1%E8%AF%81%E5%AE%9E%E4%BA%86%E5%88%86%E5%AD%90%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%AD%98%E5%9C%A8%EF%BC%8C%E6%98%AF%E7%BB%9F%E8%AE%A1%E7%89%A9%E7%90%86%E7%9A%84%E9%87%8C%E7%A8%8B%E7%A2%91%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/brownian-motion/summary-summary-3.speech?text=%E8%BF%99%E4%B8%80%E7%8E%B0%E8%B1%A1%E8%AF%81%E5%AE%9E%E4%BA%86%E5%88%86%E5%AD%90%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%AD%98%E5%9C%A8%EF%BC%8C%E6%98%AF%E7%BB%9F%E8%AE%A1%E7%89%A9%E7%90%86%E7%9A%84%E9%87%8C%E7%A8%8B%E7%A2%91%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 10.31,
+      "size": 0,
+      "text": "这一现象证实了分子的真实存在，是统计物理的里程碑。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}
