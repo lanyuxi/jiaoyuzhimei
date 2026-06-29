@@ -1,0 +1,1 @@
+import{j as e}from"./index-CIE2m8zx.js";import"./vendor-react-E7DqfmSU.js";function n(){return e.jsx("section",{className:"flex min-h-[calc(100vh-180px)] items-center justify-center rounded-[8px] bg-white shadow-[0_14px_32px_rgba(43,43,43,0.04)]",children:e.jsx("h1",{className:"text-2xl font-semibold text-[#242424]",children:"敬请期待~"})})}export{n as default};
