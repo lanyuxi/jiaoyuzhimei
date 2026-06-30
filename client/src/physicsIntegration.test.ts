@@ -66,6 +66,7 @@ describe('physics project integration', () => {
     const runtimeRoot = join(publicRoot, 'physics-original')
     const assetRoot = join(runtimeRoot, 'assets')
     const runtimeIndex = readFileSync(join(runtimeRoot, 'index.html'), 'utf8')
+    const runtimeBundle = readFileSync(join(assetRoot, 'index-B9SOS4Fp.js'), 'utf8')
     const overrideCss = readFileSync(join(runtimeRoot, 'embedded-experiment-overrides.css'), 'utf8')
     const fallbackScript = readFileSync(join(runtimeRoot, 'physics-narration-fallback.js'), 'utf8')
 
@@ -74,6 +75,8 @@ describe('physics project integration', () => {
     expect(runtimeIndex).toContain('window.__PHYSICS_ORIGINAL_ASSET_BASE__')
     expect(runtimeIndex).toContain('appendRuntimeAsset')
     expect(runtimeIndex).not.toMatch(/\s(?:src|href)="\/physics-original\//)
+    expect(runtimeBundle).toContain('window.__PHYSICS_ORIGINAL_ASSET_BASE__')
+    expect(runtimeBundle).not.toContain('return"/"+c')
     expect(existsSync(join(assetRoot, 'index-B9SOS4Fp.js'))).toBe(true)
     expect(existsSync(join(assetRoot, 'index-CRp6zjtV.css'))).toBe(true)
     expect(existsSync(join(runtimeRoot, 'embedded-experiment-overrides.css'))).toBe(true)
