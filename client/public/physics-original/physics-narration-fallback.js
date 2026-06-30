@@ -1,8 +1,17 @@
 (function () {
   const NativeAudio = window.Audio
   const NativeFetch = window.fetch ? window.fetch.bind(window) : null
+  const runtimeAssetBase =
+    window.__PHYSICS_ORIGINAL_ASSET_BASE__ ||
+    (document.currentScript?.src
+      ? new URL('./', document.currentScript.src).pathname
+      : new URL('physics-original/', window.location.origin).pathname)
   const manifestPathPattern = /^\/audio\/narrations\/([^/]+)\/manifest\.json$/
   const speechPathPattern = /\/audio\/narrations\/[^/]+\/(?:xiaoxiao\/)?[^/?]+\.speech(?:\?|$)/
+
+  function runtimeUrl(path) {
+    return new URL(path, new URL(runtimeAssetBase, window.location.origin)).href
+  }
 
   if (NativeFetch) {
     window.fetch = function patchedFetch(input, init) {
@@ -20,7 +29,7 @@
           const url = new URL(rawUrl, window.location.href)
           const match = url.pathname.match(manifestPathPattern)
           if (match) {
-            const fallbackUrl = `/physics-original/narration-manifests/${match[1]}.json`
+            const fallbackUrl = runtimeUrl(`narration-manifests/${match[1]}.json`)
             return NativeFetch(fallbackUrl, init).then((response) => (response.ok ? response : NativeFetch(input, init)))
           }
         } catch {
