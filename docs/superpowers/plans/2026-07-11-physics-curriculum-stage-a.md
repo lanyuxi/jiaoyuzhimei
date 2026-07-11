@@ -251,7 +251,7 @@ git commit -m "feat: add physics curriculum catalog"
 - Create: `client/src/physics/TextbookPhysicsCatalog.tsx`
 - Modify: `client/src/physics/PhysicsHome.tsx:1-409`
 - Modify: `client/package.json`
-- Modify: `client/package-lock.json`
+- Modify: `client/pnpm-lock.yaml`
 - Test: `client/src/physicsCatalog.test.ts`
 
 **Interfaces:**
@@ -292,7 +292,7 @@ Expected: FAIL because the two catalog components do not exist.
 Run from `client`:
 
 ```powershell
-npm install lucide-react
+pnpm add lucide-react
 ```
 
 Expected: `lucide-react` appears in `client/package.json` dependencies and lockfiles update.
@@ -350,7 +350,7 @@ Expected: PASS. Update old `physicsIntegration.test.ts` source assertions only w
 - [ ] **Step 8: Commit**
 
 ```powershell
-git add client/package.json client/package-lock.json client/src/physics client/src/physicsCatalog.test.ts client/src/physicsIntegration.test.ts
+git add client/package.json client/pnpm-lock.yaml client/src/physics client/src/physicsCatalog.test.ts client/src/physicsIntegration.test.ts
 git commit -m "feat: add textbook physics catalog"
 ```
 
