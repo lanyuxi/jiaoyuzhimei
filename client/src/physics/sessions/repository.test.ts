@@ -28,6 +28,26 @@ class WriteFailingStorage extends MemoryStorage {
   }
 }
 
+class CorruptBackupFailingStorage extends MemoryStorage {
+  setItem(key: string, value: string): void {
+    if (key === `${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`) {
+      throw new Error('storage unavailable')
+    }
+
+    super.setItem(key, value)
+  }
+}
+
+class ReadFailingStorage implements StorageLike {
+  getItem(): string | null {
+    throw new Error('storage unavailable')
+  }
+
+  setItem(): void {}
+
+  removeItem(): void {}
+}
+
 const measurement: PhysicsMeasurementRecord = {
   trialId: 'water-1',
   key: 'temperature',
@@ -36,6 +56,10 @@ const measurement: PhysicsMeasurementRecord = {
   unit: '℃',
   kind: 'raw',
   at: '2026-07-11T00:00:00.000Z',
+  conditions: [
+    { label: 'Water mass', value: 100 },
+    { label: 'Initial temperature', value: '20℃' },
+  ],
 }
 
 const event: PhysicsEventRecord = {
@@ -47,13 +71,26 @@ const event: PhysicsEventRecord = {
 }
 
 describe('physics session repository', () => {
-  it('persists and restores a measurement', () => {
+  it('reports empty storage distinctly from recovery failures', () => {
     const repository = new PhysicsSessionRepository(new MemoryStorage())
+
+    expect(repository.recovery).toEqual({
+      status: 'empty',
+      backupCreated: false,
+      liveKeyRetained: false,
+    })
+  })
+
+  it('persists and restores a measurement', () => {
+    const storage = new MemoryStorage()
+    const repository = new PhysicsSessionRepository(storage)
     const session = repository.create('heat-capacity-comparison', '比较不同物质的吸热能力')
 
     repository.appendMeasurement(session.id, measurement)
 
-    expect(repository.get(session.id)?.measurements[0]?.value).toBe(32)
+    const restored = new PhysicsSessionRepository(storage)
+
+    expect(restored.get(session.id)?.measurements[0]?.conditions).toEqual(measurement.conditions)
   })
 
   it('quarantines malformed storage without throwing', () => {
@@ -65,6 +102,11 @@ describe('physics session repository', () => {
     expect(repository.list()).toEqual([])
     expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBe('{bad json')
     expect(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)).toBeNull()
+    expect(repository.recovery).toEqual({
+      status: 'malformed',
+      backupCreated: true,
+      liveKeyRetained: false,
+    })
   })
 
   it('quarantines valid JSON with an invalid session shape', () => {
@@ -77,6 +119,39 @@ describe('physics session repository', () => {
     expect(repository.list()).toEqual([])
     expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBe(invalidShape)
     expect(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)).toBeNull()
+    expect(repository.recovery.status).toBe('malformed')
+  })
+
+  it('quarantines persisted measurements without structured conditions', () => {
+    const storage = new MemoryStorage()
+    const first = new PhysicsSessionRepository(storage)
+    const session = first.create('heat-capacity-comparison', '比较不同物质的吸热能力')
+    first.appendMeasurement(session.id, measurement)
+    const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>
+    const measurements = stored[0]!.measurements as Array<Record<string, unknown>>
+    delete measurements[0]!.conditions
+    const invalidRaw = JSON.stringify(stored)
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, invalidRaw)
+
+    const repository = new PhysicsSessionRepository(storage)
+
+    expect(repository.list()).toEqual([])
+    expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBe(invalidRaw)
+    expect(repository.recovery.status).toBe('malformed')
+  })
+
+  it('does not retain mutations to a measurement caller conditions', () => {
+    const repository = new PhysicsSessionRepository(new MemoryStorage())
+    const session = repository.create('heat-capacity-comparison', '比较不同物质的吸热能力')
+    const suppliedMeasurement = {
+      ...measurement,
+      conditions: measurement.conditions.map((condition) => ({ ...condition })),
+    }
+
+    repository.appendMeasurement(session.id, suppliedMeasurement)
+    suppliedMeasurement.conditions[0]!.value = 200
+
+    expect(repository.get(session.id)?.measurements[0]?.conditions[0]?.value).toBe(100)
   })
 
   it('returns cloned sessions so callers cannot mutate repository state', () => {
@@ -93,6 +168,79 @@ describe('physics session repository', () => {
 
     expect(repository.get(session.id)?.measurements).toEqual([measurement])
     expect(repository.get(session.id)?.events).toEqual([event])
+  })
+
+  it('quarantines duplicate persisted session IDs', () => {
+    const storage = new MemoryStorage()
+    const first = new PhysicsSessionRepository(storage)
+    const session = first.create('heat-capacity-comparison', '比较不同物质的吸热能力')
+    first.appendMeasurement(session.id, measurement)
+    const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>
+    const duplicateRaw = JSON.stringify([...stored, { ...stored[0] }])
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, duplicateRaw)
+
+    const repository = new PhysicsSessionRepository(storage)
+
+    expect(repository.list()).toEqual([])
+    expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBe(duplicateRaw)
+    expect(repository.recovery.status).toBe('malformed')
+  })
+
+  it('reports stale persisted versions', () => {
+    const storage = new MemoryStorage()
+    const first = new PhysicsSessionRepository(storage)
+    const session = first.create('heat-capacity-comparison', '比较不同物质的吸热能力')
+    first.appendMeasurement(session.id, measurement)
+    const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>
+    stored[0]!.version = 2
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, JSON.stringify(stored))
+
+    const repository = new PhysicsSessionRepository(storage)
+
+    expect(repository.list()).toEqual([])
+    expect(repository.recovery.status).toBe('stale')
+  })
+
+  it('reports malformed nonnumeric persisted versions', () => {
+    const storage = new MemoryStorage()
+    const first = new PhysicsSessionRepository(storage)
+    const session = first.create('heat-capacity-comparison', '比较不同物质的吸热能力')
+    first.appendMeasurement(session.id, measurement)
+    const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>
+    stored[0]!.version = '2'
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, JSON.stringify(stored))
+
+    const repository = new PhysicsSessionRepository(storage)
+
+    expect(repository.list()).toEqual([])
+    expect(repository.recovery.status).toBe('malformed')
+  })
+
+  it('reports unavailable storage reads', () => {
+    const repository = new PhysicsSessionRepository(new ReadFailingStorage())
+
+    expect(repository.list()).toEqual([])
+    expect(repository.recovery).toEqual({
+      status: 'unavailable',
+      backupCreated: false,
+      liveKeyRetained: false,
+    })
+  })
+
+  it('preserves corrupt storage when its backup cannot be written', () => {
+    const storage = new CorruptBackupFailingStorage()
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, '{bad json')
+
+    const repository = new PhysicsSessionRepository(storage)
+
+    expect(repository.list()).toEqual([])
+    expect(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)).toBe('{bad json')
+    expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBeNull()
+    expect(repository.recovery).toEqual({
+      status: 'backup-failed',
+      backupCreated: false,
+      liveKeyRetained: true,
+    })
   })
 
   it('appends events and marks a session completed', () => {

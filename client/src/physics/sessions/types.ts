@@ -8,6 +8,11 @@ export interface PhysicsEventRecord {
   at: string
 }
 
+export interface PhysicsExperimentalCondition {
+  label: string
+  value: number | string
+}
+
 export interface PhysicsMeasurementRecord {
   trialId: string
   key: string
@@ -16,6 +21,21 @@ export interface PhysicsMeasurementRecord {
   unit: string
   kind: 'raw' | 'derived' | 'observation'
   at: string
+  conditions: PhysicsExperimentalCondition[]
+}
+
+export type PhysicsSessionRecoveryStatus =
+  | 'empty'
+  | 'restored'
+  | 'malformed'
+  | 'stale'
+  | 'unavailable'
+  | 'backup-failed'
+
+export interface PhysicsSessionRecoveryResult {
+  status: PhysicsSessionRecoveryStatus
+  backupCreated: boolean
+  liveKeyRetained: boolean
 }
 
 export interface PhysicsSession {

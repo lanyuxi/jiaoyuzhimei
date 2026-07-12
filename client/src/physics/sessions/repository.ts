@@ -1,7 +1,10 @@
 import type {
+  PhysicsExperimentalCondition,
   PhysicsEventRecord,
   PhysicsMeasurementRecord,
   PhysicsSession,
+  PhysicsSessionRecoveryResult,
+  PhysicsSessionRecoveryStatus,
   StorageLike,
 } from './types'
 
@@ -27,11 +30,27 @@ class InMemoryStorage implements StorageLike {
 
 const nonBrowserStorage = new InMemoryStorage()
 
+interface LoadedSessions {
+  sessions: PhysicsSession[]
+  recovery: PhysicsSessionRecoveryResult
+}
+
+function cloneCondition(condition: PhysicsExperimentalCondition): PhysicsExperimentalCondition {
+  return { ...condition }
+}
+
+function cloneMeasurement(measurement: PhysicsMeasurementRecord): PhysicsMeasurementRecord {
+  return {
+    ...measurement,
+    conditions: measurement.conditions.map(cloneCondition),
+  }
+}
+
 function cloneSession(session: PhysicsSession): PhysicsSession {
   return {
     ...session,
     events: session.events.map((event) => ({ ...event })),
-    measurements: session.measurements.map((measurement) => ({ ...measurement })),
+    measurements: session.measurements.map(cloneMeasurement),
   }
 }
 
@@ -48,6 +67,12 @@ function isEventRecord(value: unknown): value is PhysicsEventRecord {
     && typeof value.at === 'string'
 }
 
+function isExperimentalCondition(value: unknown): value is PhysicsExperimentalCondition {
+  return isRecord(value)
+    && typeof value.label === 'string'
+    && (typeof value.value === 'number' || typeof value.value === 'string')
+}
+
 function isMeasurementRecord(value: unknown): value is PhysicsMeasurementRecord {
   return isRecord(value)
     && typeof value.trialId === 'string'
@@ -57,6 +82,9 @@ function isMeasurementRecord(value: unknown): value is PhysicsMeasurementRecord 
     && typeof value.unit === 'string'
     && (value.kind === 'raw' || value.kind === 'derived' || value.kind === 'observation')
     && typeof value.at === 'string'
+    && Array.isArray(value.conditions)
+    && value.conditions.length > 0
+    && value.conditions.every(isExperimentalCondition)
 }
 
 function isPhysicsSession(value: unknown): value is PhysicsSession {
@@ -72,6 +100,17 @@ function isPhysicsSession(value: unknown): value is PhysicsSession {
     && value.events.every(isEventRecord)
     && Array.isArray(value.measurements)
     && value.measurements.every(isMeasurementRecord)
+}
+
+function isSessionCollection(value: unknown): value is PhysicsSession[] {
+  if (!Array.isArray(value) || !value.every(isPhysicsSession)) return false
+
+  return new Set(value.map((session) => session.id)).size === value.length
+}
+
+function hasStaleVersion(value: unknown): boolean {
+  return Array.isArray(value)
+    && value.some((session) => isRecord(session) && typeof session.version === 'number' && session.version !== 1)
 }
 
 function browserStorage(): StorageLike {
@@ -95,10 +134,17 @@ function sessionId(): string {
 export class PhysicsSessionRepository {
   private readonly storage: StorageLike
   private sessions: PhysicsSession[]
+  private recoveryResult: PhysicsSessionRecoveryResult
 
   constructor(storage: StorageLike) {
     this.storage = storage
-    this.sessions = this.load()
+    const loaded = this.load()
+    this.sessions = loaded.sessions
+    this.recoveryResult = loaded.recovery
+  }
+
+  get recovery(): PhysicsSessionRecoveryResult {
+    return { ...this.recoveryResult }
   }
 
   create(experimentId: string, experimentTitle: string): PhysicsSession {
@@ -141,7 +187,7 @@ export class PhysicsSessionRepository {
     return this.update(id, (session) => ({
       ...session,
       updatedAt: new Date().toISOString(),
-      measurements: [...session.measurements, { ...measurement }],
+      measurements: [...session.measurements, cloneMeasurement(measurement)],
     }))
   }
 
@@ -153,39 +199,57 @@ export class PhysicsSessionRepository {
     }))
   }
 
-  private load(): PhysicsSession[] {
+  private load(): LoadedSessions {
     let raw: string | null
 
     try {
       raw = this.storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)
     } catch {
-      return []
+      return this.loaded([], 'unavailable')
     }
 
-    if (raw === null) return []
+    if (raw === null) return this.loaded([], 'empty')
 
+    let parsed: unknown
     try {
-      const parsed: unknown = JSON.parse(raw)
-      if (!Array.isArray(parsed) || !parsed.every(isPhysicsSession)) throw new Error('Invalid physics session storage')
-      return parsed.map(cloneSession)
+      parsed = JSON.parse(raw)
     } catch {
-      this.quarantine(raw)
-      return []
+      return this.quarantine(raw, 'malformed')
+    }
+
+    if (!isSessionCollection(parsed)) {
+      return this.quarantine(raw, hasStaleVersion(parsed) ? 'stale' : 'malformed')
+    }
+
+    return this.loaded(parsed.map(cloneSession), 'restored')
+  }
+
+  private loaded(
+    sessions: PhysicsSession[],
+    status: PhysicsSessionRecoveryStatus,
+    backupCreated = false,
+    liveKeyRetained = false,
+  ): LoadedSessions {
+    return {
+      sessions,
+      recovery: { status, backupCreated, liveKeyRetained },
     }
   }
 
-  private quarantine(raw: string): void {
+  private quarantine(raw: string, status: 'malformed' | 'stale'): LoadedSessions {
     try {
       this.storage.setItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`, raw)
     } catch {
-      // Storage may be unavailable or full; retaining a usable empty repository is still safer than throwing.
+      return this.loaded([], 'backup-failed', false, true)
     }
 
     try {
       this.storage.removeItem(PHYSICS_SESSIONS_STORAGE_KEY)
     } catch {
-      // The next repository instance will retry quarantine if the invalid payload remains.
+      return this.loaded([], status, true, true)
     }
+
+    return this.loaded([], status, true, false)
   }
 
   private update(
