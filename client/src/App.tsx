@@ -84,6 +84,7 @@ const ChemistrySessionsPage = lazyRetry(() => import('./chemistry/ChemistrySessi
 const ChemistryReportPage = lazyRetry(() => import('./chemistry/ChemistryReportPage'))
 const PhysicsHome = lazyRetry(() => import('./physics/PhysicsHome'))
 const PhysicsExperimentFrame = lazyRetry(() => import('./physics/PhysicsExperimentFrame'))
+const TextbookPhysicsExperimentPage = lazyRetry(() => import('./physics/TextbookPhysicsExperimentPage'))
 const ComingSoonPage = lazyRetry(() => import('./pages/ComingSoonPage'))
 const BugAdminPage = lazyRetry(() => import('./pages/BugAdminPage'))
 const ValentineMobile = lazyRetry(() => import('./components/ValentineMobile/ValentineMobile'))
@@ -169,6 +170,7 @@ export default function App() {
             <Route path="reaction-diffusion" element={<ReactionDiffusionExperiment />} />
             <Route path="mobius" element={<MobiusExperiment />} />
             <Route path="physics" element={<PhysicsHome />} />
+            <Route path="physics/labs/:id" element={<TextbookPhysicsExperimentPage />} />
             <Route path="physics/:slug" element={<PhysicsExperimentFrame />} />
             <Route path="chemistry" element={<ChemistryHome />} />
             <Route path="chemistry/sessions" element={<ChemistrySessionsPage />} />
