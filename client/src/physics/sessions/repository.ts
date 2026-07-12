@@ -67,10 +67,14 @@ function isEventRecord(value: unknown): value is PhysicsEventRecord {
     && typeof value.at === 'string'
 }
 
+function isFiniteNumberOrString(value: unknown): value is number | string {
+  return typeof value === 'string' || (typeof value === 'number' && Number.isFinite(value))
+}
+
 function isExperimentalCondition(value: unknown): value is PhysicsExperimentalCondition {
   return isRecord(value)
     && typeof value.label === 'string'
-    && (typeof value.value === 'number' || typeof value.value === 'string')
+    && isFiniteNumberOrString(value.value)
 }
 
 function isMeasurementRecord(value: unknown): value is PhysicsMeasurementRecord {
@@ -78,7 +82,7 @@ function isMeasurementRecord(value: unknown): value is PhysicsMeasurementRecord 
     && typeof value.trialId === 'string'
     && typeof value.key === 'string'
     && typeof value.label === 'string'
-    && (typeof value.value === 'number' || typeof value.value === 'string')
+    && isFiniteNumberOrString(value.value)
     && typeof value.unit === 'string'
     && (value.kind === 'raw' || value.kind === 'derived' || value.kind === 'observation')
     && typeof value.at === 'string'
@@ -184,6 +188,10 @@ export class PhysicsSessionRepository {
   }
 
   appendMeasurement(id: string, measurement: PhysicsMeasurementRecord): PhysicsSession | undefined {
+    if (!isMeasurementRecord(measurement)) {
+      throw new TypeError('Measurement does not match the persistence schema')
+    }
+
     return this.update(id, (session) => ({
       ...session,
       updatedAt: new Date().toISOString(),
@@ -269,7 +277,11 @@ export class PhysicsSessionRepository {
     try {
       this.storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, JSON.stringify(this.sessions))
     } catch {
-      // Keep the current session available in memory when browser storage cannot be written.
+      this.recoveryResult = {
+        status: 'unavailable',
+        backupCreated: false,
+        liveKeyRetained: false,
+      }
     }
   }
 }

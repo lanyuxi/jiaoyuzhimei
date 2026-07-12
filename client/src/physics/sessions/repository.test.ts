@@ -38,6 +38,16 @@ class CorruptBackupFailingStorage extends MemoryStorage {
   }
 }
 
+class CorruptRemovalFailingStorage extends MemoryStorage {
+  removeItem(key: string): void {
+    if (key === PHYSICS_SESSIONS_STORAGE_KEY) {
+      throw new Error('storage unavailable')
+    }
+
+    super.removeItem(key)
+  }
+}
+
 class ReadFailingStorage implements StorageLike {
   getItem(): string | null {
     throw new Error('storage unavailable')
@@ -243,6 +253,22 @@ describe('physics session repository', () => {
     })
   })
 
+  it('preserves corrupt storage when its live key cannot be removed after backup', () => {
+    const storage = new CorruptRemovalFailingStorage()
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, '{bad json')
+
+    const repository = new PhysicsSessionRepository(storage)
+
+    expect(repository.list()).toEqual([])
+    expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBe('{bad json')
+    expect(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)).toBe('{bad json')
+    expect(repository.recovery).toEqual({
+      status: 'malformed',
+      backupCreated: true,
+      liveKeyRetained: true,
+    })
+  })
+
   it('appends events and marks a session completed', () => {
     const repository = new PhysicsSessionRepository(new MemoryStorage())
     const session = repository.create('heat-capacity-comparison', '比较不同物质的吸热能力')
@@ -277,6 +303,31 @@ describe('physics session repository', () => {
     expect(() => repository.create('heat-capacity-comparison', '比较不同物质的吸热能力')).not.toThrow()
 
     expect(repository.list()).toHaveLength(1)
+    expect(repository.recovery).toEqual({
+      status: 'unavailable',
+      backupCreated: false,
+      liveKeyRetained: false,
+    })
+  })
+
+  it('rejects measurements that cannot be restored from persistence', () => {
+    const repository = new PhysicsSessionRepository(new MemoryStorage())
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const invalidMeasurements: PhysicsMeasurementRecord[] = [
+      { ...measurement, conditions: [] },
+      { ...measurement, value: Number.POSITIVE_INFINITY },
+      {
+        ...measurement,
+        conditions: [{ ...measurement.conditions[0]!, value: Number.NaN }],
+      },
+    ]
+
+    for (const invalidMeasurement of invalidMeasurements) {
+      expect(() => repository.appendMeasurement(session.id, invalidMeasurement))
+        .toThrow('Measurement does not match the persistence schema')
+    }
+
+    expect(repository.get(session.id)?.measurements).toEqual([])
   })
 
   it('is safe to import in non-browser environments', () => {
