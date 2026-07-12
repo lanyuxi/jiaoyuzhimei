@@ -15,6 +15,12 @@ describe('textbook physics lab routes', () => {
     expect(app).toContain("import('./physics/TextbookPhysicsExperimentPage')")
   })
 
+  it('renders the binding textbook label in experiment metadata', () => {
+    const page = readFileSync(textbookPagePath, 'utf8')
+
+    expect(page).toContain('{experiment.textbook}')
+  })
+
   it('resolves scheduled textbook experiments and exposes all six teaching sections', async () => {
     const knownId = 'ruler-length-measurement'
     const knownExperiment = textbookExperimentById.get(knownId)

@@ -36,6 +36,8 @@ export default function TextbookPhysicsExperimentPage() {
           <span aria-hidden="true">/</span>
           <span>{experiment.chapter}</span>
           <span aria-hidden="true">/</span>
+          <span>{experiment.textbook}</span>
+          <span aria-hidden="true">/</span>
           <span>{experiment.sourceType}</span>
         </div>
         <h1 className="mt-3 text-2xl font-bold text-[#242424] md:text-3xl">{experiment.title}</h1>
