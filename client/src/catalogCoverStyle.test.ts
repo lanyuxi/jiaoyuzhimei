@@ -17,7 +17,7 @@ describe('subject catalog cover style', () => {
   })
 
   it('uses the same visual-card structure for physics and chemistry', () => {
-    const physicsSource = readFileSync(join(srcRoot, 'physics/PhysicsHome.tsx'), 'utf8')
+    const physicsSource = readFileSync(join(srcRoot, 'physics/LegacyPhysicsCatalog.tsx'), 'utf8')
     const chemistrySource = readFileSync(join(srcRoot, 'chemistry/ChemistryHome.tsx'), 'utf8')
 
     expect(physicsSource).toContain('function PhysicsCover')
