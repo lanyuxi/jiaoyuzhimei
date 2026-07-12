@@ -1,13 +1,14 @@
 import { useSearchParams } from 'react-router-dom'
+import { parsePhysicsCatalogMode, serializePhysicsCatalogMode } from './catalogState'
 import LegacyPhysicsCatalog from './LegacyPhysicsCatalog'
 import TextbookPhysicsCatalog from './TextbookPhysicsCatalog'
 
 export default function PhysicsHome() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const activeCatalog = searchParams.get('catalog') === 'extended' ? 'extended' : 'textbook'
+  const activeCatalog = parsePhysicsCatalogMode(searchParams)
 
-  function selectCatalog(next: 'textbook' | 'extended') {
-    setSearchParams(next === 'textbook' ? {} : { catalog: 'extended' })
+  function selectCatalog(next: typeof activeCatalog) {
+    setSearchParams(serializePhysicsCatalogMode(next))
   }
 
   return (

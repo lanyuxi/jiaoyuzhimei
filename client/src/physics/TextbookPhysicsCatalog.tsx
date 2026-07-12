@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BookOpen, FlaskConical, LockKeyhole, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { getTextbookChapters, getTextbookExperimentTarget, selectTextbookVolume } from './catalogState'
 import { filterTextbookExperiments, textbookPhysicsExperiments } from './curriculum/catalog'
 import type { CurriculumFilters, ExperimentRequirement, TextbookVolume } from './curriculum/types'
 
@@ -12,7 +13,8 @@ const requirementLabels: Record<ExperimentRequirement, string> = {
 }
 
 function TextbookExperimentCard({ item }: { item: (typeof textbookPhysicsExperiments)[number] }) {
-  const isAvailable = item.availability === 'available'
+  const target = getTextbookExperimentTarget(item)
+  const isAvailable = target !== undefined
   const cardContent = (
     <>
       <div className="flex items-start justify-between gap-3">
@@ -33,8 +35,8 @@ function TextbookExperimentCard({ item }: { item: (typeof textbookPhysicsExperim
     </>
   )
 
-  if (isAvailable) {
-    return <Link to={`/physics/labs/${item.id}`} className="block rounded-[8px] border border-[#ece8df] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#8FB3FF] hover:shadow-[0_14px_32px_rgba(43,43,43,0.06)]">{cardContent}</Link>
+  if (target) {
+    return <Link to={target} className="block rounded-[8px] border border-[#ece8df] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#8FB3FF] hover:shadow-[0_14px_32px_rgba(43,43,43,0.06)]">{cardContent}</Link>
   }
 
   return <div aria-disabled="true" className="rounded-[8px] border border-[#ece8df] bg-[#f7f7f5] p-4 opacity-75" title="制作中，暂不可进入实验">{cardContent}</div>
@@ -48,11 +50,7 @@ export default function TextbookPhysicsCatalog() {
     query: '',
   })
 
-  const chapters = [...new Set(
-    textbookPhysicsExperiments
-      .filter((item) => filters.volume === 'ALL' || item.volume === filters.volume)
-      .map((item) => item.chapter),
-  )]
+  const chapters = getTextbookChapters(filters.volume)
   const results = filterTextbookExperiments(filters)
 
   function updateFilters(next: Partial<CurriculumFilters>) {
@@ -60,7 +58,7 @@ export default function TextbookPhysicsCatalog() {
   }
 
   function selectVolume(volume: TextbookVolume | 'ALL') {
-    updateFilters({ volume, chapter: 'ALL' })
+    setFilters((current) => selectTextbookVolume(current, volume))
   }
 
   return (
