@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   createLabRuntimeBinding,
   reduceLabRuntimeBinding,
+  reduceLabRuntimeBindingState,
   rebindLabRuntime,
 } from './useLabRuntime'
 import type { LabController } from './types'
@@ -35,6 +36,21 @@ function createController(name: string, initialValue: number): LabController<Cou
   }
 }
 
+function createCountingController(name: string, initialValue: number) {
+  let initializations = 0
+
+  return {
+    controller: {
+      ...createController(name, initialValue),
+      createInitialState: () => {
+        initializations += 1
+        return { controller: name, value: initialValue }
+      },
+    },
+    initializations: () => initializations,
+  }
+}
+
 describe('lab runtime adapter', () => {
   it('reinitializes and consistently uses a replacement controller', () => {
     const original = createController('original', 0)
@@ -52,5 +68,49 @@ describe('lab runtime adapter', () => {
       { trialId: 'replacement', value: 11 },
     ])
     expect(reset.runtime.present).toEqual({ controller: 'replacement', value: 10 })
+  })
+
+  it('commits every A to B to A identity transition before dispatching actions', () => {
+    const a = createCountingController('A', 0)
+    const b = createCountingController('B', 10)
+    let binding = createLabRuntimeBinding(a.controller)
+
+    binding = reduceLabRuntimeBindingState(binding, {
+      type: 'action',
+      binding,
+      action: { type: 'increment' },
+    })
+    const bBinding = createLabRuntimeBinding(b.controller)
+    binding = reduceLabRuntimeBindingState(binding, { type: 'binding', binding: bBinding })
+
+    expect(binding.controller).toBe(b.controller)
+    expect(binding.runtime).toMatchObject({ present: { controller: 'B', value: 10 }, past: [], future: [] })
+    expect(a.initializations()).toBe(1)
+    expect(b.initializations()).toBe(1)
+
+    binding = reduceLabRuntimeBindingState(binding, {
+      type: 'action',
+      binding,
+      action: { type: 'increment' },
+    })
+    const freshABinding = createLabRuntimeBinding(a.controller)
+    binding = reduceLabRuntimeBindingState(binding, { type: 'binding', binding: freshABinding })
+
+    expect(binding.controller).toBe(a.controller)
+    expect(binding.runtime).toMatchObject({ present: { controller: 'A', value: 0 }, past: [], future: [] })
+    expect(a.initializations()).toBe(2)
+    expect(b.initializations()).toBe(1)
+
+    binding = reduceLabRuntimeBindingState(binding, {
+      type: 'action',
+      binding,
+      action: { type: 'increment' },
+    })
+
+    expect(binding.runtime).toMatchObject({
+      present: { controller: 'A', value: 1 },
+      past: [{ controller: 'A', value: 0 }],
+      future: [],
+    })
   })
 })
