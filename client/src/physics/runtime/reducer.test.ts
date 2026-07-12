@@ -60,6 +60,23 @@ describe('lab runtime reducer', () => {
     expect(next.present).toEqual({ value: 2 })
   })
 
+  it('restores the next state from future on redo without mutating history', () => {
+    const initial = createLabRuntime(controller)
+    const first = reduceLabAction(initial, { type: 'increment' })
+    const second = reduceLabAction(first, { type: 'increment' })
+    const undone = reduceLabAction(second, { type: 'undo' })
+    const redone = reduceLabAction(undone, { type: 'redo' })
+
+    expect(undone.present).toBe(first.present)
+    expect(undone.past).toEqual([initial.present])
+    expect(undone.future).toEqual([second.present])
+    expect(redone.present).toBe(second.present)
+    expect(redone.past).toEqual([initial.present, first.present])
+    expect(redone.future).toEqual([])
+    expect(redone.past).not.toBe(undone.past)
+    expect(redone.future).not.toBe(undone.future)
+  })
+
   it('restores initial state and clears history on reset', () => {
     const changed = reduceLabAction(createLabRuntime(controller), { type: 'increment' })
     const reset = reduceLabAction(changed, { type: 'reset' })

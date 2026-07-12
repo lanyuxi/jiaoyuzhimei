@@ -19,50 +19,93 @@ export interface PointerDragOptions {
   dispatch(action: LabAction): void
 }
 
-export function usePointerDrag({ stageRef, dispatch }: PointerDragOptions): PointerDragApi {
-  const activeDrag = useRef<ActiveDrag | null>(null)
+export interface PointerCaptureTarget {
+  setPointerCapture(pointerId: number): void
+  hasPointerCapture(pointerId: number): boolean
+  releasePointerCapture(pointerId: number): void
+}
 
-  const positionFor = (event: PointerEvent<HTMLElement>): Position | null => {
-    const stage = stageRef.current
-    if (stage === null) return null
+export interface PointerDragStage {
+  getBoundingClientRect(): Pick<DOMRect, 'left' | 'top'>
+}
 
-    const rect = stage.getBoundingClientRect()
+export interface PointerDragEvent {
+  pointerId: number
+  clientX: number
+  clientY: number
+  currentTarget: PointerCaptureTarget
+}
+
+export interface PointerDragAdapterOptions {
+  stage(): PointerDragStage | null
+  dispatch(action: LabAction): void
+}
+
+export interface PointerDragAdapter {
+  onPointerDown(event: PointerDragEvent, subject?: unknown): void
+  onPointerMove(event: PointerDragEvent): void
+  onPointerUp(event: PointerDragEvent): void
+  onPointerCancel(event: PointerDragEvent): void
+}
+
+export function createPointerDragAdapter({ stage, dispatch }: PointerDragAdapterOptions): PointerDragAdapter {
+  let activeDrag: ActiveDrag | null = null
+
+  const positionFor = (event: PointerDragEvent): Position | null => {
+    const currentStage = stage()
+    if (currentStage === null) return null
+
+    const rect = currentStage.getBoundingClientRect()
     return {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top,
     }
   }
 
-  const emit = (type: 'dragStart' | 'dragMove' | 'dragEnd', event: PointerEvent<HTMLElement>): void => {
-    const drag = activeDrag.current
+  const emit = (type: 'dragStart' | 'dragMove' | 'dragEnd', event: PointerDragEvent): void => {
     const position = positionFor(event)
-    if (drag === null || position === null) return
+    if (activeDrag === null || position === null) return
 
-    dispatch({ type, payload: { subject: drag.subject, position } })
+    dispatch({ type, payload: { subject: activeDrag.subject, position } })
   }
 
-  const finishDrag = (event: PointerEvent<HTMLElement>): void => {
-    if (activeDrag.current?.pointerId !== event.pointerId) return
+  const finishDrag = (event: PointerDragEvent): void => {
+    if (activeDrag?.pointerId !== event.pointerId) return
 
     emit('dragEnd', event)
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
-    activeDrag.current = null
+    activeDrag = null
   }
 
   return {
     onPointerDown: (event, subject) => {
-      if (positionFor(event) === null) return
+      if (activeDrag !== null || positionFor(event) === null) return
 
-      activeDrag.current = { pointerId: event.pointerId, subject }
+      activeDrag = { pointerId: event.pointerId, subject }
       event.currentTarget.setPointerCapture(event.pointerId)
       emit('dragStart', event)
     },
     onPointerMove: (event) => {
-      if (activeDrag.current?.pointerId === event.pointerId) emit('dragMove', event)
+      if (activeDrag?.pointerId === event.pointerId) emit('dragMove', event)
     },
     onPointerUp: finishDrag,
     onPointerCancel: finishDrag,
   }
+}
+
+export function usePointerDrag(options: PointerDragOptions): PointerDragApi {
+  const optionsRef = useRef(options)
+  optionsRef.current = options
+  const adapterRef = useRef<PointerDragAdapter | null>(null)
+
+  if (adapterRef.current === null) {
+    adapterRef.current = createPointerDragAdapter({
+      stage: () => optionsRef.current.stageRef.current,
+      dispatch: (action) => optionsRef.current.dispatch(action),
+    })
+  }
+
+  return adapterRef.current
 }
