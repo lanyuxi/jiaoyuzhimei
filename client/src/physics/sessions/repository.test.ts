@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   browserPhysicsSessionRepository,
   PhysicsSessionRepository,
@@ -332,5 +332,27 @@ describe('physics session repository', () => {
 
   it('is safe to import in non-browser environments', () => {
     expect(() => browserPhysicsSessionRepository.list()).not.toThrow()
+  })
+
+  it('reports unavailable recovery when browser localStorage acquisition throws', async () => {
+    vi.resetModules()
+    vi.stubGlobal('window', {
+      get localStorage(): never {
+        throw new Error('storage unavailable')
+      },
+    })
+
+    try {
+      const { browserPhysicsSessionRepository: browserRepository } = await import('./repository')
+
+      expect(browserRepository.recovery).toEqual({
+        status: 'unavailable',
+        backupCreated: false,
+        liveKeyRetained: false,
+      })
+    } finally {
+      vi.unstubAllGlobals()
+      vi.resetModules()
+    }
   })
 })

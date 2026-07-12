@@ -160,3 +160,48 @@ Result: exit code 0; 19 test files passed, 93 tests passed, Vitest duration 13.9
 - A normal persistence write failure now exposes the existing typed `unavailable` recovery state, so callers can distinguish memory-only changes from normal storage availability.
 - `appendMeasurement` rejects invalid persistence shapes with `TypeError('Measurement does not match the persistence schema')`. The validation requires at least one condition and finite numeric measurement or condition values, matching reload validation.
 - The regression coverage now verifies that when a corrupt backup is written but removing the live key fails, both raw copies remain available and recovery reports `backupCreated: true` with `liveKeyRetained: true`.
+
+### Final Task 4 Important Finding: Browser Storage Acquisition
+
+#### RED
+
+Focused repository test command (from `client`):
+
+```powershell
+$env:Path='C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;'+$env:Path; & .\node_modules\.bin\vitest.cmd run src/physics/sessions/repository.test.ts
+```
+
+Result: exit code 1; 1 test failed and 19 passed. The new test reproduced the browser `window.localStorage` getter throwing and received recovery status `empty` instead of the required `unavailable`.
+
+#### GREEN And Verification
+
+Focused repository test command (from `client`):
+
+```powershell
+$env:Path='C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;'+$env:Path; & .\node_modules\.bin\vitest.cmd run src/physics/sessions/repository.test.ts
+```
+
+Result: exit code 0; 1 test file passed, 20 tests passed.
+
+Typecheck command (from `client`):
+
+```powershell
+$env:Path='C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;'+$env:Path; & .\node_modules\.bin\tsc.cmd -b
+```
+
+Result: exit code 0.
+
+Full serial suite command (from `client`):
+
+```powershell
+$env:Path='C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin;'+$env:Path; & .\node_modules\.bin\vitest.cmd run --maxWorkers=1 --minWorkers=1
+```
+
+Result: exit code 0; 19 test files passed, 94 tests passed.
+
+#### Resolution
+
+- Browser `localStorage` acquisition failures now use an in-memory-backed storage whose read throws, allowing the existing repository load path to expose typed `recovery.status: 'unavailable'` while retaining current-instance in-memory behavior.
+- SSR/non-browser imports continue using the ordinary in-memory storage fallback.
+- The regression test uses Vitest global stubbing and restores globals and modules in `finally`; no global mutation is retained for other tests.
+- Task 6 UI work was not implemented.

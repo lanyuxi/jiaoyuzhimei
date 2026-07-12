@@ -30,6 +30,14 @@ class InMemoryStorage implements StorageLike {
 
 const nonBrowserStorage = new InMemoryStorage()
 
+class UnavailableBrowserStorage extends InMemoryStorage {
+  getItem(): string | null {
+    throw new Error('localStorage unavailable')
+  }
+}
+
+const unavailableBrowserStorage = new UnavailableBrowserStorage()
+
 interface LoadedSessions {
   sessions: PhysicsSession[]
   recovery: PhysicsSessionRecoveryResult
@@ -123,7 +131,7 @@ function browserStorage(): StorageLike {
   try {
     return window.localStorage
   } catch {
-    return nonBrowserStorage
+    return unavailableBrowserStorage
   }
 }
 
