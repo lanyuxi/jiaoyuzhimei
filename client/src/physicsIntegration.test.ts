@@ -13,6 +13,7 @@ describe('physics project integration', () => {
     const layoutSource = readFileSync(join(srcRoot, 'components/Layout/Layout.tsx'), 'utf8')
     const physicsFrameSource = readFileSync(join(srcRoot, 'physics/PhysicsExperimentFrame.tsx'), 'utf8')
     const physicsHomeSource = readFileSync(join(srcRoot, 'physics/PhysicsHome.tsx'), 'utf8')
+    const legacyCatalogSource = readFileSync(join(srcRoot, 'physics/LegacyPhysicsCatalog.tsx'), 'utf8')
 
     expect(layoutSource).toContain("to: '/physics'")
     expect(layoutSource).toContain("location.pathname.startsWith('/physics')")
@@ -29,8 +30,8 @@ describe('physics project integration', () => {
     expect(physicsHomeSource).not.toContain('experiment.targetAge')
     expect(physicsHomeSource).not.toContain('experiment.sections.length')
     expect(physicsHomeSource).not.toContain('从原物理之美站点迁移而来')
-    expect(physicsHomeSource).toContain("const directoryTitle = category === allCategory ? '实验目录' : category")
-    expect(physicsHomeSource).toContain('{directoryTitle}</h2>')
+    expect(legacyCatalogSource).toContain("const directoryTitle = category === allCategory ? '实验目录' : category")
+    expect(legacyCatalogSource).toContain('{directoryTitle}</h2>')
   })
 
   it('keeps all 133 migrated physics experiments in the client app', () => {
