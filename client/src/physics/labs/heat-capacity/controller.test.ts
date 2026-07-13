@@ -211,11 +211,12 @@ describe('heat capacity comparison controller', () => {
     expect(heatCapacityController.completion(recorded)).toEqual({ complete: true, message: '已完成水和食用油吸热能力的比较' })
   })
 
-  it('registers the only available curriculum lab against the heat-capacity record', () => {
+  it('keeps the available curriculum labs registered against their catalog records', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
 
-    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison'])
-    expect(available[0]?.labId).toBe('heat-capacity-comparison')
+    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
+    expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
     expect(labRegistry.get('heat-capacity-comparison')?.experimentId).toBe('heat-capacity-comparison')
+    expect(labRegistry.get('series-parallel-circuit')?.experimentId).toBe('series-parallel-circuit')
   })
 })

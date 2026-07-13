@@ -17,14 +17,15 @@ describe('physics catalog state', () => {
     expect(serializePhysicsCatalogMode('extended').toString()).toBe('catalog=extended')
   })
 
-  it('exposes only the heat-capacity comparison card as an available lab', () => {
+  it('exposes the heat-capacity and series-parallel cards as the available labs', () => {
     expect(textbookPhysicsExperiments).toHaveLength(65)
     expect(textbookPhysicsExperiments.filter((item) => item.availability === 'available').map((item) => item.id)).toEqual([
       'heat-capacity-comparison',
+      'series-parallel-circuit',
     ])
     expect(textbookPhysicsExperiments.map(getTextbookExperimentTarget)).toEqual(
-      textbookPhysicsExperiments.map((item) => item.id === 'heat-capacity-comparison'
-        ? '/physics/labs/heat-capacity-comparison'
+      textbookPhysicsExperiments.map((item) => item.id === 'heat-capacity-comparison' || item.id === 'series-parallel-circuit'
+        ? `/physics/labs/${item.id}`
         : undefined),
     )
   })
