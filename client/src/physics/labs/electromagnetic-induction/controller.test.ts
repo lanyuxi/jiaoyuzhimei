@@ -107,6 +107,63 @@ describe('electromagnetic induction controller', () => {
     expect(electromagneticInductionController.reduce(left, { type: 'record' }).feedback.outcome).toBe('rejected')
   })
 
+  it('zeros live motion and current on release while retaining an immutable pending movement snapshot', () => {
+    const released = moveInGap(closedState(), 420, 540)
+
+    expect(released.velocityMetersPerSecond).toBe(0)
+    expect(released.motion).toBeNull()
+    expect(released.pendingMovement).toMatchObject({
+      direction: 'right',
+      circuitClosed: true,
+      fieldDirection: 'down',
+    })
+    expect(released.pendingMovement?.velocityMetersPerSecond).toBeCloseTo(12)
+    expect(Object.isFrozen(released.pendingMovement)).toBe(true)
+    expect(inducedCurrent({
+      closed: released.circuitClosed,
+      fieldTesla: 0.5,
+      lengthMeters: 0.1,
+      velocity: released.velocityMetersPerSecond,
+    })).toBe(0)
+  })
+
+  it('records and consumes a pending rightward movement before allowing a stationary observation', () => {
+    const released = moveInGap(closedState(), 420, 540)
+    const recorded = electromagneticInductionController.reduce(released, { type: 'record' }).state
+    const stationary = electromagneticInductionController.reduce(recorded, { type: 'record' }).state
+
+    expect(recorded.trials).toMatchObject([{ observation: 'right', fieldDirection: 'down' }])
+    expect(recorded.trials[0]!.velocityMetersPerSecond).toBeCloseTo(12)
+    expect(recorded.pendingMovement).toBeNull()
+    expect(stationary.trials.map((trial) => trial.observation)).toEqual(['right', 'stationary'])
+  })
+
+  it('records and consumes a pending leftward movement snapshot after release', () => {
+    const released = moveInGap(closedState(), 540, 420)
+    const recorded = electromagneticInductionController.reduce(released, { type: 'record' }).state
+
+    expect(recorded.trials).toMatchObject([{ observation: 'left', fieldDirection: 'down' }])
+    expect(recorded.trials[0]!.velocityMetersPerSecond).toBeCloseTo(-12)
+    expect(recorded.trials[0]!.currentAmps).toBeLessThan(0)
+    expect(recorded.pendingMovement).toBeNull()
+  })
+
+  it('invalidates a pending movement when the field or circuit changes', () => {
+    const released = moveInGap(closedState(), 420, 540)
+    const fieldChanged = electromagneticInductionController.reduce(released, { type: 'setFieldDirection', payload: 'up' }).state
+    const circuitChanged = reduce([
+      { type: 'setCircuit', payload: 'open' },
+      { type: 'setCircuit', payload: 'closed' },
+    ], released)
+
+    expect(fieldChanged.pendingMovement).toBeNull()
+    expect(electromagneticInductionController.reduce(fieldChanged, { type: 'record' }).state.trials)
+      .toMatchObject([{ observation: 'stationary', fieldDirection: 'up' }])
+    expect(circuitChanged.pendingMovement).toBeNull()
+    expect(electromagneticInductionController.reduce(circuitChanged, { type: 'record' }).state.trials)
+      .toMatchObject([{ observation: 'stationary', fieldDirection: 'down' }])
+  })
+
   it('completes only after all three observations establish direction reversal', () => {
     const stationary = electromagneticInductionController.reduce(closedState(), { type: 'record' }).state
     const right = electromagneticInductionController.reduce(moveInGap(stationary, 420, 540), { type: 'record' }).state
@@ -147,6 +204,7 @@ describe('electromagnetic induction controller', () => {
     expect(delayed).toBe(moved)
     expect(cancelled.state.drag).toBeNull()
     expect(cancelled.state.velocityMetersPerSecond).toBe(0)
+    expect(cancelled.state.pendingMovement).toBeNull()
   })
 
   it('exposes current and fixed conditions as structured measurements', () => {

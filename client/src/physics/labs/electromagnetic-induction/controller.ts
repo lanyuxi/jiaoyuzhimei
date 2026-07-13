@@ -31,6 +31,13 @@ interface MotionSample {
   readonly crossedGap: boolean
 }
 
+export interface PendingMovement {
+  readonly direction: Exclude<InductionObservation, 'stationary'>
+  readonly circuitClosed: true
+  readonly fieldDirection: MagneticFieldDirection
+  readonly velocityMetersPerSecond: number
+}
+
 export interface InductionTrial {
   readonly id: string
   readonly observation: InductionObservation
@@ -47,6 +54,7 @@ export interface InductionLabState {
   velocityMetersPerSecond: number
   drag: DragSample | null
   motion: MotionSample | null
+  pendingMovement: PendingMovement | null
   trials: readonly InductionTrial[]
 }
 
@@ -66,10 +74,16 @@ function freezeTrials(trials: readonly InductionTrial[]): readonly InductionTria
   return Object.freeze(trials.map((trial) => Object.freeze({ ...trial })))
 }
 
+function freezePendingMovement(pendingMovement: PendingMovement | null): PendingMovement | null {
+  return pendingMovement === null ? null : Object.freeze({ ...pendingMovement })
+}
+
 function stateWith(state: InductionLabState, patch: Partial<InductionLabState>): InductionLabState {
+  const pendingMovement = 'pendingMovement' in patch ? patch.pendingMovement ?? null : state.pendingMovement
   return {
     ...state,
     ...patch,
+    pendingMovement: freezePendingMovement(pendingMovement),
     trials: freezeTrials(patch.trials ?? state.trials),
   }
 }
@@ -121,11 +135,12 @@ export function createElectromagneticInductionState(): InductionLabState {
     velocityMetersPerSecond: 0,
     drag: null,
     motion: null,
+    pendingMovement: null,
     trials: freezeTrials([]),
   }
 }
 
-function currentFor(state: InductionLabState): number {
+export function liveCurrentFor(state: InductionLabState): number {
   const cuttingField = state.motion?.crossedGap === true && isInsideMagnetGap(state.conductorX)
   return inducedCurrent({
     closed: state.circuitClosed && cuttingField,
@@ -139,13 +154,13 @@ function reduceSetCircuit(state: InductionLabState, payload: unknown): LabTransi
   if (payload !== 'open' && payload !== 'closed') return transition(state, rejected('Choose an open or closed circuit.'))
   const circuitClosed = payload === 'closed'
   if (state.circuitClosed === circuitClosed) return transition(state, rejected('The circuit is already in that state.'))
-  return transition(stateWith(state, { circuitClosed, velocityMetersPerSecond: 0, drag: null, motion: null }), accepted(circuitClosed ? 'Circuit closed.' : 'Circuit opened.'))
+  return transition(stateWith(state, { circuitClosed, velocityMetersPerSecond: 0, drag: null, motion: null, pendingMovement: null }), accepted(circuitClosed ? 'Circuit closed.' : 'Circuit opened.'))
 }
 
 function reduceSetFieldDirection(state: InductionLabState, payload: unknown): LabTransition<InductionLabState> {
   if (payload !== 'down' && payload !== 'up') return transition(state, rejected('Choose a magnetic-field direction.'))
   if (payload === state.fieldDirection) return transition(state, accepted('Magnetic-field direction is unchanged.'))
-  return transition(stateWith(state, { fieldDirection: payload, velocityMetersPerSecond: 0, drag: null, motion: null }), accepted('Magnetic-field direction reversed; move the conductor again.'))
+  return transition(stateWith(state, { fieldDirection: payload, velocityMetersPerSecond: 0, drag: null, motion: null, pendingMovement: null }), accepted('Magnetic-field direction reversed; move the conductor again.'))
 }
 
 function reduceDragStart(state: InductionLabState, payload: unknown): LabTransition<InductionLabState> {
@@ -158,6 +173,7 @@ function reduceDragStart(state: InductionLabState, payload: unknown): LabTransit
     velocityMetersPerSecond: 0,
     drag: { x, at: drag.at },
     motion: null,
+    pendingMovement: null,
   }), accepted('Conductor selected.'))
 }
 
@@ -182,21 +198,50 @@ function reduceDragMove(state: InductionLabState, payload: unknown): LabTransiti
   }), accepted('Conductor position updated.'))
 }
 
+function pendingMovementFor(state: InductionLabState): PendingMovement | null {
+  if (!state.circuitClosed || state.motion?.crossedGap !== true || !isInsideMagnetGap(state.conductorX) || state.velocityMetersPerSecond === 0) return null
+  return {
+    direction: state.motion.direction,
+    circuitClosed: true,
+    fieldDirection: state.fieldDirection,
+    velocityMetersPerSecond: state.velocityMetersPerSecond,
+  }
+}
+
 function reduceDragEnd(state: InductionLabState, payload: unknown): LabTransition<InductionLabState> {
   if (state.drag === null) return transition(state, rejected('No conductor drag is active.'))
   const drag = parseDragPayload(payload)
-  if (!drag) return transition(stateWith(state, { drag: null }), accepted('Conductor released.'))
+  if (!drag) return transition(stateWith(state, { drag: null, velocityMetersPerSecond: 0, motion: null, pendingMovement: null }), accepted('Conductor released.'))
   const x = railPositionFromSvgPoint(drag.position)
-  if (x === null) return transition(stateWith(state, { drag: null }), accepted('Conductor released.'))
+  if (x === null) return transition(stateWith(state, { drag: null, velocityMetersPerSecond: 0, motion: null, pendingMovement: null }), accepted('Conductor released.'))
   const moved = x !== state.drag.x
   const movedState = moved ? reduceDragMove(state, payload).state : state
-  return transition(stateWith(movedState, { drag: null }), accepted('Conductor released.'))
+  return transition(stateWith(movedState, {
+    drag: null,
+    velocityMetersPerSecond: 0,
+    motion: null,
+    pendingMovement: pendingMovementFor(movedState),
+  }), accepted('Conductor released.'))
+}
+
+function pendingMovementMatches(state: InductionLabState): PendingMovement | null {
+  const pendingMovement = state.pendingMovement
+  if (
+    pendingMovement === null
+    || !state.circuitClosed
+    || !isInsideMagnetGap(state.conductorX)
+    || !pendingMovement.circuitClosed
+    || pendingMovement.fieldDirection !== state.fieldDirection
+  ) return null
+  return pendingMovement
 }
 
 function observationFor(state: InductionLabState): InductionObservation | null {
   if (!state.circuitClosed || !isInsideMagnetGap(state.conductorX)) return null
+  const pendingMovement = pendingMovementMatches(state)
+  if (pendingMovement !== null) return pendingMovement.direction
   if (state.motion === null && state.velocityMetersPerSecond === 0) return 'stationary'
-  return state.motion?.crossedGap === true ? state.motion.direction : null
+  return null
 }
 
 function reduceRecord(state: InductionLabState): LabTransition<InductionLabState> {
@@ -206,16 +251,22 @@ function reduceRecord(state: InductionLabState): LabTransition<InductionLabState
   if (observation === null) return transition(state, rejected('Move the conductor through the magnetic gap before recording this direction.'))
   if (state.trials.some((trial) => trial.observation === observation)) return transition(state, rejected('That observation has already been recorded.'))
 
-  const currentAmps = observation === 'stationary' ? 0 : currentFor(state)
+  const pendingMovement = pendingMovementMatches(state)
+  const currentAmps = pendingMovement === null ? 0 : inducedCurrent({
+    closed: pendingMovement.circuitClosed,
+    fieldTesla: signedFieldTesla(pendingMovement.fieldDirection),
+    lengthMeters: CONDUCTOR_LENGTH_METERS,
+    velocity: pendingMovement.velocityMetersPerSecond,
+  })
   const trial: InductionTrial = Object.freeze({
     id: `electromagnetic-induction-trial-${state.trials.length + 1}`,
     observation,
     currentAmps,
     circuitClosed: true,
-    fieldDirection: state.fieldDirection,
-    velocityMetersPerSecond: observation === 'stationary' ? 0 : state.velocityMetersPerSecond,
+    fieldDirection: pendingMovement?.fieldDirection ?? state.fieldDirection,
+    velocityMetersPerSecond: pendingMovement?.velocityMetersPerSecond ?? 0,
   })
-  return transition(stateWith(state, { trials: [...state.trials, trial] }), accepted('Observation recorded.'))
+  return transition(stateWith(state, { trials: [...state.trials, trial], pendingMovement: null }), accepted('Observation recorded.'))
 }
 
 function reduceResetTrial(state: InductionLabState): LabTransition<InductionLabState> {
@@ -224,6 +275,7 @@ function reduceResetTrial(state: InductionLabState): LabTransition<InductionLabS
     velocityMetersPerSecond: 0,
     drag: null,
     motion: null,
+    pendingMovement: null,
   }), accepted('Bench reset; recorded observations were preserved.'))
 }
 
@@ -239,9 +291,10 @@ function deriveMeasurements(state: InductionLabState): readonly DerivedMeasureme
 }
 
 function conditions(state: InductionLabState): readonly PhysicsExperimentalCondition[] {
+  const trial = state.trials.at(-1)
   return [
-    { label: 'Circuit', value: state.circuitClosed ? 'closed' : 'open' },
-    { label: 'Field direction', value: state.fieldDirection },
+    { label: 'Circuit', value: trial?.circuitClosed ? 'closed' : state.circuitClosed ? 'closed' : 'open' },
+    { label: 'Field direction', value: trial?.fieldDirection ?? state.fieldDirection },
     { label: 'Magnetic field', value: MAGNETIC_FIELD_TESLA },
     { label: 'Conductor length', value: CONDUCTOR_LENGTH_METERS },
     { label: 'Resistance', value: CIRCUIT_RESISTANCE_OHMS },
@@ -259,7 +312,7 @@ export const electromagneticInductionController: LabController<InductionLabState
       case 'dragStart': return reduceDragStart(state, action.payload)
       case 'dragMove': return reduceDragMove(state, action.payload)
       case 'dragEnd': return reduceDragEnd(state, action.payload)
-      case 'dragCancel': return transition(stateWith(state, { drag: null, velocityMetersPerSecond: 0, motion: null }), accepted('Conductor drag cancelled.'))
+      case 'dragCancel': return transition(stateWith(state, { drag: null, velocityMetersPerSecond: 0, motion: null, pendingMovement: null }), accepted('Conductor drag cancelled.'))
       case 'record': return reduceRecord(state)
       case 'resetTrial': return reduceResetTrial(state)
       default: return transition(state, rejected('Unsupported induction-lab action.'))

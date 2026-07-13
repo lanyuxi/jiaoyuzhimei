@@ -9,10 +9,8 @@ import {
   BENCH,
   MAGNET_GAP,
   RAIL,
-  isInsideMagnetGap,
-  signedFieldTesla,
 } from './definition'
-import { electromagneticInductionController, inducedCurrent, type InductionLabState } from './controller'
+import { electromagneticInductionController, liveCurrentFor, type InductionLabState } from './controller'
 
 function Galvanometer({ current }: { current: number }) {
   const needleAngle = current * 58
@@ -57,13 +55,7 @@ function Magnet({ direction }: { direction: 'down' | 'up' }) {
 
 export function ElectromagneticInductionScene({ state, dispatch }: PhysicsLabSceneProps<InductionLabState>) {
   const stageRef = useRef<HTMLDivElement>(null)
-  const isCuttingField = state.motion?.crossedGap === true && isInsideMagnetGap(state.conductorX)
-  const current = inducedCurrent({
-    closed: state.circuitClosed && isCuttingField,
-    fieldTesla: signedFieldTesla(state.fieldDirection),
-    lengthMeters: 0.1,
-    velocity: state.velocityMetersPerSecond,
-  })
+  const current = liveCurrentFor(state)
   const pointerDrag = usePointerDrag({
     stageRef,
     positionFor: (event) => {
