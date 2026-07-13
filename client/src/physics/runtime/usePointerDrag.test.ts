@@ -49,7 +49,7 @@ describe('pointer drag adapter', () => {
     ])
   })
 
-  it('keeps the first pointer active through competing pointer and cancellation events', () => {
+  it('keeps the first pointer active through competing events and emits a distinct cancellation semantic', () => {
     const { target, calls } = createTarget()
     const actions: LabAction[] = []
     const drag = createPointerDragAdapter({ stage: () => target, dispatch: (action) => actions.push(action) })
@@ -65,7 +65,7 @@ describe('pointer drag adapter', () => {
     expect(calls.released).toEqual([1])
     expect(actions).toEqual([
       { type: 'dragStart', payload: { subject: { id: 'first' }, position: { x: 20, y: 30 } } },
-      { type: 'dragEnd', payload: { subject: { id: 'first' }, position: { x: 30, y: 40 } } },
+      { type: 'dragCancel', payload: { subject: { id: 'first' }, position: { x: 30, y: 40 } } },
     ])
   })
 })

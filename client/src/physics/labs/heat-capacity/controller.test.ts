@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { textbookPhysicsExperiments } from '../../curriculum/catalog'
 import { labRegistry } from '../registry'
+import { HEAT_CAPACITY_SNAP_ZONES } from './definition'
 import {
   COOKING_OIL_SPECIFIC_HEAT_CAPACITY,
   WATER_SPECIFIC_HEAT_CAPACITY,
@@ -105,6 +106,62 @@ describe('heat capacity comparison controller', () => {
     expect(recorded.state.activeTrialId).toBe(recorded.state.trials[0]?.id)
   })
 
+  it('locks masses after starting, requires a reset to unlock them, and revalidates equal masses before recording', () => {
+    const started = heatCapacityController.reduce(preparedState(), { type: 'start' }).state
+    const stopped = heatCapacityController.reduce(
+      heatCapacityController.reduce(started, { type: 'tick', payload: 30 }).state,
+      { type: 'stop' },
+    ).state
+    const changedMass = heatCapacityController.reduce(stopped, { type: 'setMass', payload: { substance: 'oil', mass: 0.25 } })
+    const recorded = heatCapacityController.reduce(changedMass.state, { type: 'record' })
+    const unequal = heatCapacityController.reduce(
+      { ...stopped, oilMass: 0.25 },
+      { type: 'record' },
+    )
+    const reset = heatCapacityController.reduce(stopped, { type: 'resetTrial' }).state
+
+    expect(changedMass.state).toBe(stopped)
+    expect(changedMass.feedback.outcome).toBe('rejected')
+    expect(recorded.state.trials).toHaveLength(1)
+    expect(unequal.state.trials).toHaveLength(0)
+    expect(unequal.feedback.outcome).toBe('rejected')
+    expect(heatCapacityController.reduce(reset, { type: 'setMass', payload: { substance: 'oil', mass: 0.25 } }).feedback.outcome).toBe('accepted')
+  })
+
+  it('places each apparatus only when its drag ends inside its own explicit snap zone', () => {
+    const placementKeyBySubject = {
+      waterThermometer: 'waterThermometerPlaced',
+      oilThermometer: 'oilThermometerPlaced',
+      waterHeater: 'waterHeaterPlaced',
+      oilHeater: 'oilHeaterPlaced',
+    } as const
+
+    for (const subject of Object.keys(HEAT_CAPACITY_SNAP_ZONES) as Array<keyof typeof HEAT_CAPACITY_SNAP_ZONES>) {
+      const zone = HEAT_CAPACITY_SNAP_ZONES[subject]
+      const inside = heatCapacityController.reduce(heatCapacityController.createInitialState(), {
+        type: 'dragEnd',
+        payload: { subject, position: { x: zone.x + zone.width / 2, y: zone.y + zone.height / 2 } },
+      }).state
+      const outside = heatCapacityController.reduce(heatCapacityController.createInitialState(), {
+        type: 'dragEnd',
+        payload: { subject, position: { x: zone.x - 1, y: zone.y } },
+      })
+
+      expect(inside[placementKeyBySubject[subject]]).toBe(true)
+      expect(outside.state).toEqual(heatCapacityController.createInitialState())
+      expect(outside.feedback.outcome).toBe('rejected')
+    }
+
+    const initial = heatCapacityController.createInitialState()
+    const cancelled = heatCapacityController.reduce(initial, {
+      type: 'dragCancel',
+      payload: { subject: 'waterThermometer', position: { x: 300, y: 200 } },
+    })
+
+    expect(cancelled.state).toBe(initial)
+    expect(cancelled.feedback.outcome).toBe('accepted')
+  })
+
   it('keeps recorded trials immutable, clears only the active trial on reset, and exposes snapshot measurements', () => {
     const started = heatCapacityController.reduce(preparedState(), { type: 'start' }).state
     const stopped = heatCapacityController.reduce(
@@ -112,17 +169,19 @@ describe('heat capacity comparison controller', () => {
       { type: 'stop' },
     ).state
     const recorded = heatCapacityController.reduce(stopped, { type: 'record' }).state
-    const changedMass = heatCapacityController.reduce(recorded, { type: 'setMass', payload: { substance: 'water', mass: 0.3 } }).state
-    const reset = heatCapacityController.reduce(changedMass, { type: 'resetTrial' }).state
+    const lockedMassChange = heatCapacityController.reduce(recorded, { type: 'setMass', payload: { substance: 'water', mass: 0.3 } }).state
+    const reset = heatCapacityController.reduce(lockedMassChange, { type: 'resetTrial' }).state
+    const changedMass = heatCapacityController.reduce(reset, { type: 'setMass', payload: { substance: 'water', mass: 0.3 } }).state
 
     expect(changedMass.trials[0]).toEqual(recorded.trials[0])
     expect(changedMass.trials).not.toBe(recorded.trials)
+    expect(lockedMassChange).toBe(recorded)
     expect(Object.isFrozen(recorded.trials[0])).toBe(true)
     expect(reset.trials).toEqual(recorded.trials)
     expect(reset.trials).not.toBe(recorded.trials)
     expect(reset.activeTrialId).toBeNull()
     expect(reset.elapsedSeconds).toBe(0)
-    expect(reset.waterMass).toBe(0.3)
+    expect(changedMass.waterMass).toBe(0.3)
     expect(heatCapacityController.deriveMeasurements(recorded).map((measurement) => measurement.key)).toEqual([
       'waterTemperature',
       'oilTemperature',

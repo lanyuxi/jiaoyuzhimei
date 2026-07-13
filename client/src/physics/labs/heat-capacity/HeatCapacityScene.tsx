@@ -6,6 +6,7 @@ import { usePointerDrag } from '../../runtime/usePointerDrag'
 import type { LabAction, Position } from '../../runtime/types'
 import { HEAT_CAPACITY_SNAP_ZONES, type HeatCapacityDragSubject, type HeatCapacitySubstance } from './definition'
 import { heatCapacityController, type HeatCapacityState } from './controller'
+import { startHeatCapacityTimer } from './timing'
 
 const workbenchWidth = 960
 const workbenchHeight = 540
@@ -98,6 +99,7 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
   const pointerDrag = usePointerDrag({
     stageRef,
     dispatch: (action: LabAction) => {
+      if (action.type === 'dragCancel') return
       if (action.type !== 'dragEnd' || typeof action.payload !== 'object' || action.payload === null) return
       const drag = action.payload as { subject?: unknown; position?: unknown }
       if (!isPosition(drag.position) || stageRef.current === null) return
@@ -118,8 +120,12 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
 
   useEffect(() => {
     if (!state.heating) return undefined
-    const timerId = window.setInterval(() => dispatch({ type: 'tick', payload: 1 }, 'heat-tick'), 1000)
-    return () => window.clearInterval(timerId)
+    return startHeatCapacityTimer({
+      now: () => window.performance.now(),
+      setInterval: (callback) => window.setInterval(callback, 250),
+      clearInterval: (timerId) => window.clearInterval(timerId),
+      onElapsed: (seconds) => dispatch({ type: 'tick', payload: seconds }, 'heat-tick'),
+    })
   }, [dispatch, state.heating])
 
   function updateMass(substance: HeatCapacitySubstance, event: ChangeEvent<HTMLInputElement>) {
@@ -152,8 +158,8 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
       </div>
 
       <div className="grid shrink-0 gap-3 border-t border-[#30435a] px-4 py-3 lg:grid-cols-[1fr_1fr_auto]">
-        <label className="flex items-center justify-between gap-3 text-sm font-semibold text-[#c7d4e5]">水的质量（kg）<input aria-label="水的质量（kg）" type="number" min="0.01" step="0.01" value={state.waterMass} onChange={(event) => updateMass('water', event)} disabled={state.heating} className="w-24 rounded-[4px] border border-[#52718f] bg-[#101722] px-2 py-1 text-right text-sm text-white" /></label>
-        <label className="flex items-center justify-between gap-3 text-sm font-semibold text-[#c7d4e5]">食用油质量（kg）<input aria-label="食用油质量（kg）" type="number" min="0.01" step="0.01" value={state.oilMass} onChange={(event) => updateMass('oil', event)} disabled={state.heating} className="w-24 rounded-[4px] border border-[#52718f] bg-[#101722] px-2 py-1 text-right text-sm text-white" /></label>
+        <label className="flex items-center justify-between gap-3 text-sm font-semibold text-[#c7d4e5]">水的质量（kg）<input aria-label="水的质量（kg）" type="number" min="0.01" step="0.01" value={state.waterMass} onChange={(event) => updateMass('water', event)} disabled={state.massLocked} className="w-24 rounded-[4px] border border-[#52718f] bg-[#101722] px-2 py-1 text-right text-sm text-white" /></label>
+        <label className="flex items-center justify-between gap-3 text-sm font-semibold text-[#c7d4e5]">食用油质量（kg）<input aria-label="食用油质量（kg）" type="number" min="0.01" step="0.01" value={state.oilMass} onChange={(event) => updateMass('oil', event)} disabled={state.massLocked} className="w-24 rounded-[4px] border border-[#52718f] bg-[#101722] px-2 py-1 text-right text-sm text-white" /></label>
         <div className="flex flex-wrap items-center justify-end gap-2">
           <button type="button" aria-label="开始同时加热" title="开始同时加热" onClick={() => dispatch({ type: 'start' }, 'start-heating')} disabled={state.heating} className="inline-flex h-9 items-center gap-2 rounded-[6px] bg-[#1f8f62] px-3 text-sm font-bold text-white disabled:opacity-45"><Play className="size-4" aria-hidden="true" />开始</button>
           <button type="button" aria-label="停止加热" title="停止加热" onClick={() => dispatch({ type: 'stop' }, 'stop-heating')} disabled={!state.heating} className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-[#da7a66] px-3 text-sm font-bold text-[#ffd4ca] disabled:opacity-45"><Square className="size-4" aria-hidden="true" />停止</button>

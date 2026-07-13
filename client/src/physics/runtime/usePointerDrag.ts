@@ -79,6 +79,20 @@ export function createPointerDragAdapter({ stage, dispatch }: PointerDragAdapter
     activeDrag = null
   }
 
+  const cancelDrag = (event: PointerDragEvent): void => {
+    if (activeDrag?.pointerId !== event.pointerId) return
+
+    const position = positionFor(event)
+    dispatch({
+      type: 'dragCancel',
+      payload: position === null ? { subject: activeDrag.subject } : { subject: activeDrag.subject, position },
+    })
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    activeDrag = null
+  }
+
   return {
     onPointerDown: (event, subject) => {
       if (activeDrag !== null || positionFor(event) === null) return
@@ -91,7 +105,7 @@ export function createPointerDragAdapter({ stage, dispatch }: PointerDragAdapter
       if (activeDrag?.pointerId === event.pointerId) emit('dragMove', event)
     },
     onPointerUp: finishDrag,
-    onPointerCancel: finishDrag,
+    onPointerCancel: cancelDrag,
   }
 }
 

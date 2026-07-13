@@ -46,6 +46,7 @@ export interface HeatCapacityState extends HeatCapacityConfig {
   oilHeaterPlaced: boolean
   heatersPlaced: boolean
   heating: boolean
+  massLocked: boolean
   activeTrialId: string | null
   trials: readonly HeatCapacityTrial[]
 }
@@ -126,6 +127,7 @@ export function createHeatCapacityState(config: Partial<HeatCapacityConfig> = {}
     oilHeaterPlaced: false,
     heatersPlaced: false,
     heating: false,
+    massLocked: false,
     activeTrialId: null,
     trials: [],
   }
@@ -172,6 +174,7 @@ export function advanceHeating(state: HeatCapacityState, seconds: number): HeatC
 }
 
 function reduceSetMass(state: HeatCapacityState, payload: unknown): LabTransition<HeatCapacityState> {
+  if (state.massLocked) return transition(state, rejected('请先重置当前实验，再改变样品质量'))
   if (state.heating) return transition(state, rejected('加热进行中，不能改变质量'))
   if (typeof payload !== 'object' || payload === null) return transition(state, rejected('质量设置无效'))
   const value = payload as { substance?: unknown; mass?: unknown }
@@ -220,7 +223,7 @@ function reduceStart(state: HeatCapacityState): LabTransition<HeatCapacityState>
   if (state.heating) return transition(state, rejected('加热已经开始'))
   const prerequisite = canStart(state)
   if (prerequisite) return transition(state, prerequisite)
-  return transition(nextState(state, { heating: true }), accepted('已开始同时加热'))
+  return transition(nextState(state, { heating: true, massLocked: true }), accepted('已开始同时加热'))
 }
 
 function reduceTick(state: HeatCapacityState, payload: unknown): LabTransition<HeatCapacityState> {
@@ -242,6 +245,9 @@ function reduceRecord(state: HeatCapacityState): LabTransition<HeatCapacityState
   }
   if (!state.heatersPlaced) return transition(state, rejected('请先把两个相同的加热器放到两个烧杯下方'))
   if (state.heating) return transition(state, rejected('请先停止加热再记录数据'))
+  if (!validStateConfig(state) || Math.abs(state.waterMass - state.oilMass) > EQUAL_MASS_TOLERANCE) {
+    return transition(state, rejected('请将水和食用油的质量调至相等'))
+  }
   if (state.elapsedSeconds < MINIMUM_RECORDING_SECONDS) return transition(state, rejected('加热时间至少需要30秒'))
 
   const trial = Object.freeze({
@@ -270,6 +276,7 @@ function reduceResetTrial(state: HeatCapacityState): LabTransition<HeatCapacityS
     oilThermometerPlaced: false,
     waterHeaterPlaced: false,
     oilHeaterPlaced: false,
+    massLocked: false,
     activeTrialId: null,
   }), accepted('已重置当前实验，历史试次仍被保留'))
 }
@@ -309,6 +316,7 @@ export const heatCapacityController: LabController<HeatCapacityState> & {
       case 'placeThermometer': return reducePlace(state, 'thermometer', action.payload)
       case 'placeHeater': return reducePlace(state, 'heater', action.payload)
       case 'dragEnd': return reduceDragEnd(state, action.payload)
+      case 'dragCancel': return transition(state, accepted('已取消器材拖拽'))
       case 'start': return reduceStart(state)
       case 'tick': return reduceTick(state, action.payload)
       case 'stop': return reduceStop(state)
