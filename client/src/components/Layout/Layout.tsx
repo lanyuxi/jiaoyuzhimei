@@ -15,6 +15,7 @@ function LayoutContent() {
     '/',
     '/math',
     '/physics',
+    '/physics/sessions',
     '/chemistry',
     '/chinese',
     '/english',

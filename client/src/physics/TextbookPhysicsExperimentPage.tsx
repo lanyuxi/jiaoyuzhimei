@@ -2,6 +2,7 @@ import { ArrowLeft, Clock3 } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { textbookExperimentById } from './curriculum/catalog'
 import ExperimentInfo from './runtime/ExperimentInfo'
+import PhysicsLabHost from './PhysicsLabHost'
 
 export function getTextbookExperiment(id: string) {
   return textbookExperimentById.get(id)
@@ -43,13 +44,19 @@ export default function TextbookPhysicsExperimentPage() {
         <h1 className="mt-3 text-2xl font-bold text-[#242424] md:text-3xl">{experiment.title}</h1>
         <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#8a867f]">
           <Clock3 className="size-4" aria-hidden="true" />
-          该实验正在制作中
+          {experiment.availability === 'available' ? '实验台已开放' : '该实验正在制作中'}
         </p>
       </header>
 
-      <div className="border-b border-[#ece8df] bg-white px-5 md:px-7">
-        <ExperimentInfo experiment={experiment} />
-      </div>
+      {experiment.availability === 'available' ? (
+        <div className="bg-white px-5 py-5 md:px-7 md:py-7">
+          <PhysicsLabHost experiment={experiment} />
+        </div>
+      ) : (
+        <div className="border-b border-[#ece8df] bg-white px-5 md:px-7">
+          <ExperimentInfo experiment={experiment} />
+        </div>
+      )}
     </div>
   )
 }

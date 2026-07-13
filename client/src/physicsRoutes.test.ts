@@ -6,12 +6,16 @@ import { textbookExperimentById } from './physics/curriculum/catalog'
 const sourceDirectory = join(process.cwd(), 'src')
 const textbookPagePath = join(sourceDirectory, 'physics/TextbookPhysicsExperimentPage.tsx')
 const experimentInfoPath = join(sourceDirectory, 'physics/runtime/ExperimentInfo.tsx')
+const labHostPath = join(sourceDirectory, 'physics/PhysicsLabHost.tsx')
 
 describe('textbook physics lab routes', () => {
   it('routes textbook labs before the legacy slug route', () => {
     const app = readFileSync(join(sourceDirectory, 'App.tsx'), 'utf8')
 
     expect(app.indexOf('path="physics/labs/:id"')).toBeLessThan(app.indexOf('path="physics/:slug"'))
+    expect(app.indexOf('path="physics/sessions"')).toBeLessThan(app.indexOf('path="physics/:slug"'))
+    expect(app).toContain("import('./physics/sessions/PhysicsSessionsPage')")
+    expect(app).toContain("import('./physics/sessions/PhysicsReportPage')")
     expect(app).toContain("import('./physics/TextbookPhysicsExperimentPage')")
   })
 
@@ -29,6 +33,7 @@ describe('textbook physics lab routes', () => {
     expect(textbookExperimentById.get('unknown-textbook-experiment')).toBeUndefined()
     expect(existsSync(textbookPagePath)).toBe(true)
     expect(existsSync(experimentInfoPath)).toBe(true)
+    expect(existsSync(labHostPath)).toBe(true)
 
     if (!existsSync(textbookPagePath) || !existsSync(experimentInfoPath)) return
 
@@ -37,6 +42,8 @@ describe('textbook physics lab routes', () => {
 
     expect(getTextbookExperiment(knownId)).toBe(knownExperiment)
     expect(getTextbookExperiment('unknown-textbook-experiment')).toBeUndefined()
+    expect(readFileSync(textbookPagePath, 'utf8')).toContain("experiment.availability === 'available'")
+    expect(readFileSync(textbookPagePath, 'utf8')).toContain('PhysicsLabHost')
     expect(experimentInfoSections.map((section) => section.key)).toEqual([
       'purpose',
       'principle',
