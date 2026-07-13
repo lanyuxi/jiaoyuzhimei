@@ -128,7 +128,9 @@ function experiment(row: WorkbookExperiment): TextbookPhysicsExperiment {
     conclusion: [row.conclusion],
     supplement: [row.supplement],
     measurements: measurementsFor(row.title),
-    availability: 'scheduled',
+    ...(row.id === 'heat-capacity-comparison'
+      ? { availability: 'available' as const, labId: 'heat-capacity-comparison' }
+      : { availability: 'scheduled' as const }),
   }
 }
 
