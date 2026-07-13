@@ -32,3 +32,25 @@ Result: 9 test files passed, 47 tests passed.
 
 - A first `tsc -b` surfaced only two nullability assertions in the new test; those were corrected.
 - The replacement `tsc -b` and full serial suite were intentionally not completed after the user requested that broad checks stop. They are not claimed as passing.
+
+## Verification-Only Continuation
+
+The previously incomplete checks were run on 2026-07-13 with the bundled Codex runtime because this shell does not expose `node` on PATH.
+
+Typecheck command:
+
+```powershell
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\typescript\lib\tsc.js' -b
+```
+
+Result: exit code 0; no TypeScript diagnostics; wall time 54.2 seconds.
+
+Full serial Vitest command:
+
+```powershell
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\vitest\vitest.mjs' run --maxWorkers=1 --minWorkers=1
+```
+
+Result: exit code 0; 27 test files passed, 144 tests passed; Vitest duration 20.70 seconds, command wall time 48.7 seconds.
+
+The typecheck and full serial suite are now verified as passing. No production files changed during this continuation.
