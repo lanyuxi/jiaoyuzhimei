@@ -207,12 +207,24 @@ export class PhysicsSessionRepository {
     }))
   }
 
-  complete(id: string): PhysicsSession | undefined {
-    return this.update(id, (session) => ({
-      ...session,
+  complete(id: string, event?: PhysicsEventRecord): PhysicsSession | undefined {
+    if (event && !isEventRecord(event)) {
+      throw new TypeError('Event does not match the persistence schema')
+    }
+
+    const index = this.sessions.findIndex((candidate) => candidate.id === id)
+    const current = this.sessions[index]
+    if (!current || current.status === 'COMPLETED') return undefined
+
+    const completed: PhysicsSession = {
+      ...current,
       status: 'COMPLETED',
       updatedAt: new Date().toISOString(),
-    }))
+      events: event ? [...current.events, { ...event }] : current.events,
+    }
+    this.sessions = this.sessions.map((session, currentIndex) => currentIndex === index ? completed : session)
+    this.persist()
+    return cloneSession(completed)
   }
 
   private load(): LoadedSessions {

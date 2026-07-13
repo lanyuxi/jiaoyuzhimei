@@ -4,6 +4,9 @@ import { textbookExperimentById } from './curriculum/catalog'
 import ExperimentInfo from './runtime/ExperimentInfo'
 import PhysicsLabHost from './PhysicsLabHost'
 
+export const AVAILABLE_LAB_CONTAINER_WIDTH = 1536
+export const AVAILABLE_LAB_HORIZONTAL_PADDING = 28
+
 export function getTextbookExperiment(id: string) {
   return textbookExperimentById.get(id)
 }
@@ -26,7 +29,7 @@ export default function TextbookPhysicsExperimentPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className={experiment.availability === 'available' ? 'mx-auto w-full max-w-[1536px]' : 'mx-auto max-w-4xl'}>
       <header className="border-b border-[#ece8df] bg-white px-5 py-6 md:px-7 md:py-8">
         <Link to="/physics" className="inline-flex items-center gap-2 text-sm font-semibold text-[#165DFF] hover:underline">
           <ArrowLeft className="size-4" aria-hidden="true" />

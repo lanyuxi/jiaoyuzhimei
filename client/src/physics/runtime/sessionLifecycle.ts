@@ -54,15 +54,23 @@ export function recordLabFeedback(
   feedback: LabFeedback,
   at?: string,
 ): PhysicsEventRecord {
-  const event: PhysicsEventRecord = {
+  const event = labFeedbackEvent(action, feedback, at)
+  repository.appendEvent(sessionId, event)
+  return event
+}
+
+function labFeedbackEvent(
+  action: string,
+  feedback: LabFeedback,
+  at?: string,
+): PhysicsEventRecord {
+  return {
     id: recordId('physics-event'),
     action,
     detail: feedback.message,
     outcome: feedback.outcome,
     at: nowOr(at),
   }
-  repository.appendEvent(sessionId, event)
-  return event
 }
 
 export function recordDerivedMeasurements(
@@ -89,8 +97,10 @@ export function recordDerivedMeasurements(
 export function completeLabSession(
   repository: Pick<SessionWriter, 'complete'>,
   sessionId: string,
+  feedback?: LabFeedback,
+  at?: string,
 ): PhysicsSession | undefined {
-  return repository.complete(sessionId)
+  return repository.complete(sessionId, feedback ? labFeedbackEvent('complete-lab', feedback, at) : undefined)
 }
 
 export interface RecoveryPrompt {

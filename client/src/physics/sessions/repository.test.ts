@@ -22,6 +22,15 @@ class MemoryStorage implements StorageLike {
   }
 }
 
+class CountingStorage extends MemoryStorage {
+  writes = 0
+
+  setItem(key: string, value: string): void {
+    this.writes += 1
+    super.setItem(key, value)
+  }
+}
+
 class WriteFailingStorage extends MemoryStorage {
   setItem(): void {
     throw new Error('storage unavailable')
@@ -275,6 +284,31 @@ describe('physics session repository', () => {
 
     expect(repository.appendEvent(session.id, event)?.events).toEqual([event])
     expect(repository.complete(session.id)?.status).toBe('COMPLETED')
+  })
+
+  it('completes a session once and persists its completion event only once', () => {
+    const storage = new CountingStorage()
+    const repository = new PhysicsSessionRepository(storage)
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const completionEvent: PhysicsEventRecord = {
+      ...event,
+      id: 'complete-event',
+      action: 'complete-lab',
+      detail: 'Completed',
+    }
+
+    const completed = repository.complete(session.id, completionEvent)
+    const writesAfterFirstCompletion = storage.writes
+    const repeated = repository.complete(session.id, completionEvent)
+
+    expect(completed).toMatchObject({ status: 'COMPLETED', events: [completionEvent] })
+    expect(repeated).toBeUndefined()
+    expect(storage.writes).toBe(writesAfterFirstCompletion)
+    expect(repository.get(session.id)).toMatchObject({
+      status: 'COMPLETED',
+      updatedAt: completed?.updatedAt,
+      events: [completionEvent],
+    })
   })
 
   it('returns undefined for unknown session IDs', () => {

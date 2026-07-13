@@ -5,6 +5,7 @@ import { textbookExperimentById } from './physics/curriculum/catalog'
 import type { TextbookPhysicsExperiment } from './physics/curriculum/types'
 import { resolveLabRegistration } from './physics/PhysicsLabHost'
 import { groupMeasurementsByTrial } from './physics/runtime/MeasurementTable'
+import { LAB_DESKTOP_LAYOUT } from './physics/runtime/PhysicsLabShell'
 import {
   createLabSessionCoordinator,
   completeLabSession,
@@ -12,6 +13,10 @@ import {
   recordLabFeedback,
   recoveryPrompt,
 } from './physics/runtime/sessionLifecycle'
+import {
+  AVAILABLE_LAB_CONTAINER_WIDTH,
+  AVAILABLE_LAB_HORIZONTAL_PADDING,
+} from './physics/TextbookPhysicsExperimentPage'
 import { resolvePhysicsReport } from './physics/sessions/PhysicsReportPage'
 import type {
   PhysicsEventRecord,
@@ -56,9 +61,20 @@ class RecordingRepository {
     return { ...this.created.find((session) => session.id === id)!, measurements: [measurement] }
   }
 
-  complete(id: string): PhysicsSession {
+  complete(id: string, event?: PhysicsEventRecord): PhysicsSession | undefined {
+    const index = this.created.findIndex((session) => session.id === id)
+    const current = this.created[index]
+    if (!current || current.status === 'COMPLETED') return undefined
+
+    const completed = {
+      ...current,
+      status: 'COMPLETED' as const,
+      events: event ? [...current.events, event] : current.events,
+    }
+    this.created[index] = completed
     this.completed.push(id)
-    return { ...this.created.find((session) => session.id === id)!, status: 'COMPLETED' }
+    if (event) this.events.push(event)
+    return completed
   }
 }
 
@@ -91,6 +107,14 @@ describe('physics lab shell', () => {
       expect(source).toContain(label)
     }
     expect(source).toContain('aria-label')
+  })
+
+  it('uses the runtime atomic command result for semantic feedback and disables commands after completion', () => {
+    const source = readFileSync(shellPath, 'utf8')
+
+    expect(source).toContain('const transition = runtime.dispatch(action)')
+    expect(source).not.toContain('controller.reduce(runtime.state, action)')
+    expect(source).toContain('disabled={isCompleted}')
   })
 
   it('creates one session per lab mount and records accepted and rejected actions', () => {
@@ -128,8 +152,33 @@ describe('physics lab shell', () => {
     })
     expect(grouped).toEqual([{ trialId: 'trial-1', conditions, measurements: repository.measurements }])
 
-    completeLabSession(repository, session.id)
+    const completionFeedback = { outcome: 'accepted' as const, message: '瀹為獙宸插畬鎴?' }
+    completeLabSession(repository, session.id, completionFeedback)
+    completeLabSession(repository, session.id, completionFeedback)
     expect(repository.completed).toEqual([session.id])
+    expect(repository.events.filter((event) => event.action === 'complete-lab')).toHaveLength(1)
+  })
+
+  it('guarantees the available-lab desktop scene width while retaining responsive rails', () => {
+    const source = readFileSync(shellPath, 'utf8')
+    const textbookPage = readFileSync(join(sourceRoot, 'physics/TextbookPhysicsExperimentPage.tsx'), 'utf8')
+    const sceneWidth = AVAILABLE_LAB_CONTAINER_WIDTH
+      - (AVAILABLE_LAB_HORIZONTAL_PADDING * 2)
+      - (LAB_DESKTOP_LAYOUT.gap * 2)
+      - LAB_DESKTOP_LAYOUT.apparatusWidth
+      - LAB_DESKTOP_LAYOUT.stepsWidth
+
+    expect(LAB_DESKTOP_LAYOUT).toEqual({
+      breakpoint: '2xl',
+      apparatusWidth: 240,
+      sceneMinWidth: 853,
+      stepsWidth: 300,
+      gap: 16,
+    })
+    expect(sceneWidth).toBeGreaterThanOrEqual(LAB_DESKTOP_LAYOUT.sceneMinWidth)
+    expect(source).toContain('2xl:grid-cols-[240px_minmax(0,1fr)_300px]')
+    expect(source).toContain('2xl:min-h-[480px]')
+    expect(textbookPage).toContain('max-w-[1536px]')
   })
 
   it('describes recoverable storage failures with a new-session action', () => {

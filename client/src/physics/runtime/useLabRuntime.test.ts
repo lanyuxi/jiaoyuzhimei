@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   createLabRuntimeBinding,
+  dispatchLabRuntimeBinding,
   reduceLabRuntimeBinding,
   reduceLabRuntimeBindingState,
   rebindLabRuntime,
@@ -52,6 +53,33 @@ function createCountingController(name: string, initialValue: number) {
 }
 
 describe('lab runtime adapter', () => {
+  it('reduces rapid semantic commands against the latest committed binding and returns their exact feedback', () => {
+    const reducedStates: number[] = []
+    const controller: LabController<CounterState> = {
+      ...createController('atomic', 0),
+      reduce: (state, action) => {
+        reducedStates.push(state.value)
+        const accepted = action.type === 'increment' && state.value === 0
+        return {
+          state: accepted ? { controller: 'atomic', value: 1 } : state,
+          feedback: {
+            outcome: accepted ? 'accepted' : 'rejected',
+            message: accepted ? 'incremented' : 'already incremented',
+          },
+        }
+      },
+    }
+    const binding = createLabRuntimeBinding(controller)
+
+    const first = dispatchLabRuntimeBinding(binding, controller, { type: 'increment' })
+    const second = dispatchLabRuntimeBinding(first.binding, controller, { type: 'increment' })
+
+    expect(reducedStates).toEqual([0, 1])
+    expect(first.feedback).toEqual({ outcome: 'accepted', message: 'incremented' })
+    expect(second.feedback).toEqual({ outcome: 'rejected', message: 'already incremented' })
+    expect(second.binding.runtime.present).toEqual({ controller: 'atomic', value: 1 })
+  })
+
   it('reinitializes and consistently uses a replacement controller', () => {
     const original = createController('original', 0)
     const replacement = createController('replacement', 10)
