@@ -68,4 +68,26 @@ describe('pointer drag adapter', () => {
       { type: 'dragCancel', payload: { subject: { id: 'first' }, position: { x: 30, y: 40 } } },
     ])
   })
+
+  it('uses an optional position mapper for each captured pointer event', () => {
+    const { target, calls } = createTarget()
+    const actions: LabAction[] = []
+    const drag = createPointerDragAdapter({
+      stage: () => target,
+      positionFor: ({ clientX, clientY }) => ({ x: clientX * 10, y: clientY * 10 }),
+      dispatch: (action) => actions.push(action),
+    })
+
+    drag.onPointerDown(event(1, 120, 80, target), { id: 'first' })
+    drag.onPointerMove(event(1, 130, 90, target))
+    drag.onPointerCancel(event(1, 140, 100, target))
+
+    expect(calls.captured).toEqual([1])
+    expect(calls.released).toEqual([1])
+    expect(actions).toEqual([
+      { type: 'dragStart', payload: { subject: { id: 'first' }, position: { x: 1200, y: 800 } } },
+      { type: 'dragMove', payload: { subject: { id: 'first' }, position: { x: 1300, y: 900 } } },
+      { type: 'dragCancel', payload: { subject: { id: 'first' }, position: { x: 1400, y: 1000 } } },
+    ])
+  })
 })

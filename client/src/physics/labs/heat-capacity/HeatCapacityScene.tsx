@@ -3,6 +3,7 @@ import { Flame, Play, RotateCcw, Square, Thermometer, Timer } from 'lucide-react
 import type { TextbookPhysicsExperiment } from '../../curriculum/types'
 import PhysicsLabShell, { type PhysicsLabSceneProps } from '../../runtime/PhysicsLabShell'
 import { usePointerDrag } from '../../runtime/usePointerDrag'
+import { mapClientPointToSvgViewBox } from '../../runtime/svgCoordinates'
 import type { LabAction, Position } from '../../runtime/types'
 import { HEAT_CAPACITY_SNAP_ZONES, type HeatCapacityDragSubject, type HeatCapacitySubstance } from './definition'
 import { heatCapacityController, type HeatCapacityState } from './controller'
@@ -98,21 +99,25 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
   const stageRef = useRef<HTMLDivElement>(null)
   const pointerDrag = usePointerDrag({
     stageRef,
+    positionFor: (event) => {
+      const svg = stageRef.current?.querySelector<SVGSVGElement>('svg') ?? null
+      if (svg === null) return null
+
+      return mapClientPointToSvgViewBox(event, {
+        rect: svg.getBoundingClientRect(),
+        viewBox: { x: 0, y: 0, width: workbenchWidth, height: workbenchHeight },
+      })
+    },
     dispatch: (action: LabAction) => {
       if (action.type === 'dragCancel') return
       if (action.type !== 'dragEnd' || typeof action.payload !== 'object' || action.payload === null) return
       const drag = action.payload as { subject?: unknown; position?: unknown }
-      if (!isPosition(drag.position) || stageRef.current === null) return
-      const rect = stageRef.current.getBoundingClientRect()
-      if (rect.width === 0 || rect.height === 0) return
+      if (!isPosition(drag.position)) return
       dispatch({
         type: 'dragEnd',
         payload: {
           subject: drag.subject,
-          position: {
-            x: drag.position.x / rect.width * workbenchWidth,
-            y: drag.position.y / rect.height * workbenchHeight,
-          },
+          position: drag.position,
         },
       }, 'place-apparatus')
     },

@@ -1,54 +1,34 @@
-# Task 7 Report: 比较不同物质的吸热能力
+# Task 7 Snap-Coordinate Report
 
-## RED Evidence
+## Root Cause
 
-- Added `client/src/physics/labs/heat-capacity/controller.test.ts` before production files existed.
-- Direct Vitest execution failed because `./controller` did not exist.
-- After the controller was implemented, the remaining registration/catalog assertion failed as expected because no lab was registered and no catalog item was available.
-- The first serial full-suite run then identified the previous all-scheduled catalog assertion in `client/src/physicsCatalog.test.ts`; it was updated to the Task 7 contract and rerun.
+`HeatCapacityScene` converted stage-local drag coordinates by the full flex-stage width and height. The SVG paints a 960 by 540 viewBox with `xMidYMid meet`, so controls and centered letterbox margins were treated as part of the experimental workbench. Visible snap zones and drop coordinates therefore diverged.
 
-## GREEN Evidence
+## Implementation
 
-- Focused command:
-  `node node_modules/vitest/vitest.mjs run src/physics/labs/heat-capacity/controller.test.ts src/physicsLabShell.test.ts src/physics/curriculum/catalog.test.ts`
-  passed 3 files and 21 tests.
-- Focused catalog-state command:
-  `node node_modules/vitest/vitest.mjs run src/physicsCatalog.test.ts`
-  passed 1 file and 4 tests.
-- `node node_modules/typescript/bin/tsc -b` passed with exit code 0.
+- Added `mapClientPointToSvgViewBox`, a pure runtime helper that uses the SVG bounding rect, viewBox dimensions, `meet` scale, and centered X/Y letterbox offsets.
+- Added an opt-in `positionFor` mapper to `usePointerDrag`. It is applied to start, move, end, and cancel events without changing pointer capture, cancellation, or multi-pointer ownership.
+- `HeatCapacityScene` reads the rendered SVG rect and dispatches its already-mapped viewBox position directly to the heat controller. Experiment-specific snap zones remain in the heat controller.
 
-## Full Evidence
+## TDD Evidence
 
-- Serial command:
-  `node node_modules/vitest/vitest.mjs run --no-file-parallelism`
-  passed 25 files and 134 tests in 19.63 seconds.
+1. Red: `svgCoordinates.test.ts` failed with `Cannot find module './svgCoordinates'` before the helper existed.
+2. Red: `usePointerDrag.test.ts` failed the mapper assertion, receiving the former stage coordinates `{ x: 20, y: 30 }` instead of `{ x: 1200, y: 800 }`.
+3. Green: the new mapper and pointer tests passed: 2 files, 8 tests.
 
-## Changed Files
+The geometry tests cover horizontal and vertical letterboxing, no letterboxing, an inclusive visible snap-zone edge, and an adjacent invisible letterbox point that maps outside the zone.
 
-- `client/src/physics/labs/heat-capacity/definition.ts`
-- `client/src/physics/labs/heat-capacity/controller.ts`
-- `client/src/physics/labs/heat-capacity/controller.test.ts`
-- `client/src/physics/labs/heat-capacity/HeatCapacityScene.tsx`
-- `client/src/physics/labs/registry.ts`
-- `client/src/physics/curriculum/catalog.ts`
-- `client/src/physicsCatalog.test.ts`
+## Focused Verification
 
-## Self Review
+Ran serially with the bundled Codex runtime because this shell does not expose `node` on PATH:
 
-- The controller uses exact `Q = cmΔT` calculations with water `4200 J/(kg·°C)` and cooking oil `2100 J/(kg·°C)`.
-- Start, tick, stop, record, and reset-trial operations are guarded; trial values are frozen snapshots and session measurements are only derived from the active recorded trial.
-- The scene uses `PhysicsLabShell`, normalized `usePointerDrag` drop actions with cancellation, semantic command actions, accessible numeric mass steppers, and a cleaned-up one-second timer effect.
-- Only `heat-capacity-comparison` is available and registered; all other catalog records remain scheduled.
+```powershell
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\vitest\vitest.mjs' run --maxWorkers=1 --minWorkers=1 src/physics/labs/heat-capacity/controller.test.ts src/physics/labs/heat-capacity/timing.test.ts src/physics/runtime/geometry.test.ts src/physics/runtime/reducer.test.ts src/physics/runtime/svgCoordinates.test.ts src/physics/runtime/useLabRuntime.test.ts src/physics/runtime/usePointerDrag.test.ts src/physicsCatalog.test.ts src/physics/curriculum/catalog.test.ts
+```
 
-## Concerns
+Result: 9 test files passed, 47 tests passed.
 
-- No remaining automated test or typecheck concern. The available local Node runtime was not on the default PATH, so all verification used its explicit Codex runtime path.
-- A hidden Vite process stayed alive but did not accept HTTP connections on `127.0.0.1:5175`; the dev-server endpoint was therefore not used as completion evidence.
+## Remaining Verification
 
-## Review Fix Evidence
-
-- RED: `controller.test.ts`, `usePointerDrag.test.ts`, and the new `timing.test.ts` were run before the implementation. They failed for the intended reasons: a stopped, heated trial still accepted a mass change; pointer cancellation emitted `dragEnd`; and the timing helper did not exist.
-- Focused command: `C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe node_modules/vitest/vitest.mjs run src/physics/labs/heat-capacity/controller.test.ts src/physics/labs/heat-capacity/timing.test.ts src/physics/runtime/usePointerDrag.test.ts src/physicsLabShell.test.ts src/physics/curriculum/catalog.test.ts src/physicsCatalog.test.ts` passed 6 files and 31 tests in 3.78 seconds.
-- Typecheck: `C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe node_modules/typescript/bin/tsc -b` passed with exit code 0.
-- Full serial suite: `C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe node_modules/vitest/vitest.mjs run --no-file-parallelism` passed 26 files and 138 tests in 19.81 seconds.
-- Review coverage now includes: locked-until-reset mass integrity plus recording revalidation; distinct `dragCancel` dispatch and no apparatus placement on cancellation; each explicit snap zone's inside/outside drop path; fractional monotonic timestamp deltas; delayed-callback clamping; and stale interval cleanup.
+- A first `tsc -b` surfaced only two nullability assertions in the new test; those were corrected.
+- The replacement `tsc -b` and full serial suite were intentionally not completed after the user requested that broad checks stop. They are not claimed as passing.

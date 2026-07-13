@@ -17,6 +17,7 @@ export interface PointerDragApi {
 export interface PointerDragOptions {
   stageRef: RefObject<HTMLElement | null>
   dispatch(action: LabAction): void
+  positionFor?(event: Pick<PointerDragEvent, 'clientX' | 'clientY'>): Position | null
 }
 
 export interface PointerCaptureTarget {
@@ -39,6 +40,7 @@ export interface PointerDragEvent {
 export interface PointerDragAdapterOptions {
   stage(): PointerDragStage | null
   dispatch(action: LabAction): void
+  positionFor?(event: Pick<PointerDragEvent, 'clientX' | 'clientY'>): Position | null
 }
 
 export interface PointerDragAdapter {
@@ -48,10 +50,12 @@ export interface PointerDragAdapter {
   onPointerCancel(event: PointerDragEvent): void
 }
 
-export function createPointerDragAdapter({ stage, dispatch }: PointerDragAdapterOptions): PointerDragAdapter {
+export function createPointerDragAdapter({ stage, dispatch, positionFor: positionForOverride }: PointerDragAdapterOptions): PointerDragAdapter {
   let activeDrag: ActiveDrag | null = null
 
   const positionFor = (event: PointerDragEvent): Position | null => {
+    if (positionForOverride) return positionForOverride(event)
+
     const currentStage = stage()
     if (currentStage === null) return null
 
@@ -118,6 +122,19 @@ export function usePointerDrag(options: PointerDragOptions): PointerDragApi {
     adapterRef.current = createPointerDragAdapter({
       stage: () => optionsRef.current.stageRef.current,
       dispatch: (action) => optionsRef.current.dispatch(action),
+      positionFor: (event) => {
+        const mapper = optionsRef.current.positionFor
+        if (mapper) return mapper(event)
+
+        const currentStage = optionsRef.current.stageRef.current
+        if (currentStage === null) return null
+
+        const rect = currentStage.getBoundingClientRect()
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+        }
+      },
     })
   }
 
