@@ -195,6 +195,16 @@ describe('physics lab shell', () => {
     expect(textbookPage).toContain('mx-auto max-w-4xl')
   })
 
+  it('keeps the scene fluid below 2xl without a mobile aspect-ratio width constraint', () => {
+    const source = readFileSync(shellPath, 'utf8')
+
+    expect(source).toContain('flex min-h-[300px]')
+    expect(source).toContain('md:aspect-[16/9]')
+    expect(source).not.toContain('flex aspect-[16/9] min-h-[300px]')
+    expect(source).toContain('<div className="min-w-0 flex-1">')
+    expect(source).toContain('<Scene state={runtime.state} dispatch={dispatchSemantic} />')
+  })
+
   it('describes recoverable storage failures with a new-session action', () => {
     expect(recoveryPrompt(recovery)).toEqual({
       title: '本地实验记录无法恢复',

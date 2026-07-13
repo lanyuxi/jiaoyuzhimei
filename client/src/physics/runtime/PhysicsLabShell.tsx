@@ -164,8 +164,10 @@ export default function PhysicsLabShell<TState>({
               <TooltipButton label="实验报告" onClick={() => setReportOpen(true)}><FileText className="size-4" aria-hidden="true" /></TooltipButton>
             </div>
           </div>
-          <div className="mt-4 flex aspect-[16/9] min-h-[300px] items-stretch overflow-hidden border border-[#dedad2] bg-[#fdfdfc] 2xl:min-h-[480px]">
-            <Scene state={runtime.state} dispatch={dispatchSemantic} />
+          <div className="mt-4 flex min-h-[300px] items-stretch overflow-hidden border border-[#dedad2] bg-[#fdfdfc] md:aspect-[16/9] 2xl:min-h-[480px]">
+            <div className="min-w-0 flex-1">
+              <Scene state={runtime.state} dispatch={dispatchSemantic} />
+            </div>
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#ece8df] pt-4">
             <button type="button" onClick={recordCurrentMeasurements} disabled={isCompleted} className="rounded-[6px] border border-[#165DFF] px-4 py-2 text-sm font-semibold text-[#165DFF] disabled:cursor-not-allowed disabled:opacity-40">记录当前读数</button>
