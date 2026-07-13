@@ -187,6 +187,14 @@ export class PhysicsSessionRepository {
     return session ? cloneSession(session) : undefined
   }
 
+  findLatestInProgress(experimentId: string): PhysicsSession | undefined {
+    const latest = this.sessions
+      .filter((session) => session.experimentId === experimentId && session.status === 'IN_PROGRESS')
+      .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt) || right.id.localeCompare(left.id))[0]
+
+    return latest ? cloneSession(latest) : undefined
+  }
+
   appendEvent(id: string, event: PhysicsEventRecord): PhysicsSession | undefined {
     return this.update(id, (session) => ({
       ...session,

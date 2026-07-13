@@ -43,9 +43,16 @@ const shellPath = join(sourceRoot, 'physics/runtime/PhysicsLabShell.tsx')
 
 class RecordingRepository {
   created: PhysicsSession[] = []
+  restorable: PhysicsSession[] = []
   events: PhysicsEventRecord[] = []
   measurements: PhysicsMeasurementRecord[] = []
   completed: string[] = []
+
+  findLatestInProgress(experimentId: string): PhysicsSession | undefined {
+    return this.restorable
+      .filter((session) => session.experimentId === experimentId && session.status === 'IN_PROGRESS')
+      .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt) || right.id.localeCompare(left.id))[0]
+  }
 
   create(experimentId: string, experimentTitle: string): PhysicsSession {
     const session: PhysicsSession = {
@@ -129,7 +136,47 @@ describe('physics lab shell', () => {
     expect(source).toContain('disabled={isCompleted}')
   })
 
-  it('creates one session per lab mount and records accepted and rejected actions', () => {
+  it('restores an active session across fresh coordinators without creating another record', () => {
+    const repository = new RecordingRepository()
+    const active: PhysicsSession = {
+      version: 1,
+      id: 'restored-session',
+      experimentId: 'water-temperature',
+      experimentTitle: 'Water temperature',
+      status: 'IN_PROGRESS',
+      createdAt: '2026-07-13T00:00:00.000Z',
+      updatedAt: '2026-07-13T00:01:00.000Z',
+      events: [],
+      measurements: [{
+        trialId: 'restored-trial',
+        key: 'temperature',
+        label: 'Temperature',
+        value: 32,
+        unit: 'C',
+        kind: 'raw',
+        at: '2026-07-13T00:01:00.000Z',
+        conditions: [...conditions],
+      }],
+    }
+    repository.restorable = [
+      { ...active, id: 'completed-session', status: 'COMPLETED' },
+      { ...active, id: 'different-experiment-session', experimentId: 'different-experiment' },
+      active,
+    ]
+
+    const firstCoordinator = createLabSessionCoordinator(repository, 'water-temperature', 'Water temperature')
+    const restored = firstCoordinator.ensureSession()
+    const remounted = createLabSessionCoordinator(repository, 'water-temperature', 'Water temperature').ensureSession()
+
+    expect(restored).toEqual(active)
+    expect(remounted).toEqual(active)
+    expect(remounted.measurements).toEqual(active.measurements)
+    expect(repository.created).toHaveLength(0)
+    expect(firstCoordinator.createNewSession().id).not.toBe(active.id)
+    expect(repository.created).toHaveLength(1)
+  })
+
+  it('keeps one session within a coordinator and records accepted and rejected actions', () => {
     const repository = new RecordingRepository()
     const coordinator = createLabSessionCoordinator(repository, 'water-temperature', '用温度计测量水的温度')
 

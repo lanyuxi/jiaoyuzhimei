@@ -8,7 +8,10 @@ import type {
   PhysicsSessionRecoveryResult,
 } from '../sessions/types'
 
-type SessionWriter = Pick<PhysicsSessionRepository, 'appendEvent' | 'appendMeasurement' | 'complete' | 'create'>
+type SessionWriter = Pick<
+  PhysicsSessionRepository,
+  'appendEvent' | 'appendMeasurement' | 'complete' | 'create' | 'findLatestInProgress'
+>
 
 let fallbackRecordId = 0
 
@@ -30,7 +33,7 @@ export interface LabSessionCoordinator {
 }
 
 export function createLabSessionCoordinator(
-  repository: Pick<SessionWriter, 'create'>,
+  repository: Pick<SessionWriter, 'create' | 'findLatestInProgress'>,
   experimentId: string,
   experimentTitle: string,
 ): LabSessionCoordinator {
@@ -42,7 +45,10 @@ export function createLabSessionCoordinator(
   }
 
   return {
-    ensureSession: () => session ?? create(),
+    ensureSession: () => {
+      session ??= repository.findLatestInProgress(experimentId) ?? create()
+      return session
+    },
     createNewSession: create,
   }
 }

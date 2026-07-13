@@ -331,6 +331,33 @@ describe('physics session repository', () => {
     expect(restored.get(session.id)?.measurements).toEqual([measurement])
   })
 
+  it('selects the latest in-progress session for an experiment without writing another record', () => {
+    const storage = new CountingStorage()
+    const initial = new PhysicsSessionRepository(storage)
+    const older = initial.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const latest = initial.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const completed = initial.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const differentExperiment = initial.create('series-parallel-circuit', 'Series and parallel circuit')
+    initial.appendMeasurement(latest.id, measurement)
+    initial.complete(completed.id)
+
+    const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>
+    for (const session of stored) {
+      if (session.id === older.id) Object.assign(session, { id: 'session-a', updatedAt: '2026-07-13T00:00:00.000Z' })
+      if (session.id === latest.id) Object.assign(session, { id: 'session-z', updatedAt: '2026-07-13T00:00:00.000Z' })
+      if (session.id === completed.id) Object.assign(session, { id: 'completed-session', updatedAt: '2026-07-13T00:01:00.000Z' })
+      if (session.id === differentExperiment.id) Object.assign(session, { id: 'different-experiment-session', updatedAt: '2026-07-13T00:02:00.000Z' })
+    }
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, JSON.stringify(stored))
+    const writesBeforeSelection = storage.writes
+    const restored = new PhysicsSessionRepository(storage)
+
+    expect(restored.findLatestInProgress('heat-capacity-comparison')).toMatchObject({ id: 'session-z', measurements: [measurement] })
+    expect(restored.findLatestInProgress('series-parallel-circuit')).toMatchObject({ id: 'different-experiment-session' })
+    expect(restored.findLatestInProgress('missing-experiment')).toBeUndefined()
+    expect(storage.writes).toBe(writesBeforeSelection)
+  })
+
   it('keeps in-memory changes available when storage writes fail', () => {
     const repository = new PhysicsSessionRepository(new WriteFailingStorage())
 
