@@ -214,9 +214,10 @@ describe('heat capacity comparison controller', () => {
   it('keeps the available curriculum labs registered against their catalog records', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
 
-    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
-    expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
+    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
+    expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
     expect(labRegistry.get('heat-capacity-comparison')?.experimentId).toBe('heat-capacity-comparison')
     expect(labRegistry.get('series-parallel-circuit')?.experimentId).toBe('series-parallel-circuit')
+    expect(labRegistry.get('electromagnetic-induction')?.experimentId).toBe('electromagnetic-induction')
   })
 })

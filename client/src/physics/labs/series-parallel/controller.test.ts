@@ -212,10 +212,10 @@ describe('series parallel circuit controller', () => {
     expect(cancelled.feedback.outcome).toBe('accepted')
   })
 
-  it('registers exactly the heat-capacity and series-parallel available labs', () => {
+  it('registers exactly the three available benchmark labs', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
-    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
-    expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
-    expect([...labRegistry.keys()]).toEqual(['heat-capacity-comparison', 'series-parallel-circuit'])
+    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
+    expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
+    expect([...labRegistry.keys()]).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
   })
 })
