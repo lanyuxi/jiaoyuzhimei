@@ -164,7 +164,7 @@ export default function PhysicsLabShell<TState>({
               <TooltipButton label="实验报告" onClick={() => setReportOpen(true)}><FileText className="size-4" aria-hidden="true" /></TooltipButton>
             </div>
           </div>
-          <div className="mt-4 flex min-h-[300px] items-stretch overflow-hidden border border-[#dedad2] bg-[#fdfdfc] md:aspect-[16/9] 2xl:min-h-[480px]">
+          <div className="mt-4 flex min-h-[480px] items-stretch overflow-hidden border border-[#dedad2] bg-[#fdfdfc] md:min-h-[300px] md:aspect-[16/9] 2xl:min-h-[480px]">
             <div className="min-w-0 flex-1">
               <Scene state={runtime.state} dispatch={dispatchSemantic} />
             </div>

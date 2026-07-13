@@ -93,7 +93,7 @@ export function ElectromagneticInductionScene({ state, dispatch }: PhysicsLabSce
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-[#07111e] text-[#e8f2fb]">
+    <div className="flex h-full w-full min-h-0 flex-col bg-[#07111e] text-[#e8f2fb]">
       <div ref={stageRef} className="relative min-h-0 flex-1 touch-none overflow-hidden">
         <svg viewBox={`0 0 ${BENCH.width} ${BENCH.height}`} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 size-full" role="img" aria-label="电磁感应实验台，可拖动导体棒穿过磁场">
           <defs>

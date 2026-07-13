@@ -1,5 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { createElement } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import {
   LAB_MAIN_HORIZONTAL_PADDING,
@@ -8,6 +10,12 @@ import {
 import { textbookExperimentById } from './physics/curriculum/catalog'
 import type { TextbookPhysicsExperiment } from './physics/curriculum/types'
 import { resolveLabRegistration } from './physics/PhysicsLabHost'
+import { HeatCapacityScene } from './physics/labs/heat-capacity/HeatCapacityScene'
+import { heatCapacityController } from './physics/labs/heat-capacity/controller'
+import { ElectromagneticInductionScene } from './physics/labs/electromagnetic-induction/ElectromagneticInductionScene'
+import { electromagneticInductionController } from './physics/labs/electromagnetic-induction/controller'
+import { SeriesParallelScene } from './physics/labs/series-parallel/SeriesParallelScene'
+import { seriesParallelController } from './physics/labs/series-parallel/controller'
 import { groupMeasurementsByTrial } from './physics/runtime/MeasurementTable'
 import { LAB_DESKTOP_LAYOUT } from './physics/runtime/PhysicsLabShell'
 import {
@@ -198,11 +206,31 @@ describe('physics lab shell', () => {
   it('keeps the scene fluid below 2xl without a mobile aspect-ratio width constraint', () => {
     const source = readFileSync(shellPath, 'utf8')
 
-    expect(source).toContain('flex min-h-[300px]')
-    expect(source).toContain('md:aspect-[16/9]')
+    expect(source).toContain('flex min-h-[480px]')
+    expect(source).toContain('md:min-h-[300px] md:aspect-[16/9]')
     expect(source).not.toContain('flex aspect-[16/9] min-h-[300px]')
     expect(source).toContain('<div className="min-w-0 flex-1">')
     expect(source).toContain('<Scene state={runtime.state} dispatch={dispatchSemantic} />')
+  })
+
+  it('renders Stage A scene roots that fill the fluid child and a non-overlapping heat tray', () => {
+    const dispatch = () => undefined
+    const sceneMarkup = [
+      renderToStaticMarkup(createElement(HeatCapacityScene, { state: heatCapacityController.createInitialState(), dispatch })),
+      renderToStaticMarkup(createElement(SeriesParallelScene, { state: seriesParallelController.createInitialState(), dispatch })),
+      renderToStaticMarkup(createElement(ElectromagneticInductionScene, { state: electromagneticInductionController.createInitialState(), dispatch })),
+    ]
+
+    for (const markup of sceneMarkup) {
+      const rootClass = markup.match(/^<div class="([^"]+)"/)?.[1].split(' ') ?? []
+      expect(rootClass).toEqual(expect.arrayContaining(['flex', 'h-full', 'w-full', 'min-h-0', 'flex-col']))
+      expect(markup).toContain('absolute inset-0 size-full')
+    }
+
+    const heatMarkup = sceneMarkup[0]
+    expect(heatMarkup).toContain('grid-cols-2')
+    expect(heatMarkup).toContain('md:grid-cols-4')
+    expect(heatMarkup).not.toContain('bottom-3 grid h-12 w-28')
   })
 
   it('describes recoverable storage failures with a new-session action', () => {

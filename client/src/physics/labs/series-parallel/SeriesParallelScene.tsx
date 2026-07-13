@@ -96,7 +96,7 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-[#0b1420] text-[#e8f2ff]">
+    <div className="flex h-full w-full min-h-0 flex-col bg-[#0b1420] text-[#e8f2ff]">
       <div ref={stageRef} className="relative min-h-0 flex-1 touch-none overflow-hidden">
         <svg ref={svgRef} viewBox={`0 0 ${workbenchWidth} ${workbenchHeight}`} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 size-full" role="img" aria-label="连接串联电路和并联电路的实验台">
           <rect width={workbenchWidth} height={workbenchHeight} fill="#0b1420" />

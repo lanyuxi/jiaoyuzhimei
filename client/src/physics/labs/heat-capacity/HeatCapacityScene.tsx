@@ -71,19 +71,12 @@ function DragTool({
   if (placed) return null
   const thermometer = subject.endsWith('Thermometer')
   const oil = subject.startsWith('oil')
-  const leftBySubject: Record<HeatCapacityDragSubject, string> = {
-    waterThermometer: '4%',
-    oilThermometer: '17%',
-    waterHeater: '30%',
-    oilHeater: '43%',
-  }
   return (
     <button
       type="button"
       aria-label={dragSubjectLabel(subject)}
       title={dragSubjectLabel(subject)}
-      className={`absolute bottom-3 grid h-12 w-28 place-items-center rounded-[6px] border text-xs font-semibold ${thermometer ? 'border-[#8ec6ff] bg-[#193451] text-[#e7f4ff]' : 'border-[#e58c56] bg-[#442719] text-[#ffe3d2]'}`}
-      style={{ left: leftBySubject[subject] }}
+      className={`grid h-11 w-full min-w-0 place-items-center rounded-[6px] border text-xs font-semibold ${thermometer ? 'border-[#8ec6ff] bg-[#193451] text-[#e7f4ff]' : 'border-[#e58c56] bg-[#442719] text-[#ffe3d2]'}`}
       onPointerDown={(event) => pointerDrag.onPointerDown(event, subject)}
       onPointerMove={pointerDrag.onPointerMove}
       onPointerUp={pointerDrag.onPointerUp}
@@ -138,7 +131,7 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-[#101722] text-[#e6edf7]">
+    <div className="flex h-full w-full min-h-0 flex-col bg-[#101722] text-[#e6edf7]">
       <div ref={stageRef} className="relative min-h-0 flex-1 touch-none overflow-hidden">
         <svg viewBox={`0 0 ${workbenchWidth} ${workbenchHeight}`} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 size-full" role="img" aria-label="水和食用油吸热能力比较实验台">
           <rect width={workbenchWidth} height={workbenchHeight} fill="#101722" />
@@ -153,7 +146,7 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
           <g transform="translate(760 120)"><rect width="144" height="104" rx="6" fill="#172333" stroke="#52718f" /><text x="72" y="27" fill="#9fb0c5" fontSize="13" textAnchor="middle">秒表</text><text x="72" y="70" fill="#f8fbff" fontSize="30" fontWeight="700" textAnchor="middle">{state.elapsedSeconds.toFixed(1)} s</text></g>
           <g transform="translate(56 120)"><rect width="132" height="104" rx="6" fill="#172333" stroke="#52718f" /><text x="66" y="27" fill="#9fb0c5" fontSize="13" textAnchor="middle">控制条件</text><text x="66" y="55" fill="#f8fbff" fontSize="15" textAnchor="middle">P = {state.heaterPower} W</text><text x="66" y="79" fill="#f8fbff" fontSize="15" textAnchor="middle">T₀ = 25°C</text></g>
         </svg>
-        <div className="absolute bottom-0 left-0 right-0 h-[76px] border-t border-[#30435a] bg-[#142031]">
+        <div className="absolute bottom-0 left-0 right-0 grid min-h-[136px] grid-cols-2 gap-2 border-t border-[#30435a] bg-[#142031] px-3 pb-3 pt-7 md:min-h-[76px] md:grid-cols-4 md:items-end md:px-4 md:pb-2 md:pt-6">
           <p className="absolute right-4 top-2 text-xs font-semibold text-[#8fa0b7]">器材托盘</p>
           <DragTool subject="waterThermometer" placed={state.waterThermometerPlaced} pointerDrag={pointerDrag} />
           <DragTool subject="oilThermometer" placed={state.oilThermometerPlaced} pointerDrag={pointerDrag} />
