@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { physicsCategories, physicsDifficultyLabels, physicsExperiments } from './physics/data'
+import { textbookPhysicsExperiments } from './physics/curriculum/catalog'
+import { labRegistry } from './physics/labs/registry'
 
 const projectRoot = process.cwd()
 const srcRoot = join(projectRoot, 'src')
@@ -43,6 +45,36 @@ describe('physics project integration', () => {
     expect(physicsCategories).toHaveLength(14)
     expect(categoryTotal).toBe(133)
     expect(slugs.has('spring-oscillation')).toBe(true)
+  })
+
+  it('ships the stage A textbook lab platform', () => {
+    const appSource = readFileSync(join(srcRoot, 'App.tsx'), 'utf8')
+    const availableExperimentIds = textbookPhysicsExperiments
+      .filter((experiment) => experiment.availability === 'available')
+      .map((experiment) => experiment.id)
+    const routeOrder = [
+      'path="physics"',
+      'path="physics/sessions"',
+      'path="physics/sessions/:id/report"',
+      'path="physics/labs/:id"',
+      'path="physics/:slug"',
+    ]
+    const routeOffsets = routeOrder.map((route) => appSource.indexOf(route))
+
+    expect(textbookPhysicsExperiments).toHaveLength(65)
+    expect(physicsExperiments).toHaveLength(133)
+    expect([...labRegistry.keys()].sort()).toEqual([
+      'electromagnetic-induction',
+      'heat-capacity-comparison',
+      'series-parallel-circuit',
+    ])
+    expect(availableExperimentIds).toEqual([
+      'heat-capacity-comparison',
+      'series-parallel-circuit',
+      'electromagnetic-induction',
+    ])
+    expect(routeOffsets.every((offset) => offset >= 0)).toBe(true)
+    expect(routeOffsets).toEqual([...routeOffsets].sort((left, right) => left - right))
   })
 
   it('keeps physics difficulty labels readable', () => {
