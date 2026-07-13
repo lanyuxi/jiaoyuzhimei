@@ -484,7 +484,7 @@ describe('physics session repository', () => {
     const latest = initial.create('heat-capacity-comparison', 'Heat capacity comparison')
     const completed = initial.create('heat-capacity-comparison', 'Heat capacity comparison')
     const differentExperiment = initial.create('series-parallel-circuit', 'Series and parallel circuit')
-    initial.appendMeasurement(latest.id, measurement)
+    initial.synchronize(latest.id, synchronization())
     initial.complete(completed.id)
 
     const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>

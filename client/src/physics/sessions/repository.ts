@@ -256,7 +256,11 @@ export class PhysicsSessionRepository {
 
   findLatestInProgress(experimentId: string): PhysicsSession | undefined {
     const latest = this.sessions
-      .filter((session) => session.experimentId === experimentId && session.status === 'IN_PROGRESS')
+      .filter((session) => (
+        session.experimentId === experimentId
+        && session.status === 'IN_PROGRESS'
+        && (session.runtimeSnapshot !== undefined || session.measurements.length === 0)
+      ))
       .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt) || right.id.localeCompare(left.id))[0]
 
     return latest ? cloneSession(latest) : undefined

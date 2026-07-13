@@ -55,3 +55,41 @@ The circuit hit areas were changed to one-sided transparent non-scaling stroke s
 ## Concerns
 
 No task-blocking concerns remain. Both Vite builds retain the repository's existing warning about a mixed static/dynamic `BasicArithmetic` import and chunks larger than 1500 kB; this change did not introduce or expand those warnings.
+
+## Legacy Continuation Migration Addendum
+
+Date: 2026-07-13
+
+### Finding And Resolution
+
+Measurement-bearing legacy `IN_PROGRESS` sessions without a `runtimeSnapshot` were still eligible for mutable continuation. An accepted lab action could therefore synchronize an initial controller state over historical rows. `findLatestInProgress` now excludes only sessions where `runtimeSnapshot === undefined` and `measurements.length > 0`. Such sessions remain available through `get` and `list` as historical records, while the coordinator creates one fresh mutable session. Snapshotless sessions with no measurements remain eligible and safely start from controller initial state. No controller state is fabricated from legacy rows, and the two Minor review findings were not changed.
+
+### TDD Evidence
+
+Focused command:
+
+```powershell
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\vitest\vitest.mjs' run 'src\physics\sessions\repository.test.ts' 'src\physicsLabShell.test.ts' --maxWorkers=1 --no-file-parallelism
+```
+
+- RED: 1 failed and 44 passed. The real repository returned the measurement-bearing snapshotless session instead of `undefined`.
+- GREEN: 2 files and 45 tests passed. The regression confirms coordinator creation of one fresh session and byte-identical serialized measurements from `get` on the legacy session.
+
+### Verification Commands
+
+```powershell
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\vitest\vitest.mjs' run --maxWorkers=1 --no-file-parallelism
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\typescript\bin\tsc' -b
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\tsx\dist\cli.mjs' 'scripts\check-course-integrity.ts'
+& 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\vite\bin\vite.js' build
+$env:GITHUB_PAGES='true'; & 'C:\Users\85120\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' '.\node_modules\vite\bin\vite.js' build --logLevel error
+```
+
+Results:
+
+- Full serial Vitest: 29 files and 196 tests passed.
+- TypeScript: `tsc -b` passed with no diagnostics.
+- Course integrity: 55 course configs complete.
+- Standard Vite production build: passed, 3965 modules transformed.
+- GitHub Pages production build: the first 180-second wrapper timed out after transform/render output; the clean rerun completed with exit code 0 in 136.3 seconds.
+- Existing Vite mixed-import and large-chunk warnings remain unchanged.

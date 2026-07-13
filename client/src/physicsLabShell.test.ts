@@ -199,6 +199,7 @@ describe('physics lab shell', () => {
         at: '2026-07-13T00:01:00.000Z',
         conditions: [...conditions],
       }],
+      runtimeSnapshot: { apparatusReady: true },
     }
     repository.restorable = [
       { ...active, id: 'completed-session', status: 'COMPLETED' },
@@ -216,6 +217,33 @@ describe('physics lab shell', () => {
     expect(repository.created).toHaveLength(0)
     expect(firstCoordinator.createNewSession().id).not.toBe(active.id)
     expect(repository.created).toHaveLength(1)
+  })
+
+  it('starts a fresh session instead of continuing measurement-bearing legacy history', () => {
+    const repository = new PhysicsSessionRepository(new MemorySessionStorage())
+    const experiment = textbookExperimentById.get('heat-capacity-comparison')!
+    const legacy = repository.create(experiment.id, experiment.title)
+    const legacyMeasurement: PhysicsMeasurementRecord = {
+      trialId: 'legacy-trial',
+      key: 'temperature',
+      label: 'Temperature',
+      value: 32,
+      unit: 'C',
+      kind: 'raw',
+      at: '2026-07-13T00:01:00.000Z',
+      conditions: [...conditions],
+    }
+    repository.appendMeasurement(legacy.id, legacyMeasurement)
+    const preservedMeasurements = JSON.stringify(repository.get(legacy.id)?.measurements)
+
+    expect(repository.findLatestInProgress(experiment.id)).toBeUndefined()
+
+    const session = createLabSessionCoordinator(repository, experiment.id, experiment.title).ensureSession()
+
+    expect(session.id).not.toBe(legacy.id)
+    expect(session.measurements).toEqual([])
+    expect(repository.list()).toHaveLength(2)
+    expect(JSON.stringify(repository.get(legacy.id)?.measurements)).toBe(preservedMeasurements)
   })
 
   it('hydrates a fresh runtime from the restored coordinator snapshot', () => {
