@@ -1,6 +1,10 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import {
+  LAB_MAIN_HORIZONTAL_PADDING,
+  LAB_MAIN_MAX_WIDTH,
+} from './components/Layout/Layout'
 import { textbookExperimentById } from './physics/curriculum/catalog'
 import type { TextbookPhysicsExperiment } from './physics/curriculum/types'
 import { resolveLabRegistration } from './physics/PhysicsLabHost'
@@ -161,8 +165,11 @@ describe('physics lab shell', () => {
 
   it('guarantees the available-lab desktop scene width while retaining responsive rails', () => {
     const source = readFileSync(shellPath, 'utf8')
+    const layout = readFileSync(join(sourceRoot, 'components/Layout/Layout.tsx'), 'utf8')
     const textbookPage = readFileSync(join(sourceRoot, 'physics/TextbookPhysicsExperimentPage.tsx'), 'utf8')
-    const sceneWidth = AVAILABLE_LAB_CONTAINER_WIDTH
+    const layoutContentWidth = Math.min(AVAILABLE_LAB_CONTAINER_WIDTH, LAB_MAIN_MAX_WIDTH)
+      - (LAB_MAIN_HORIZONTAL_PADDING * 2)
+    const sceneWidth = layoutContentWidth
       - (AVAILABLE_LAB_HORIZONTAL_PADDING * 2)
       - (LAB_DESKTOP_LAYOUT.gap * 2)
       - LAB_DESKTOP_LAYOUT.apparatusWidth
@@ -176,9 +183,16 @@ describe('physics lab shell', () => {
       gap: 16,
     })
     expect(sceneWidth).toBeGreaterThanOrEqual(LAB_DESKTOP_LAYOUT.sceneMinWidth)
+    expect(sceneWidth).toBeGreaterThanOrEqual(853.34)
+    expect(sceneWidth / (16 / 9)).toBeGreaterThanOrEqual(480)
     expect(source).toContain('2xl:grid-cols-[240px_minmax(0,1fr)_300px]')
     expect(source).toContain('2xl:min-h-[480px]')
+    expect(layout).toContain("location.pathname.startsWith('/physics/labs/')")
+    expect(layout).toContain('max-w-[1536px]')
+    expect(layout).toContain('2xl:px-0')
+    expect(layout).toContain("'max-w-[1420px] md:px-8'")
     expect(textbookPage).toContain('max-w-[1536px]')
+    expect(textbookPage).toContain('mx-auto max-w-4xl')
   })
 
   it('describes recoverable storage failures with a new-session action', () => {

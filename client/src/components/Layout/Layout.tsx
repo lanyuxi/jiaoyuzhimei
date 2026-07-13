@@ -5,12 +5,16 @@ import { BugReportButton } from '../BugReport'
 
 const logoSrc = `${import.meta.env.BASE_URL}education-beauty-logo.png`
 
+export const LAB_MAIN_MAX_WIDTH = 1536
+export const LAB_MAIN_HORIZONTAL_PADDING = 0
+
 function LayoutContent() {
   const narration = useNarrationOptional()
   const location = useLocation()
   const isNarrationMode = narration?.playbackState.isNarrationMode || false
   const isPresenterMode = narration?.playbackState.isPresenterMode || false
   const experimentPath = location.pathname
+  const isPhysicsLabRoute = location.pathname.startsWith('/physics/labs/')
   const nonExperimentPaths = new Set([
     '/',
     '/math',
@@ -76,7 +80,7 @@ function LayoutContent() {
       </header>
 
       <main className={`transition-all duration-300 ${isNarrationMode ? 'pb-20' : ''}`}>
-        <div className="mx-auto flex min-h-[calc(100vh-64px)] max-w-[1420px] flex-col px-4 py-5 md:px-8 md:py-7">
+        <div className={`mx-auto flex min-h-[calc(100vh-64px)] w-full flex-col px-4 py-5 md:py-7 ${isPhysicsLabRoute ? 'max-w-[1536px] 2xl:px-0' : 'max-w-[1420px] md:px-8'}`}>
           <div className="animate-fade-in flex-1">
             <Outlet />
           </div>
