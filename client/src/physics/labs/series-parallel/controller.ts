@@ -42,20 +42,19 @@ export interface CircuitLabState {
 
 const accepted = (message: string): LabFeedback => ({ outcome: 'accepted', message })
 const rejected = (message: string): LabFeedback => ({ outcome: 'rejected', message })
-const terminalIds = new Set(Object.keys(CIRCUIT_TERMINALS))
-const seriesWireKeys = new Set([
-  'battery+::switch-a',
-  'lamp1-a::switch-b',
-  'lamp1-b::lamp2-a',
-  'battery-::lamp2-b',
-])
-const parallelWireKeys = new Set([
-  'battery+::switch-a',
-  'lamp1-a::switch-b',
-  'lamp2-a::switch-b',
-  'battery-::lamp1-b',
-  'battery-::lamp2-b',
-])
+const terminalList = Object.keys(CIRCUIT_TERMINALS) as CircuitTerminalId[]
+const terminalIds = new Set<string>(terminalList)
+const switchContinuity = COMPONENT_INTERNAL_CONNECTIONS.find(([from]) => from.startsWith('switch'))!
+const lampContinuities = COMPONENT_INTERNAL_CONNECTIONS.filter(([from]) => from.startsWith('lamp'))
+
+interface IndexedCircuitEdge {
+  readonly from: CircuitTerminalId
+  readonly to: CircuitTerminalId
+  readonly index: number
+  readonly kind: 'wire' | 'switch' | 'lamp'
+}
+
+type CircuitAdjacency = ReadonlyMap<CircuitTerminalId, readonly IndexedCircuitEdge[]>
 
 function freezeEdges(edges: readonly CircuitEdge[]): readonly CircuitEdge[] {
   return Object.freeze(edges.map((edge) => Object.freeze({ from: edge.from, to: edge.to })))
@@ -78,18 +77,115 @@ function stateWith(state: CircuitLabState, patch: Partial<CircuitLabState>): Cir
   }
 }
 
-function sameKeys(actual: ReadonlySet<string>, expected: ReadonlySet<string>): boolean {
-  return actual.size === expected.size && [...actual].every((key) => expected.has(key))
+function topologyError(): CircuitValidation {
+  return { valid: false, code: 'unexpected-topology', message: '导线连接与该电路图不一致，请检查每个元件端点' }
 }
 
-function validateExactTopology(graph: CircuitGraph, expected: ReadonlySet<string>, message: string): CircuitValidation {
-  const safe = validateCircuitSafety(graph)
-  if (!safe.valid) return safe
-  const keys = new Set(graph.edges.map(normalizedEdgeKey))
-  if (!sameKeys(keys, expected)) {
-    return { valid: false, code: 'unexpected-topology', message: '导线连接与该电路图不一致，请检查每个元件端点' }
+function componentEdges(includeSwitch: boolean): readonly CircuitEdge[] {
+  return [
+    ...lampContinuities.map(([from, to]) => ({ from, to })),
+    ...(includeSwitch ? [{ from: switchContinuity[0], to: switchContinuity[1] }] : []),
+  ]
+}
+
+function indexedEdges(graph: CircuitGraph, includeSwitch: boolean): readonly IndexedCircuitEdge[] {
+  const wires = graph.edges.map((edge) => ({ ...edge, kind: 'wire' as const }))
+  const lamps = lampContinuities.map(([from, to]) => ({ from, to, kind: 'lamp' as const }))
+  const switchEdge = includeSwitch ? [{ from: switchContinuity[0], to: switchContinuity[1], kind: 'switch' as const }] : []
+  return [...wires, ...lamps, ...switchEdge].map((edge, index) => ({
+    ...edge,
+    from: edge.from as CircuitTerminalId,
+    to: edge.to as CircuitTerminalId,
+    index,
+  }))
+}
+
+function buildAdjacency(edges: readonly IndexedCircuitEdge[]): CircuitAdjacency {
+  const adjacency = new Map<CircuitTerminalId, IndexedCircuitEdge[]>(terminalList.map((id) => [id, []]))
+  for (const edge of edges) {
+    adjacency.get(edge.from)!.push(edge)
+    adjacency.get(edge.to)!.push(edge)
   }
-  return { valid: true, message }
+  return adjacency
+}
+
+function opposite(edge: IndexedCircuitEdge, terminal: CircuitTerminalId): CircuitTerminalId {
+  return edge.from === terminal ? edge.to : edge.from
+}
+
+function reachable(adjacency: CircuitAdjacency, start: CircuitTerminalId, skippedEdge?: number): ReadonlySet<CircuitTerminalId> {
+  const visited = new Set<CircuitTerminalId>([start])
+  const pending = [start]
+  while (pending.length > 0) {
+    const terminal = pending.pop()!
+    for (const edge of adjacency.get(terminal)!) {
+      if (edge.index === skippedEdge) continue
+      const next = opposite(edge, terminal)
+      if (!visited.has(next)) {
+        visited.add(next)
+        pending.push(next)
+      }
+    }
+  }
+  return visited
+}
+
+function bridgeIndexes(adjacency: CircuitAdjacency): ReadonlySet<number> {
+  const discovery = new Map<CircuitTerminalId, number>()
+  const low = new Map<CircuitTerminalId, number>()
+  const bridges = new Set<number>()
+  let time = 0
+
+  const visit = (terminal: CircuitTerminalId, parent?: number) => {
+    time += 1
+    discovery.set(terminal, time)
+    low.set(terminal, time)
+    for (const edge of adjacency.get(terminal)!) {
+      if (edge.index === parent) continue
+      const next = opposite(edge, terminal)
+      if (!discovery.has(next)) {
+        visit(next, edge.index)
+        low.set(terminal, Math.min(low.get(terminal)!, low.get(next)!))
+        if (low.get(next)! > discovery.get(terminal)!) bridges.add(edge.index)
+      } else {
+        low.set(terminal, Math.min(low.get(terminal)!, discovery.get(next)!))
+      }
+    }
+  }
+
+  for (const terminal of terminalList) {
+    if (!discovery.has(terminal)) visit(terminal)
+  }
+  return bridges
+}
+
+function simplePaths(adjacency: CircuitAdjacency, start: CircuitTerminalId, end: CircuitTerminalId, allowed: ReadonlySet<CircuitTerminalId>): readonly (readonly IndexedCircuitEdge[])[] {
+  const paths: IndexedCircuitEdge[][] = []
+  const visit = (terminal: CircuitTerminalId, visited: ReadonlySet<CircuitTerminalId>, path: readonly IndexedCircuitEdge[]) => {
+    if (paths.length > 2) return
+    if (terminal === end) {
+      paths.push([...path])
+      return
+    }
+    for (const edge of adjacency.get(terminal)!.slice().sort((left, right) => left.index - right.index)) {
+      const next = opposite(edge, terminal)
+      if (allowed.has(next) && !visited.has(next)) {
+        visit(next, new Set([...visited, next]), [...path, edge])
+      }
+    }
+  }
+  visit(start, new Set([start]), [])
+  return paths
+}
+
+function terminalsOnPath(start: CircuitTerminalId, path: readonly IndexedCircuitEdge[]): ReadonlySet<CircuitTerminalId> {
+  const terminals = new Set<CircuitTerminalId>([start])
+  let current = start
+  for (const edge of path) {
+    current = opposite(edge, current)
+    terminals.add(current)
+  }
+  return terminals
 }
 
 function activeTrial(state: CircuitLabState): CircuitTrial | undefined {
@@ -104,14 +200,14 @@ export function circuitFromEdges(edges: readonly CircuitEdge[]): CircuitGraph {
   return { edges: freezeEdges(edges) }
 }
 
-export function circuitWithInternalContinuity(graph: CircuitGraph): CircuitGraph {
+export function circuitWithInternalContinuity(graph: CircuitGraph, switchClosed = true): CircuitGraph {
   return circuitFromEdges([
     ...graph.edges,
-    ...COMPONENT_INTERNAL_CONNECTIONS.map(([from, to]) => ({ from, to })),
+    ...componentEdges(switchClosed),
   ])
 }
 
-export function validateCircuitSafety(graph: CircuitGraph): CircuitValidation {
+export function validateCircuitSafety(graph: CircuitGraph, switchClosed = true): CircuitValidation {
   const seen = new Set<string>()
   for (const edge of graph.edges) {
     if (!isTerminalId(edge.from) || !isTerminalId(edge.to)) {
@@ -121,17 +217,64 @@ export function validateCircuitSafety(graph: CircuitGraph): CircuitValidation {
     const key = normalizedEdgeKey(edge)
     if (seen.has(key)) return { valid: false, code: 'duplicate-wire', message: '两接线柱之间已有导线' }
     seen.add(key)
-    if (key === 'battery+::battery-') return { valid: false, code: 'battery-short', message: '电源两极不能用导线直接相连' }
+  }
+  const conductiveEdges = indexedEdges(graph, switchClosed).filter((edge) => edge.kind !== 'lamp')
+  if (reachable(buildAdjacency(conductiveEdges), 'battery+').has('battery-')) {
+    return { valid: false, code: 'battery-short', message: '电源两极不能用导线直接相连' }
   }
   return { valid: true, message: '连接安全' }
 }
 
 export function validateSeriesCircuit(graph: CircuitGraph): CircuitValidation {
-  return validateExactTopology(graph, seriesWireKeys, '串联电路连接正确')
+  const safe = validateCircuitSafety(graph)
+  if (!safe.valid) return safe
+  const edges = indexedEdges(graph, true)
+  const adjacency = buildAdjacency(edges)
+  if (reachable(adjacency, 'battery+').size !== terminalList.length) return topologyError()
+  if (adjacency.get('battery+')!.length !== 1 || adjacency.get('battery-')!.length !== 1) return topologyError()
+  if (terminalList.filter((terminal) => !terminal.startsWith('battery')).some((terminal) => adjacency.get(terminal)!.length !== 2)) return topologyError()
+  return { valid: true, message: '串联电路连接正确' }
 }
 
 export function validateParallelCircuit(graph: CircuitGraph): CircuitValidation {
-  return validateExactTopology(graph, parallelWireKeys, '并联电路连接正确')
+  const safe = validateCircuitSafety(graph)
+  if (!safe.valid) return safe
+  const edges = indexedEdges(graph, true)
+  const adjacency = buildAdjacency(edges)
+  if (edges.length !== terminalList.length || reachable(adjacency, 'battery+').size !== terminalList.length) return topologyError()
+
+  const switchEdge = edges.find((edge) => edge.kind === 'switch')!
+  if (!bridgeIndexes(adjacency).has(switchEdge.index)) return topologyError()
+
+  const firstComponent = reachable(adjacency, switchEdge.from, switchEdge.index)
+  const secondComponent = reachable(adjacency, switchEdge.to, switchEdge.index)
+  const lampTerminals = new Set<CircuitTerminalId>(lampContinuities.flat())
+  const components = [firstComponent, secondComponent]
+  const isolated = components.find((component) => {
+    const batteryCount = ['battery+', 'battery-'].filter((terminal) => component.has(terminal as CircuitTerminalId)).length
+    return batteryCount === 1 && ![...lampTerminals].some((terminal) => component.has(terminal))
+  })
+  const network = components.find((component) => component !== isolated)
+  if (!isolated || !network || ![...lampTerminals].every((terminal) => network.has(terminal))) return topologyError()
+
+  const networkSwitchTerminal = network.has(switchEdge.from) ? switchEdge.from : switchEdge.to
+  const networkBatteryTerminal = network.has('battery+') ? 'battery+' : network.has('battery-') ? 'battery-' : null
+  if (!networkBatteryTerminal) return topologyError()
+
+  const paths = simplePaths(adjacency, networkSwitchTerminal, networkBatteryTerminal, network)
+  if (paths.length !== 2) return topologyError()
+  const pathEdges = new Set(paths.flat().map((edge) => edge.index))
+  const networkEdges = edges.filter((edge) => edge.index !== switchEdge.index && network.has(edge.from) && network.has(edge.to))
+  if (networkEdges.some((edge) => !pathEdges.has(edge.index))) return topologyError()
+  if (paths.some((path) => path.filter((edge) => edge.kind === 'lamp').length !== 1)) return topologyError()
+
+  const sharedTerminals = new Set<CircuitTerminalId>()
+  const firstPathTerminals = terminalsOnPath(networkSwitchTerminal, paths[0]!)
+  const secondPathTerminals = terminalsOnPath(networkSwitchTerminal, paths[1]!)
+  for (const terminal of firstPathTerminals) if (secondPathTerminals.has(terminal)) sharedTerminals.add(terminal)
+  if (sharedTerminals.size !== 2 || !sharedTerminals.has(networkSwitchTerminal) || !sharedTerminals.has(networkBatteryTerminal)) return topologyError()
+
+  return { valid: true, message: '并联电路连接正确' }
 }
 
 export function createSeriesParallelState(): CircuitLabState {
@@ -150,7 +293,7 @@ function reduceConnect(state: CircuitLabState, payload: unknown): LabTransition<
   const edge = payload as Partial<CircuitEdge>
   if (!isTerminalId(edge.from) || !isTerminalId(edge.to)) return transition(state, rejected('导线只能连接到器材接线柱'))
   const nextEdges = [...state.edges, { from: edge.from, to: edge.to }]
-  const safety = validateCircuitSafety(circuitFromEdges(nextEdges))
+  const safety = validateCircuitSafety(circuitFromEdges(nextEdges), false)
   if (!safety.valid) return transition(state, rejected(safety.message))
   return transition(stateWith(state, { edges: nextEdges, activeTrialId: null }), accepted('导线已连接'))
 }
@@ -200,8 +343,8 @@ function deriveMeasurements(state: CircuitLabState): readonly DerivedMeasurement
   return [
     { trialId: trial.id, key: 'circuitMode', label: '电路类型', value: trial.mode === 'series' ? '串联' : '并联', unit: '', kind: 'observation' },
     { trialId: trial.id, key: 'switchState', label: '开关状态', value: state.switchClosed ? '闭合' : '断开', unit: '', kind: 'observation' },
-    { trialId: trial.id, key: 'lamp1State', label: '灯泡 1', value: trial.lamp1Lit ? '发光' : '熄灭', unit: '', kind: 'observation' },
-    { trialId: trial.id, key: 'lamp2State', label: '灯泡 2', value: trial.lamp2Lit ? '发光' : '熄灭', unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'lamp1State', label: '灯泡 1', value: state.switchClosed ? '发光' : '熄灭', unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'lamp2State', label: '灯泡 2', value: state.switchClosed ? '发光' : '熄灭', unit: '', kind: 'observation' },
   ]
 }
 
@@ -225,7 +368,9 @@ export const seriesParallelController: LabController<CircuitLabState> & {
       case 'setMode': return reduceSetMode(state, action.payload)
       case 'setSwitch': return reduceSetSwitch(state, action.payload)
       case 'resetTrial': return reduceResetTrial(state)
-      case 'dragStart': return transition(state, accepted('请将导线另一端拖到接线柱'))
+      case 'dragStart': return state.switchClosed
+        ? transition(state, rejected('开关闭合时不能开始连接导线，请先断开开关'))
+        : transition(state, accepted('请将导线另一端拖到接线柱'))
       case 'dragCancel': return transition(state, accepted('已取消本次导线连接'))
       default: return transition(state, rejected('不支持的电路操作'))
     }

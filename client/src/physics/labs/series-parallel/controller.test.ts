@@ -28,6 +28,21 @@ const parallelEdges: CircuitEdge[] = [
   { from: 'lamp2-b', to: 'battery-' },
 ]
 
+const reversedSeriesEdges: CircuitEdge[] = [
+  { from: 'battery+', to: 'lamp1-b' },
+  { from: 'lamp1-a', to: 'lamp2-a' },
+  { from: 'lamp2-b', to: 'switch-b' },
+  { from: 'switch-a', to: 'battery-' },
+]
+
+const switchAfterParallelEdges: CircuitEdge[] = [
+  { from: 'battery+', to: 'lamp1-b' },
+  { from: 'battery+', to: 'lamp2-a' },
+  { from: 'lamp1-a', to: 'switch-b' },
+  { from: 'lamp2-b', to: 'switch-b' },
+  { from: 'switch-a', to: 'battery-' },
+]
+
 function reduce(actions: Array<{ type: string; payload?: unknown }>) {
   return actions.reduce(
     (state, action) => seriesParallelController.reduce(state, action).state,
@@ -66,6 +81,18 @@ describe('series parallel circuit controller', () => {
     expect(edit.feedback.outcome).toBe('rejected')
   })
 
+  it('detects switch-only and multi-wire indirect shorts before energizing', () => {
+    expect(validateCircuitSafety(circuitFromEdges([
+      { from: 'battery+', to: 'switch-a' },
+      { from: 'switch-b', to: 'battery-' },
+    ]))).toMatchObject({ valid: false, code: 'battery-short' })
+    expect(validateCircuitSafety(circuitFromEdges([
+      { from: 'battery+', to: 'lamp1-a' },
+      { from: 'lamp1-a', to: 'lamp1-b' },
+      { from: 'lamp1-b', to: 'battery-' },
+    ]))).toMatchObject({ valid: false, code: 'battery-short' })
+  })
+
   it('accepts only the exact closed series loop and rejects malformed loops, bypasses, and a bypassed switch', () => {
     expect(validateSeriesCircuit(circuitFromEdges(seriesEdges))).toEqual({ valid: true, message: '串联电路连接正确' })
     expect(validateSeriesCircuit(circuitFromEdges([...seriesEdges, { from: 'battery+', to: 'lamp1-a' }]))).toMatchObject({ valid: false, code: 'unexpected-topology' })
@@ -77,6 +104,10 @@ describe('series parallel circuit controller', () => {
       { from: 'lamp1-b', to: 'lamp2-a' },
       { from: 'lamp2-b', to: 'battery-' },
     ]))).toMatchObject({ valid: false, code: 'unexpected-topology' })
+  })
+
+  it('accepts a series path with swapped lamp order, lamp terminals, and switch orientation', () => {
+    expect(validateSeriesCircuit(circuitFromEdges(reversedSeriesEdges))).toMatchObject({ valid: true })
   })
 
   it('accepts only two independent parallel lamp branches and rejects missing, crossed, and shared-branch defects', () => {
@@ -93,6 +124,17 @@ describe('series parallel circuit controller', () => {
     ]))).toMatchObject({ valid: false, code: 'unexpected-topology' })
   })
 
+  it('accepts parallel branches when the switch is after their merge and lamp terminals are swapped', () => {
+    expect(validateParallelCircuit(circuitFromEdges(switchAfterParallelEdges))).toMatchObject({ valid: true })
+  })
+
+  it('rejects an extra parallel cycle even when both lamps remain connected', () => {
+    expect(validateParallelCircuit(circuitFromEdges([
+      ...parallelEdges,
+      { from: 'battery+', to: 'lamp1-a' },
+    ]))).toMatchObject({ valid: false, code: 'unexpected-topology' })
+  })
+
   it('cannot close an invalid or unsafe graph', () => {
     const incomplete = seriesParallelController.reduce(createSeriesParallelState(), { type: 'setSwitch', payload: 'closed' })
     const unsafe = seriesParallelController.reduce(
@@ -103,6 +145,14 @@ describe('series parallel circuit controller', () => {
     expect(incomplete.feedback.outcome).toBe('rejected')
     expect(unsafe.state.switchClosed).toBe(false)
     expect(unsafe.feedback.outcome).toBe('rejected')
+  })
+
+  it('rejects a closed-switch drag start before any preview can be created', () => {
+    const closed = seriesParallelController.reduce(wired('series'), { type: 'setSwitch', payload: 'closed' }).state
+    const drag = seriesParallelController.reduce(closed, { type: 'dragStart', payload: { subject: 'battery+' } })
+
+    expect(drag.state).toBe(closed)
+    expect(drag.feedback.outcome).toBe('rejected')
   })
 
   it('isolates modes and trials, completing only after valid energized series and parallel trials', () => {
@@ -140,6 +190,15 @@ describe('series parallel circuit controller', () => {
       { label: '开关状态', value: '闭合' },
       { label: '导线数量', value: 4 },
     ])
+  })
+
+  it('reports live lamp readings after opening an energized trial without mutating its snapshot', () => {
+    const closed = seriesParallelController.reduce(wired('series'), { type: 'setSwitch', payload: 'closed' }).state
+    const opened = seriesParallelController.reduce(closed, { type: 'setSwitch', payload: 'open' }).state
+
+    expect(closed.trials[0]).toMatchObject({ lamp1Lit: true, lamp2Lit: true })
+    expect(seriesParallelController.deriveMeasurements(opened).slice(2).map((measurement) => measurement.value))
+      .not.toEqual(seriesParallelController.deriveMeasurements(closed).slice(2).map((measurement) => measurement.value))
   })
 
   it('snaps a terminal drop only inside the explicit radius and safely clears drag previews on cancellation', () => {

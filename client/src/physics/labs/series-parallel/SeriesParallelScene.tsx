@@ -91,6 +91,9 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
   })
 
   const pointerEvent = (event: PointerEvent<SVGCircleElement>) => event as unknown as PointerEvent<HTMLElement>
+  const beginWire = (event: PointerEvent<SVGCircleElement>, terminal: CircuitTerminalId) => {
+    if (!state.switchClosed) pointerDrag.onPointerDown(pointerEvent(event), terminal)
+  }
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-[#0b1420] text-[#e8f2ff]">
@@ -136,7 +139,7 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
                 aria-label={terminal.label}
                 role="button"
                 tabIndex={0}
-                onPointerDown={(event) => pointerDrag.onPointerDown(pointerEvent(event), terminal.id)}
+                onPointerDown={(event) => beginWire(event, terminal.id)}
                 onPointerMove={(event) => pointerDrag.onPointerMove(pointerEvent(event))}
                 onPointerUp={(event) => pointerDrag.onPointerUp(pointerEvent(event))}
                 onPointerCancel={(event) => pointerDrag.onPointerCancel(pointerEvent(event))}
