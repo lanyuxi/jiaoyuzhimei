@@ -100,6 +100,93 @@ function isPosition(value: unknown): value is Position {
   return Number.isFinite(candidate.x) && Number.isFinite(candidate.y)
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+function isFinitePositiveNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0
+}
+
+function isFiniteNonNegativeNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0
+}
+
+function isHeatCapacityTrial(value: unknown): value is HeatCapacityTrial {
+  return isRecord(value)
+    && typeof value.id === 'string'
+    && isFinitePositiveNumber(value.waterMass)
+    && isFinitePositiveNumber(value.oilMass)
+    && isFinitePositiveNumber(value.heaterPower)
+    && isFiniteNonNegativeNumber(value.initialTemperature)
+    && isFiniteNonNegativeNumber(value.waterTemperature)
+    && isFiniteNonNegativeNumber(value.oilTemperature)
+    && isFiniteNonNegativeNumber(value.elapsedSeconds)
+}
+
+function isHeatCapacitySnapshot(value: unknown): value is HeatCapacityState {
+  if (!isRecord(value)
+    || !isFinitePositiveNumber(value.waterMass)
+    || !isFinitePositiveNumber(value.oilMass)
+    || !isFinitePositiveNumber(value.heaterPower)
+    || !isFiniteNonNegativeNumber(value.elapsedSeconds)
+    || !isFiniteNonNegativeNumber(value.waterTemperature)
+    || !isFiniteNonNegativeNumber(value.oilTemperature)
+    || typeof value.waterThermometerPlaced !== 'boolean'
+    || typeof value.oilThermometerPlaced !== 'boolean'
+    || typeof value.waterHeaterPlaced !== 'boolean'
+    || typeof value.oilHeaterPlaced !== 'boolean'
+    || typeof value.heatersPlaced !== 'boolean'
+    || typeof value.heating !== 'boolean'
+    || typeof value.massLocked !== 'boolean'
+    || (value.activeTrialId !== null && typeof value.activeTrialId !== 'string')
+    || !Array.isArray(value.trials)
+    || !value.trials.every(isHeatCapacityTrial)) return false
+
+  const trialIds = value.trials.map((trial) => trial.id)
+  const apparatusReady = value.waterThermometerPlaced
+    && value.oilThermometerPlaced
+    && value.waterHeaterPlaced
+    && value.oilHeaterPlaced
+  const trialsValid = value.trials.every((trial) => (
+    Math.abs(trial.waterMass - trial.oilMass) <= EQUAL_MASS_TOLERANCE
+    && trial.elapsedSeconds >= MINIMUM_RECORDING_SECONDS
+  ))
+  return new Set(trialIds).size === trialIds.length
+    && (value.activeTrialId === null || trialIds.includes(value.activeTrialId))
+    && value.heatersPlaced === (value.waterHeaterPlaced && value.oilHeaterPlaced)
+    && (!value.heating || (apparatusReady && value.massLocked && Math.abs(value.waterMass - value.oilMass) <= EQUAL_MASS_TOLERANCE))
+    && trialsValid
+}
+
+function snapshot(state: HeatCapacityState) {
+  return {
+    waterMass: state.waterMass,
+    oilMass: state.oilMass,
+    heaterPower: state.heaterPower,
+    elapsedSeconds: state.elapsedSeconds,
+    waterTemperature: state.waterTemperature,
+    oilTemperature: state.oilTemperature,
+    waterThermometerPlaced: state.waterThermometerPlaced,
+    oilThermometerPlaced: state.oilThermometerPlaced,
+    waterHeaterPlaced: state.waterHeaterPlaced,
+    oilHeaterPlaced: state.oilHeaterPlaced,
+    heatersPlaced: state.heatersPlaced,
+    heating: state.heating,
+    massLocked: state.massLocked,
+    activeTrialId: state.activeTrialId,
+    trials: state.trials.map((trial) => ({ ...trial })),
+  }
+}
+
+function restore(snapshotValue: unknown): HeatCapacityState {
+  if (!isHeatCapacitySnapshot(snapshotValue)) return createHeatCapacityState()
+  return {
+    ...snapshotValue,
+    trials: snapshotValue.trials.map((trial) => Object.freeze({ ...trial })),
+  }
+}
+
 function trialFor(state: HeatCapacityState): HeatCapacityTrial | undefined {
   return state.activeTrialId === null
     ? undefined
@@ -281,9 +368,7 @@ function reduceResetTrial(state: HeatCapacityState): LabTransition<HeatCapacityS
   }), accepted('已重置当前实验，历史试次仍被保留'))
 }
 
-function deriveMeasurements(state: HeatCapacityState): readonly DerivedMeasurement[] {
-  const trial = trialFor(state)
-  if (!trial) return []
+function measurementsForTrial(trial: HeatCapacityTrial): readonly DerivedMeasurement[] {
   return [
     { trialId: trial.id, key: 'waterTemperature', label: '水的末温', value: trial.waterTemperature, unit: '°C', kind: 'raw' },
     { trialId: trial.id, key: 'oilTemperature', label: '食用油的末温', value: trial.oilTemperature, unit: '°C', kind: 'raw' },
@@ -293,17 +378,60 @@ function deriveMeasurements(state: HeatCapacityState): readonly DerivedMeasureme
   ]
 }
 
-function conditions(state: HeatCapacityState): readonly PhysicsExperimentalCondition[] {
+function deriveMeasurements(state: HeatCapacityState): readonly DerivedMeasurement[] {
   const trial = trialFor(state)
-  const values = trial ?? state
+  return trial ? measurementsForTrial(trial) : []
+}
+
+function conditionsForTrial(trial: HeatCapacityTrial): readonly PhysicsExperimentalCondition[] {
   return [
-    { label: '水的质量', value: values.waterMass },
-    { label: '食用油的质量', value: values.oilMass },
-    { label: '初温', value: trial?.initialTemperature ?? INITIAL_TEMPERATURE },
-    { label: '加热功率', value: values.heaterPower },
+    { label: '水的质量', value: trial.waterMass },
+    { label: '食用油的质量', value: trial.oilMass },
+    { label: '初温', value: trial.initialTemperature },
+    { label: '加热功率', value: trial.heaterPower },
     { label: '水的比热容', value: WATER_SPECIFIC_HEAT_CAPACITY },
     { label: '食用油的比热容', value: COOKING_OIL_SPECIFIC_HEAT_CAPACITY },
   ]
+}
+
+function conditions(state: HeatCapacityState): readonly PhysicsExperimentalCondition[] {
+  const trial = trialFor(state)
+  if (trial) return conditionsForTrial(trial)
+  return [
+    { label: '水的质量', value: state.waterMass },
+    { label: '食用油的质量', value: state.oilMass },
+    { label: '初温', value: INITIAL_TEMPERATURE },
+    { label: '加热功率', value: state.heaterPower },
+    { label: '水的比热容', value: WATER_SPECIFIC_HEAT_CAPACITY },
+    { label: '食用油的比热容', value: COOKING_OIL_SPECIFIC_HEAT_CAPACITY },
+  ]
+}
+
+function measurementGroups(state: HeatCapacityState) {
+  return state.trials.map((trial) => ({
+    conditions: conditionsForTrial(trial),
+    measurements: measurementsForTrial(trial),
+  }))
+}
+
+function report(state: HeatCapacityState) {
+  const calculationResults = state.trials.map((trial, index) => {
+    const waterChange = trial.waterTemperature - trial.initialTemperature
+    const oilChange = trial.oilTemperature - trial.initialTemperature
+    const ratio = waterChange === 0 ? 0 : oilChange / waterChange
+    return `试次 ${index + 1}：Q = cmΔT；水升温 ${waterChange.toFixed(2)} °C，食用油升温 ${oilChange.toFixed(2)} °C，升温比为 ${ratio.toFixed(2)}。`
+  })
+  return {
+    calculationResults,
+    conclusion: state.trials.length === 0
+      ? []
+      : ['相同质量的水和食用油吸收相同热量时，食用油升温更快，水的比热容更大。'],
+    errorAnalysis: [
+      '烧杯向环境散热会使实际温升低于理想计算值。',
+      '两份样品质量、初温或加热功率不一致会破坏控制变量条件。',
+      '温度计读数延迟和停止加热后的余热会带来末温读数误差。',
+    ],
+  }
 }
 
 export const heatCapacityController: LabController<HeatCapacityState> & {
@@ -326,6 +454,10 @@ export const heatCapacityController: LabController<HeatCapacityState> & {
     }
   },
   deriveMeasurements,
+  snapshot,
+  restore,
+  measurementGroups,
+  report,
   conditions,
   completion: (state) => state.trials.length > 0
     ? { complete: true, message: '已完成水和食用油吸热能力的比较' }

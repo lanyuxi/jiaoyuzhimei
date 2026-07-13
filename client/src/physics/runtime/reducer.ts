@@ -29,9 +29,24 @@ export function reduceLabAction<TState>(
       return redo(runtime, controller)
     case 'reset':
       return createLabRuntime(controller)
+    case 'hydrate':
+      return hydrateLabRuntime(runtime, action.payload)
     default:
       return reduceSemanticAction(runtime, action, controller)
   }
+}
+
+export function hydrateLabRuntime<TState>(
+  runtime: LabRuntime<TState>,
+  snapshot: unknown,
+): LabRuntime<TState> {
+  const controller = controllerFor(runtime)
+  return withController({
+    present: controller.restore(snapshot),
+    past: [],
+    future: [],
+    feedback: null,
+  }, controller)
 }
 
 function reduceSemanticAction<TState>(

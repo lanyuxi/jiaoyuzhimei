@@ -89,6 +89,38 @@ const event: PhysicsEventRecord = {
   at: '2026-07-11T00:01:00.000Z',
 }
 
+const report = {
+  purpose: ['Compare two substances.'],
+  apparatus: ['Water', 'Oil', 'Heaters'],
+  calculationResults: ['Oil temperature change is twice the water temperature change.'],
+  conclusion: ['Water has the greater specific heat capacity.'],
+  errorAnalysis: ['Heat loss lowers the measured temperature changes.'],
+  supplement: ['Keep both samples at equal mass.'],
+}
+
+function synchronization() {
+  return {
+    runtimeSnapshot: {
+      elapsedSeconds: 30,
+      apparatus: { waterThermometerPlaced: true },
+      trials: [{ id: 'water-1', readings: [32] }],
+    },
+    measurements: [{
+      ...measurement,
+      conditions: measurement.conditions.map((condition) => ({ ...condition })),
+    }],
+    report: {
+      ...report,
+      purpose: [...report.purpose],
+      apparatus: [...report.apparatus],
+      calculationResults: [...report.calculationResults],
+      conclusion: [...report.conclusion],
+      errorAnalysis: [...report.errorAnalysis],
+      supplement: [...report.supplement],
+    },
+  }
+}
+
 describe('physics session repository', () => {
   it('reports empty storage distinctly from recovery failures', () => {
     const repository = new PhysicsSessionRepository(new MemoryStorage())
@@ -329,6 +361,120 @@ describe('physics session repository', () => {
     const restored = new PhysicsSessionRepository(storage)
 
     expect(restored.get(session.id)?.measurements).toEqual([measurement])
+  })
+
+  it('round-trips synchronized snapshots and reports without exposing repository-owned values', () => {
+    const storage = new MemoryStorage()
+    const repository = new PhysicsSessionRepository(storage)
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const supplied = synchronization()
+
+    const synchronized = repository.synchronize(session.id, supplied)
+    supplied.runtimeSnapshot.apparatus.waterThermometerPlaced = false
+    supplied.runtimeSnapshot.trials[0]!.readings[0] = 99
+    supplied.measurements[0]!.conditions[0]!.value = 999
+    supplied.report.calculationResults[0] = 'mutated'
+    const returnedSnapshot = synchronized?.runtimeSnapshot as typeof supplied.runtimeSnapshot
+    returnedSnapshot.apparatus.waterThermometerPlaced = false
+    synchronized?.report?.errorAnalysis.push('mutated')
+
+    const restored = new PhysicsSessionRepository(storage).get(session.id)
+    expect(restored?.runtimeSnapshot).toEqual({
+      elapsedSeconds: 30,
+      apparatus: { waterThermometerPlaced: true },
+      trials: [{ id: 'water-1', readings: [32] }],
+    })
+    expect(restored?.measurements).toEqual([measurement])
+    expect(restored?.report).toEqual(report)
+  })
+
+  it('keeps version-1 sessions without optional snapshots and reports backward compatible', () => {
+    const storage = new MemoryStorage()
+    const repository = new PhysicsSessionRepository(storage)
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+
+    const restored = new PhysicsSessionRepository(storage).get(session.id)
+
+    expect(restored?.runtimeSnapshot).toBeUndefined()
+    expect(restored?.report).toBeUndefined()
+    expect(restored?.status).toBe('IN_PROGRESS')
+  })
+
+  it('restores legacy sessions with repeatedly appended measurement rows', () => {
+    const storage = new MemoryStorage()
+    const first = new PhysicsSessionRepository(storage)
+    const session = first.create('heat-capacity-comparison', 'Heat capacity comparison')
+    first.appendMeasurement(session.id, measurement)
+    first.appendMeasurement(session.id, measurement)
+
+    const restored = new PhysicsSessionRepository(storage)
+
+    expect(restored.recovery.status).toBe('restored')
+    expect(restored.get(session.id)?.measurements).toEqual([measurement, measurement])
+  })
+
+  it('replaces a complete synchronized measurement set in one write without duplicate rows', () => {
+    const storage = new CountingStorage()
+    const repository = new PhysicsSessionRepository(storage)
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const first = synchronization()
+    const writesBeforeFirstSync = storage.writes
+
+    repository.synchronize(session.id, first)
+    expect(storage.writes).toBe(writesBeforeFirstSync + 1)
+
+    const second = synchronization()
+    const writesBeforeSecondSync = storage.writes
+    const synchronized = repository.synchronize(session.id, second)
+
+    expect(storage.writes).toBe(writesBeforeSecondSync + 1)
+    expect(synchronized?.measurements).toEqual([measurement])
+
+    const reset = repository.synchronize(session.id, {
+      ...synchronization(),
+      runtimeSnapshot: { initial: true },
+      measurements: [],
+    })
+    expect(reset?.measurements).toEqual([])
+  })
+
+  it('completes with the same atomic synchronization so measurements cannot be empty', () => {
+    const storage = new CountingStorage()
+    const repository = new PhysicsSessionRepository(storage)
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const writesBeforeCompletion = storage.writes
+
+    const completed = repository.complete(session.id, event, synchronization())
+
+    expect(storage.writes).toBe(writesBeforeCompletion + 1)
+    expect(completed).toMatchObject({
+      status: 'COMPLETED',
+      measurements: [measurement],
+      report,
+    })
+    expect(completed?.runtimeSnapshot).toEqual(synchronization().runtimeSnapshot)
+  })
+
+  it('rejects non-JSON snapshots and quarantines malformed structured reports', () => {
+    const repository = new PhysicsSessionRepository(new MemoryStorage())
+    const session = repository.create('heat-capacity-comparison', 'Heat capacity comparison')
+    expect(() => repository.synchronize(session.id, {
+      ...synchronization(),
+      runtimeSnapshot: { elapsedSeconds: Number.NaN },
+    })).toThrow('Session synchronization does not match the persistence schema')
+
+    const storage = new MemoryStorage()
+    const first = new PhysicsSessionRepository(storage)
+    first.create('heat-capacity-comparison', 'Heat capacity comparison')
+    const stored = JSON.parse(storage.getItem(PHYSICS_SESSIONS_STORAGE_KEY)!) as Array<Record<string, unknown>>
+    stored[0]!.report = { ...report, calculationResults: [42] }
+    const invalidRaw = JSON.stringify(stored)
+    storage.setItem(PHYSICS_SESSIONS_STORAGE_KEY, invalidRaw)
+
+    const restored = new PhysicsSessionRepository(storage)
+    expect(restored.list()).toEqual([])
+    expect(restored.recovery.status).toBe('malformed')
+    expect(storage.getItem(`${PHYSICS_SESSIONS_STORAGE_KEY}-corrupt`)).toBe(invalidRaw)
   })
 
   it('selects the latest in-progress session for an experiment without writing another record', () => {

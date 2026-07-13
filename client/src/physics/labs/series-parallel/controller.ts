@@ -64,6 +64,88 @@ function isTerminalId(value: unknown): value is CircuitTerminalId {
   return typeof value === 'string' && terminalIds.has(value)
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+function isCircuitMode(value: unknown): value is CircuitMode {
+  return value === 'series' || value === 'parallel'
+}
+
+function isCircuitEdge(value: unknown): value is CircuitEdge {
+  return isRecord(value) && isTerminalId(value.from) && isTerminalId(value.to) && value.from !== value.to
+}
+
+function isCircuitTrial(value: unknown): value is CircuitTrial {
+  return isRecord(value)
+    && typeof value.id === 'string'
+    && isCircuitMode(value.mode)
+    && typeof value.voltage === 'number'
+    && Number.isFinite(value.voltage)
+    && value.voltage > 0
+    && typeof value.wireCount === 'number'
+    && Number.isInteger(value.wireCount)
+    && value.wireCount >= 0
+    && typeof value.lamp1Lit === 'boolean'
+    && typeof value.lamp2Lit === 'boolean'
+    && Array.isArray(value.edges)
+    && value.edges.every(isCircuitEdge)
+    && value.edges.length === value.wireCount
+}
+
+function isCircuitSnapshot(value: unknown): value is CircuitLabState {
+  if (!isRecord(value)
+    || !isCircuitMode(value.mode)
+    || !Array.isArray(value.edges)
+    || !value.edges.every(isCircuitEdge)
+    || typeof value.switchClosed !== 'boolean'
+    || (value.activeTrialId !== null && typeof value.activeTrialId !== 'string')
+    || !Array.isArray(value.trials)
+    || !value.trials.every(isCircuitTrial)) return false
+
+  const trialIds = value.trials.map((trial) => trial.id)
+  const currentGraph = circuitFromEdges(value.edges)
+  const currentTopology = value.mode === 'series'
+    ? validateSeriesCircuit(currentGraph)
+    : validateParallelCircuit(currentGraph)
+  const trialsValid = value.trials.every((trial) => {
+    const graph = circuitFromEdges(trial.edges)
+    return trial.mode === 'series' ? validateSeriesCircuit(graph).valid : validateParallelCircuit(graph).valid
+  })
+  return new Set(trialIds).size === trialIds.length
+    && (value.activeTrialId === null || trialIds.includes(value.activeTrialId))
+    && validateCircuitSafety(currentGraph, false).valid
+    && (!value.switchClosed || (value.activeTrialId !== null && currentTopology.valid))
+    && trialsValid
+}
+
+function snapshot(state: CircuitLabState) {
+  return {
+    mode: state.mode,
+    edges: state.edges.map((edge) => ({ ...edge })),
+    switchClosed: state.switchClosed,
+    activeTrialId: state.activeTrialId,
+    trials: state.trials.map((trial) => ({
+      ...trial,
+      edges: trial.edges.map((edge) => ({ ...edge })),
+    })),
+  }
+}
+
+function restore(snapshotValue: unknown): CircuitLabState {
+  if (!isCircuitSnapshot(snapshotValue)) return createSeriesParallelState()
+  return {
+    mode: snapshotValue.mode,
+    edges: freezeEdges(snapshotValue.edges),
+    switchClosed: snapshotValue.switchClosed,
+    activeTrialId: snapshotValue.activeTrialId,
+    trials: Object.freeze(snapshotValue.trials.map((trial) => Object.freeze({
+      ...trial,
+      edges: freezeEdges(trial.edges),
+    }))),
+  }
+}
+
 function transition(state: CircuitLabState, feedback: LabFeedback): LabTransition<CircuitLabState> {
   return { state, feedback }
 }
@@ -358,6 +440,47 @@ function conditions(state: CircuitLabState): readonly PhysicsExperimentalConditi
   ]
 }
 
+function measurementsForTrial(trial: CircuitTrial): readonly DerivedMeasurement[] {
+  return [
+    { trialId: trial.id, key: 'circuitMode', label: '电路类型', value: trial.mode === 'series' ? '串联' : '并联', unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'switchState', label: '开关状态', value: '闭合', unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'lamp1State', label: '灯泡 1', value: trial.lamp1Lit ? '发光' : '熄灭', unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'lamp2State', label: '灯泡 2', value: trial.lamp2Lit ? '发光' : '熄灭', unit: '', kind: 'observation' },
+  ]
+}
+
+function conditionsForTrial(trial: CircuitTrial): readonly PhysicsExperimentalCondition[] {
+  return [
+    { label: '电路类型', value: trial.mode === 'series' ? '串联' : '并联' },
+    { label: '电源电压', value: trial.voltage },
+    { label: '开关状态', value: '闭合' },
+    { label: '导线数量', value: trial.wireCount },
+  ]
+}
+
+function measurementGroups(state: CircuitLabState) {
+  return state.trials.map((trial) => ({
+    conditions: conditionsForTrial(trial),
+    measurements: measurementsForTrial(trial),
+  }))
+}
+
+function report(state: CircuitLabState) {
+  return {
+    calculationResults: state.trials.map((trial, index) => (
+      `试次 ${index + 1}：${trial.mode === 'series' ? '串联' : '并联'}拓扑校验通过，${trial.wireCount} 条导线连接后闭合开关，两只灯泡均发光。`
+    )),
+    conclusion: state.trials.length === 0
+      ? []
+      : ['串联电路只有一条电流路径，并联电路具有相互独立的支路；正确连接时两只灯泡都能发光。'],
+    errorAnalysis: [
+      '接线柱接触不良或导线松动会形成断路，使灯泡不能正常发光。',
+      '闭合开关时改接导线可能造成短路，因此必须先断开电源。',
+      '灯泡规格差异会改变亮度，不能仅凭亮度判断串联或并联拓扑。',
+    ],
+  }
+}
+
 export const seriesParallelController: LabController<CircuitLabState> & {
   conditions(state: CircuitLabState): readonly PhysicsExperimentalCondition[]
 } = {
@@ -376,6 +499,10 @@ export const seriesParallelController: LabController<CircuitLabState> & {
     }
   },
   deriveMeasurements,
+  snapshot,
+  restore,
+  measurementGroups,
+  report,
   conditions,
   completion: (state) => {
     const modes = new Set(state.trials.map((trial) => trial.mode))

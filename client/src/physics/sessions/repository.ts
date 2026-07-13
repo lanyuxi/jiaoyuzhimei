@@ -4,7 +4,10 @@ import type {
   PhysicsMeasurementRecord,
   PhysicsSession,
   PhysicsSessionRecoveryResult,
+  PhysicsSessionReport,
   PhysicsSessionRecoveryStatus,
+  PhysicsSessionSynchronization,
+  JsonValue,
   StorageLike,
 } from './types'
 
@@ -54,11 +57,34 @@ function cloneMeasurement(measurement: PhysicsMeasurementRecord): PhysicsMeasure
   }
 }
 
+function cloneJsonValue(value: JsonValue): JsonValue {
+  if (Array.isArray(value)) return value.map(cloneJsonValue)
+  if (isRecord(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entry]) => [key, cloneJsonValue(entry as JsonValue)]),
+    )
+  }
+  return value
+}
+
+function cloneReport(report: PhysicsSessionReport): PhysicsSessionReport {
+  return {
+    purpose: [...report.purpose],
+    apparatus: [...report.apparatus],
+    calculationResults: [...report.calculationResults],
+    conclusion: [...report.conclusion],
+    errorAnalysis: [...report.errorAnalysis],
+    supplement: [...report.supplement],
+  }
+}
+
 function cloneSession(session: PhysicsSession): PhysicsSession {
   return {
     ...session,
     events: session.events.map((event) => ({ ...event })),
     measurements: session.measurements.map(cloneMeasurement),
+    ...(session.runtimeSnapshot === undefined ? {} : { runtimeSnapshot: cloneJsonValue(session.runtimeSnapshot) }),
+    ...(session.report === undefined ? {} : { report: cloneReport(session.report) }),
   }
 }
 
@@ -77,6 +103,30 @@ function isEventRecord(value: unknown): value is PhysicsEventRecord {
 
 function isFiniteNumberOrString(value: unknown): value is number | string {
   return typeof value === 'string' || (typeof value === 'number' && Number.isFinite(value))
+}
+
+function isJsonValue(value: unknown): value is JsonValue {
+  if (value === null || typeof value === 'boolean' || typeof value === 'string') return true
+  if (typeof value === 'number') return Number.isFinite(value)
+  if (Array.isArray(value)) return value.every(isJsonValue)
+  if (!isRecord(value)) return false
+  const prototype = Object.getPrototypeOf(value)
+  return (prototype === Object.prototype || prototype === null)
+    && Object.values(value).every(isJsonValue)
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((entry) => typeof entry === 'string')
+}
+
+function isSessionReport(value: unknown): value is PhysicsSessionReport {
+  return isRecord(value)
+    && isStringArray(value.purpose)
+    && isStringArray(value.apparatus)
+    && isStringArray(value.calculationResults)
+    && isStringArray(value.conclusion)
+    && isStringArray(value.errorAnalysis)
+    && isStringArray(value.supplement)
 }
 
 function isExperimentalCondition(value: unknown): value is PhysicsExperimentalCondition {
@@ -99,6 +149,21 @@ function isMeasurementRecord(value: unknown): value is PhysicsMeasurementRecord 
     && value.conditions.every(isExperimentalCondition)
 }
 
+function hasUniqueMeasurements(measurements: readonly PhysicsMeasurementRecord[]): boolean {
+  const keys = measurements.map((measurement) => `${measurement.trialId}\u0000${measurement.key}`)
+  return new Set(keys).size === keys.length
+}
+
+function isSynchronization(value: unknown): value is PhysicsSessionSynchronization {
+  return isRecord(value)
+    && isJsonValue(value.runtimeSnapshot)
+    && Array.isArray(value.measurements)
+    && value.measurements.every(isMeasurementRecord)
+    && hasUniqueMeasurements(value.measurements)
+    && isSessionReport(value.report)
+    && (value.event === undefined || isEventRecord(value.event))
+}
+
 function isPhysicsSession(value: unknown): value is PhysicsSession {
   return isRecord(value)
     && value.version === 1
@@ -112,6 +177,8 @@ function isPhysicsSession(value: unknown): value is PhysicsSession {
     && value.events.every(isEventRecord)
     && Array.isArray(value.measurements)
     && value.measurements.every(isMeasurementRecord)
+    && (value.runtimeSnapshot === undefined || isJsonValue(value.runtimeSnapshot))
+    && (value.report === undefined || isSessionReport(value.report))
 }
 
 function isSessionCollection(value: unknown): value is PhysicsSession[] {
@@ -215,20 +282,36 @@ export class PhysicsSessionRepository {
     }))
   }
 
-  complete(id: string, event?: PhysicsEventRecord): PhysicsSession | undefined {
+  synchronize(id: string, synchronization: PhysicsSessionSynchronization): PhysicsSession | undefined {
+    if (!isSynchronization(synchronization)) {
+      throw new TypeError('Session synchronization does not match the persistence schema')
+    }
+
+    return this.update(id, (session) => this.applySynchronization(session, synchronization))
+  }
+
+  complete(
+    id: string,
+    event?: PhysicsEventRecord,
+    synchronization?: PhysicsSessionSynchronization,
+  ): PhysicsSession | undefined {
     if (event && !isEventRecord(event)) {
       throw new TypeError('Event does not match the persistence schema')
+    }
+    if (synchronization && !isSynchronization(synchronization)) {
+      throw new TypeError('Session synchronization does not match the persistence schema')
     }
 
     const index = this.sessions.findIndex((candidate) => candidate.id === id)
     const current = this.sessions[index]
     if (!current || current.status === 'COMPLETED') return undefined
 
+    const synchronized = synchronization ? this.applySynchronization(current, synchronization) : current
     const completed: PhysicsSession = {
-      ...current,
+      ...synchronized,
       status: 'COMPLETED',
       updatedAt: new Date().toISOString(),
-      events: event ? [...current.events, { ...event }] : current.events,
+      events: event ? [...synchronized.events, { ...event }] : synchronized.events,
     }
     this.sessions = this.sessions.map((session, currentIndex) => currentIndex === index ? completed : session)
     this.persist()
@@ -299,6 +382,22 @@ export class PhysicsSessionRepository {
     this.sessions = this.sessions.map((session, currentIndex) => currentIndex === index ? updated : session)
     this.persist()
     return cloneSession(updated)
+  }
+
+  private applySynchronization(
+    session: PhysicsSession,
+    synchronization: PhysicsSessionSynchronization,
+  ): PhysicsSession {
+    return {
+      ...session,
+      updatedAt: new Date().toISOString(),
+      events: synchronization.event
+        ? [...session.events, { ...synchronization.event }]
+        : session.events,
+      measurements: synchronization.measurements.map(cloneMeasurement),
+      runtimeSnapshot: cloneJsonValue(synchronization.runtimeSnapshot),
+      report: cloneReport(synchronization.report),
+    }
   }
 
   private persist(): void {

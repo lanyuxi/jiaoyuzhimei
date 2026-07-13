@@ -24,6 +24,24 @@ export interface PhysicsMeasurementRecord {
   conditions: PhysicsExperimentalCondition[]
 }
 
+export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
+
+export interface PhysicsSessionReport {
+  purpose: string[]
+  apparatus: string[]
+  calculationResults: string[]
+  conclusion: string[]
+  errorAnalysis: string[]
+  supplement: string[]
+}
+
+export interface PhysicsSessionSynchronization {
+  runtimeSnapshot: JsonValue
+  measurements: PhysicsMeasurementRecord[]
+  report: PhysicsSessionReport
+  event?: PhysicsEventRecord
+}
+
 export type PhysicsSessionRecoveryStatus =
   | 'empty'
   | 'restored'
@@ -48,6 +66,8 @@ export interface PhysicsSession {
   updatedAt: string
   events: PhysicsEventRecord[]
   measurements: PhysicsMeasurementRecord[]
+  runtimeSnapshot?: JsonValue
+  report?: PhysicsSessionReport
 }
 
 export interface StorageLike {

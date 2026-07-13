@@ -211,6 +211,51 @@ describe('heat capacity comparison controller', () => {
     expect(heatCapacityController.completion(recorded)).toEqual({ complete: true, message: '已完成水和食用油吸热能力的比较' })
   })
 
+  it('restores validated snapshots and derives every retained trial with report content', () => {
+    const firstStarted = heatCapacityController.reduce(preparedState(), { type: 'start' }).state
+    const firstRecorded = heatCapacityController.reduce(
+      heatCapacityController.reduce(
+        heatCapacityController.reduce(firstStarted, { type: 'tick', payload: 30 }).state,
+        { type: 'stop' },
+      ).state,
+      { type: 'record' },
+    ).state
+    const reset = heatCapacityController.reduce(firstRecorded, { type: 'resetTrial' }).state
+    const secondPrepared = [
+      { type: 'placeThermometer', payload: 'water' },
+      { type: 'placeThermometer', payload: 'oil' },
+      { type: 'placeHeater', payload: 'water' },
+      { type: 'placeHeater', payload: 'oil' },
+      { type: 'start' },
+      { type: 'tick', payload: 60 },
+      { type: 'stop' },
+      { type: 'record' },
+    ].reduce((state, action) => heatCapacityController.reduce(state, action).state, reset)
+
+    const snapshot = heatCapacityController.snapshot(secondPrepared)
+    const restored = heatCapacityController.restore(snapshot)
+    const groups = heatCapacityController.measurementGroups(restored)
+    const summary = heatCapacityController.report(restored)
+
+    expect(restored).toEqual(secondPrepared)
+    expect(restored).not.toBe(secondPrepared)
+    expect(groups).toHaveLength(2)
+    expect(groups.map((group) => group.measurements[0]?.trialId)).toEqual([
+      'heat-capacity-trial-1',
+      'heat-capacity-trial-2',
+    ])
+    expect(groups[0]?.conditions).not.toBe(groups[1]?.conditions)
+    expect(summary.calculationResults.join(' ')).toContain('Q = cmΔT')
+    expect(summary.conclusion.length).toBeGreaterThan(0)
+    expect(summary.errorAnalysis.join(' ')).toContain('散热')
+    expect(heatCapacityController.restore({ elapsedSeconds: 'bad' }))
+      .toEqual(heatCapacityController.createInitialState())
+    expect(heatCapacityController.restore({
+      ...(heatCapacityController.snapshot(heatCapacityController.createInitialState()) as Record<string, unknown>),
+      heating: true,
+    })).toEqual(heatCapacityController.createInitialState())
+  })
+
   it('keeps the available curriculum labs registered against their catalog records', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
 

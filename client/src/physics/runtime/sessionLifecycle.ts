@@ -1,4 +1,5 @@
-import type { DerivedMeasurement, LabFeedback } from './types'
+import type { TextbookPhysicsExperiment } from '../curriculum/types'
+import type { DerivedMeasurement, LabController, LabFeedback } from './types'
 import type { PhysicsSessionRepository } from '../sessions/repository'
 import type {
   PhysicsEventRecord,
@@ -6,11 +7,12 @@ import type {
   PhysicsMeasurementRecord,
   PhysicsSession,
   PhysicsSessionRecoveryResult,
+  PhysicsSessionSynchronization,
 } from '../sessions/types'
 
 type SessionWriter = Pick<
   PhysicsSessionRepository,
-  'appendEvent' | 'appendMeasurement' | 'complete' | 'create' | 'findLatestInProgress'
+  'appendEvent' | 'appendMeasurement' | 'complete' | 'create' | 'findLatestInProgress' | 'synchronize'
 >
 
 let fallbackRecordId = 0
@@ -100,13 +102,68 @@ export function recordDerivedMeasurements(
   })
 }
 
-export function completeLabSession(
+export interface LabSessionSynchronizationInput<TState> {
+  controller: LabController<TState>
+  state: TState
+  experiment: TextbookPhysicsExperiment
+  event?: {
+    action: string
+    feedback: LabFeedback
+  }
+  at?: string
+}
+
+function labSessionSynchronization<TState>({
+  controller,
+  state,
+  experiment,
+  event,
+  at,
+}: LabSessionSynchronizationInput<TState>): PhysicsSessionSynchronization {
+  const recordedAt = nowOr(at)
+  const measurements = controller.measurementGroups(state).flatMap((group) => (
+    group.measurements.map((measurement): PhysicsMeasurementRecord => ({
+      ...measurement,
+      at: recordedAt,
+      conditions: group.conditions.map((condition) => ({ ...condition })),
+    }))
+  ))
+  const summary = controller.report(state)
+  return {
+    runtimeSnapshot: controller.snapshot(state),
+    measurements,
+    report: {
+      purpose: [...experiment.purpose],
+      apparatus: [...experiment.apparatus],
+      calculationResults: [...summary.calculationResults],
+      conclusion: [...summary.conclusion],
+      errorAnalysis: [...summary.errorAnalysis],
+      supplement: [...experiment.supplement],
+    },
+    ...(event ? { event: labFeedbackEvent(event.action, event.feedback, recordedAt) } : {}),
+  }
+}
+
+export function synchronizeLabSession<TState>(
+  repository: Pick<SessionWriter, 'synchronize'>,
+  sessionId: string,
+  input: LabSessionSynchronizationInput<TState>,
+): PhysicsSession | undefined {
+  return repository.synchronize(sessionId, labSessionSynchronization(input))
+}
+
+export function completeLabSession<TState>(
   repository: Pick<SessionWriter, 'complete'>,
   sessionId: string,
   feedback?: LabFeedback,
   at?: string,
+  synchronization?: LabSessionSynchronizationInput<TState>,
 ): PhysicsSession | undefined {
-  return repository.complete(sessionId, feedback ? labFeedbackEvent('complete-lab', feedback, at) : undefined)
+  return repository.complete(
+    sessionId,
+    feedback ? labFeedbackEvent('complete-lab', feedback, at) : undefined,
+    synchronization ? labSessionSynchronization(synchronization) : undefined,
+  )
 }
 
 export interface RecoveryPrompt {

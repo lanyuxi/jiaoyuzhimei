@@ -33,6 +33,25 @@ function createController(name: string, initialValue: number): LabController<Cou
       unit: '',
       kind: 'raw',
     }],
+    snapshot: (state) => ({ ...state }),
+    restore: (snapshot) => typeof snapshot === 'object'
+      && snapshot !== null
+      && typeof (snapshot as Partial<CounterState>).controller === 'string'
+      && typeof (snapshot as Partial<CounterState>).value === 'number'
+      ? { ...(snapshot as CounterState) }
+      : { controller: name, value: initialValue },
+    measurementGroups: (state) => [{
+      conditions: [{ label: 'Controller', value: name }],
+      measurements: [{
+        trialId: name,
+        key: 'value',
+        label: name,
+        value: state.value,
+        unit: '',
+        kind: 'raw',
+      }],
+    }],
+    report: () => ({ calculationResults: [name], conclusion: [name], errorAnalysis: [name] }),
     completion: () => ({ complete: false, message: name }),
   }
 }
@@ -138,6 +157,28 @@ describe('lab runtime adapter', () => {
     expect(binding.runtime).toMatchObject({
       present: { controller: 'A', value: 1 },
       past: [{ controller: 'A', value: 0 }],
+      future: [],
+    })
+  })
+
+  it('returns the next state from undo, redo, reset, and hydrate binding commands', () => {
+    const controller = createController('commands', 0)
+    const initial = createLabRuntimeBinding(controller)
+    const incremented = dispatchLabRuntimeBinding(initial, controller, { type: 'increment' })
+    const undone = dispatchLabRuntimeBinding(incremented.binding, controller, { type: 'undo' })
+    const redone = dispatchLabRuntimeBinding(undone.binding, controller, { type: 'redo' })
+    const reset = dispatchLabRuntimeBinding(redone.binding, controller, { type: 'reset' })
+    const hydrated = dispatchLabRuntimeBinding(reset.binding, controller, {
+      type: 'hydrate',
+      payload: { controller: 'commands', value: 9 },
+    })
+
+    expect(undone.binding.runtime.present.value).toBe(0)
+    expect(redone.binding.runtime.present.value).toBe(1)
+    expect(reset.binding.runtime.present.value).toBe(0)
+    expect(hydrated.binding.runtime).toMatchObject({
+      present: { controller: 'commands', value: 9 },
+      past: [],
       future: [],
     })
   })

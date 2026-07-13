@@ -106,6 +106,101 @@ function parseDragPayload(payload: unknown): { position: Position; at: number } 
     : null
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+function isFieldDirection(value: unknown): value is MagneticFieldDirection {
+  return value === 'down' || value === 'up'
+}
+
+function isObservation(value: unknown): value is InductionObservation {
+  return value === 'stationary' || value === 'right' || value === 'left'
+}
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value)
+}
+
+function isDragSample(value: unknown): value is DragSample {
+  return isRecord(value) && isFiniteNumber(value.x) && isFiniteNumber(value.at) && value.at >= 0
+}
+
+function isMotionSample(value: unknown): value is MotionSample {
+  return isRecord(value)
+    && (value.direction === 'right' || value.direction === 'left')
+    && typeof value.crossedGap === 'boolean'
+}
+
+function isPendingMovement(value: unknown): value is PendingMovement {
+  return isRecord(value)
+    && (value.direction === 'right' || value.direction === 'left')
+    && value.circuitClosed === true
+    && isFieldDirection(value.fieldDirection)
+    && isFiniteNumber(value.velocityMetersPerSecond)
+    && value.velocityMetersPerSecond !== 0
+}
+
+function isInductionTrial(value: unknown): value is InductionTrial {
+  return isRecord(value)
+    && typeof value.id === 'string'
+    && isObservation(value.observation)
+    && isFiniteNumber(value.currentAmps)
+    && value.circuitClosed === true
+    && isFieldDirection(value.fieldDirection)
+    && isFiniteNumber(value.velocityMetersPerSecond)
+}
+
+function isInductionSnapshot(value: unknown): value is InductionLabState {
+  if (!isRecord(value)
+    || typeof value.circuitClosed !== 'boolean'
+    || !isFieldDirection(value.fieldDirection)
+    || !isFiniteNumber(value.conductorX)
+    || value.conductorX < RAIL.left
+    || value.conductorX > RAIL.right
+    || !isFiniteNumber(value.velocityMetersPerSecond)
+    || (value.drag !== null && !isDragSample(value.drag))
+    || (value.motion !== null && !isMotionSample(value.motion))
+    || (value.pendingMovement !== null && !isPendingMovement(value.pendingMovement))
+    || !Array.isArray(value.trials)
+    || !value.trials.every(isInductionTrial)) return false
+
+  const trialIds = value.trials.map((trial) => trial.id)
+  const observations = value.trials.map((trial) => trial.observation)
+  return new Set(trialIds).size === trialIds.length
+    && new Set(observations).size === observations.length
+    && (value.pendingMovement === null || (
+      value.circuitClosed
+      && value.pendingMovement.fieldDirection === value.fieldDirection
+      && isInsideMagnetGap(value.conductorX)
+    ))
+    && (value.motion === null || value.drag !== null)
+}
+
+function snapshot(state: InductionLabState) {
+  return {
+    circuitClosed: state.circuitClosed,
+    fieldDirection: state.fieldDirection,
+    conductorX: state.conductorX,
+    velocityMetersPerSecond: state.velocityMetersPerSecond,
+    drag: state.drag === null ? null : { ...state.drag },
+    motion: state.motion === null ? null : { ...state.motion },
+    pendingMovement: state.pendingMovement === null ? null : { ...state.pendingMovement },
+    trials: state.trials.map((trial) => ({ ...trial })),
+  }
+}
+
+function restore(snapshotValue: unknown): InductionLabState {
+  if (!isInductionSnapshot(snapshotValue)) return createElectromagneticInductionState()
+  return {
+    ...snapshotValue,
+    drag: snapshotValue.drag === null ? null : { ...snapshotValue.drag },
+    motion: snapshotValue.motion === null ? null : { ...snapshotValue.motion },
+    pendingMovement: freezePendingMovement(snapshotValue.pendingMovement),
+    trials: freezeTrials(snapshotValue.trials),
+  }
+}
+
 export function railPositionFromSvgPoint(position: Position): number | null {
   if (Math.abs(position.y - RAIL.y) > RAIL.hitHeight) return null
   return Math.min(RAIL.right, Math.max(RAIL.left, position.x))
@@ -301,6 +396,48 @@ function conditions(state: InductionLabState): readonly PhysicsExperimentalCondi
   ]
 }
 
+function measurementsForTrial(trial: InductionTrial): readonly DerivedMeasurement[] {
+  return [
+    { trialId: trial.id, key: 'inducedCurrent', label: 'Induced current', value: trial.currentAmps, unit: 'A', kind: 'raw' },
+    { trialId: trial.id, key: 'motionDirection', label: 'Motion direction', value: trial.observation, unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'fieldDirection', label: 'Field direction', value: trial.fieldDirection, unit: '', kind: 'observation' },
+    { trialId: trial.id, key: 'circuitState', label: 'Circuit state', value: 'closed', unit: '', kind: 'observation' },
+  ]
+}
+
+function conditionsForTrial(trial: InductionTrial): readonly PhysicsExperimentalCondition[] {
+  return [
+    { label: 'Circuit', value: 'closed' },
+    { label: 'Field direction', value: trial.fieldDirection },
+    { label: 'Magnetic field', value: MAGNETIC_FIELD_TESLA },
+    { label: 'Conductor length', value: CONDUCTOR_LENGTH_METERS },
+    { label: 'Resistance', value: CIRCUIT_RESISTANCE_OHMS },
+  ]
+}
+
+function measurementGroups(state: InductionLabState) {
+  return state.trials.map((trial) => ({
+    conditions: conditionsForTrial(trial),
+    measurements: measurementsForTrial(trial),
+  }))
+}
+
+function report(state: InductionLabState) {
+  return {
+    calculationResults: state.trials.map((trial, index) => (
+      `观察 ${index + 1}：I = BLv / R；导体${trial.observation === 'stationary' ? '静止' : trial.observation === 'right' ? '向右运动' : '向左运动'}，感应电流为 ${trial.currentAmps.toFixed(3)} A。`
+    )),
+    conclusion: state.trials.length === 0
+      ? []
+      : ['闭合电路的一部分导体切割磁感线时产生感应电流，改变运动方向会改变感应电流方向。'],
+    errorAnalysis: [
+      '拖动速度不均匀会使按 I = BLv / R 计算的瞬时电流发生波动。',
+      '导体未完全位于磁场间隙内时，实际有效切割长度会减小。',
+      '电路接触电阻和电流计零点偏差会影响感应电流读数。',
+    ],
+  }
+}
+
 export const electromagneticInductionController: LabController<InductionLabState> & {
   conditions(state: InductionLabState): readonly PhysicsExperimentalCondition[]
 } = {
@@ -319,6 +456,10 @@ export const electromagneticInductionController: LabController<InductionLabState
     }
   },
   deriveMeasurements,
+  snapshot,
+  restore,
+  measurementGroups,
+  report,
   conditions,
   completion: (state) => {
     const stationary = state.trials.find((trial) => trial.observation === 'stationary')

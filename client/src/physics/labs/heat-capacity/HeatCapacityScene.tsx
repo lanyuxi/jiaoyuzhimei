@@ -170,5 +170,5 @@ export function HeatCapacityScene({ state, dispatch }: PhysicsLabSceneProps<Heat
 }
 
 export function HeatCapacityLab({ experiment }: { experiment: TextbookPhysicsExperiment }) {
-  return <PhysicsLabShell experiment={experiment} controller={heatCapacityController} Scene={HeatCapacityScene} conditions={heatCapacityController.conditions} />
+  return <PhysicsLabShell experiment={experiment} controller={heatCapacityController} Scene={HeatCapacityScene} />
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createLabRuntime, reduceLabAction } from './reducer'
+import { createLabRuntime, hydrateLabRuntime, reduceLabAction } from './reducer'
 import type { LabController } from './types'
 
 interface CounterState {
@@ -12,6 +12,14 @@ const controller: LabController<CounterState> = {
     ? { state: { value: state.value + 1 }, feedback: { outcome: 'accepted', message: 'Incremented' } }
     : { state, feedback: { outcome: 'rejected', message: 'Invalid action' } },
   deriveMeasurements: () => [],
+  snapshot: (state) => ({ ...state }),
+  restore: (snapshot) => typeof snapshot === 'object'
+    && snapshot !== null
+    && typeof (snapshot as { value?: unknown }).value === 'number'
+    ? { value: (snapshot as { value: number }).value }
+    : { value: 0 },
+  measurementGroups: () => [],
+  report: () => ({ calculationResults: [], conclusion: [], errorAnalysis: [] }),
   completion: () => ({ complete: false, message: 'Continue experimenting' }),
 }
 
@@ -86,6 +94,16 @@ describe('lab runtime reducer', () => {
     expect(reset.past).toEqual([])
     expect(reset.future).toEqual([])
     expect(reset.feedback).toBeNull()
+  })
+
+  it('hydrates a validated controller snapshot without manufacturing undo history', () => {
+    const changed = reduceLabAction(createLabRuntime(controller), { type: 'increment' })
+
+    const hydrated = hydrateLabRuntime(changed, { value: 7 })
+    const invalid = hydrateLabRuntime(hydrated, { value: 'bad' })
+
+    expect(hydrated).toMatchObject({ present: { value: 7 }, past: [], future: [], feedback: null })
+    expect(invalid).toMatchObject({ present: { value: 0 }, past: [], future: [], feedback: null })
   })
 
   it('leaves an empty undo stack unchanged', () => {

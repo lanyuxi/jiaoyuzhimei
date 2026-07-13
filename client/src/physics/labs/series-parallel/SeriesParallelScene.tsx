@@ -10,6 +10,20 @@ import { seriesParallelController, type CircuitEdge, type CircuitLabState } from
 
 const workbenchWidth = 960
 const workbenchHeight = 540
+const terminalHitLength = 110
+
+export const CIRCUIT_TERMINAL_HIT_STROKE = 40
+
+export function circuitTerminalHitSegment(id: CircuitTerminalId) {
+  const terminal = CIRCUIT_TERMINALS[id]
+  const direction = id === 'battery+' || id === 'battery-' || id === 'switch-a' ? -1 : 1
+  return {
+    x1: terminal.x,
+    y1: terminal.y,
+    x2: terminal.x + direction * terminalHitLength,
+    y2: terminal.y,
+  }
+}
 
 function isPosition(value: unknown): value is Position {
   if (typeof value !== 'object' || value === null) return false
@@ -90,8 +104,8 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
     },
   })
 
-  const pointerEvent = (event: PointerEvent<SVGCircleElement>) => event as unknown as PointerEvent<HTMLElement>
-  const beginWire = (event: PointerEvent<SVGCircleElement>, terminal: CircuitTerminalId) => {
+  const pointerEvent = (event: PointerEvent<SVGElement>) => event as unknown as PointerEvent<HTMLElement>
+  const beginWire = (event: PointerEvent<SVGElement>, terminal: CircuitTerminalId) => {
     if (!state.switchClosed) pointerDrag.onPointerDown(pointerEvent(event), terminal)
   }
 
@@ -128,6 +142,7 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
 
           {(Object.values(CIRCUIT_TERMINALS) as Array<(typeof CIRCUIT_TERMINALS)[CircuitTerminalId]>).map((terminal) => {
             const connected = terminalHasWire(state, terminal.id)
+            const hitSegment = circuitTerminalHitSegment(terminal.id)
             return <g key={terminal.id}>
               <circle cx={terminal.x} cy={terminal.y} r="17" fill={connected ? '#d94f4a' : '#172d45'} stroke={connected ? '#ffb3a9' : '#8fb3d4'} strokeWidth="3" />
               <circle
@@ -135,6 +150,16 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
                 cy={terminal.y}
                 r="11"
                 fill="#f2f7ff"
+              />
+              <path
+                data-hit-target="circuit-terminal"
+                d={`M ${hitSegment.x1} ${hitSegment.y1} L ${hitSegment.x2} ${hitSegment.y2}`}
+                fill="none"
+                stroke="transparent"
+                strokeWidth={CIRCUIT_TERMINAL_HIT_STROKE}
+                vectorEffect="non-scaling-stroke"
+                strokeLinecap="butt"
+                pointerEvents="stroke"
                 className="cursor-crosshair"
                 aria-label={terminal.label}
                 role="button"
@@ -170,5 +195,5 @@ export function SeriesParallelScene({ state, dispatch }: PhysicsLabSceneProps<Ci
 }
 
 export function SeriesParallelLab({ experiment }: { experiment: TextbookPhysicsExperiment }) {
-  return <PhysicsLabShell experiment={experiment} controller={seriesParallelController} Scene={SeriesParallelScene} conditions={seriesParallelController.conditions} />
+  return <PhysicsLabShell experiment={experiment} controller={seriesParallelController} Scene={SeriesParallelScene} />
 }

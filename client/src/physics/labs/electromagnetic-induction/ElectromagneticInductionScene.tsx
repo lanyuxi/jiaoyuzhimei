@@ -110,7 +110,7 @@ export function ElectromagneticInductionScene({ state, dispatch }: PhysicsLabSce
           <path d={`M 112 ${RAIL.y} H 846`} stroke="#dce9f5" strokeWidth="3" strokeLinecap="round" />
           <text x="112" y="448" fill="#92a7bc" fontSize="14">水平导轨</text>
           <path d={`M ${state.conductorX} 148 V 364`} stroke="#f4c462" strokeWidth="13" strokeLinecap="round" />
-          <rect x={state.conductorX - 24} y="130" width="48" height="250" rx="8" fill="transparent" stroke="transparent" className="cursor-grab active:cursor-grabbing" onPointerDown={beginDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={cancelDrag} aria-label="拖动导体棒" />
+          <rect data-hit-target="induction-conductor" x={state.conductorX - 24} y="130" width="48" height="250" rx="8" fill="transparent" stroke="transparent" strokeWidth="40" vectorEffect="non-scaling-stroke" pointerEvents="stroke" className="cursor-grab active:cursor-grabbing" onPointerDown={beginDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={cancelDrag} aria-label="拖动导体棒" />
           <text x={state.conductorX} y="122" fill="#ffe7a4" fontSize="14" fontWeight="700" textAnchor="middle">导体棒</text>
           {state.motion !== null && <g><line x1={state.conductorX} y1="420" x2={state.conductorX + (state.motion.direction === 'right' ? 78 : -78)} y2="420" stroke="#ffcc66" strokeWidth="4" markerEnd="url(#motion-arrow)" /><text x={state.conductorX} y="445" fill="#ffdc85" fontSize="14" fontWeight="700" textAnchor="middle">运动方向：{state.motion.direction === 'right' ? '向右 →' : '向左 ←'}</text></g>}
           <path d={`M ${state.conductorX} 148 H 670 V 130`} fill="none" stroke={state.circuitClosed ? '#76cda4' : '#65778a'} strokeWidth="5" strokeDasharray={state.circuitClosed ? undefined : '10 7'} />
@@ -130,5 +130,5 @@ export function ElectromagneticInductionScene({ state, dispatch }: PhysicsLabSce
 }
 
 export function ElectromagneticInductionLab({ experiment }: { experiment: TextbookPhysicsExperiment }) {
-  return <PhysicsLabShell experiment={experiment} controller={electromagneticInductionController} Scene={ElectromagneticInductionScene} conditions={electromagneticInductionController.conditions} />
+  return <PhysicsLabShell experiment={experiment} controller={electromagneticInductionController} Scene={ElectromagneticInductionScene} />
 }

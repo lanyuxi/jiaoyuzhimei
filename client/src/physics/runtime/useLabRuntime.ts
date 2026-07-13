@@ -8,9 +8,10 @@ export interface LabRuntimeApi<TState> {
   measurements: readonly DerivedMeasurement[]
   completion: { complete: boolean; message: string }
   dispatch(action: LabAction): LabRuntimeCommandResult<TState>
-  undo(): void
-  redo(): void
-  reset(): void
+  undo(): LabRuntimeCommandResult<TState>
+  redo(): LabRuntimeCommandResult<TState>
+  reset(): LabRuntimeCommandResult<TState>
+  hydrate(snapshot: unknown): LabRuntimeCommandResult<TState>
 }
 
 export interface LabRuntimeCommandResult<TState> {
@@ -97,14 +98,20 @@ export function useLabRuntime<TState>(controller: LabController<TState>): LabRun
     setBinding(rebound)
   }, [controller])
 
+  const undo = useCallback(() => dispatch({ type: 'undo' }), [dispatch])
+  const redo = useCallback(() => dispatch({ type: 'redo' }), [dispatch])
+  const reset = useCallback(() => dispatch({ type: 'reset' }), [dispatch])
+  const hydrate = useCallback((snapshot: unknown) => dispatch({ type: 'hydrate', payload: snapshot }), [dispatch])
+
   return useMemo(() => ({
     state: runtime.present,
     feedback: runtime.feedback,
     measurements: activeBinding.controller.deriveMeasurements(runtime.present),
     completion: activeBinding.controller.completion(runtime.present),
     dispatch,
-    undo: () => { dispatch({ type: 'undo' }) },
-    redo: () => { dispatch({ type: 'redo' }) },
-    reset: () => { dispatch({ type: 'reset' }) },
-  }), [activeBinding, runtime, dispatch])
+    undo,
+    redo,
+    reset,
+    hydrate,
+  }), [activeBinding, runtime, dispatch, hydrate, redo, reset, undo])
 }

@@ -14,28 +14,37 @@ import { HeatCapacityScene } from './physics/labs/heat-capacity/HeatCapacityScen
 import { heatCapacityController } from './physics/labs/heat-capacity/controller'
 import { ElectromagneticInductionScene } from './physics/labs/electromagnetic-induction/ElectromagneticInductionScene'
 import { electromagneticInductionController } from './physics/labs/electromagnetic-induction/controller'
-import { SeriesParallelScene } from './physics/labs/series-parallel/SeriesParallelScene'
+import {
+  CIRCUIT_TERMINAL_HIT_STROKE,
+  SeriesParallelScene,
+  circuitTerminalHitSegment,
+} from './physics/labs/series-parallel/SeriesParallelScene'
 import { seriesParallelController } from './physics/labs/series-parallel/controller'
+import { CIRCUIT_TERMINALS } from './physics/labs/series-parallel/definition'
 import { groupMeasurementsByTrial } from './physics/runtime/MeasurementTable'
 import { LAB_DESKTOP_LAYOUT } from './physics/runtime/PhysicsLabShell'
+import { createLabRuntime, hydrateLabRuntime, reduceLabAction } from './physics/runtime/reducer'
 import {
   createLabSessionCoordinator,
   completeLabSession,
   recordDerivedMeasurements,
   recordLabFeedback,
   recoveryPrompt,
+  synchronizeLabSession,
 } from './physics/runtime/sessionLifecycle'
 import {
   AVAILABLE_LAB_CONTAINER_WIDTH,
   AVAILABLE_LAB_HORIZONTAL_PADDING,
 } from './physics/TextbookPhysicsExperimentPage'
-import { resolvePhysicsReport } from './physics/sessions/PhysicsReportPage'
+import { physicsReportSections, resolvePhysicsReport } from './physics/sessions/PhysicsReportPage'
+import { PhysicsSessionRepository } from './physics/sessions/repository'
 import type {
   PhysicsEventRecord,
   PhysicsExperimentalCondition,
   PhysicsMeasurementRecord,
   PhysicsSession,
   PhysicsSessionRecoveryResult,
+  StorageLike,
 } from './physics/sessions/types'
 
 const sourceRoot = join(process.cwd(), 'src')
@@ -117,6 +126,39 @@ const conditions: readonly PhysicsExperimentalCondition[] = [
   { label: '初温', value: '20℃' },
 ]
 
+class MemorySessionStorage implements StorageLike {
+  private readonly values = new Map<string, string>()
+
+  getItem(key: string): string | null {
+    return this.values.get(key) ?? null
+  }
+
+  setItem(key: string, value: string): void {
+    this.values.set(key, value)
+  }
+
+  removeItem(key: string): void {
+    this.values.delete(key)
+  }
+}
+
+function recordedHeatState() {
+  const actions = [
+    { type: 'placeThermometer', payload: 'water' },
+    { type: 'placeThermometer', payload: 'oil' },
+    { type: 'placeHeater', payload: 'water' },
+    { type: 'placeHeater', payload: 'oil' },
+    { type: 'start' },
+    { type: 'tick', payload: 30 },
+    { type: 'stop' },
+    { type: 'record' },
+  ]
+  return actions.reduce(
+    (state, action) => heatCapacityController.reduce(state, action).state,
+    heatCapacityController.createInitialState(),
+  )
+}
+
 describe('physics lab shell', () => {
   it('exposes the required experiment controls', () => {
     expect(existsSync(shellPath)).toBe(true)
@@ -174,6 +216,106 @@ describe('physics lab shell', () => {
     expect(repository.created).toHaveLength(0)
     expect(firstCoordinator.createNewSession().id).not.toBe(active.id)
     expect(repository.created).toHaveLength(1)
+  })
+
+  it('hydrates a fresh runtime from the restored coordinator snapshot', () => {
+    const repository = new PhysicsSessionRepository(new MemorySessionStorage())
+    const experiment = textbookExperimentById.get('heat-capacity-comparison')!
+    const session = repository.create(experiment.id, experiment.title)
+    const state = heatCapacityController.reduce(
+      heatCapacityController.createInitialState(),
+      { type: 'placeThermometer', payload: 'water' },
+    ).state
+    synchronizeLabSession(repository, session.id, {
+      controller: heatCapacityController,
+      state,
+      experiment,
+    })
+
+    const restoredSession = createLabSessionCoordinator(repository, experiment.id, experiment.title).ensureSession()
+    const runtime = hydrateLabRuntime(
+      createLabRuntime(heatCapacityController),
+      restoredSession.runtimeSnapshot,
+    )
+
+    expect(runtime.present.waterThermometerPlaced).toBe(true)
+    expect(runtime.past).toEqual([])
+    expect(runtime.future).toEqual([])
+  })
+
+  it('synchronizes complete measurement rows without duplicates across undo and global reset', () => {
+    const repository = new PhysicsSessionRepository(new MemorySessionStorage())
+    const experiment = textbookExperimentById.get('heat-capacity-comparison')!
+    const session = repository.create(experiment.id, experiment.title)
+    const actions = [
+      { type: 'placeThermometer', payload: 'water' },
+      { type: 'placeThermometer', payload: 'oil' },
+      { type: 'placeHeater', payload: 'water' },
+      { type: 'placeHeater', payload: 'oil' },
+      { type: 'start' },
+      { type: 'tick', payload: 30 },
+      { type: 'stop' },
+      { type: 'record' },
+    ]
+    const recorded = actions.reduce(
+      (runtime, action) => reduceLabAction(runtime, action),
+      createLabRuntime(heatCapacityController),
+    )
+
+    synchronizeLabSession(repository, session.id, {
+      controller: heatCapacityController,
+      state: recorded.present,
+      experiment,
+    })
+    synchronizeLabSession(repository, session.id, {
+      controller: heatCapacityController,
+      state: recorded.present,
+      experiment,
+    })
+    expect(repository.get(session.id)?.measurements).toHaveLength(5)
+
+    const undone = reduceLabAction(recorded, { type: 'undo' })
+    synchronizeLabSession(repository, session.id, {
+      controller: heatCapacityController,
+      state: undone.present,
+      experiment,
+    })
+    expect(repository.get(session.id)?.measurements).toEqual([])
+
+    synchronizeLabSession(repository, session.id, {
+      controller: heatCapacityController,
+      state: recorded.present,
+      experiment,
+    })
+    const reset = reduceLabAction(recorded, { type: 'reset' })
+    synchronizeLabSession(repository, session.id, {
+      controller: heatCapacityController,
+      state: reset.present,
+      experiment,
+    })
+    expect(repository.get(session.id)?.measurements).toEqual([])
+  })
+
+  it('synchronizes nonempty measurements and structured report sections before completion', () => {
+    const repository = new PhysicsSessionRepository(new MemorySessionStorage())
+    const experiment = textbookExperimentById.get('heat-capacity-comparison')!
+    const session = repository.create(experiment.id, experiment.title)
+    const completed = completeLabSession(
+      repository,
+      session.id,
+      { outcome: 'accepted', message: 'Completed' },
+      '2026-07-13T00:05:00.000Z',
+      { controller: heatCapacityController, state: recordedHeatState(), experiment },
+    )
+
+    expect(completed?.status).toBe('COMPLETED')
+    expect(completed?.measurements).toHaveLength(5)
+    expect(completed?.runtimeSnapshot).toBeDefined()
+    const sections = physicsReportSections(completed!, experiment)
+    expect(sections.calculationResults).toEqual(completed?.report?.calculationResults)
+    expect(sections.errorAnalysis).toEqual(completed?.report?.errorAnalysis)
+    expect(sections.calculationResults.join(' ')).toContain('Q = cmΔT')
+    expect(sections.errorAnalysis.join(' ')).toContain('散热')
   })
 
   it('keeps one session within a coordinator and records accepted and rejected actions', () => {
@@ -278,6 +420,65 @@ describe('physics lab shell', () => {
     expect(heatMarkup).toContain('grid-cols-2')
     expect(heatMarkup).toContain('md:grid-cols-4')
     expect(heatMarkup).not.toContain('bottom-3 grid h-12 w-28')
+  })
+
+  it('uses non-scaling mobile hit overlays while preserving visible circuit and conductor geometry', () => {
+    const dispatch = () => undefined
+    const circuitMarkup = renderToStaticMarkup(createElement(SeriesParallelScene, {
+      state: seriesParallelController.createInitialState(),
+      dispatch,
+    }))
+    const inductionMarkup = renderToStaticMarkup(createElement(ElectromagneticInductionScene, {
+      state: electromagneticInductionController.createInitialState(),
+      dispatch,
+    }))
+
+    const mobileScale = 356 / 960
+    const hitBounds = Object.keys(CIRCUIT_TERMINALS).map((id) => {
+      const segment = circuitTerminalHitSegment(id as keyof typeof CIRCUIT_TERMINALS)
+      const halfStroke = CIRCUIT_TERMINAL_HIT_STROKE / 2
+      return segment.y1 === segment.y2
+        ? {
+            id,
+            left: Math.min(segment.x1, segment.x2) * mobileScale,
+            right: Math.max(segment.x1, segment.x2) * mobileScale,
+            top: segment.y1 * mobileScale - halfStroke,
+            bottom: segment.y1 * mobileScale + halfStroke,
+          }
+        : {
+            id,
+            left: segment.x1 * mobileScale - halfStroke,
+            right: segment.x1 * mobileScale + halfStroke,
+            top: Math.min(segment.y1, segment.y2) * mobileScale,
+            bottom: Math.max(segment.y1, segment.y2) * mobileScale,
+          }
+    })
+    for (const bounds of hitBounds) {
+      expect(bounds.right - bounds.left).toBeGreaterThanOrEqual(40)
+      expect(bounds.bottom - bounds.top).toBeGreaterThanOrEqual(40)
+    }
+    for (let leftIndex = 0; leftIndex < hitBounds.length; leftIndex += 1) {
+      for (let rightIndex = leftIndex + 1; rightIndex < hitBounds.length; rightIndex += 1) {
+        const left = hitBounds[leftIndex]!
+        const right = hitBounds[rightIndex]!
+        const overlapWidth = Math.min(left.right, right.right) - Math.max(left.left, right.left)
+        const overlapHeight = Math.min(left.bottom, right.bottom) - Math.max(left.top, right.top)
+        expect(overlapWidth > 0 && overlapHeight > 0, `${left.id} overlaps ${right.id}`).toBe(false)
+      }
+    }
+
+    expect(circuitMarkup.match(/data-hit-target="circuit-terminal"/g)).toHaveLength(Object.keys(CIRCUIT_TERMINALS).length)
+    expect(circuitMarkup.match(/vector-effect="non-scaling-stroke"/g)).toHaveLength(Object.keys(CIRCUIT_TERMINALS).length)
+    expect(circuitMarkup.match(/data-hit-target="circuit-terminal"[^>]*stroke-width="40"/g))
+      .toHaveLength(Object.keys(CIRCUIT_TERMINALS).length)
+    expect(circuitMarkup.match(/stroke-linecap="butt"/g)).toHaveLength(Object.keys(CIRCUIT_TERMINALS).length)
+    expect(circuitMarkup).toContain('r="17"')
+    expect(circuitMarkup).toContain('r="11"')
+
+    expect(inductionMarkup).toContain('data-hit-target="induction-conductor"')
+    expect(inductionMarkup).toContain('vector-effect="non-scaling-stroke"')
+    expect(inductionMarkup).toMatch(/data-hit-target="induction-conductor"[^>]*stroke-width="40"/)
+    expect(inductionMarkup).toContain('stroke-width="13"')
   })
 
   it('describes recoverable storage failures with a new-session action', () => {

@@ -220,6 +220,38 @@ describe('electromagnetic induction controller', () => {
     ])
   })
 
+  it('restores validated conductor snapshots and derives all observations for reports', () => {
+    const stationary = electromagneticInductionController.reduce(closedState(), { type: 'record' }).state
+    const right = electromagneticInductionController.reduce(moveInGap(stationary, 420, 540), { type: 'record' }).state
+    const completed = electromagneticInductionController.reduce(moveInGap(right, 540, 420), { type: 'record' }).state
+
+    const snapshot = electromagneticInductionController.snapshot(completed)
+    const restored = electromagneticInductionController.restore(snapshot)
+    const groups = electromagneticInductionController.measurementGroups(restored)
+    const summary = electromagneticInductionController.report(restored)
+
+    expect(restored).toEqual(completed)
+    expect(restored.trials).not.toBe(completed.trials)
+    expect(groups).toHaveLength(3)
+    expect(groups.map((group) => group.measurements.find((measurement) => measurement.key === 'motionDirection')?.value))
+      .toEqual(['stationary', 'right', 'left'])
+    expect(summary.calculationResults.join(' ')).toContain('I = BLv / R')
+    expect(summary.conclusion.length).toBeGreaterThan(0)
+    expect(summary.errorAnalysis.join(' ')).toContain('速度')
+    expect(electromagneticInductionController.restore({ conductorX: 'bad' }))
+      .toEqual(electromagneticInductionController.createInitialState())
+    expect(electromagneticInductionController.restore({
+      ...(electromagneticInductionController.snapshot(completed) as Record<string, unknown>),
+      circuitClosed: false,
+      pendingMovement: {
+        direction: 'right',
+        circuitClosed: true,
+        fieldDirection: 'down',
+        velocityMetersPerSecond: 1,
+      },
+    })).toEqual(electromagneticInductionController.createInitialState())
+  })
+
   it('registers exactly three available benchmark labs with matching catalog labIds', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
     expect(available.map((experiment) => experiment.id)).toEqual([

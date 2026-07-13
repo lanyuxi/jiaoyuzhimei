@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ComponentType } from 'react'
 import { FileText, Redo2, RotateCcw, TableProperties, Undo2 } from 'lucide-react'
 import type { TextbookPhysicsExperiment } from '../curriculum/types'
 import { browserPhysicsSessionRepository, type PhysicsSessionRepository } from '../sessions/repository'
-import type { PhysicsExperimentalCondition, PhysicsSession } from '../sessions/types'
+import type { PhysicsSession } from '../sessions/types'
 import { useLabRuntime } from './useLabRuntime'
 import type { LabAction, LabController } from './types'
 import ExperimentReportDialog from './ExperimentReportDialog'
@@ -10,9 +10,9 @@ import MeasurementTable from './MeasurementTable'
 import {
   completeLabSession,
   createLabSessionCoordinator,
-  recordDerivedMeasurements,
   recordLabFeedback,
   recoveryPrompt,
+  synchronizeLabSession,
 } from './sessionLifecycle'
 
 export interface PhysicsLabSceneProps<TState> {
@@ -24,7 +24,6 @@ export interface PhysicsLabShellProps<TState> {
   experiment: TextbookPhysicsExperiment
   controller: LabController<TState>
   Scene: ComponentType<PhysicsLabSceneProps<TState>>
-  conditions(state: TState): readonly PhysicsExperimentalCondition[]
   repository?: PhysicsSessionRepository
 }
 
@@ -59,7 +58,6 @@ export default function PhysicsLabShell<TState>({
   experiment,
   controller,
   Scene,
-  conditions,
   repository = browserPhysicsSessionRepository,
 }: PhysicsLabShellProps<TState>) {
   const runtime = useLabRuntime(controller)
@@ -80,21 +78,63 @@ export default function PhysicsLabShell<TState>({
 
   useEffect(() => {
     const nextSession = coordinator.ensureSession()
+    runtime.hydrate(nextSession.runtimeSnapshot)
     setSession(nextSession)
     setRecordedMeasurements(nextSession.measurements)
   }, [coordinator])
 
+  function applySynchronized(nextSession: PhysicsSession | undefined) {
+    if (!nextSession) return
+    setSession(nextSession)
+    setRecordedMeasurements(nextSession.measurements)
+  }
+
+  function synchronizeState(
+    state: TState,
+    event?: { action: string; feedback: { outcome: 'accepted' | 'rejected'; message: string } },
+  ) {
+    if (!session) return undefined
+    return synchronizeLabSession(repository, session.id, {
+      controller,
+      state,
+      experiment,
+      event,
+    })
+  }
+
   function dispatchSemantic(action: LabAction, detail = action.type) {
     if (isCompleted) return
     const transition = runtime.dispatch(action)
-    if (session && transition.feedback) recordLabFeedback(repository, session.id, detail, transition.feedback)
+    if (!session || !transition.feedback) return
+    if (transition.feedback.outcome === 'accepted') {
+      applySynchronized(synchronizeState(transition.state, { action: detail, feedback: transition.feedback }))
+    } else {
+      recordLabFeedback(repository, session.id, detail, transition.feedback)
+    }
   }
 
   function recordCurrentMeasurements() {
     if (!session || isCompleted) return
-    const records = recordDerivedMeasurements(repository, session.id, runtime.measurements, conditions(runtime.state))
-    recordLabFeedback(repository, session.id, 'record-measurement', { outcome: 'accepted', message: '已记录当前读数' })
-    setRecordedMeasurements((current) => [...current, ...records])
+    applySynchronized(synchronizeState(runtime.state, {
+      action: 'record-measurement',
+      feedback: { outcome: 'accepted', message: '已同步当前读数' },
+    }))
+  }
+
+  function runToolbarCommand(command: 'undo' | 'redo' | 'reset') {
+    if (!session || isCompleted) return
+    const before = runtime.state
+    const transition = runtime[command]()
+    const changed = transition.state !== before
+    const labels = {
+      undo: changed ? '已撤销上一步操作' : '没有可撤销的操作',
+      redo: changed ? '已重做下一步操作' : '没有可重做的操作',
+      reset: '已重置整个实验',
+    }
+    applySynchronized(synchronizeState(transition.state, {
+      action: command,
+      feedback: { outcome: changed || command === 'reset' ? 'accepted' : 'rejected', message: labels[command] },
+    }))
   }
 
   function completeExperiment() {
@@ -103,16 +143,28 @@ export default function PhysicsLabShell<TState>({
       recordLabFeedback(repository, session.id, 'complete-lab', { outcome: 'rejected', message: runtime.completion.message })
       return
     }
-    const completed = completeLabSession(repository, session.id, { outcome: 'accepted', message: runtime.completion.message })
+    const completed = completeLabSession(
+      repository,
+      session.id,
+      { outcome: 'accepted', message: runtime.completion.message },
+      undefined,
+      { controller, state: runtime.state, experiment },
+    )
     if (!completed) return
     setSession(completed)
+    setRecordedMeasurements(completed.measurements)
     setReportOpen(true)
   }
 
   function createNewSession() {
     const nextSession = coordinator.createNewSession()
-    setSession(nextSession)
-    setRecordedMeasurements([])
+    const reset = runtime.reset()
+    const synchronized = synchronizeLabSession(repository, nextSession.id, {
+      controller,
+      state: reset.state,
+      experiment,
+    })
+    applySynchronized(synchronized ?? nextSession)
     setReportOpen(false)
   }
 
@@ -157,9 +209,9 @@ export default function PhysicsLabShell<TState>({
               <p className="mt-1 text-sm text-[#4b4742]">{runtime.feedback?.message ?? '调整器材后记录读数。'}</p>
             </div>
             <div className="flex items-center gap-2">
-              <TooltipButton label="撤销" onClick={runtime.undo} disabled={isCompleted}><Undo2 className="size-4" aria-hidden="true" /></TooltipButton>
-              <TooltipButton label="重做" onClick={runtime.redo} disabled={isCompleted}><Redo2 className="size-4" aria-hidden="true" /></TooltipButton>
-              <TooltipButton label="重置" onClick={runtime.reset} disabled={isCompleted}><RotateCcw className="size-4" aria-hidden="true" /></TooltipButton>
+              <TooltipButton label="撤销" onClick={() => runToolbarCommand('undo')} disabled={isCompleted}><Undo2 className="size-4" aria-hidden="true" /></TooltipButton>
+              <TooltipButton label="重做" onClick={() => runToolbarCommand('redo')} disabled={isCompleted}><Redo2 className="size-4" aria-hidden="true" /></TooltipButton>
+              <TooltipButton label="重置" onClick={() => runToolbarCommand('reset')} disabled={isCompleted}><RotateCcw className="size-4" aria-hidden="true" /></TooltipButton>
               <TooltipButton label="数据表格" onClick={recordCurrentMeasurements} disabled={isCompleted}><TableProperties className="size-4" aria-hidden="true" /></TooltipButton>
               <TooltipButton label="实验报告" onClick={() => setReportOpen(true)}><FileText className="size-4" aria-hidden="true" /></TooltipButton>
             </div>

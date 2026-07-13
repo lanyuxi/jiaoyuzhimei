@@ -212,6 +212,44 @@ describe('series parallel circuit controller', () => {
     expect(cancelled.feedback.outcome).toBe('accepted')
   })
 
+  it('restores validated wiring snapshots and derives all retained circuit trials for reports', () => {
+    const seriesClosed = seriesParallelController.reduce(wired('series'), { type: 'setSwitch', payload: 'closed' }).state
+    const opened = seriesParallelController.reduce(seriesClosed, { type: 'setSwitch', payload: 'open' }).state
+    const parallel = seriesParallelController.reduce(opened, { type: 'setMode', payload: 'parallel' }).state
+    const parallelClosed = seriesParallelController.reduce(
+      parallelEdges.reduce(
+        (state, edge) => seriesParallelController.reduce(state, { type: 'connect', payload: edge }).state,
+        parallel,
+      ),
+      { type: 'setSwitch', payload: 'closed' },
+    ).state
+
+    const snapshot = seriesParallelController.snapshot(parallelClosed)
+    const restored = seriesParallelController.restore(snapshot)
+    const groups = seriesParallelController.measurementGroups(restored)
+    const summary = seriesParallelController.report(restored)
+
+    expect(restored).toEqual(parallelClosed)
+    expect(restored.edges).not.toBe(parallelClosed.edges)
+    expect(groups).toHaveLength(2)
+    expect(groups.map((group) => group.conditions[0]?.value)).toEqual(['串联', '并联'])
+    expect(groups.flatMap((group) => group.measurements).map((measurement) => measurement.trialId))
+      .toEqual(expect.arrayContaining([
+        'series-parallel-trial-1',
+        'series-parallel-trial-2',
+      ]))
+    expect(summary.calculationResults.join(' ')).toContain('串联')
+    expect(summary.calculationResults.join(' ')).toContain('并联')
+    expect(summary.conclusion.length).toBeGreaterThan(0)
+    expect(summary.errorAnalysis.join(' ')).toContain('接触')
+    expect(seriesParallelController.restore({ edges: 'bad' }))
+      .toEqual(seriesParallelController.createInitialState())
+    expect(seriesParallelController.restore({
+      ...(seriesParallelController.snapshot(parallelClosed) as Record<string, unknown>),
+      edges: [],
+    })).toEqual(seriesParallelController.createInitialState())
+  })
+
   it('registers exactly the three available benchmark labs', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
     expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
