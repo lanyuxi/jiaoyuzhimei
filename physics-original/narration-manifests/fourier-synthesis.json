@@ -1,0 +1,163 @@
+{
+  "script_id": "fourier-synthesis",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 105.34,
+  "files": [
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%82%85%E9%87%8C%E5%8F%B6%E5%90%88%E6%88%90%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%B8%80%E4%B8%AA%E6%83%8A%E4%BA%BA%E7%9A%84%E4%BA%8B%E5%AE%9E%E6%98%AF%EF%BC%9A%E4%BB%BB%E4%BD%95%E5%91%A8%E6%9C%9F%E6%B3%A2%E5%BD%A2%E9%83%BD%E8%83%BD%E7%94%B1%E6%AD%A3%E5%BC%A6%E6%B3%A2%E5%8F%A0%E5%8A%A0%E8%80%8C%E6%88%90%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%82%85%E9%87%8C%E5%8F%B6%E5%90%88%E6%88%90%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%B8%80%E4%B8%AA%E6%83%8A%E4%BA%BA%E7%9A%84%E4%BA%8B%E5%AE%9E%E6%98%AF%EF%BC%9A%E4%BB%BB%E4%BD%95%E5%91%A8%E6%9C%9F%E6%B3%A2%E5%BD%A2%E9%83%BD%E8%83%BD%E7%94%B1%E6%AD%A3%E5%BC%A6%E6%B3%A2%E5%8F%A0%E5%8A%A0%E8%80%8C%E6%88%90%E3%80%82",
+      "duration": 11.88,
+      "size": 0,
+      "text": "欢迎来到傅里叶合成实验！一个惊人的事实是：任何周期波形都能由正弦波叠加而成。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%B7%A6%E8%BE%B9%E6%98%AF%E5%90%88%E6%88%90%E5%87%BA%E7%9A%84%E6%B3%A2%E5%BD%A2%EF%BC%8C%E5%8F%B3%E8%BE%B9%E6%98%AF%E5%AE%83%E7%9A%84%E9%A2%91%E8%B0%B1%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/intro-intro-2.speech?text=%E5%B7%A6%E8%BE%B9%E6%98%AF%E5%90%88%E6%88%90%E5%87%BA%E7%9A%84%E6%B3%A2%E5%BD%A2%EF%BC%8C%E5%8F%B3%E8%BE%B9%E6%98%AF%E5%AE%83%E7%9A%84%E9%A2%91%E8%B0%B1%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "左边是合成出的波形，右边是它的频谱。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%9F%BA%E9%A2%91%E6%98%AF%E6%9C%80%E4%BD%8E%E9%A2%91%E7%8E%87%E7%9A%84%E6%AD%A3%E5%BC%A6%E6%B3%A2%EF%BC%8C%E9%A2%91%E7%8E%87%E6%98%AF%E5%AE%83%E6%95%B4%E6%95%B0%E5%80%8D%E7%9A%84%E5%8F%AB%E8%B0%90%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/concept-concept-1.speech?text=%E5%9F%BA%E9%A2%91%E6%98%AF%E6%9C%80%E4%BD%8E%E9%A2%91%E7%8E%87%E7%9A%84%E6%AD%A3%E5%BC%A6%E6%B3%A2%EF%BC%8C%E9%A2%91%E7%8E%87%E6%98%AF%E5%AE%83%E6%95%B4%E6%95%B0%E5%80%8D%E7%9A%84%E5%8F%AB%E8%B0%90%E6%B3%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "基频是最低频率的正弦波，频率是它整数倍的叫谐波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%8A%8A%E4%B8%8D%E5%90%8C%E6%8C%AF%E5%B9%85%E7%9A%84%E8%B0%90%E6%B3%A2%E5%8A%A0%E5%9C%A8%E4%B8%80%E8%B5%B7%EF%BC%8C%E5%B0%B1%E8%83%BD%E9%80%BC%E8%BF%91%E6%96%B9%E6%B3%A2%E3%80%81%E9%94%AF%E9%BD%BF%E6%B3%A2%E7%AD%89%E5%A4%8D%E6%9D%82%E6%B3%A2%E5%BD%A2%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/concept-concept-2.speech?text=%E6%8A%8A%E4%B8%8D%E5%90%8C%E6%8C%AF%E5%B9%85%E7%9A%84%E8%B0%90%E6%B3%A2%E5%8A%A0%E5%9C%A8%E4%B8%80%E8%B5%B7%EF%BC%8C%E5%B0%B1%E8%83%BD%E9%80%BC%E8%BF%91%E6%96%B9%E6%B3%A2%E3%80%81%E9%94%AF%E9%BD%BF%E6%B3%A2%E7%AD%89%E5%A4%8D%E6%9D%82%E6%B3%A2%E5%BD%A2%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "把不同振幅的谐波加在一起，就能逼近方波、锯齿波等复杂波形。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E9%A2%91%E8%B0%B1%E6%98%BE%E7%A4%BA%E4%BA%86%E6%AF%8F%E4%B8%AA%E8%B0%90%E6%B3%A2%E7%9A%84%E6%8C%AF%E5%B9%85%EF%BC%8C%E6%98%AF%E6%B3%A2%E5%BD%A2%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/concept-concept-3.speech?text=%E9%A2%91%E8%B0%B1%E6%98%BE%E7%A4%BA%E4%BA%86%E6%AF%8F%E4%B8%AA%E8%B0%90%E6%B3%A2%E7%9A%84%E6%8C%AF%E5%B9%85%EF%BC%8C%E6%98%AF%E6%B3%A2%E5%BD%A2%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "频谱显示了每个谐波的振幅，是波形的另一种表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5%E5%B1%95%E5%BC%80%E6%88%90%E6%AD%A3%E5%BC%A6%E8%B0%90%E6%B3%A2%E4%B9%8B%E5%92%8C%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/formula-formula-1.speech?text=%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5%E5%B1%95%E5%BC%80%E6%88%90%E6%AD%A3%E5%BC%A6%E8%B0%90%E6%B3%A2%E4%B9%8B%E5%92%8C%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "周期函数可以展开成正弦谐波之和。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%96%B9%E6%B3%A2%E5%8F%AA%E5%90%AB%E5%A5%87%E6%AC%A1%E8%B0%90%E6%B3%A2%EF%BC%8C%E6%8C%AF%E5%B9%85%E6%8C%89%201%20%E6%AF%94%20n%20%E8%A1%B0%E5%87%8F%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/formula-formula-2.speech?text=%E6%96%B9%E6%B3%A2%E5%8F%AA%E5%90%AB%E5%A5%87%E6%AC%A1%E8%B0%90%E6%B3%A2%EF%BC%8C%E6%8C%AF%E5%B9%85%E6%8C%89%201%20%E6%AF%94%20n%20%E8%A1%B0%E5%87%8F%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "方波只含奇次谐波，振幅按 1 比 n 衰减。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%A2%9E%E5%8A%A0%E8%B0%90%E6%B3%A2%E6%95%B0%20N%EF%BC%8C%E5%90%88%E6%88%90%E6%B3%A2%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%8E%A5%E8%BF%91%E7%90%86%E6%83%B3%E7%9A%84%E6%96%B9%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/interaction-interaction-1.speech?text=%E5%A2%9E%E5%8A%A0%E8%B0%90%E6%B3%A2%E6%95%B0%20N%EF%BC%8C%E5%90%88%E6%88%90%E6%B3%A2%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%8E%A5%E8%BF%91%E7%90%86%E6%83%B3%E7%9A%84%E6%96%B9%E6%B3%A2%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "增加谐波数 N，合成波越来越接近理想的方波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E6%96%B9%E6%B3%A2%E8%BE%B9%E7%BC%98%E6%80%BB%E6%9C%89%E5%B0%8F%E8%BF%87%E5%86%B2%EF%BC%8C%E6%97%A0%E8%AE%BA%E5%8A%A0%E5%A4%9A%E5%B0%91%E8%B0%90%E6%B3%A2%E9%83%BD%E6%B6%88%E4%B8%8D%E6%8E%89%EF%BC%8C%E8%BF%99%E5%8F%AB%E5%90%89%E5%B8%83%E6%96%AF%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E6%96%B9%E6%B3%A2%E8%BE%B9%E7%BC%98%E6%80%BB%E6%9C%89%E5%B0%8F%E8%BF%87%E5%86%B2%EF%BC%8C%E6%97%A0%E8%AE%BA%E5%8A%A0%E5%A4%9A%E5%B0%91%E8%B0%90%E6%B3%A2%E9%83%BD%E6%B6%88%E4%B8%8D%E6%8E%89%EF%BC%8C%E8%BF%99%E5%8F%AB%E5%90%89%E5%B8%83%E6%96%AF%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "注意方波边缘总有小过冲，无论加多少谐波都消不掉，这叫吉布斯现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E9%94%AF%E9%BD%BF%E6%B3%A2%E6%88%96%E4%B8%89%E8%A7%92%E6%B3%A2%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%83%E4%BB%AC%E4%B8%8D%E5%90%8C%E7%9A%84%E9%A2%91%E8%B0%B1%E7%BB%93%E6%9E%84%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/interaction-interaction-3.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E9%94%AF%E9%BD%BF%E6%B3%A2%E6%88%96%E4%B8%89%E8%A7%92%E6%B3%A2%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%83%E4%BB%AC%E4%B8%8D%E5%90%8C%E7%9A%84%E9%A2%91%E8%B0%B1%E7%BB%93%E6%9E%84%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "切换到锯齿波或三角波，观察它们不同的频谱结构。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%82%85%E9%87%8C%E5%8F%B6%E5%88%86%E6%9E%90%E6%98%AF%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E3%80%81%E9%9F%B3%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%9A%84%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/application-application-1.speech?text=%E5%82%85%E9%87%8C%E5%8F%B6%E5%88%86%E6%9E%90%E6%98%AF%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E3%80%81%E9%9F%B3%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%9A%84%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "傅里叶分析是信号处理、音频压缩和图像处理的核心工具。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E4%B9%90%E5%99%A8%E9%9F%B3%E8%89%B2%E7%9A%84%E5%B7%AE%E5%BC%82%EF%BC%8C%E6%9C%AC%E8%B4%A8%E4%B8%8A%E5%B0%B1%E6%98%AF%E8%B0%90%E6%B3%A2%E6%88%90%E5%88%86%E7%9A%84%E4%B8%8D%E5%90%8C%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/application-application-2.speech?text=%E4%B9%90%E5%99%A8%E9%9F%B3%E8%89%B2%E7%9A%84%E5%B7%AE%E5%BC%82%EF%BC%8C%E6%9C%AC%E8%B4%A8%E4%B8%8A%E5%B0%B1%E6%98%AF%E8%B0%90%E6%B3%A2%E6%88%90%E5%88%86%E7%9A%84%E4%B8%8D%E5%90%8C%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "乐器音色的差异，本质上就是谐波成分的不同。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%A4%8D%E6%9D%82%E7%9A%84%E5%91%A8%E6%9C%9F%E6%B3%A2%E5%BD%A2%E9%83%BD%E8%83%BD%E5%88%86%E8%A7%A3%E4%B8%BA%E7%AE%80%E5%8D%95%E6%AD%A3%E5%BC%A6%E6%B3%A2%E4%B9%8B%E5%92%8C%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/summary-summary-1.speech?text=%E5%A4%8D%E6%9D%82%E7%9A%84%E5%91%A8%E6%9C%9F%E6%B3%A2%E5%BD%A2%E9%83%BD%E8%83%BD%E5%88%86%E8%A7%A3%E4%B8%BA%E7%AE%80%E5%8D%95%E6%AD%A3%E5%BC%A6%E6%B3%A2%E4%B9%8B%E5%92%8C%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "复杂的周期波形都能分解为简单正弦波之和。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "fourier-synthesis",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%97%B6%E5%9F%9F%E7%9A%84%E6%B3%A2%E5%BD%A2%E4%B8%8E%E9%A2%91%E5%9F%9F%E7%9A%84%E9%A2%91%E8%B0%B1%EF%BC%8C%E6%98%AF%E5%90%8C%E4%B8%80%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%A7%86%E8%A7%92%E3%80%82",
+      "path": "audio/narrations/fourier-synthesis/summary-summary-2.speech?text=%E6%97%B6%E5%9F%9F%E7%9A%84%E6%B3%A2%E5%BD%A2%E4%B8%8E%E9%A2%91%E5%9F%9F%E7%9A%84%E9%A2%91%E8%B0%B1%EF%BC%8C%E6%98%AF%E5%90%8C%E4%B8%80%E4%BF%A1%E5%8F%B7%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%A7%86%E8%A7%92%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "时域的波形与频域的频谱，是同一信号的两种视角。",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "script_id": "capillary",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 165.64,
+  "files": [
+    {
+      "script_id": "capillary",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%B0%B4%E9%BB%BE%E8%83%BD%E5%9C%A8%E6%B0%B4%E9%9D%A2%E4%B8%8A%E8%A1%8C%E8%B5%B0%EF%BC%8C%E9%9C%B2%E7%8F%A0%E6%80%BB%E6%98%AF%E5%9C%86%E6%BB%9A%E6%BB%9A%E7%9A%84%EF%BC%8C%E8%BF%99%E9%83%BD%E6%BA%90%E4%BA%8E%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/capillary/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%B0%B4%E9%BB%BE%E8%83%BD%E5%9C%A8%E6%B0%B4%E9%9D%A2%E4%B8%8A%E8%A1%8C%E8%B5%B0%EF%BC%8C%E9%9C%B2%E7%8F%A0%E6%80%BB%E6%98%AF%E5%9C%86%E6%BB%9A%E6%BB%9A%E7%9A%84%EF%BC%8C%E8%BF%99%E9%83%BD%E6%BA%90%E4%BA%8E%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E3%80%82",
+      "duration": 12.19,
+      "size": 0,
+      "text": "欢迎来到表面张力实验！水黾能在水面上行走，露珠总是圆滚滚的，这都源于表面张力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E6%8A%8A%E4%B8%80%E6%A0%B9%E7%BB%86%E7%AE%A1%E6%8F%92%E8%BF%9B%E6%B0%B4%E9%87%8C%EF%BC%8C%E6%B0%B4%E4%BC%9A%E8%87%AA%E5%B7%B1%E5%BE%80%E4%B8%8A%E7%88%AC%EF%BC%9B%E6%8F%92%E8%BF%9B%E6%B0%B4%E9%93%B6%E9%87%8C%EF%BC%8C%E6%B0%B4%E9%93%B6%E5%8D%B4%E5%BE%80%E4%B8%8B%E7%BC%A9%E3%80%82",
+      "path": "audio/narrations/capillary/intro-intro-2.speech?text=%E6%8A%8A%E4%B8%80%E6%A0%B9%E7%BB%86%E7%AE%A1%E6%8F%92%E8%BF%9B%E6%B0%B4%E9%87%8C%EF%BC%8C%E6%B0%B4%E4%BC%9A%E8%87%AA%E5%B7%B1%E5%BE%80%E4%B8%8A%E7%88%AC%EF%BC%9B%E6%8F%92%E8%BF%9B%E6%B0%B4%E9%93%B6%E9%87%8C%EF%BC%8C%E6%B0%B4%E9%93%B6%E5%8D%B4%E5%BE%80%E4%B8%8B%E7%BC%A9%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "把一根细管插进水里，水会自己往上爬；插进水银里，水银却往下缩。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E7%A7%8D%E7%A5%9E%E5%A5%87%E7%9A%84%E6%AF%9B%E7%BB%86%E7%8E%B0%E8%B1%A1%EF%BC%8C%E8%83%8C%E5%90%8E%E6%AD%A3%E6%98%AF%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E5%9C%A8%E8%B5%B7%E4%BD%9C%E7%94%A8%E3%80%82",
+      "path": "audio/narrations/capillary/intro-intro-3.speech?text=%E8%BF%99%E7%A7%8D%E7%A5%9E%E5%A5%87%E7%9A%84%E6%AF%9B%E7%BB%86%E7%8E%B0%E8%B1%A1%EF%BC%8C%E8%83%8C%E5%90%8E%E6%AD%A3%E6%98%AF%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E5%9C%A8%E8%B5%B7%E4%BD%9C%E7%94%A8%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "这种神奇的毛细现象，背后正是表面张力在起作用。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%B6%B2%E4%BD%93%E8%A1%A8%E9%9D%A2%E7%9A%84%E5%88%86%E5%AD%90%E5%8F%97%E5%88%B0%E5%90%91%E5%86%85%E7%9A%84%E6%8B%89%E5%8A%9B%EF%BC%8C%E4%BD%BF%E8%A1%A8%E9%9D%A2%E5%83%8F%E4%B8%80%E5%BC%A0%E7%BB%B7%E7%B4%A7%E7%9A%84%E5%BC%B9%E6%80%A7%E8%86%9C%E3%80%82",
+      "path": "audio/narrations/capillary/concept-concept-1.speech?text=%E6%B6%B2%E4%BD%93%E8%A1%A8%E9%9D%A2%E7%9A%84%E5%88%86%E5%AD%90%E5%8F%97%E5%88%B0%E5%90%91%E5%86%85%E7%9A%84%E6%8B%89%E5%8A%9B%EF%BC%8C%E4%BD%BF%E8%A1%A8%E9%9D%A2%E5%83%8F%E4%B8%80%E5%BC%A0%E7%BB%B7%E7%B4%A7%E7%9A%84%E5%BC%B9%E6%80%A7%E8%86%9C%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "液体表面的分子受到向内的拉力，使表面像一张绷紧的弹性膜。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BF%99%E7%A7%8D%E4%BD%BF%E6%B6%B2%E9%9D%A2%E6%94%B6%E7%BC%A9%E5%88%B0%E6%9C%80%E5%B0%8F%E7%9A%84%E5%8A%9B%EF%BC%8C%E5%B0%B1%E6%98%AF%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/capillary/concept-concept-2.speech?text=%E8%BF%99%E7%A7%8D%E4%BD%BF%E6%B6%B2%E9%9D%A2%E6%94%B6%E7%BC%A9%E5%88%B0%E6%9C%80%E5%B0%8F%E7%9A%84%E5%8A%9B%EF%BC%8C%E5%B0%B1%E6%98%AF%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "这种使液面收缩到最小的力，就是表面张力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%BD%93%E6%B6%B2%E4%BD%93%E6%B5%B8%E6%B6%A6%E7%AE%A1%E5%A3%81%E6%97%B6%EF%BC%8C%E6%AF%94%E5%A6%82%E6%B0%B4%E5%92%8C%E7%8E%BB%E7%92%83%EF%BC%8C%E6%B6%B2%E9%9D%A2%E4%BC%9A%E6%B2%BF%E7%AE%A1%E5%A3%81%E4%B8%8A%E5%8D%87%E3%80%82",
+      "path": "audio/narrations/capillary/concept-concept-3.speech?text=%E5%BD%93%E6%B6%B2%E4%BD%93%E6%B5%B8%E6%B6%A6%E7%AE%A1%E5%A3%81%E6%97%B6%EF%BC%8C%E6%AF%94%E5%A6%82%E6%B0%B4%E5%92%8C%E7%8E%BB%E7%92%83%EF%BC%8C%E6%B6%B2%E9%9D%A2%E4%BC%9A%E6%B2%BF%E7%AE%A1%E5%A3%81%E4%B8%8A%E5%8D%87%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "当液体浸润管壁时，比如水和玻璃，液面会沿管壁上升。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%BD%93%E6%B6%B2%E4%BD%93%E4%B8%8D%E6%B5%B8%E6%B6%A6%E7%AE%A1%E5%A3%81%E6%97%B6%EF%BC%8C%E6%AF%94%E5%A6%82%E6%B0%B4%E9%93%B6%E5%92%8C%E7%8E%BB%E7%92%83%EF%BC%8C%E6%B6%B2%E9%9D%A2%E5%88%99%E4%BC%9A%E4%B8%8B%E9%99%8D%E3%80%82",
+      "path": "audio/narrations/capillary/concept-concept-4.speech?text=%E5%BD%93%E6%B6%B2%E4%BD%93%E4%B8%8D%E6%B5%B8%E6%B6%A6%E7%AE%A1%E5%A3%81%E6%97%B6%EF%BC%8C%E6%AF%94%E5%A6%82%E6%B0%B4%E9%93%B6%E5%92%8C%E7%8E%BB%E7%92%83%EF%BC%8C%E6%B6%B2%E9%9D%A2%E5%88%99%E4%BC%9A%E4%B8%8B%E9%99%8D%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "当液体不浸润管壁时，比如水银和玻璃，液面则会下降。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%AF%9B%E7%BB%86%E7%AE%A1%E4%B8%AD%E6%B6%B2%E9%9D%A2%E4%B8%8A%E5%8D%87%E7%9A%84%E9%AB%98%E5%BA%A6%E7%94%B1%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/capillary/formula-formula-1.speech?text=%E6%AF%9B%E7%BB%86%E7%AE%A1%E4%B8%AD%E6%B6%B2%E9%9D%A2%E4%B8%8A%E5%8D%87%E7%9A%84%E9%AB%98%E5%BA%A6%E7%94%B1%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "毛细管中液面上升的高度由这个公式决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20%CF%83%20%E6%98%AF%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E7%B3%BB%E6%95%B0%EF%BC%8C%CE%B8%20%E6%98%AF%E6%8E%A5%E8%A7%A6%E8%A7%92%EF%BC%8Cr%20%E6%98%AF%E7%AE%A1%E7%9A%84%E5%8D%8A%E5%BE%84%E3%80%82",
+      "path": "audio/narrations/capillary/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20%CF%83%20%E6%98%AF%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E7%B3%BB%E6%95%B0%EF%BC%8C%CE%B8%20%E6%98%AF%E6%8E%A5%E8%A7%A6%E8%A7%92%EF%BC%8Cr%20%E6%98%AF%E7%AE%A1%E7%9A%84%E5%8D%8A%E5%BE%84%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "其中 σ 是表面张力系数，θ 是接触角，r 是管的半径。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%AE%A1%E8%B6%8A%E7%BB%86%EF%BC%8C%E4%B8%8A%E5%8D%87%E8%B6%8A%E9%AB%98%EF%BC%9B%E6%8E%A5%E8%A7%A6%E8%A7%92%E5%B0%8F%E4%BA%8E%2090%20%E5%BA%A6%E6%97%B6%E6%B6%B2%E9%9D%A2%E4%B8%8A%E5%8D%87%EF%BC%8C%E5%A4%A7%E4%BA%8E%2090%20%E5%BA%A6%E6%97%B6%E4%B8%8B%E9%99%8D%E3%80%82",
+      "path": "audio/narrations/capillary/formula-formula-3.speech?text=%E7%AE%A1%E8%B6%8A%E7%BB%86%EF%BC%8C%E4%B8%8A%E5%8D%87%E8%B6%8A%E9%AB%98%EF%BC%9B%E6%8E%A5%E8%A7%A6%E8%A7%92%E5%B0%8F%E4%BA%8E%2090%20%E5%BA%A6%E6%97%B6%E6%B6%B2%E9%9D%A2%E4%B8%8A%E5%8D%87%EF%BC%8C%E5%A4%A7%E4%BA%8E%2090%20%E5%BA%A6%E6%97%B6%E4%B8%8B%E9%99%8D%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "管越细，上升越高；接触角小于 90 度时液面上升，大于 90 度时下降。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BF%99%E5%B0%B1%E8%A7%A3%E9%87%8A%E4%BA%86%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BB%86%E7%AE%A1%E4%B8%AD%E7%9A%84%E6%AF%9B%E7%BB%86%E6%95%88%E5%BA%94%E7%89%B9%E5%88%AB%E6%98%8E%E6%98%BE%E3%80%82",
+      "path": "audio/narrations/capillary/formula-formula-4.speech?text=%E8%BF%99%E5%B0%B1%E8%A7%A3%E9%87%8A%E4%BA%86%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BB%86%E7%AE%A1%E4%B8%AD%E7%9A%84%E6%AF%9B%E7%BB%86%E6%95%88%E5%BA%94%E7%89%B9%E5%88%AB%E6%98%8E%E6%98%BE%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "这就解释了为什么细管中的毛细效应特别明显。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%87%8F%E5%B0%8F%E7%AE%A1%E7%9A%84%E5%8D%8A%E5%BE%84%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B6%B2%E9%9D%A2%E4%B8%8A%E5%8D%87%E5%BE%97%E8%B6%8A%E6%9D%A5%E8%B6%8A%E9%AB%98%E3%80%82",
+      "path": "audio/narrations/capillary/interaction-interaction-1.speech?text=%E5%87%8F%E5%B0%8F%E7%AE%A1%E7%9A%84%E5%8D%8A%E5%BE%84%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B6%B2%E9%9D%A2%E4%B8%8A%E5%8D%87%E5%BE%97%E8%B6%8A%E6%9D%A5%E8%B6%8A%E9%AB%98%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "减小管的半径，观察液面上升得越来越高。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E6%8E%A5%E8%A7%A6%E8%A7%92%EF%BC%8C%E5%BD%93%E5%AE%83%E8%B6%85%E8%BF%87%2090%20%E5%BA%A6%E6%97%B6%EF%BC%8C%E7%9C%8B%E6%B6%B2%E9%9D%A2%E5%A6%82%E4%BD%95%E8%BD%AC%E4%B8%BA%E4%B8%8B%E9%99%8D%E3%80%82",
+      "path": "audio/narrations/capillary/interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E6%8E%A5%E8%A7%A6%E8%A7%92%EF%BC%8C%E5%BD%93%E5%AE%83%E8%B6%85%E8%BF%87%2090%20%E5%BA%A6%E6%97%B6%EF%BC%8C%E7%9C%8B%E6%B6%B2%E9%9D%A2%E5%A6%82%E4%BD%95%E8%BD%AC%E4%B8%BA%E4%B8%8B%E9%99%8D%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "调整接触角，当它超过 90 度时，看液面如何转为下降。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E7%B3%BB%E6%95%B0%EF%BC%8C%E6%84%9F%E5%8F%97%E4%B8%8D%E5%90%8C%E6%B6%B2%E4%BD%93%E7%9A%84%E6%AF%9B%E7%BB%86%E6%95%88%E6%9E%9C%E5%B7%AE%E5%BC%82%E3%80%82",
+      "path": "audio/narrations/capillary/interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E7%B3%BB%E6%95%B0%EF%BC%8C%E6%84%9F%E5%8F%97%E4%B8%8D%E5%90%8C%E6%B6%B2%E4%BD%93%E7%9A%84%E6%AF%9B%E7%BB%86%E6%95%88%E6%9E%9C%E5%B7%AE%E5%BC%82%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "改变表面张力系数，感受不同液体的毛细效果差异。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%A4%8D%E7%89%A9%E9%9D%A0%E6%AF%9B%E7%BB%86%E4%BD%9C%E7%94%A8%EF%BC%8C%E6%8A%8A%E6%B0%B4%E5%88%86%E4%BB%8E%E6%A0%B9%E9%83%A8%E8%BE%93%E9%80%81%E5%88%B0%E9%AB%98%E9%AB%98%E7%9A%84%E6%9E%9D%E5%8F%B6%E3%80%82",
+      "path": "audio/narrations/capillary/application-application-1.speech?text=%E6%A4%8D%E7%89%A9%E9%9D%A0%E6%AF%9B%E7%BB%86%E4%BD%9C%E7%94%A8%EF%BC%8C%E6%8A%8A%E6%B0%B4%E5%88%86%E4%BB%8E%E6%A0%B9%E9%83%A8%E8%BE%93%E9%80%81%E5%88%B0%E9%AB%98%E9%AB%98%E7%9A%84%E6%9E%9D%E5%8F%B6%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "植物靠毛细作用，把水分从根部输送到高高的枝叶。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%AF%9B%E5%B7%BE%E5%90%B8%E6%B0%B4%E3%80%81%E9%92%A2%E7%AC%94%E5%87%BA%E5%A2%A8%EF%BC%8C%E9%83%BD%E6%98%AF%E6%AF%9B%E7%BB%86%E7%8E%B0%E8%B1%A1%E7%9A%84%E6%97%A5%E5%B8%B8%E4%BD%93%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/capillary/application-application-2.speech?text=%E6%AF%9B%E5%B7%BE%E5%90%B8%E6%B0%B4%E3%80%81%E9%92%A2%E7%AC%94%E5%87%BA%E5%A2%A8%EF%BC%8C%E9%83%BD%E6%98%AF%E6%AF%9B%E7%BB%86%E7%8E%B0%E8%B1%A1%E7%9A%84%E6%97%A5%E5%B8%B8%E4%BD%93%E7%8E%B0%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "毛巾吸水、钢笔出墨，都是毛细现象的日常体现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%9C%9F%E5%A3%A4%E4%BF%9D%E6%B0%B4%E3%80%81%E5%BE%AE%E6%B5%81%E6%8E%A7%E8%8A%AF%E7%89%87%EF%BC%8C%E4%B9%9F%E9%83%BD%E4%BE%9D%E8%B5%96%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E4%B8%8E%E6%AF%9B%E7%BB%86%E6%95%88%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/capillary/application-application-3.speech?text=%E5%9C%9F%E5%A3%A4%E4%BF%9D%E6%B0%B4%E3%80%81%E5%BE%AE%E6%B5%81%E6%8E%A7%E8%8A%AF%E7%89%87%EF%BC%8C%E4%B9%9F%E9%83%BD%E4%BE%9D%E8%B5%96%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E4%B8%8E%E6%AF%9B%E7%BB%86%E6%95%88%E5%BA%94%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "土壤保水、微流控芯片，也都依赖表面张力与毛细效应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E4%BD%BF%E6%B6%B2%E9%9D%A2%E5%83%8F%E7%BB%B7%E7%B4%A7%E7%9A%84%E8%86%9C%EF%BC%8C%E8%B6%8B%E4%BA%8E%E6%94%B6%E7%BC%A9%E5%88%B0%E6%9C%80%E5%B0%8F%E3%80%82",
+      "path": "audio/narrations/capillary/summary-summary-1.speech?text=%E8%A1%A8%E9%9D%A2%E5%BC%A0%E5%8A%9B%E4%BD%BF%E6%B6%B2%E9%9D%A2%E5%83%8F%E7%BB%B7%E7%B4%A7%E7%9A%84%E8%86%9C%EF%BC%8C%E8%B6%8B%E4%BA%8E%E6%94%B6%E7%BC%A9%E5%88%B0%E6%9C%80%E5%B0%8F%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "表面张力使液面像绷紧的膜，趋于收缩到最小。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%AF%9B%E7%BB%86%E4%B8%8A%E5%8D%87%E9%AB%98%E5%BA%A6%20h%20%E7%AD%89%E4%BA%8E%202%CF%83cos%CE%B8%20%E9%99%A4%E4%BB%A5%20%CF%81gr%EF%BC%8C%E7%AE%A1%E8%B6%8A%E7%BB%86%E4%B8%8A%E5%8D%87%E8%B6%8A%E9%AB%98%E3%80%82",
+      "path": "audio/narrations/capillary/summary-summary-2.speech?text=%E6%AF%9B%E7%BB%86%E4%B8%8A%E5%8D%87%E9%AB%98%E5%BA%A6%20h%20%E7%AD%89%E4%BA%8E%202%CF%83cos%CE%B8%20%E9%99%A4%E4%BB%A5%20%CF%81gr%EF%BC%8C%E7%AE%A1%E8%B6%8A%E7%BB%86%E4%B8%8A%E5%8D%87%E8%B6%8A%E9%AB%98%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "毛细上升高度 h 等于 2σcosθ 除以 ρgr，管越细上升越高。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capillary",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E6%B5%B8%E6%B6%A6%E6%97%B6%E4%B8%8A%E5%8D%87%E3%80%81%E4%B8%8D%E6%B5%B8%E6%B6%A6%E6%97%B6%E4%B8%8B%E9%99%8D%E3%80%82%E4%BB%8E%E6%A4%8D%E7%89%A9%E5%90%B8%E6%B0%B4%E5%88%B0%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB%EF%BC%8C%E6%AF%9B%E7%BB%86%E7%8E%B0%E8%B1%A1%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/capillary/summary-summary-3.speech?text=%E6%B5%B8%E6%B6%A6%E6%97%B6%E4%B8%8A%E5%8D%87%E3%80%81%E4%B8%8D%E6%B5%B8%E6%B6%A6%E6%97%B6%E4%B8%8B%E9%99%8D%E3%80%82%E4%BB%8E%E6%A4%8D%E7%89%A9%E5%90%B8%E6%B0%B4%E5%88%B0%E6%97%A5%E5%B8%B8%E7%94%9F%E6%B4%BB%EF%BC%8C%E6%AF%9B%E7%BB%86%E7%8E%B0%E8%B1%A1%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 12.81,
+      "size": 0,
+      "text": "浸润时上升、不浸润时下降。从植物吸水到日常生活，毛细现象无处不在。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

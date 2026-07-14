@@ -1,0 +1,229 @@
+{
+  "script_id": "kepler-laws",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 175.32,
+  "files": [
+    {
+      "script_id": "kepler-laws",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B%E5%AE%9E%E9%AA%8C%EF%BC%81%E5%8D%81%E4%B8%83%E4%B8%96%E7%BA%AA%E5%88%9D%EF%BC%8C%E5%BC%80%E6%99%AE%E5%8B%92%E5%88%86%E6%9E%90%E4%BA%86%E5%A4%A7%E9%87%8F%E8%A1%8C%E6%98%9F%E8%A7%82%E6%B5%8B%E6%95%B0%E6%8D%AE%E3%80%82",
+      "path": "audio/narrations/kepler-laws/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B%E5%AE%9E%E9%AA%8C%EF%BC%81%E5%8D%81%E4%B8%83%E4%B8%96%E7%BA%AA%E5%88%9D%EF%BC%8C%E5%BC%80%E6%99%AE%E5%8B%92%E5%88%86%E6%9E%90%E4%BA%86%E5%A4%A7%E9%87%8F%E8%A1%8C%E6%98%9F%E8%A7%82%E6%B5%8B%E6%95%B0%E6%8D%AE%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "欢迎来到开普勒定律实验！十七世纪初，开普勒分析了大量行星观测数据。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%BB%96%E4%BB%8E%E7%BA%B7%E7%B9%81%E7%9A%84%E6%95%B0%E5%AD%97%E4%B8%AD%EF%BC%8C%E6%80%BB%E7%BB%93%E5%87%BA%E4%B8%89%E6%9D%A1%E4%BC%98%E7%BE%8E%E8%80%8C%E7%B2%BE%E7%A1%AE%E7%9A%84%E8%A1%8C%E6%98%9F%E8%BF%90%E5%8A%A8%E5%AE%9A%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/kepler-laws/intro-intro-2.speech?text=%E4%BB%96%E4%BB%8E%E7%BA%B7%E7%B9%81%E7%9A%84%E6%95%B0%E5%AD%97%E4%B8%AD%EF%BC%8C%E6%80%BB%E7%BB%93%E5%87%BA%E4%B8%89%E6%9D%A1%E4%BC%98%E7%BE%8E%E8%80%8C%E7%B2%BE%E7%A1%AE%E7%9A%84%E8%A1%8C%E6%98%9F%E8%BF%90%E5%8A%A8%E5%AE%9A%E5%BE%8B%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "他从纷繁的数字中，总结出三条优美而精确的行星运动定律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%B8%89%E6%9D%A1%E5%AE%9A%E5%BE%8B%E4%B8%8D%E4%BB%85%E6%8F%8F%E7%BB%98%E4%BA%86%E5%A4%AA%E9%98%B3%E7%B3%BB%E7%9A%84%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B9%9F%E4%B8%BA%E7%89%9B%E9%A1%BF%E5%8F%91%E7%8E%B0%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E9%93%BA%E5%B9%B3%E4%BA%86%E9%81%93%E8%B7%AF%E3%80%82",
+      "path": "audio/narrations/kepler-laws/intro-intro-3.speech?text=%E8%BF%99%E4%B8%89%E6%9D%A1%E5%AE%9A%E5%BE%8B%E4%B8%8D%E4%BB%85%E6%8F%8F%E7%BB%98%E4%BA%86%E5%A4%AA%E9%98%B3%E7%B3%BB%E7%9A%84%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B9%9F%E4%B8%BA%E7%89%9B%E9%A1%BF%E5%8F%91%E7%8E%B0%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E9%93%BA%E5%B9%B3%E4%BA%86%E9%81%93%E8%B7%AF%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "这三条定律不仅描绘了太阳系的运行，也为牛顿发现万有引力铺平了道路。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B%E8%AF%B4%EF%BC%8C%E8%A1%8C%E6%98%9F%E6%B2%BF%E6%A4%AD%E5%9C%86%E8%BD%A8%E9%81%93%E8%BF%90%E8%A1%8C%EF%BC%8C%E5%A4%AA%E9%98%B3%E4%BD%8D%E4%BA%8E%E6%A4%AD%E5%9C%86%E7%9A%84%E4%B8%80%E4%B8%AA%E7%84%A6%E7%82%B9%E4%B8%8A%E3%80%82",
+      "path": "audio/narrations/kepler-laws/concept-concept-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B%E8%AF%B4%EF%BC%8C%E8%A1%8C%E6%98%9F%E6%B2%BF%E6%A4%AD%E5%9C%86%E8%BD%A8%E9%81%93%E8%BF%90%E8%A1%8C%EF%BC%8C%E5%A4%AA%E9%98%B3%E4%BD%8D%E4%BA%8E%E6%A4%AD%E5%9C%86%E7%9A%84%E4%B8%80%E4%B8%AA%E7%84%A6%E7%82%B9%E4%B8%8A%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "第一定律说，行星沿椭圆轨道运行，太阳位于椭圆的一个焦点上。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%E8%AF%B4%EF%BC%8C%E8%BF%9E%E6%8E%A5%E8%A1%8C%E6%98%9F%E5%92%8C%E5%A4%AA%E9%98%B3%E7%9A%84%E7%BA%BF%E6%AE%B5%EF%BC%8C%E5%9C%A8%E7%9B%B8%E7%AD%89%E6%97%B6%E9%97%B4%E5%86%85%E6%89%AB%E8%BF%87%E7%9B%B8%E7%AD%89%E7%9A%84%E9%9D%A2%E7%A7%AF%E3%80%82",
+      "path": "audio/narrations/kepler-laws/concept-concept-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%E8%AF%B4%EF%BC%8C%E8%BF%9E%E6%8E%A5%E8%A1%8C%E6%98%9F%E5%92%8C%E5%A4%AA%E9%98%B3%E7%9A%84%E7%BA%BF%E6%AE%B5%EF%BC%8C%E5%9C%A8%E7%9B%B8%E7%AD%89%E6%97%B6%E9%97%B4%E5%86%85%E6%89%AB%E8%BF%87%E7%9B%B8%E7%AD%89%E7%9A%84%E9%9D%A2%E7%A7%AF%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "第二定律说，连接行星和太阳的线段，在相等时间内扫过相等的面积。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E8%A1%8C%E6%98%9F%E5%9C%A8%E8%BF%91%E6%97%A5%E7%82%B9%E8%B7%91%E5%BE%97%E5%BF%AB%EF%BC%8C%E5%9C%A8%E8%BF%9C%E6%97%A5%E7%82%B9%E8%B7%91%E5%BE%97%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/kepler-laws/concept-concept-3.speech?text=%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E8%A1%8C%E6%98%9F%E5%9C%A8%E8%BF%91%E6%97%A5%E7%82%B9%E8%B7%91%E5%BE%97%E5%BF%AB%EF%BC%8C%E5%9C%A8%E8%BF%9C%E6%97%A5%E7%82%B9%E8%B7%91%E5%BE%97%E6%85%A2%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "这意味着行星在近日点跑得快，在远日点跑得慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B%E6%8F%AD%E7%A4%BA%E4%BA%86%E4%B8%8D%E5%90%8C%E8%A1%8C%E6%98%9F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9A%E5%91%A8%E6%9C%9F%E8%B6%8A%E9%95%BF%EF%BC%8C%E8%BD%A8%E9%81%93%E8%B6%8A%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/kepler-laws/concept-concept-4.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B%E6%8F%AD%E7%A4%BA%E4%BA%86%E4%B8%8D%E5%90%8C%E8%A1%8C%E6%98%9F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9A%E5%91%A8%E6%9C%9F%E8%B6%8A%E9%95%BF%EF%BC%8C%E8%BD%A8%E9%81%93%E8%B6%8A%E5%A4%A7%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "第三定律揭示了不同行星之间的关系：周期越长，轨道越大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E8%A7%92%E5%8A%A8%E9%87%8F%E5%AE%88%E6%81%92%EF%BC%8C%E6%89%AB%E8%BF%87%E9%9D%A2%E7%A7%AF%E7%9A%84%E9%80%9F%E7%8E%87%E4%BF%9D%E6%8C%81%E6%81%92%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/kepler-laws/formula-formula-1.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E8%A7%92%E5%8A%A8%E9%87%8F%E5%AE%88%E6%81%92%EF%BC%8C%E6%89%AB%E8%BF%87%E9%9D%A2%E7%A7%AF%E7%9A%84%E9%80%9F%E7%8E%87%E4%BF%9D%E6%8C%81%E6%81%92%E5%AE%9A%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "第二定律本质上是角动量守恒，扫过面积的速率保持恒定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B%E6%8C%87%E5%87%BA%EF%BC%8C%E8%BD%A8%E9%81%93%E5%91%A8%E6%9C%9F%E7%9A%84%E5%B9%B3%E6%96%B9%E4%B8%8E%E5%8D%8A%E9%95%BF%E8%BD%B4%E7%9A%84%E7%AB%8B%E6%96%B9%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/kepler-laws/formula-formula-2.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B%E6%8C%87%E5%87%BA%EF%BC%8C%E8%BD%A8%E9%81%93%E5%91%A8%E6%9C%9F%E7%9A%84%E5%B9%B3%E6%96%B9%E4%B8%8E%E5%8D%8A%E9%95%BF%E8%BD%B4%E7%9A%84%E7%AB%8B%E6%96%B9%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "第三定律指出，轨道周期的平方与半长轴的立方成正比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%9B%B4%E7%B2%BE%E7%A1%AE%E5%9C%B0%E8%AF%B4%EF%BC%8CT%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20a%20%E7%AB%8B%E6%96%B9%E7%AD%89%E4%BA%8E%E4%B8%80%E4%B8%AA%E7%94%B1%E4%B8%AD%E5%BF%83%E5%A4%A9%E4%BD%93%E8%B4%A8%E9%87%8F%E5%86%B3%E5%AE%9A%E7%9A%84%E5%B8%B8%E6%95%B0%E3%80%82",
+      "path": "audio/narrations/kepler-laws/formula-formula-3.speech?text=%E6%9B%B4%E7%B2%BE%E7%A1%AE%E5%9C%B0%E8%AF%B4%EF%BC%8CT%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20a%20%E7%AB%8B%E6%96%B9%E7%AD%89%E4%BA%8E%E4%B8%80%E4%B8%AA%E7%94%B1%E4%B8%AD%E5%BF%83%E5%A4%A9%E4%BD%93%E8%B4%A8%E9%87%8F%E5%86%B3%E5%AE%9A%E7%9A%84%E5%B8%B8%E6%95%B0%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "更精确地说，T 平方除以 a 立方等于一个由中心天体质量决定的常数。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%AF%B9%E5%A4%AA%E9%98%B3%E7%B3%BB%E6%89%80%E6%9C%89%E8%A1%8C%E6%98%9F%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%AF%94%E5%80%BC%E9%83%BD%E7%9B%B8%E5%90%8C%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E5%AE%9A%E5%BE%8B%E7%9A%84%E5%A5%87%E5%A6%99%E4%B9%8B%E5%A4%84%E3%80%82",
+      "path": "audio/narrations/kepler-laws/formula-formula-4.speech?text=%E5%AF%B9%E5%A4%AA%E9%98%B3%E7%B3%BB%E6%89%80%E6%9C%89%E8%A1%8C%E6%98%9F%EF%BC%8C%E8%BF%99%E4%B8%AA%E6%AF%94%E5%80%BC%E9%83%BD%E7%9B%B8%E5%90%8C%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E5%AE%9A%E5%BE%8B%E7%9A%84%E5%A5%87%E5%A6%99%E4%B9%8B%E5%A4%84%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "对太阳系所有行星，这个比值都相同，这正是定律的奇妙之处。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E8%BD%A8%E9%81%93%E7%9A%84%E5%81%8F%E5%BF%83%E7%8E%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%A4%AD%E5%9C%86%E4%BB%8E%E6%8E%A5%E8%BF%91%E5%9C%86%E5%BD%A2%E5%8F%98%E5%BE%97%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%89%81%E3%80%82",
+      "path": "audio/narrations/kepler-laws/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E8%BD%A8%E9%81%93%E7%9A%84%E5%81%8F%E5%BF%83%E7%8E%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%A4%AD%E5%9C%86%E4%BB%8E%E6%8E%A5%E8%BF%91%E5%9C%86%E5%BD%A2%E5%8F%98%E5%BE%97%E8%B6%8A%E6%9D%A5%E8%B6%8A%E6%89%81%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "调整轨道的偏心率，观察椭圆从接近圆形变得越来越扁。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E8%A1%8C%E6%98%9F%E6%89%AB%E8%BF%87%E7%9A%84%E6%89%87%E5%BD%A2%E9%9D%A2%E7%A7%AF%EF%BC%8C%E7%9B%B8%E7%AD%89%E6%97%B6%E9%97%B4%E5%86%85%E5%AE%83%E4%BB%AC%E7%9A%84%E9%9D%A2%E7%A7%AF%E5%A7%8B%E7%BB%88%E7%9B%B8%E7%AD%89%E3%80%82",
+      "path": "audio/narrations/kepler-laws/interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E8%A1%8C%E6%98%9F%E6%89%AB%E8%BF%87%E7%9A%84%E6%89%87%E5%BD%A2%E9%9D%A2%E7%A7%AF%EF%BC%8C%E7%9B%B8%E7%AD%89%E6%97%B6%E9%97%B4%E5%86%85%E5%AE%83%E4%BB%AC%E7%9A%84%E9%9D%A2%E7%A7%AF%E5%A7%8B%E7%BB%88%E7%9B%B8%E7%AD%89%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "注意行星扫过的扇形面积，相等时间内它们的面积始终相等。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E5%8D%8A%E9%95%BF%E8%BD%B4%EF%BC%8C%E7%9C%8B%E5%91%A8%E6%9C%9F%E5%A6%82%E4%BD%95%E6%8C%89%E7%85%A7%20T%20%E5%B9%B3%E6%96%B9%E6%AD%A3%E6%AF%94%E4%BA%8E%20a%20%E7%AB%8B%E6%96%B9%E7%9A%84%E8%A7%84%E5%BE%8B%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/kepler-laws/interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E5%8D%8A%E9%95%BF%E8%BD%B4%EF%BC%8C%E7%9C%8B%E5%91%A8%E6%9C%9F%E5%A6%82%E4%BD%95%E6%8C%89%E7%85%A7%20T%20%E5%B9%B3%E6%96%B9%E6%AD%A3%E6%AF%94%E4%BA%8E%20a%20%E7%AB%8B%E6%96%B9%E7%9A%84%E8%A7%84%E5%BE%8B%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "改变半长轴，看周期如何按照 T 平方正比于 a 立方的规律变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B%E8%AE%A9%E6%88%91%E4%BB%AC%E8%83%BD%E7%B2%BE%E7%A1%AE%E9%A2%84%E6%B5%8B%E8%A1%8C%E6%98%9F%E3%80%81%E5%BD%97%E6%98%9F%E5%92%8C%E5%8D%AB%E6%98%9F%E7%9A%84%E4%BD%8D%E7%BD%AE%E3%80%82",
+      "path": "audio/narrations/kepler-laws/application-application-1.speech?text=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B%E8%AE%A9%E6%88%91%E4%BB%AC%E8%83%BD%E7%B2%BE%E7%A1%AE%E9%A2%84%E6%B5%8B%E8%A1%8C%E6%98%9F%E3%80%81%E5%BD%97%E6%98%9F%E5%92%8C%E5%8D%AB%E6%98%9F%E7%9A%84%E4%BD%8D%E7%BD%AE%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "开普勒定律让我们能精确预测行星、彗星和卫星的位置。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%93%88%E9%9B%B7%E6%AD%A3%E6%98%AF%E7%94%A8%E8%BF%99%E4%BA%9B%E8%A7%84%E5%BE%8B%EF%BC%8C%E9%A2%84%E8%A8%80%E4%BA%86%E5%93%88%E9%9B%B7%E5%BD%97%E6%98%9F%E7%9A%84%E5%9B%9E%E5%BD%92%E3%80%82",
+      "path": "audio/narrations/kepler-laws/application-application-2.speech?text=%E5%93%88%E9%9B%B7%E6%AD%A3%E6%98%AF%E7%94%A8%E8%BF%99%E4%BA%9B%E8%A7%84%E5%BE%8B%EF%BC%8C%E9%A2%84%E8%A8%80%E4%BA%86%E5%93%88%E9%9B%B7%E5%BD%97%E6%98%9F%E7%9A%84%E5%9B%9E%E5%BD%92%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "哈雷正是用这些规律，预言了哈雷彗星的回归。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%8E%B0%E4%BB%A3%E8%88%AA%E5%A4%A9%E5%99%A8%E7%9A%84%E8%BD%A8%E9%81%93%E8%AE%BE%E8%AE%A1%EF%BC%8C%E4%BE%9D%E7%84%B6%E5%BB%BA%E7%AB%8B%E5%9C%A8%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%8A%E3%80%82",
+      "path": "audio/narrations/kepler-laws/application-application-3.speech?text=%E7%8E%B0%E4%BB%A3%E8%88%AA%E5%A4%A9%E5%99%A8%E7%9A%84%E8%BD%A8%E9%81%93%E8%AE%BE%E8%AE%A1%EF%BC%8C%E4%BE%9D%E7%84%B6%E5%BB%BA%E7%AB%8B%E5%9C%A8%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%8A%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "现代航天器的轨道设计，依然建立在开普勒定律的基础之上。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B%EF%BC%9A%E8%A1%8C%E6%98%9F%E6%B2%BF%E6%A4%AD%E5%9C%86%E8%BD%A8%E9%81%93%E8%BF%90%E8%A1%8C%EF%BC%8C%E5%A4%AA%E9%98%B3%E5%9C%A8%E4%B8%80%E4%B8%AA%E7%84%A6%E7%82%B9%E4%B8%8A%E3%80%82",
+      "path": "audio/narrations/kepler-laws/summary-summary-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B%EF%BC%9A%E8%A1%8C%E6%98%9F%E6%B2%BF%E6%A4%AD%E5%9C%86%E8%BD%A8%E9%81%93%E8%BF%90%E8%A1%8C%EF%BC%8C%E5%A4%AA%E9%98%B3%E5%9C%A8%E4%B8%80%E4%B8%AA%E7%84%A6%E7%82%B9%E4%B8%8A%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "第一定律：行星沿椭圆轨道运行，太阳在一个焦点上。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%EF%BC%9A%E7%AD%89%E6%97%B6%E9%97%B4%E6%89%AB%E8%BF%87%E7%AD%89%E9%9D%A2%E7%A7%AF%EF%BC%8C%E8%BF%91%E6%97%A5%E7%82%B9%E5%BF%AB%E3%80%81%E8%BF%9C%E6%97%A5%E7%82%B9%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/kepler-laws/summary-summary-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%EF%BC%9A%E7%AD%89%E6%97%B6%E9%97%B4%E6%89%AB%E8%BF%87%E7%AD%89%E9%9D%A2%E7%A7%AF%EF%BC%8C%E8%BF%91%E6%97%A5%E7%82%B9%E5%BF%AB%E3%80%81%E8%BF%9C%E6%97%A5%E7%82%B9%E6%85%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "第二定律：等时间扫过等面积，近日点快、远日点慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kepler-laws",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B%EF%BC%9A%E5%91%A8%E6%9C%9F%E5%B9%B3%E6%96%B9%E6%AD%A3%E6%AF%94%E4%BA%8E%E5%8D%8A%E9%95%BF%E8%BD%B4%E7%AB%8B%E6%96%B9%E3%80%82%E4%B8%89%E6%9D%A1%E5%AE%9A%E5%BE%8B%E5%85%B1%E5%90%8C%E6%8F%8F%E7%BB%98%E4%BA%86%E5%A4%A9%E4%BD%93%E7%9A%84%E8%88%9E%E8%B9%88%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/kepler-laws/summary-summary-3.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B%EF%BC%9A%E5%91%A8%E6%9C%9F%E5%B9%B3%E6%96%B9%E6%AD%A3%E6%AF%94%E4%BA%8E%E5%8D%8A%E9%95%BF%E8%BD%B4%E7%AB%8B%E6%96%B9%E3%80%82%E4%B8%89%E6%9D%A1%E5%AE%9A%E5%BE%8B%E5%85%B1%E5%90%8C%E6%8F%8F%E7%BB%98%E4%BA%86%E5%A4%A9%E4%BD%93%E7%9A%84%E8%88%9E%E8%B9%88%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 12.81,
+      "size": 0,
+      "text": "第三定律：周期平方正比于半长轴立方。三条定律共同描绘了天体的舞蹈。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

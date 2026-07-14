@@ -1,0 +1,229 @@
+{
+  "script_id": "pulley-system",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 168.46,
+  "files": [
+    {
+      "script_id": "pulley-system",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%BB%91%E8%BD%AE%E7%BB%84%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%A6%81%E6%8A%8A%E6%B2%89%E9%87%8D%E7%9A%84%E8%B4%A7%E7%89%A9%E5%90%8A%E4%B8%8A%E9%AB%98%E6%A5%BC%EF%BC%8C%E5%B7%A5%E4%BA%BA%E9%9D%A0%E7%9A%84%E5%B0%B1%E6%98%AF%E6%BB%91%E8%BD%AE%E7%BB%84%E3%80%82",
+      "path": "audio/narrations/pulley-system/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%BB%91%E8%BD%AE%E7%BB%84%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%A6%81%E6%8A%8A%E6%B2%89%E9%87%8D%E7%9A%84%E8%B4%A7%E7%89%A9%E5%90%8A%E4%B8%8A%E9%AB%98%E6%A5%BC%EF%BC%8C%E5%B7%A5%E4%BA%BA%E9%9D%A0%E7%9A%84%E5%B0%B1%E6%98%AF%E6%BB%91%E8%BD%AE%E7%BB%84%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "欢迎来到滑轮组实验！要把沉重的货物吊上高楼，工人靠的就是滑轮组。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%80%E4%B8%AA%E4%BA%BA%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%89%E8%B5%B7%E6%AF%94%E8%87%AA%E5%B7%B1%E9%87%8D%E5%BE%97%E5%A4%9A%E7%9A%84%E7%89%A9%E4%BD%93%EF%BC%9F%E7%A7%98%E5%AF%86%E5%B0%B1%E8%97%8F%E5%9C%A8%E6%BB%91%E8%BD%AE%E7%9A%84%E7%BB%84%E5%90%88%E9%87%8C%E3%80%82",
+      "path": "audio/narrations/pulley-system/intro-intro-2.speech?text=%E4%B8%80%E4%B8%AA%E4%BA%BA%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%8B%89%E8%B5%B7%E6%AF%94%E8%87%AA%E5%B7%B1%E9%87%8D%E5%BE%97%E5%A4%9A%E7%9A%84%E7%89%A9%E4%BD%93%EF%BC%9F%E7%A7%98%E5%AF%86%E5%B0%B1%E8%97%8F%E5%9C%A8%E6%BB%91%E8%BD%AE%E7%9A%84%E7%BB%84%E5%90%88%E9%87%8C%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "一个人为什么能拉起比自己重得多的物体？秘密就藏在滑轮的组合里。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BD%86%E7%9C%81%E5%8A%9B%E4%BB%8E%E6%9D%A5%E4%B8%8D%E6%98%AF%E5%85%8D%E8%B4%B9%E7%9A%84%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E7%9C%8B%E7%9C%8B%E5%85%B6%E4%B8%AD%E7%9A%84%E4%BB%A3%E4%BB%B7%E4%B8%8E%E6%95%88%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/pulley-system/intro-intro-3.speech?text=%E4%BD%86%E7%9C%81%E5%8A%9B%E4%BB%8E%E6%9D%A5%E4%B8%8D%E6%98%AF%E5%85%8D%E8%B4%B9%E7%9A%84%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E7%9C%8B%E7%9C%8B%E5%85%B6%E4%B8%AD%E7%9A%84%E4%BB%A3%E4%BB%B7%E4%B8%8E%E6%95%88%E7%8E%87%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "但省力从来不是免费的，今天我们就来看看其中的代价与效率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%AE%9A%E6%BB%91%E8%BD%AE%E5%9B%BA%E5%AE%9A%E4%B8%8D%E5%8A%A8%EF%BC%8C%E5%8F%AA%E6%94%B9%E5%8F%98%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%8C%E4%B8%8D%E7%9C%81%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/pulley-system/concept-concept-1.speech?text=%E5%AE%9A%E6%BB%91%E8%BD%AE%E5%9B%BA%E5%AE%9A%E4%B8%8D%E5%8A%A8%EF%BC%8C%E5%8F%AA%E6%94%B9%E5%8F%98%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%8C%E4%B8%8D%E7%9C%81%E5%8A%9B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "定滑轮固定不动，只改变力的方向，不省力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%8A%A8%E6%BB%91%E8%BD%AE%E9%9A%8F%E7%89%A9%E4%BD%93%E4%B8%80%E8%B5%B7%E7%A7%BB%E5%8A%A8%EF%BC%8C%E8%83%BD%E7%9C%81%E4%B8%80%E5%8D%8A%E7%9A%84%E5%8A%9B%EF%BC%8C%E4%BD%86%E8%A6%81%E5%A4%9A%E6%8B%89%E4%B8%80%E5%80%8D%E7%9A%84%E7%BB%B3%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/pulley-system/concept-concept-2.speech?text=%E5%8A%A8%E6%BB%91%E8%BD%AE%E9%9A%8F%E7%89%A9%E4%BD%93%E4%B8%80%E8%B5%B7%E7%A7%BB%E5%8A%A8%EF%BC%8C%E8%83%BD%E7%9C%81%E4%B8%80%E5%8D%8A%E7%9A%84%E5%8A%9B%EF%BC%8C%E4%BD%86%E8%A6%81%E5%A4%9A%E6%8B%89%E4%B8%80%E5%80%8D%E7%9A%84%E7%BB%B3%E5%AD%90%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "动滑轮随物体一起移动，能省一半的力，但要多拉一倍的绳子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%8A%8A%E5%AE%9A%E6%BB%91%E8%BD%AE%E5%92%8C%E5%8A%A8%E6%BB%91%E8%BD%AE%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%BB%91%E8%BD%AE%E7%BB%84%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%90%8C%E6%97%B6%E7%9C%81%E5%8A%9B%E5%8F%88%E6%94%B9%E5%8F%98%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/pulley-system/concept-concept-3.speech?text=%E6%8A%8A%E5%AE%9A%E6%BB%91%E8%BD%AE%E5%92%8C%E5%8A%A8%E6%BB%91%E8%BD%AE%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%BB%91%E8%BD%AE%E7%BB%84%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%90%8C%E6%97%B6%E7%9C%81%E5%8A%9B%E5%8F%88%E6%94%B9%E5%8F%98%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "把定滑轮和动滑轮组合起来，就是滑轮组，可以同时省力又改变方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%9C%89%E5%87%A0%E6%AE%B5%E7%BB%B3%E5%AD%90%E5%90%8A%E7%9D%80%E5%8A%A8%E6%BB%91%E8%BD%AE%EF%BC%8C%E6%8B%89%E5%8A%9B%E5%B0%B1%E5%8F%98%E6%88%90%E7%89%A9%E9%87%8D%E7%9A%84%E5%87%A0%E5%88%86%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/pulley-system/concept-concept-4.speech?text=%E6%9C%89%E5%87%A0%E6%AE%B5%E7%BB%B3%E5%AD%90%E5%90%8A%E7%9D%80%E5%8A%A8%E6%BB%91%E8%BD%AE%EF%BC%8C%E6%8B%89%E5%8A%9B%E5%B0%B1%E5%8F%98%E6%88%90%E7%89%A9%E9%87%8D%E7%9A%84%E5%87%A0%E5%88%86%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "有几段绳子吊着动滑轮，拉力就变成物重的几分之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%8B%89%E5%8A%9B%E7%AD%89%E4%BA%8E%E7%89%A9%E9%87%8D%E9%99%A4%E4%BB%A5%E6%89%BF%E9%87%8D%E7%BB%B3%E5%AD%90%E7%9A%84%E6%AE%B5%E6%95%B0%20n%E3%80%82",
+      "path": "audio/narrations/pulley-system/formula-formula-1.speech?text=%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%8B%89%E5%8A%9B%E7%AD%89%E4%BA%8E%E7%89%A9%E9%87%8D%E9%99%A4%E4%BB%A5%E6%89%BF%E9%87%8D%E7%BB%B3%E5%AD%90%E7%9A%84%E6%AE%B5%E6%95%B0%20n%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "理想情况下，拉力等于物重除以承重绳子的段数 n。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E4%BD%86%E7%BB%B3%E5%AD%90%E6%8B%89%E5%8A%A8%E7%9A%84%E8%B7%9D%E7%A6%BB%E6%98%AF%E7%89%A9%E4%BD%93%E4%B8%8A%E5%8D%87%E9%AB%98%E5%BA%A6%E7%9A%84%20n%20%E5%80%8D%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E7%9C%81%E5%8A%9B%E8%B4%B9%E8%B7%9D%E7%A6%BB%E3%80%82",
+      "path": "audio/narrations/pulley-system/formula-formula-2.speech?text=%E4%BD%86%E7%BB%B3%E5%AD%90%E6%8B%89%E5%8A%A8%E7%9A%84%E8%B7%9D%E7%A6%BB%E6%98%AF%E7%89%A9%E4%BD%93%E4%B8%8A%E5%8D%87%E9%AB%98%E5%BA%A6%E7%9A%84%20n%20%E5%80%8D%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E7%9C%81%E5%8A%9B%E8%B4%B9%E8%B7%9D%E7%A6%BB%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "但绳子拉动的距离是物体上升高度的 n 倍，这就是省力费距离。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E7%AD%89%E4%BA%8E%E6%9C%89%E7%94%A8%E5%8A%9F%E9%99%A4%E4%BB%A5%E6%80%BB%E5%8A%9F%EF%BC%8C%E5%8F%8D%E6%98%A0%E4%BA%86%E6%9C%BA%E6%A2%B0%E7%9A%84%E8%83%BD%E9%87%8F%E5%88%A9%E7%94%A8%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/pulley-system/formula-formula-3.speech?text=%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E7%AD%89%E4%BA%8E%E6%9C%89%E7%94%A8%E5%8A%9F%E9%99%A4%E4%BB%A5%E6%80%BB%E5%8A%9F%EF%BC%8C%E5%8F%8D%E6%98%A0%E4%BA%86%E6%9C%BA%E6%A2%B0%E7%9A%84%E8%83%BD%E9%87%8F%E5%88%A9%E7%94%A8%E7%8E%87%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "机械效率等于有用功除以总功，反映了机械的能量利用率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E7%94%B1%E4%BA%8E%E5%8A%A8%E6%BB%91%E8%BD%AE%E8%87%AA%E9%87%8D%E5%92%8C%E6%91%A9%E6%93%A6%E6%B6%88%E8%80%97%E4%BA%86%E9%A2%9D%E5%A4%96%E7%9A%84%E5%8A%9F%EF%BC%8C%E5%AE%9E%E9%99%85%E6%95%88%E7%8E%87%E6%80%BB%E6%98%AF%E5%B0%8F%E4%BA%8E%E7%99%BE%E5%88%86%E4%B9%8B%E7%99%BE%E3%80%82",
+      "path": "audio/narrations/pulley-system/formula-formula-4.speech?text=%E7%94%B1%E4%BA%8E%E5%8A%A8%E6%BB%91%E8%BD%AE%E8%87%AA%E9%87%8D%E5%92%8C%E6%91%A9%E6%93%A6%E6%B6%88%E8%80%97%E4%BA%86%E9%A2%9D%E5%A4%96%E7%9A%84%E5%8A%9F%EF%BC%8C%E5%AE%9E%E9%99%85%E6%95%88%E7%8E%87%E6%80%BB%E6%98%AF%E5%B0%8F%E4%BA%8E%E7%99%BE%E5%88%86%E4%B9%8B%E7%99%BE%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "由于动滑轮自重和摩擦消耗了额外的功，实际效率总是小于百分之百。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%A2%9E%E5%8A%A0%E6%89%BF%E9%87%8D%E7%BB%B3%E6%AE%B5%E6%95%B0%20n%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%8B%89%E5%8A%9B%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%8F%EF%BC%8C%E4%BD%86%E6%8B%89%E7%BB%B3%E8%B7%9D%E7%A6%BB%E7%9B%B8%E5%BA%94%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/pulley-system/interaction-interaction-1.speech?text=%E5%A2%9E%E5%8A%A0%E6%89%BF%E9%87%8D%E7%BB%B3%E6%AE%B5%E6%95%B0%20n%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%8B%89%E5%8A%9B%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%8F%EF%BC%8C%E4%BD%86%E6%8B%89%E7%BB%B3%E8%B7%9D%E7%A6%BB%E7%9B%B8%E5%BA%94%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "增加承重绳段数 n，观察拉力如何减小，但拉绳距离相应增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E5%8A%A8%E6%BB%91%E8%BD%AE%E7%9A%84%E9%87%8D%E9%87%8F%EF%BC%8C%E7%9C%8B%E7%9C%8B%E5%AE%83%E5%A6%82%E4%BD%95%E6%8B%89%E4%BD%8E%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/pulley-system/interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E5%8A%A8%E6%BB%91%E8%BD%AE%E7%9A%84%E9%87%8D%E9%87%8F%EF%BC%8C%E7%9C%8B%E7%9C%8B%E5%AE%83%E5%A6%82%E4%BD%95%E6%8B%89%E4%BD%8E%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "调整动滑轮的重量，看看它如何拉低机械效率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%8A%A8%E6%BB%91%E8%BD%AE%E8%B6%8A%E9%87%8D%E3%80%81%E7%89%A9%E4%BD%93%E8%B6%8A%E8%BD%BB%EF%BC%8C%E9%A2%9D%E5%A4%96%E6%B6%88%E8%80%97%E5%8D%A0%E6%AF%94%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%95%88%E7%8E%87%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/pulley-system/interaction-interaction-3.speech?text=%E5%8A%A8%E6%BB%91%E8%BD%AE%E8%B6%8A%E9%87%8D%E3%80%81%E7%89%A9%E4%BD%93%E8%B6%8A%E8%BD%BB%EF%BC%8C%E9%A2%9D%E5%A4%96%E6%B6%88%E8%80%97%E5%8D%A0%E6%AF%94%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%95%88%E7%8E%87%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "动滑轮越重、物体越轻，额外消耗占比越大，效率越低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%A1%94%E5%90%8A%E5%92%8C%E8%B5%B7%E9%87%8D%E6%9C%BA%E7%94%A8%E5%A4%9A%E7%BB%84%E6%BB%91%E8%BD%AE%EF%BC%8C%E8%AE%A9%E5%B0%8F%E7%94%B5%E6%9C%BA%E4%B9%9F%E8%83%BD%E5%90%8A%E8%B5%B7%E5%87%A0%E5%8D%81%E5%90%A8%E7%9A%84%E9%87%8D%E7%89%A9%E3%80%82",
+      "path": "audio/narrations/pulley-system/application-application-1.speech?text=%E5%A1%94%E5%90%8A%E5%92%8C%E8%B5%B7%E9%87%8D%E6%9C%BA%E7%94%A8%E5%A4%9A%E7%BB%84%E6%BB%91%E8%BD%AE%EF%BC%8C%E8%AE%A9%E5%B0%8F%E7%94%B5%E6%9C%BA%E4%B9%9F%E8%83%BD%E5%90%8A%E8%B5%B7%E5%87%A0%E5%8D%81%E5%90%A8%E7%9A%84%E9%87%8D%E7%89%A9%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "塔吊和起重机用多组滑轮，让小电机也能吊起几十吨的重物。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%94%80%E5%B2%A9%E5%92%8C%E6%95%91%E6%8F%B4%E4%B8%AD%E7%9A%84%E7%9C%81%E5%8A%9B%E7%B3%BB%E7%BB%9F%EF%BC%8C%E4%B9%9F%E6%98%AF%E6%BB%91%E8%BD%AE%E7%BB%84%E5%8E%9F%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%E3%80%82",
+      "path": "audio/narrations/pulley-system/application-application-2.speech?text=%E6%94%80%E5%B2%A9%E5%92%8C%E6%95%91%E6%8F%B4%E4%B8%AD%E7%9A%84%E7%9C%81%E5%8A%9B%E7%B3%BB%E7%BB%9F%EF%BC%8C%E4%B9%9F%E6%98%AF%E6%BB%91%E8%BD%AE%E7%BB%84%E5%8E%9F%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "攀岩和救援中的省力系统，也是滑轮组原理的应用。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%B7%A5%E7%A8%8B%E5%B8%88%E8%AE%BE%E8%AE%A1%E6%97%B6%E4%BC%9A%E5%B0%BD%E9%87%8F%E5%87%8F%E5%B0%8F%E6%BB%91%E8%BD%AE%E8%87%AA%E9%87%8D%E5%92%8C%E6%91%A9%E6%93%A6%EF%BC%8C%E4%BB%A5%E6%8F%90%E9%AB%98%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/pulley-system/application-application-3.speech?text=%E5%B7%A5%E7%A8%8B%E5%B8%88%E8%AE%BE%E8%AE%A1%E6%97%B6%E4%BC%9A%E5%B0%BD%E9%87%8F%E5%87%8F%E5%B0%8F%E6%BB%91%E8%BD%AE%E8%87%AA%E9%87%8D%E5%92%8C%E6%91%A9%E6%93%A6%EF%BC%8C%E4%BB%A5%E6%8F%90%E9%AB%98%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "工程师设计时会尽量减小滑轮自重和摩擦，以提高机械效率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%BB%91%E8%BD%AE%E7%BB%84%E7%94%A8%20n%20%E6%AE%B5%E7%BB%B3%E5%AD%90%E6%89%BF%E9%87%8D%EF%BC%8C%E7%90%86%E6%83%B3%E6%8B%89%E5%8A%9B%E4%B8%BA%E7%89%A9%E9%87%8D%E7%9A%84%20n%20%E5%88%86%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/pulley-system/summary-summary-1.speech?text=%E6%BB%91%E8%BD%AE%E7%BB%84%E7%94%A8%20n%20%E6%AE%B5%E7%BB%B3%E5%AD%90%E6%89%BF%E9%87%8D%EF%BC%8C%E7%90%86%E6%83%B3%E6%8B%89%E5%8A%9B%E4%B8%BA%E7%89%A9%E9%87%8D%E7%9A%84%20n%20%E5%88%86%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "滑轮组用 n 段绳子承重，理想拉力为物重的 n 分之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E7%9C%81%E5%8A%9B%E5%BF%85%E5%AE%9A%E8%B4%B9%E8%B7%9D%E7%A6%BB%EF%BC%8C%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E7%AD%89%E4%BA%8E%E6%9C%89%E7%94%A8%E5%8A%9F%E9%99%A4%E4%BB%A5%E6%80%BB%E5%8A%9F%E3%80%82",
+      "path": "audio/narrations/pulley-system/summary-summary-2.speech?text=%E7%9C%81%E5%8A%9B%E5%BF%85%E5%AE%9A%E8%B4%B9%E8%B7%9D%E7%A6%BB%EF%BC%8C%E6%9C%BA%E6%A2%B0%E6%95%88%E7%8E%87%E7%AD%89%E4%BA%8E%E6%9C%89%E7%94%A8%E5%8A%9F%E9%99%A4%E4%BB%A5%E6%80%BB%E5%8A%9F%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "省力必定费距离，机械效率等于有用功除以总功。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "pulley-system",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%8A%A8%E6%BB%91%E8%BD%AE%E8%87%AA%E9%87%8D%E5%92%8C%E6%91%A9%E6%93%A6%E8%AE%A9%E6%95%88%E7%8E%87%E5%B0%8F%E4%BA%8E%E7%99%BE%E5%88%86%E4%B9%8B%E7%99%BE%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E9%A2%86%E4%BC%9A%E4%BA%86%E7%9C%81%E5%8A%9B%E8%83%8C%E5%90%8E%E7%9A%84%E6%99%BA%E6%85%A7%EF%BC%81",
+      "path": "audio/narrations/pulley-system/summary-summary-3.speech?text=%E5%8A%A8%E6%BB%91%E8%BD%AE%E8%87%AA%E9%87%8D%E5%92%8C%E6%91%A9%E6%93%A6%E8%AE%A9%E6%95%88%E7%8E%87%E5%B0%8F%E4%BA%8E%E7%99%BE%E5%88%86%E4%B9%8B%E7%99%BE%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E9%A2%86%E4%BC%9A%E4%BA%86%E7%9C%81%E5%8A%9B%E8%83%8C%E5%90%8E%E7%9A%84%E6%99%BA%E6%85%A7%EF%BC%81",
+      "duration": 10,
+      "size": 0,
+      "text": "动滑轮自重和摩擦让效率小于百分之百。希望你领会了省力背后的智慧！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

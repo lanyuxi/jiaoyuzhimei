@@ -1,0 +1,229 @@
+{
+  "script_id": "kdv-soliton",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 130.01,
+  "files": [
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%AD%A4%E7%AB%8B%E6%B3%A2%EF%BC%811834%20%E5%B9%B4%EF%BC%8C%E7%BD%97%E7%B4%A0%E5%9C%A8%E8%BF%90%E6%B2%B3%E8%BE%B9%E9%AA%91%E9%A9%AC%E8%BF%BD%E9%80%90%E4%B8%80%E4%B8%AA%E5%A5%87%E7%89%B9%E7%9A%84%E6%B0%B4%E5%8C%85%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%AD%A4%E7%AB%8B%E6%B3%A2%EF%BC%811834%20%E5%B9%B4%EF%BC%8C%E7%BD%97%E7%B4%A0%E5%9C%A8%E8%BF%90%E6%B2%B3%E8%BE%B9%E9%AA%91%E9%A9%AC%E8%BF%BD%E9%80%90%E4%B8%80%E4%B8%AA%E5%A5%87%E7%89%B9%E7%9A%84%E6%B0%B4%E5%8C%85%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "欢迎来到孤立波！1834 年，罗素在运河边骑马追逐一个奇特的水包。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E7%8B%AC%E8%87%AA%E5%89%8D%E8%A1%8C%E6%95%B0%E5%85%AC%E9%87%8C%EF%BC%8C%E5%BD%A2%E7%8A%B6%E5%87%A0%E4%B9%8E%E4%B8%8D%E5%8F%98%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E5%AD%A4%E7%AB%8B%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/intro-intro-2.speech?text=%E5%AE%83%E7%8B%AC%E8%87%AA%E5%89%8D%E8%A1%8C%E6%95%B0%E5%85%AC%E9%87%8C%EF%BC%8C%E5%BD%A2%E7%8A%B6%E5%87%A0%E4%B9%8E%E4%B8%8D%E5%8F%98%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E5%AD%A4%E7%AB%8B%E6%B3%A2%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "它独自前行数公里，形状几乎不变，这就是孤立波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%AE%83%E7%94%B1%20KdV%20%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%EF%BC%8C%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%89%A9%E7%90%86%E7%9A%84%E6%98%8E%E7%8F%A0%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/intro-intro-3.speech?text=%E5%AE%83%E7%94%B1%20KdV%20%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%EF%BC%8C%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%89%A9%E7%90%86%E7%9A%84%E6%98%8E%E7%8F%A0%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它由 KdV 方程描述，是非线性物理的明珠。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%99%AE%E9%80%9A%E6%B3%A2%E5%8C%85%E4%BC%9A%E5%9B%A0%E8%89%B2%E6%95%A3%E8%80%8C%E9%80%90%E6%B8%90%E5%B1%95%E5%AE%BD%E3%80%81%E6%B6%88%E6%95%A3%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/concept-concept-1.speech?text=%E6%99%AE%E9%80%9A%E6%B3%A2%E5%8C%85%E4%BC%9A%E5%9B%A0%E8%89%B2%E6%95%A3%E8%80%8C%E9%80%90%E6%B8%90%E5%B1%95%E5%AE%BD%E3%80%81%E6%B6%88%E6%95%A3%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "普通波包会因色散而逐渐展宽、消散。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%80%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%95%88%E5%BA%94%E4%BC%9A%E8%AE%A9%E6%B3%A2%E5%8C%85%E5%8F%98%E9%99%A1%E3%80%81%E8%81%9A%E6%8B%A2%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/concept-concept-2.speech?text=%E8%80%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%95%88%E5%BA%94%E4%BC%9A%E8%AE%A9%E6%B3%A2%E5%8C%85%E5%8F%98%E9%99%A1%E3%80%81%E8%81%9A%E6%8B%A2%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "而非线性效应会让波包变陡、聚拢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%BD%93%E8%89%B2%E6%95%A3%E4%B8%8E%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%81%B0%E5%A5%BD%E5%B9%B3%E8%A1%A1%EF%BC%8C%E6%B3%A2%E5%8C%85%E5%B0%B1%E7%A8%B3%E5%AE%9A%E4%B8%8D%E5%8F%98%E4%BA%86%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/concept-concept-3.speech?text=%E5%BD%93%E8%89%B2%E6%95%A3%E4%B8%8E%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%81%B0%E5%A5%BD%E5%B9%B3%E8%A1%A1%EF%BC%8C%E6%B3%A2%E5%8C%85%E5%B0%B1%E7%A8%B3%E5%AE%9A%E4%B8%8D%E5%8F%98%E4%BA%86%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "当色散与非线性恰好平衡，波包就稳定不变了。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BF%99%E7%A7%8D%E7%A8%B3%E5%AE%9A%E7%9A%84%E5%AD%A4%E7%AB%8B%E6%B3%A2%E5%8F%88%E5%8F%AB%E5%AD%A4%E7%AB%8B%E5%AD%90%EF%BC%8C%E8%83%BD%E4%BF%9D%E6%8C%81%E5%BD%A2%E7%8A%B6%E9%95%BF%E8%B7%9D%E7%A6%BB%E4%BC%A0%E6%92%AD%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/concept-concept-4.speech?text=%E8%BF%99%E7%A7%8D%E7%A8%B3%E5%AE%9A%E7%9A%84%E5%AD%A4%E7%AB%8B%E6%B3%A2%E5%8F%88%E5%8F%AB%E5%AD%A4%E7%AB%8B%E5%AD%90%EF%BC%8C%E8%83%BD%E4%BF%9D%E6%8C%81%E5%BD%A2%E7%8A%B6%E9%95%BF%E8%B7%9D%E7%A6%BB%E4%BC%A0%E6%92%AD%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "这种稳定的孤立波又叫孤立子，能保持形状长距离传播。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=KdV%20%E6%96%B9%E7%A8%8B%E5%90%8C%E6%97%B6%E5%8C%85%E5%90%AB%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%A1%B9%E5%92%8C%E8%89%B2%E6%95%A3%E9%A1%B9%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/formula-formula-1.speech?text=KdV%20%E6%96%B9%E7%A8%8B%E5%90%8C%E6%97%B6%E5%8C%85%E5%90%AB%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%A1%B9%E5%92%8C%E8%89%B2%E6%95%A3%E9%A1%B9%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "KdV 方程同时包含非线性项和色散项。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%AE%83%E7%9A%84%E5%AD%A4%E7%AB%8B%E6%B3%A2%E8%A7%A3%E6%98%AF%E4%B8%80%E4%B8%AA%E5%8F%8C%E6%9B%B2%E6%AD%A3%E5%89%B2%E5%B9%B3%E6%96%B9%E7%9A%84%E6%B3%A2%E5%8C%85%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/formula-formula-2.speech?text=%E5%AE%83%E7%9A%84%E5%AD%A4%E7%AB%8B%E6%B3%A2%E8%A7%A3%E6%98%AF%E4%B8%80%E4%B8%AA%E5%8F%8C%E6%9B%B2%E6%AD%A3%E5%89%B2%E5%B9%B3%E6%96%B9%E7%9A%84%E6%B3%A2%E5%8C%85%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "它的孤立波解是一个双曲正割平方的波包。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%8C%AF%E5%B9%85%E8%B6%8A%E9%AB%98%E7%9A%84%E5%AD%A4%E7%AB%8B%E6%B3%A2%E4%BC%A0%E6%92%AD%E8%B6%8A%E5%BF%AB%EF%BC%8C%E4%B9%9F%E8%B6%8A%E7%AA%84%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/formula-formula-3.speech?text=%E6%8C%AF%E5%B9%85%E8%B6%8A%E9%AB%98%E7%9A%84%E5%AD%A4%E7%AB%8B%E6%B3%A2%E4%BC%A0%E6%92%AD%E8%B6%8A%E5%BF%AB%EF%BC%8C%E4%B9%9F%E8%B6%8A%E7%AA%84%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "振幅越高的孤立波传播越快，也越窄。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E4%B8%A4%E4%B8%AA%E5%AD%A4%E7%AB%8B%E6%B3%A2%E7%9B%B8%E6%92%9E%E5%90%8E%EF%BC%8C%E7%AB%9F%E8%83%BD%E5%90%84%E8%87%AA%E5%AE%8C%E5%A5%BD%E5%9C%B0%E7%A9%BF%E5%87%BA%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/formula-formula-4.speech?text=%E4%B8%A4%E4%B8%AA%E5%AD%A4%E7%AB%8B%E6%B3%A2%E7%9B%B8%E6%92%9E%E5%90%8E%EF%BC%8C%E7%AB%9F%E8%83%BD%E5%90%84%E8%87%AA%E5%AE%8C%E5%A5%BD%E5%9C%B0%E7%A9%BF%E5%87%BA%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "两个孤立波相撞后，竟能各自完好地穿出。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E6%B3%A2%E9%80%9F%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AD%A4%E7%AB%8B%E6%B3%A2%E6%8C%AF%E5%B9%85%E4%B8%8E%E5%AE%BD%E5%BA%A6%E7%9A%84%E8%81%94%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E6%B3%A2%E9%80%9F%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AD%A4%E7%AB%8B%E6%B3%A2%E6%8C%AF%E5%B9%85%E4%B8%8E%E5%AE%BD%E5%BA%A6%E7%9A%84%E8%81%94%E5%8A%A8%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "调节波速，观察孤立波振幅与宽度的联动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%AE%A9%E6%B3%A2%E5%8C%85%E4%BC%A0%E6%92%AD%EF%BC%8C%E7%9C%8B%E5%AE%83%E5%BD%A2%E7%8A%B6%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/interaction-interaction-2.speech?text=%E8%AE%A9%E6%B3%A2%E5%8C%85%E4%BC%A0%E6%92%AD%EF%BC%8C%E7%9C%8B%E5%AE%83%E5%BD%A2%E7%8A%B6%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "让波包传播，看它形状保持不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E4%BD%93%E4%BC%9A%E9%AB%98%E6%8C%AF%E5%B9%85%E5%AD%A4%E7%AB%8B%E6%B3%A2%E5%8F%88%E9%AB%98%E5%8F%88%E7%AA%84%E5%8F%88%E5%BF%AB%E7%9A%84%E7%89%B9%E5%BE%81%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/interaction-interaction-3.speech?text=%E4%BD%93%E4%BC%9A%E9%AB%98%E6%8C%AF%E5%B9%85%E5%AD%A4%E7%AB%8B%E6%B3%A2%E5%8F%88%E9%AB%98%E5%8F%88%E7%AA%84%E5%8F%88%E5%BF%AB%E7%9A%84%E7%89%B9%E5%BE%81%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "体会高振幅孤立波又高又窄又快的特征。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%85%89%E7%BA%A4%E5%AD%A4%E7%AB%8B%E5%AD%90%E8%83%BD%E5%9C%A8%E9%95%BF%E8%B7%9D%E7%A6%BB%E9%80%9A%E4%BF%A1%E4%B8%AD%E4%BF%9D%E6%8C%81%E8%84%89%E5%86%B2%E4%B8%8D%E5%A4%B1%E7%9C%9F%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/application-application-1.speech?text=%E5%85%89%E7%BA%A4%E5%AD%A4%E7%AB%8B%E5%AD%90%E8%83%BD%E5%9C%A8%E9%95%BF%E8%B7%9D%E7%A6%BB%E9%80%9A%E4%BF%A1%E4%B8%AD%E4%BF%9D%E6%8C%81%E8%84%89%E5%86%B2%E4%B8%8D%E5%A4%B1%E7%9C%9F%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "光纤孤立子能在长距离通信中保持脉冲不失真。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%B5%B7%E6%B4%8B%E4%B8%AD%E7%9A%84%E5%86%85%E6%B3%A2%E3%80%81%E6%B5%85%E6%B0%B4%E6%B3%A2%E4%B9%9F%E5%B8%B8%E4%BB%A5%E5%AD%A4%E7%AB%8B%E6%B3%A2%E5%BD%A2%E5%BC%8F%E5%87%BA%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/application-application-2.speech?text=%E6%B5%B7%E6%B4%8B%E4%B8%AD%E7%9A%84%E5%86%85%E6%B3%A2%E3%80%81%E6%B5%85%E6%B0%B4%E6%B3%A2%E4%B9%9F%E5%B8%B8%E4%BB%A5%E5%AD%A4%E7%AB%8B%E6%B3%A2%E5%BD%A2%E5%BC%8F%E5%87%BA%E7%8E%B0%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "海洋中的内波、浅水波也常以孤立波形式出现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AD%A4%E7%AB%8B%E5%AD%90%E7%90%86%E8%AE%BA%E6%B7%B1%E5%88%BB%E5%BD%B1%E5%93%8D%E4%BA%86%E7%8E%B0%E4%BB%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%A7%91%E5%AD%A6%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/application-application-3.speech?text=%E5%AD%A4%E7%AB%8B%E5%AD%90%E7%90%86%E8%AE%BA%E6%B7%B1%E5%88%BB%E5%BD%B1%E5%93%8D%E4%BA%86%E7%8E%B0%E4%BB%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%A7%91%E5%AD%A6%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "孤立子理论深刻影响了现代非线性科学。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%AD%A4%E7%AB%8B%E6%B3%A2%E6%98%AF%E8%89%B2%E6%95%A3%E4%B8%8E%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%B9%B3%E8%A1%A1%E7%9A%84%E4%BA%A7%E7%89%A9%EF%BC%8C%E5%BD%A2%E7%8A%B6%E7%A8%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/summary-summary-1.speech?text=%E5%AD%A4%E7%AB%8B%E6%B3%A2%E6%98%AF%E8%89%B2%E6%95%A3%E4%B8%8E%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%B9%B3%E8%A1%A1%E7%9A%84%E4%BA%A7%E7%89%A9%EF%BC%8C%E5%BD%A2%E7%8A%B6%E7%A8%B3%E5%AE%9A%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "孤立波是色散与非线性平衡的产物，形状稳定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=KdV%20%E6%96%B9%E7%A8%8B%E7%9A%84%20sech%C2%B2%20%E8%A7%A3%E6%8F%8F%E8%BF%B0%E4%BA%86%E5%AE%83%EF%BC%8C%E6%8C%AF%E5%B9%85%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%BF%AB%E8%B6%8A%E7%AA%84%E3%80%82",
+      "path": "audio/narrations/kdv-soliton/summary-summary-2.speech?text=KdV%20%E6%96%B9%E7%A8%8B%E7%9A%84%20sech%C2%B2%20%E8%A7%A3%E6%8F%8F%E8%BF%B0%E4%BA%86%E5%AE%83%EF%BC%8C%E6%8C%AF%E5%B9%85%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%BF%AB%E8%B6%8A%E7%AA%84%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "KdV 方程的 sech² 解描述了它，振幅越大越快越窄。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "kdv-soliton",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E8%BF%90%E6%B2%B3%E5%88%B0%E5%85%89%E7%BA%A4%EF%BC%8C%E5%AD%A4%E7%AB%8B%E5%AD%90%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/kdv-soliton/summary-summary-3.speech?text=%E4%BB%8E%E8%BF%90%E6%B2%B3%E5%88%B0%E5%85%89%E7%BA%A4%EF%BC%8C%E5%AD%A4%E7%AB%8B%E5%AD%90%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.19,
+      "size": 0,
+      "text": "从运河到光纤，孤立子无处不在。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

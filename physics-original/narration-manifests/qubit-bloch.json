@@ -1,0 +1,229 @@
+{
+  "script_id": "qubit-bloch",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 142.19,
+  "files": [
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E9%87%8F%E5%AD%90%E4%B8%96%E7%95%8C%EF%BC%81%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%E5%8F%AA%E8%83%BD%E6%98%AF%200%20%E6%88%96%201%EF%BC%8C%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E5%8D%B4%E8%83%BD%E5%90%8C%E6%97%B6%E6%98%AF%E4%B8%A4%E8%80%85%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E9%87%8F%E5%AD%90%E4%B8%96%E7%95%8C%EF%BC%81%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%E5%8F%AA%E8%83%BD%E6%98%AF%200%20%E6%88%96%201%EF%BC%8C%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E5%8D%B4%E8%83%BD%E5%90%8C%E6%97%B6%E6%98%AF%E4%B8%A4%E8%80%85%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "欢迎进入量子世界！经典比特只能是 0 或 1，量子比特却能同时是两者。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%99%E7%A7%8D%E7%A5%9E%E5%A5%87%E7%9A%84%E5%8F%A0%E5%8A%A0%E6%80%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%94%A8%E4%B8%80%E4%B8%AA%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84%E7%82%B9%E6%9D%A5%E7%9B%B4%E8%A7%82%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/intro-intro-2.speech?text=%E8%BF%99%E7%A7%8D%E7%A5%9E%E5%A5%87%E7%9A%84%E5%8F%A0%E5%8A%A0%E6%80%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%94%A8%E4%B8%80%E4%B8%AA%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84%E7%82%B9%E6%9D%A5%E7%9B%B4%E8%A7%82%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "这种神奇的叠加态，可以用一个球面上的点来直观表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E7%90%83%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E2%80%94%E2%80%94%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E5%9C%B0%E5%9B%BE%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E7%90%83%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E2%80%94%E2%80%94%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E5%9C%B0%E5%9B%BE%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "这个球，就是布洛赫球——量子比特的地图。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%90%83%E7%9A%84%E5%8C%97%E6%9E%81%E4%BB%A3%E8%A1%A8%E7%8A%B6%E6%80%81%200%EF%BC%8C%E5%8D%97%E6%9E%81%E4%BB%A3%E8%A1%A8%E7%8A%B6%E6%80%81%201%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/concept-concept-1.speech?text=%E7%90%83%E7%9A%84%E5%8C%97%E6%9E%81%E4%BB%A3%E8%A1%A8%E7%8A%B6%E6%80%81%200%EF%BC%8C%E5%8D%97%E6%9E%81%E4%BB%A3%E8%A1%A8%E7%8A%B6%E6%80%81%201%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "球的北极代表状态 0，南极代表状态 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84%E4%BB%BB%E6%84%8F%E4%B8%80%E7%82%B9%EF%BC%8C%E9%83%BD%E6%98%AF%200%20%E5%92%8C%201%20%E7%9A%84%E6%9F%90%E7%A7%8D%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/concept-concept-2.speech?text=%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84%E4%BB%BB%E6%84%8F%E4%B8%80%E7%82%B9%EF%BC%8C%E9%83%BD%E6%98%AF%200%20%E5%92%8C%201%20%E7%9A%84%E6%9F%90%E7%A7%8D%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "球面上的任意一点，都是 0 和 1 的某种叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%9E%81%E8%A7%92%20%CE%B8%20%E5%86%B3%E5%AE%9A%200%20%E4%B8%8E%201%20%E7%9A%84%E6%AF%94%E9%87%8D%EF%BC%8C%E6%96%B9%E4%BD%8D%E8%A7%92%20%CF%86%20%E5%86%B3%E5%AE%9A%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BD%8D%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/concept-concept-3.speech?text=%E6%9E%81%E8%A7%92%20%CE%B8%20%E5%86%B3%E5%AE%9A%200%20%E4%B8%8E%201%20%E7%9A%84%E6%AF%94%E9%87%8D%EF%BC%8C%E6%96%B9%E4%BD%8D%E8%A7%92%20%CF%86%20%E5%86%B3%E5%AE%9A%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BD%8D%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "极角 θ 决定 0 与 1 的比重，方位角 φ 决定它们之间的相位。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E4%B8%80%E6%97%A6%E6%B5%8B%E9%87%8F%EF%BC%8C%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E5%B0%B1%E9%9A%8F%E6%9C%BA%E5%9D%8D%E7%BC%A9%E5%88%B0%E5%8C%97%E6%9E%81%E6%88%96%E5%8D%97%E6%9E%81%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/concept-concept-4.speech?text=%E4%B8%80%E6%97%A6%E6%B5%8B%E9%87%8F%EF%BC%8C%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E5%B0%B1%E9%9A%8F%E6%9C%BA%E5%9D%8D%E7%BC%A9%E5%88%B0%E5%8C%97%E6%9E%81%E6%88%96%E5%8D%97%E6%9E%81%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "一旦测量，量子比特就随机坍缩到北极或南极。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%81%E7%94%B1%20%CE%B8%20%E5%92%8C%20%CF%86%20%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/formula-formula-1.speech?text=%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%81%E7%94%B1%20%CE%B8%20%E5%92%8C%20%CF%86%20%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "量子比特的一般态由 θ 和 φ 描述。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%B5%8B%E5%BE%97%200%20%E7%9A%84%E6%A6%82%E7%8E%87%E6%98%AF%20cos%C2%B2%20(%CE%B8%2F2)%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/formula-formula-2.speech?text=%E6%B5%8B%E5%BE%97%200%20%E7%9A%84%E6%A6%82%E7%8E%87%E6%98%AF%20cos%C2%B2%20(%CE%B8%2F2)%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "测得 0 的概率是 cos² (θ/2)。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%B5%8B%E5%BE%97%201%20%E7%9A%84%E6%A6%82%E7%8E%87%E6%98%AF%20sin%C2%B2%20(%CE%B8%2F2)%EF%BC%8C%E4%B8%A4%E8%80%85%E4%B9%8B%E5%92%8C%E4%B8%BA%201%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/formula-formula-3.speech?text=%E6%B5%8B%E5%BE%97%201%20%E7%9A%84%E6%A6%82%E7%8E%87%E6%98%AF%20sin%C2%B2%20(%CE%B8%2F2)%EF%BC%8C%E4%B8%A4%E8%80%85%E4%B9%8B%E5%92%8C%E4%B8%BA%201%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "测得 1 的概率是 sin² (θ/2)，两者之和为 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%B5%A4%E9%81%93%E4%B8%8A%E7%9A%84%E7%82%B9%E6%98%AF%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%EF%BC%8C%E6%B5%8B%200%20%E5%92%8C%E6%B5%8B%201%20%E5%90%84%E5%8D%A0%E4%B8%80%E5%8D%8A%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/formula-formula-4.speech?text=%E8%B5%A4%E9%81%93%E4%B8%8A%E7%9A%84%E7%82%B9%E6%98%AF%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%EF%BC%8C%E6%B5%8B%200%20%E5%92%8C%E6%B5%8B%201%20%E5%90%84%E5%8D%A0%E4%B8%80%E5%8D%8A%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "赤道上的点是均等叠加，测 0 和测 1 各占一半。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E6%8B%96%E5%8A%A8%E6%9E%81%E8%A7%92%20%CE%B8%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%80%81%E7%9F%A2%E9%87%8F%E4%BB%8E%E5%8C%97%E6%9E%81%E8%BD%AC%E5%90%91%E5%8D%97%E6%9E%81%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/interaction-interaction-1.speech?text=%E6%8B%96%E5%8A%A8%E6%9E%81%E8%A7%92%20%CE%B8%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%80%81%E7%9F%A2%E9%87%8F%E4%BB%8E%E5%8C%97%E6%9E%81%E8%BD%AC%E5%90%91%E5%8D%97%E6%9E%81%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "拖动极角 θ，观察态矢量从北极转向南极。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E6%96%B9%E4%BD%8D%E8%A7%92%20%CF%86%EF%BC%8C%E7%9C%8B%E7%9B%B8%E4%BD%8D%E5%A6%82%E4%BD%95%E7%BB%95%E8%B5%A4%E9%81%93%E6%97%8B%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E6%96%B9%E4%BD%8D%E8%A7%92%20%CF%86%EF%BC%8C%E7%9C%8B%E7%9B%B8%E4%BD%8D%E5%A6%82%E4%BD%95%E7%BB%95%E8%B5%A4%E9%81%93%E6%97%8B%E8%BD%AC%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "改变方位角 φ，看相位如何绕赤道旋转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%B5%8B%E9%87%8F%E6%A6%82%E7%8E%87%E9%9A%8F%E6%9E%81%E8%A7%92%E7%9A%84%E8%BF%9E%E7%BB%AD%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%B5%8B%E9%87%8F%E6%A6%82%E7%8E%87%E9%9A%8F%E6%9E%81%E8%A7%92%E7%9A%84%E8%BF%9E%E7%BB%AD%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "注意测量概率随极角的连续变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E6%98%AF%E7%90%86%E8%A7%A3%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E7%9A%84%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/application-application-1.speech?text=%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E6%98%AF%E7%90%86%E8%A7%A3%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E7%9A%84%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "布洛赫球是理解量子计算的基础工具。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%87%8F%E5%AD%90%E9%97%A8%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%8C%E5%B0%B1%E6%98%AF%E8%AE%A9%E6%80%81%E7%9F%A2%E9%87%8F%E5%9C%A8%E7%90%83%E9%9D%A2%E4%B8%8A%E6%97%8B%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/application-application-2.speech?text=%E9%87%8F%E5%AD%90%E9%97%A8%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%8C%E5%B0%B1%E6%98%AF%E8%AE%A9%E6%80%81%E7%9F%A2%E9%87%8F%E5%9C%A8%E7%90%83%E9%9D%A2%E4%B8%8A%E6%97%8B%E8%BD%AC%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "量子门的作用，就是让态矢量在球面上旋转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E5%BC%BA%E5%A4%A7%E5%B9%B6%E8%A1%8C%E8%83%BD%E5%8A%9B%E7%9A%84%E6%BA%90%E6%B3%89%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/application-application-3.speech?text=%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E5%BC%BA%E5%A4%A7%E5%B9%B6%E8%A1%8C%E8%83%BD%E5%8A%9B%E7%9A%84%E6%BA%90%E6%B3%89%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "量子比特的叠加，是量子计算强大并行能力的源泉。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E6%98%AF%200%20%E5%92%8C%201%20%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E7%94%A8%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E4%B8%8A%E7%9A%84%E7%82%B9%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/summary-summary-1.speech?text=%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E6%98%AF%200%20%E5%92%8C%201%20%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E7%94%A8%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E4%B8%8A%E7%9A%84%E7%82%B9%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "量子比特是 0 和 1 的叠加，用布洛赫球上的点表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%9E%81%E8%A7%92%E5%86%B3%E5%AE%9A%E6%B5%8B%E9%87%8F%E6%A6%82%E7%8E%87%EF%BC%8C%E6%96%B9%E4%BD%8D%E8%A7%92%E5%86%B3%E5%AE%9A%E7%9B%B8%E4%BD%8D%E3%80%82",
+      "path": "audio/narrations/qubit-bloch/summary-summary-2.speech?text=%E6%9E%81%E8%A7%92%E5%86%B3%E5%AE%9A%E6%B5%8B%E9%87%8F%E6%A6%82%E7%8E%87%EF%BC%8C%E6%96%B9%E4%BD%8D%E8%A7%92%E5%86%B3%E5%AE%9A%E7%9B%B8%E4%BD%8D%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "极角决定测量概率，方位角决定相位。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "qubit-bloch",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E6%B5%8B%E9%87%8F%E4%BD%BF%E5%AE%83%E9%9A%8F%E6%9C%BA%E5%9D%8D%E7%BC%A9%E5%88%B0%200%20%E6%88%96%201%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/qubit-bloch/summary-summary-3.speech?text=%E6%B5%8B%E9%87%8F%E4%BD%BF%E5%AE%83%E9%9A%8F%E6%9C%BA%E5%9D%8D%E7%BC%A9%E5%88%B0%200%20%E6%88%96%201%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.5,
+      "size": 0,
+      "text": "测量使它随机坍缩到 0 或 1。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}
