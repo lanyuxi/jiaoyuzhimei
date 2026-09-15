@@ -104,15 +104,51 @@ export const NEEDLE_LIMIT_ANGLE = 60
 export const TERMINAL_HIT_LENGTH = 118
 export const TERMINAL_HIT_STROKE = 38
 
+/** 工作台视图尺寸：命中线段必须画在这个范围内，否则会出现「看不见但能点」的死区 */
+export const WORKBENCH_VIEW_WIDTH = 960
+export const WORKBENCH_VIEW_HEIGHT = 540
+
+function clampToWorkbench(value: number, max: number): number {
+  return Math.min(max, Math.max(0, value))
+}
+
+/**
+ * 接线柱命中线段：从接线柱指向元件内部。
+ * 元件靠近工作台边缘时按视图范围截断，避免命中区溢出到工作台外面
+ * （工作台外层是 overflow-hidden 的容器，溢出的接线段会被裁掉而表现为「拖不出导线」）。
+ */
 export function terminalHitSegment(id: AmmeterTerminalId): { x1: number; y1: number; x2: number; y2: number } {
   const terminal = CIRCUIT_TERMINALS[id]
   if (id === 'battery+' || id === 'battery-' || id === 'switch-a' || id === 'switch-b') {
-    return { x1: terminal.x, y1: terminal.y, x2: terminal.x, y2: terminal.y - TERMINAL_HIT_LENGTH }
+    return {
+      x1: terminal.x,
+      y1: terminal.y,
+      x2: terminal.x,
+      y2: clampToWorkbench(terminal.y - TERMINAL_HIT_LENGTH, WORKBENCH_VIEW_HEIGHT),
+    }
   }
   if (id === 'lamp1-a' || id === 'lamp1-b' || id === 'lamp2-a' || id === 'lamp2-b') {
-    return { x1: terminal.x, y1: terminal.y, x2: terminal.x + TERMINAL_HIT_LENGTH, y2: terminal.y }
+    return {
+      x1: terminal.x,
+      y1: terminal.y,
+      x2: clampToWorkbench(terminal.x + TERMINAL_HIT_LENGTH, WORKBENCH_VIEW_WIDTH),
+      y2: terminal.y,
+    }
   }
-  return { x1: terminal.x, y1: terminal.y, x2: terminal.x, y2: terminal.y + TERMINAL_HIT_LENGTH }
+  return {
+    x1: terminal.x,
+    y1: terminal.y,
+    x2: terminal.x,
+    y2: clampToWorkbench(terminal.y + TERMINAL_HIT_LENGTH, WORKBENCH_VIEW_HEIGHT),
+  }
+}
+
+/**
+ * 接线柱是否可以开始拉线：开关闭合时按实验规范禁止改接导线，此时命中区不响应指针。
+ * 其余情况下每一个接线柱都必须可拖，否则学生无法把电流表串联进电路。
+ */
+export function isTerminalDraggable(_id: AmmeterTerminalId, state: { switchClosed: boolean }): boolean {
+  return !state.switchClosed
 }
 
 export function terminalAtPosition(position: Position): AmmeterTerminalId | null {

@@ -10,6 +10,9 @@ import {
   NEEDLE_LIMIT_ANGLE,
   RANGE_SPEC,
   TERMINAL_HIT_STROKE,
+  WORKBENCH_VIEW_HEIGHT,
+  WORKBENCH_VIEW_WIDTH,
+  isTerminalDraggable,
   needleAngle,
   terminalAtPosition,
   terminalHitSegment,
@@ -19,8 +22,8 @@ import {
 } from './definition'
 import { ammeterController, type AmmeterLabState, type CircuitEdge } from './controller'
 
-const workbenchWidth = 960
-const workbenchHeight = 540
+const workbenchWidth = WORKBENCH_VIEW_WIDTH
+const workbenchHeight = WORKBENCH_VIEW_HEIGHT
 
 const caseFill = '#d9d4cb'
 const caseStroke = '#8d867c'
@@ -73,12 +76,12 @@ function Terminal({ id, state, drag }: TerminalProps) {
   const terminal = CIRCUIT_TERMINALS[id]
   const connected = terminalHasWire(state, id)
   const segment = terminalHitSegment(id)
-  const disabled = state.switchClosed
+  const disabled = !isTerminalDraggable(id, state)
   const handlers = {
     onPointerDown: (event: PointerEvent<SVGElement>) => { if (!disabled) drag.onPointerDown(event) },
-    onPointerMove: drag.onPointerMove,
-    onPointerUp: drag.onPointerUp,
-    onPointerCancel: drag.onPointerCancel,
+    onPointerMove: (event: PointerEvent<SVGElement>) => { if (!disabled) drag.onPointerMove(event) },
+    onPointerUp: (event: PointerEvent<SVGElement>) => { if (!disabled) drag.onPointerUp(event) },
+    onPointerCancel: (event: PointerEvent<SVGElement>) => { if (!disabled) drag.onPointerCancel(event) },
   }
   return (
     <g>
@@ -103,6 +106,8 @@ function Terminal({ id, state, drag }: TerminalProps) {
         fill="none"
         stroke="transparent"
         strokeWidth={TERMINAL_HIT_STROKE}
+        strokeLinecap="butt"
+        vectorEffect="non-scaling-stroke"
         pointerEvents="stroke"
         className="cursor-crosshair"
         aria-label={terminal.label}

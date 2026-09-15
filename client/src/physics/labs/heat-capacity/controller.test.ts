@@ -267,3 +267,19 @@ describe('heat capacity comparison controller', () => {
     expect(labRegistry.get('electromagnetic-induction')?.experimentId).toBe('electromagnetic-induction')
   })
 })
+
+describe('吸热能力实验台状态回归', () => {
+  it('重复记录同一组数据时不应额外占用数据表格行', () => {
+    const started = heatCapacityController.reduce(preparedState(), { type: 'start' }).state
+    const stopped = heatCapacityController.reduce(
+      heatCapacityController.reduce(started, { type: 'tick', payload: 30 }).state,
+      { type: 'stop' },
+    ).state
+    const recorded = heatCapacityController.reduce(stopped, { type: 'record' }).state
+    const recordedAgain = heatCapacityController.reduce(recorded, { type: 'record' })
+
+    expect(recordedAgain.state.trials).toHaveLength(1)
+    expect(recordedAgain.state.activeTrialId).toBe(recorded.activeTrialId)
+    expect(heatCapacityController.measurementGroups(recordedAgain.state)).toHaveLength(1)
+  })
+})

@@ -29,6 +29,7 @@ export interface CircuitTrial {
   readonly wireCount: number
   readonly lamp1Lit: boolean
   readonly lamp2Lit: boolean
+  readonly positionLabel?: string
   readonly edges: readonly CircuitEdge[]
 }
 
@@ -406,6 +407,7 @@ function reduceSetSwitch(state: CircuitLabState, payload: unknown): LabTransitio
     wireCount: state.edges.length,
     lamp1Lit: true,
     lamp2Lit: true,
+    positionLabel: state.mode === 'series' ? '唯一路径' : (parallelMeasurementPosition(graph) === 'main' ? '干路' : '支路'),
     edges: freezeEdges(state.edges),
   })
   return transition(
@@ -430,10 +432,32 @@ function deriveMeasurements(state: CircuitLabState): readonly DerivedMeasurement
   ]
 }
 
+export type CircuitMeasurementPosition = 'main' | 'branch'
+
+/**
+ * 并联电路电流表测量位置。
+ * 干路接法（电流表串在干路上）：电源两极、开关两端各接两根导线，共 4 根。
+ * 支路接法（电流表串在一条支路上）：干路只剩两根导线，另有一条支路被电流表占位。
+ */
+export function parallelMeasurementPosition(graph: CircuitGraph): CircuitMeasurementPosition {
+  const adjacency = buildAdjacency(indexedEdges(graph, true))
+  const mainPathWires = (['battery+', 'battery-', 'switch-a', 'switch-b'] as CircuitTerminalId[])
+    .flatMap((terminal) => adjacency.get(terminal)!)
+    .filter((edge) => edge.kind === 'wire').length
+  return mainPathWires >= 4 ? 'main' : 'branch'
+}
+
+function measurementPositionLabel(state: CircuitLabState, mode: CircuitMode): string {
+  if (mode === 'series') return '唯一路径'
+  return parallelMeasurementPosition(circuitFromEdges(state.edges)) === 'main' ? '干路' : '支路'
+}
+
 function conditions(state: CircuitLabState): readonly PhysicsExperimentalCondition[] {
   const trial = activeTrial(state)
+  const mode = trial?.mode ?? state.mode
   return [
-    { label: '电路类型', value: (trial?.mode ?? state.mode) === 'series' ? '串联' : '并联' },
+    { label: '电路类型', value: mode === 'series' ? '串联' : '并联' },
+    { label: '测量位置', value: trial?.positionLabel ?? measurementPositionLabel(state, mode) },
     { label: '电源电压', value: trial?.voltage ?? 3 },
     { label: '开关状态', value: state.switchClosed ? '闭合' : '断开' },
     { label: '导线数量', value: trial?.wireCount ?? state.edges.length },
@@ -452,6 +476,7 @@ function measurementsForTrial(trial: CircuitTrial): readonly DerivedMeasurement[
 function conditionsForTrial(trial: CircuitTrial): readonly PhysicsExperimentalCondition[] {
   return [
     { label: '电路类型', value: trial.mode === 'series' ? '串联' : '并联' },
+    { label: '测量位置', value: trial.positionLabel ?? (trial.mode === 'series' ? '唯一路径' : '干路') },
     { label: '电源电压', value: trial.voltage },
     { label: '开关状态', value: '闭合' },
     { label: '导线数量', value: trial.wireCount },

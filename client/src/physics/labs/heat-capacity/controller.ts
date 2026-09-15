@@ -337,6 +337,23 @@ function reduceRecord(state: HeatCapacityState): LabTransition<HeatCapacityState
   }
   if (state.elapsedSeconds < MINIMUM_RECORDING_SECONDS) return transition(state, rejected('加热时间至少需要30秒'))
 
+  // 同一轮加热已经记录过：不重复生成数据行，避免数据表格出现重复分组
+  if (state.activeTrialId !== null) {
+    const activeIndex = state.trials.findIndex((trial) => trial.id === state.activeTrialId)
+    if (activeIndex >= 0) {
+      const activeTrial = state.trials[activeIndex]!
+      const unchanged = activeTrial.elapsedSeconds === state.elapsedSeconds
+        && activeTrial.waterTemperature === state.waterTemperature
+        && activeTrial.oilTemperature === state.oilTemperature
+        && activeTrial.waterMass === state.waterMass
+        && activeTrial.oilMass === state.oilMass
+        && activeTrial.heaterPower === state.heaterPower
+      if (unchanged) {
+        return transition(state, rejected('本次数据已经记录，请重置或调整条件后再记录'))
+      }
+    }
+  }
+
   const trial = Object.freeze({
     id: `heat-capacity-trial-${state.trials.length + 1}`,
     waterMass: state.waterMass,

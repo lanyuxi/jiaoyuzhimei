@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { AmmeterScene, CircuitSchematic } from './AmmeterScene'
 import { ammeterController, createAmmeterState, type AmmeterTrial } from './controller'
-import { CIRCUIT_TERMINALS, RANGE_SPEC, needleAngle, terminalHitSegment } from './definition'
+import { CIRCUIT_TERMINALS, RANGE_SPEC, isTerminalDraggable, needleAngle, terminalHitSegment } from './definition'
 
 const noop = () => {}
 
@@ -125,5 +125,33 @@ describe('电流表实验台界面', () => {
     const html = render(ammeterController.createInitialState())
     expect(html).toContain('开关断开')
     expect(html).not.toContain('量程过小')
+  })
+})
+
+describe('电流表实验台接线交互', () => {
+  it('每个接线柱的拖拽命中区都能完整落在 960×540 工作台内', () => {
+    for (const id of Object.keys(CIRCUIT_TERMINALS) as Array<keyof typeof CIRCUIT_TERMINALS>) {
+      const terminal = CIRCUIT_TERMINALS[id]
+      const segment = terminalHitSegment(id)
+      for (const point of [segment, { x1: segment.x2, y1: segment.y2, x2: terminal.x, y2: terminal.y }]) {
+        expect(point.x1).toBeGreaterThanOrEqual(0)
+        expect(point.y1).toBeGreaterThanOrEqual(0)
+        expect(point.x2).toBeLessThanOrEqual(960)
+        expect(point.y2).toBeLessThanOrEqual(540)
+      }
+    }
+  })
+
+  it('可从任意接线柱按下指针开始拉线', () => {
+    for (const id of Object.keys(CIRCUIT_TERMINALS) as Array<keyof typeof CIRCUIT_TERMINALS>) {
+      expect(isTerminalDraggable(id, createAmmeterState())).toBe(true)
+    }
+  })
+
+  it('开关闭合时禁止从接线柱拉线', () => {
+    const closed = { ...createAmmeterState(), switchClosed: true }
+    for (const id of Object.keys(CIRCUIT_TERMINALS) as Array<keyof typeof CIRCUIT_TERMINALS>) {
+      expect(isTerminalDraggable(id, closed)).toBe(false)
+    }
   })
 })

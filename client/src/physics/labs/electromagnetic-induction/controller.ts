@@ -386,10 +386,10 @@ function deriveMeasurements(state: InductionLabState): readonly DerivedMeasureme
 }
 
 function conditions(state: InductionLabState): readonly PhysicsExperimentalCondition[] {
-  const trial = state.trials.at(-1)
   return [
-    { label: 'Circuit', value: trial?.circuitClosed ? 'closed' : state.circuitClosed ? 'closed' : 'open' },
-    { label: 'Field direction', value: trial?.fieldDirection ?? state.fieldDirection },
+    // 电路状态与磁场方向必须反映实验台当前状态：断开开关后不能继续沿用上一条记录的“闭合”
+    { label: 'Circuit', value: state.circuitClosed ? 'closed' : 'open' },
+    { label: 'Field direction', value: state.fieldDirection },
     { label: 'Magnetic field', value: MAGNETIC_FIELD_TESLA },
     { label: 'Conductor length', value: CONDUCTOR_LENGTH_METERS },
     { label: 'Resistance', value: CIRCUIT_RESISTANCE_OHMS },

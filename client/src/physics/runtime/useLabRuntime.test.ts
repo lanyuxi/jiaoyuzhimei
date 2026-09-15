@@ -6,7 +6,7 @@ import {
   reduceLabRuntimeBindingState,
   rebindLabRuntime,
 } from './useLabRuntime'
-import type { LabController } from './types'
+import type { LabAction, LabController } from './types'
 
 interface CounterState {
   controller: string
@@ -181,5 +181,28 @@ describe('lab runtime adapter', () => {
       past: [],
       future: [],
     })
+  })
+})
+
+describe('lab runtime drag action payloads', () => {
+  it('keeps every drag and semantic action payload JSON-safe so a session snapshot can round-trip', () => {
+    const controller = createController('drag', 0)
+    const recorded: LabAction[] = []
+    const binding = createLabRuntimeBinding(controller)
+
+    const actions: LabAction[] = [
+      { type: 'dragStart', payload: { subject: 'terminal', position: { x: 12, y: 34 } } },
+      { type: 'dragMove', payload: { subject: 'terminal', position: { x: 56, y: 78 } } },
+      { type: 'dragEnd', payload: { subject: 'terminal', position: { x: 90, y: 12 }, at: 1234 } },
+      { type: 'dragCancel', payload: { subject: 'terminal' } },
+    ]
+
+    for (const action of actions) {
+      recorded.push(action)
+      dispatchLabRuntimeBinding(binding, controller, action)
+    }
+
+    expect(JSON.parse(JSON.stringify(recorded))).toEqual(actions)
+    expect(recorded.some((action) => action.type.startsWith('drag'))).toBe(true)
   })
 })

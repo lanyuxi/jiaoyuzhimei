@@ -269,3 +269,34 @@ describe('electromagnetic induction controller', () => {
     ])
   })
 })
+
+describe('电磁感应实验台状态一致性', () => {
+  it('断开电路后应报告电路已断开，而不是沿用上一条记录的闭合状态', () => {
+    const recorded = electromagneticInductionController.reduce(moveInGap(closedState(), 420, 540), { type: 'record' }).state
+    const opened = electromagneticInductionController.reduce(recorded, { type: 'setCircuit', payload: 'open' }).state
+    const circuit = (state: InductionLabState) => electromagneticInductionController
+      .conditions(state)
+      .find((condition) => condition.label === 'Circuit')?.value
+
+    expect(circuit(recorded)).toBe('closed')
+    expect(circuit(opened)).toBe('open')
+    expect(opened.trials).toHaveLength(1)
+  })
+
+  it('记录动生观察时同步派生的电流与 I = BLv / R 的符号保持一致', () => {
+    const state = electromagneticInductionController.reduce(moveInGap(closedState(), 420, 540), { type: 'record' }).state
+    const trial = state.trials.at(-1)!
+    const measurement = electromagneticInductionController
+      .deriveMeasurements(state)
+      .find((entry) => entry.key === 'inducedCurrent')
+
+    expect(trial.currentAmps).toBeGreaterThan(0)
+    expect(measurement?.value).toBe(trial.currentAmps)
+    expect(inducedCurrent({
+      closed: true,
+      fieldTesla: 0.5,
+      lengthMeters: 0.1,
+      velocity: trial.velocityMetersPerSecond,
+    })).toBeCloseTo(trial.currentAmps, 6)
+  })
+})

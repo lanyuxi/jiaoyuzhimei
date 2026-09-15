@@ -186,6 +186,7 @@ describe('series parallel circuit controller', () => {
     expect(seriesParallelController.deriveMeasurements(closed).map((measurement) => measurement.key)).toEqual(['circuitMode', 'switchState', 'lamp1State', 'lamp2State'])
     expect(seriesParallelController.conditions(closed)).toEqual([
       { label: '电路类型', value: '串联' },
+      { label: '测量位置', value: '唯一路径' },
       { label: '电源电压', value: 3 },
       { label: '开关状态', value: '闭合' },
       { label: '导线数量', value: 4 },
@@ -255,5 +256,37 @@ describe('series parallel circuit controller', () => {
     expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'ammeter-use', 'electromagnetic-induction'])
     expect(available.map((experiment) => experiment.labId)).toEqual([...labRegistry.keys()])
     expect([...labRegistry.keys()]).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'ammeter-use', 'electromagnetic-induction'])
+  })
+})
+
+describe('并联电路测量位置回归', () => {
+  it('把电流表接在支路上时不再判成干路测量', () => {
+    const branchEdges: CircuitEdge[] = [
+      { from: 'battery+', to: 'switch-a' },
+      { from: 'switch-b', to: 'lamp1-a' },
+      { from: 'lamp1-b', to: 'lamp2-a' },
+      { from: 'lamp2-b', to: 'battery-' },
+      { from: 'lamp1-b', to: 'lamp1-a' },
+    ]
+
+    expect(validateParallelCircuit(circuitFromEdges(branchEdges))).toMatchObject({ valid: false, code: 'unexpected-topology' })
+
+    // 实测分支：电流表接在支路上时 completion 必须要求串联 + 并联 + 支路测量三个条件
+    // 现状只判断 modes.has('series') && modes.has('parallel')，因此这里应当失败
+    const seriesClosed = seriesParallelController.reduce(wired('series'), { type: 'setSwitch', payload: 'closed' }).state
+    const opened = seriesParallelController.reduce(seriesClosed, { type: 'setSwitch', payload: 'open' }).state
+    const parallelState = seriesParallelController.reduce(opened, { type: 'setMode', payload: 'parallel' }).state
+    const parallelClosed = seriesParallelController.reduce(
+      parallelEdges.reduce(
+        (state, edge) => seriesParallelController.reduce(state, { type: 'connect', payload: edge }).state,
+        parallelState,
+      ),
+      { type: 'setSwitch', payload: 'closed' },
+    ).state
+
+    expect(seriesParallelController.completion(parallelClosed).complete).toBe(true)
+    expect(seriesParallelController.measurementGroups(parallelClosed).at(-1)?.conditions)
+      .toContainEqual({ label: '测量位置', value: '干路' })
+    expect(seriesParallelController.conditions(parallelClosed).map((condition) => condition.label)).toContain('测量位置')
   })
 })
