@@ -15,11 +15,12 @@ import {
   isAmmeterTerminal,
   roundToDivision,
   type AmmeterMode,
+  type AmmeterPosition,
   type AmmeterRangeId,
   type AmmeterTerminalId,
 } from './definition'
 
-export type { AmmeterMode, AmmeterRangeId }
+export type { AmmeterMode, AmmeterRangeId, AmmeterPosition }
 
 export interface CircuitEdge {
   from: AmmeterTerminalId
@@ -42,7 +43,6 @@ export type CircuitValidation =
       | 'ammeter-both-ranges'
       | 'battery-short'
       | 'ammeter-short'
-      | 'reverse-polarity'
       | 'ammeter-not-series'
       | 'ammeter-not-in-main'
       | 'unexpected-topology'
@@ -52,7 +52,7 @@ export type CircuitValidation =
 export interface AmmeterTrial {
   readonly id: string
   readonly mode: AmmeterMode
-  readonly position: 'main' | 'branch'
+  readonly position: AmmeterPosition
   readonly range: AmmeterRangeId
   readonly reading: number
   readonly overRange: boolean
@@ -64,17 +64,33 @@ export interface AmmeterTrial {
 
 export interface AmmeterLabState {
   mode: AmmeterMode
-  position: 'main' | 'branch'
+  position: AmmeterPosition
   edges: readonly CircuitEdge[]
   activeRange: AmmeterRangeId | null
   switchClosed: boolean
   activeTrialId: string | null
   trials: readonly AmmeterTrial[]
-  /** 试触记录：是否已经用大量程试触过 */
+  /** 是否已经用 3A 大量程试触过（教材要求先试触再精读） */
   hasTestedWithLargeRange: boolean
-  /** 是否发生过量程溢出，用于安全提示 */
+  /** 过载提示：指针打到最右端时保留提示文本 */
   overRangeWarning: string | null
 }
+
+interface CircuitAnalysis {
+  readonly range: AmmeterRangeId
+  readonly position: AmmeterPosition
+  readonly reading: number
+  readonly overRange: boolean
+}
+
+interface IndexedCircuitEdge {
+  readonly from: AmmeterTerminalId
+  readonly to: AmmeterTerminalId
+  readonly index: number
+  readonly kind: 'wire' | 'switch' | 'lamp' | 'ammeter'
+}
+
+type CircuitAdjacency = ReadonlyMap<AmmeterTerminalId, readonly IndexedCircuitEdge[]>
 
 const accepted = (message: string): LabFeedback => ({ outcome: 'accepted', message })
 const rejected = (message: string): LabFeedback => ({ outcome: 'rejected', message })
@@ -83,35 +99,24 @@ const terminalList = [...TERMINAL_IDS]
 const terminalIds = new Set<string>(terminalList)
 const switchContinuity = COMPONENT_INTERNAL_CONNECTIONS.find(([from]) => from.startsWith('switch'))!
 const lampContinuities = COMPONENT_INTERNAL_CONNECTIONS.filter(([from]) => from.startsWith('lamp'))
-const ammeterContinuities = Object.values(AMMETER_INTERNAL_CONNECTIONS)
-
-interface IndexedCircuitEdge {
-  readonly from: AmmeterTerminalId
-  readonly to: AmmeterTerminalId
-  readonly index: number
-  readonly kind: 'wire' | 'switch' | 'lamp' | 'ammeter'
-  readonly range?: AmmeterRangeId
-}
-
-type CircuitAdjacency = ReadonlyMap<AmmeterTerminalId, readonly IndexedCircuitEdge[]>
 
 function freezeEdges(edges: readonly CircuitEdge[]): readonly CircuitEdge[] {
   return Object.freeze(edges.map((edge) => Object.freeze({ from: edge.from, to: edge.to })))
-}
-
-function isTerminalId(value: unknown): value is AmmeterTerminalId {
-  return typeof value === 'string' && terminalIds.has(value)
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
 
+function isTerminalId(value: unknown): value is AmmeterTerminalId {
+  return typeof value === 'string' && terminalIds.has(value)
+}
+
 function isAmmeterMode(value: unknown): value is AmmeterMode {
   return value === 'series' || value === 'parallel'
 }
 
-function isAmmeterPosition(value: unknown): value is 'main' | 'branch' {
+function isAmmeterPosition(value: unknown): value is AmmeterPosition {
   return value === 'main' || value === 'branch'
 }
 
@@ -159,12 +164,20 @@ function isAmmeterSnapshot(value: unknown): value is AmmeterLabState {
   const trialIds = value.trials.map((trial) => trial.id)
   const currentGraph = circuitFromEdges(value.edges)
   const trialsValid = value.trials.every((trial) => (
-    trial.mode === 'series' ? validateSeriesCircuit(circuitFromEdges(trial.edges), trial.position).valid : validateParallelCircuit(circuitFromEdges(trial.edges), trial.position).valid
+    trial.mode === 'series'
+      ? validateSeriesCircuit(circuitFromEdges(trial.edges), trial.position).valid
+      : validateParallelCircuit(circuitFromEdges(trial.edges), trial.position).valid
   ))
   return new Set(trialIds).size === trialIds.length
     && (value.activeTrialId === null || trialIds.includes(value.activeTrialId))
-    && validateCircuitSafety(currentGraph, value.switchClosed, value.activeRange).valid
-    && (!value.switchClosed || analyzeCurrentState({ ...createAmmeterState(), mode: value.mode, position: value.position, edges: freezeEdges(value.edges), activeRange: value.activeRange }) !== null)
+    && validateCircuitSafety(currentGraph, false, value.activeRange).valid
+    && (!value.switchClosed || analyzeCurrentState({
+      ...createAmmeterState(),
+      mode: value.mode,
+      position: value.position,
+      edges: freezeEdges(value.edges),
+      activeRange: value.activeRange,
+    }) !== null)
     && trialsValid
 }
 
@@ -205,35 +218,31 @@ function stateWith(state: AmmeterLabState, patch: Partial<AmmeterLabState>): Amm
   return {
     ...state,
     ...patch,
-    edges: patch.edges ? freezeEdges(patch.edges) : freezeEdges(state.edges),
+    edges: freezeEdges(patch.edges ?? state.edges),
     trials: patch.trials ? Object.freeze([...patch.trials]) : Object.freeze([...state.trials]),
   }
 }
 
 function topologyError(): CircuitValidation {
-  return { valid: false, code: 'unexpected-topology', message: '导线连接与该电路图不一致，请检查每个元件的接线柱' }
+  return { valid: false, code: 'unexpected-topology', message: '导线连接与该电路的接线方式不一致，请检查每个元件的接线柱' }
+}
+
+export function normalizedEdgeKey(edge: CircuitEdge): string {
+  return [edge.from, edge.to].sort().join('::')
+}
+
+export function circuitFromEdges(edges: readonly CircuitEdge[]): CircuitGraph {
+  return { edges: freezeEdges(edges) }
 }
 
 function indexedEdges(graph: CircuitGraph, includeSwitch: boolean, activeRange: AmmeterRangeId | null): readonly IndexedCircuitEdge[] {
   const wires = graph.edges.map((edge) => ({ ...edge, kind: 'wire' as const }))
   const lamps = lampContinuities.map(([from, to]) => ({ from, to, kind: 'lamp' as const }))
   const switchEdge = includeSwitch ? [{ from: switchContinuity[0], to: switchContinuity[1], kind: 'switch' as const }] : []
-  const meterEdges = activeRange
-    ? ammeterContinuities.map(([from, to]) => ({
-      from,
-      to,
-      kind: 'ammeter' as const,
-      range: ammeterRangeForTerminal(to) ?? undefined,
-      active: to === ammeterTerminalForRange(activeRange),
-    }))
-    : []
-  const meterActive = meterEdges.filter((edge) => (edge as { active?: boolean }).active !== false)
-  return [
-    ...wires,
-    ...lamps,
-    ...switchEdge,
-    ...meterActive.map(({ from, to, kind, range }) => ({ from, to, kind, range })),
-  ].map((edge, index) => ({
+  const meterEdges = activeRange === null
+    ? []
+    : [{ from: AMMETER_INTERNAL_CONNECTIONS[activeRange][0], to: AMMETER_INTERNAL_CONNECTIONS[activeRange][1], kind: 'ammeter' as const }]
+  return [...wires, ...lamps, ...switchEdge, ...meterEdges].map((edge, index) => ({
     ...edge,
     from: edge.from as AmmeterTerminalId,
     to: edge.to as AmmeterTerminalId,
@@ -256,7 +265,7 @@ function opposite(edge: IndexedCircuitEdge, terminal: AmmeterTerminalId): Ammete
 
 function reachable(adjacency: CircuitAdjacency, start: AmmeterTerminalId, skippedEdge?: number): ReadonlySet<AmmeterTerminalId> {
   const visited = new Set<AmmeterTerminalId>([start])
-  const pending = [start]
+  const pending: AmmeterTerminalId[] = [start]
   while (pending.length > 0) {
     const terminal = pending.pop()!
     for (const edge of adjacency.get(terminal)!) {
@@ -271,7 +280,12 @@ function reachable(adjacency: CircuitAdjacency, start: AmmeterTerminalId, skippe
   return visited
 }
 
-function simplePaths(adjacency: CircuitAdjacency, start: AmmeterTerminalId, end: AmmeterTerminalId, allowed: ReadonlySet<AmmeterTerminalId>): readonly (readonly IndexedCircuitEdge[])[] {
+function simplePaths(
+  adjacency: CircuitAdjacency,
+  start: AmmeterTerminalId,
+  end: AmmeterTerminalId,
+  allowed: ReadonlySet<AmmeterTerminalId>,
+): readonly (readonly IndexedCircuitEdge[])[] {
   const paths: IndexedCircuitEdge[][] = []
   const visit = (terminal: AmmeterTerminalId, visited: ReadonlySet<AmmeterTerminalId>, path: readonly IndexedCircuitEdge[]) => {
     if (paths.length > 2) return
@@ -290,15 +304,7 @@ function simplePaths(adjacency: CircuitAdjacency, start: AmmeterTerminalId, end:
   return paths
 }
 
-export function normalizedEdgeKey(edge: CircuitEdge): string {
-  return [edge.from, edge.to].sort().join('::')
-}
-
-export function circuitFromEdges(edges: readonly CircuitEdge[]): CircuitGraph {
-  return { edges: freezeEdges(edges) }
-}
-
-/** 使用的电流表正接线柱（未接入量程时为 null；接入两个量程时为 'both'） */
+/** 当前接入的电流表正接线柱（未接入量程时为 null；同时接入两个量程时也为 null） */
 export function usedRangeTerminal(graph: CircuitGraph): AmmeterTerminalId | null {
   const used = AMMETER_POSITIVE_TERMINALS.filter((terminal) => graph.edges.some((edge) => edge.from === terminal || edge.to === terminal))
   return used.length === 1 ? used[0]! : null
@@ -306,7 +312,7 @@ export function usedRangeTerminal(graph: CircuitGraph): AmmeterTerminalId | null
 
 export function usedRange(graph: CircuitGraph): AmmeterRangeId | null {
   const terminal = usedRangeTerminal(graph)
-  return terminal ? ammeterRangeForTerminal(terminal) : null
+  return terminal === null ? null : ammeterRangeForTerminal(terminal)
 }
 
 function ammeterPositiveTerminalsUsed(graph: CircuitGraph): readonly AmmeterTerminalId[] {
@@ -314,7 +320,8 @@ function ammeterPositiveTerminalsUsed(graph: CircuitGraph): readonly AmmeterTerm
 }
 
 /**
- * 安全校验：与教材要求一致 —— 电流表必须串联、电流从正接线柱流入、不得直接接电源两极。
+ * 安全校验：与教材要求一致 —— 电流表必须串联接入、只能接一个量程接线柱、
+ * 两个接线柱之间不得用导线直接相连、不得直接跨接在电源两极上、电源两极不得直接短接。
  */
 export function validateCircuitSafety(
   graph: CircuitGraph,
@@ -328,7 +335,7 @@ export function validateCircuitSafety(
     }
     if (edge.from === edge.to) return { valid: false, code: 'self-link', message: '同一接线柱不能连接到自身' }
     const key = normalizedEdgeKey(edge)
-    if (seen.has(key)) return { valid: false, code: 'duplicate-wire', message: '两接线柱之间已有导线' }
+    if (seen.has(key)) return { valid: false, code: 'duplicate-wire', message: '两接线柱之间已有一根导线' }
     seen.add(key)
     if (isAmmeterTerminal(edge.from) && isAmmeterTerminal(edge.to)) {
       return { valid: false, code: 'wire-through-ammeter', message: '电流表的两个接线柱之间不能用导线直接连接' }
@@ -339,24 +346,22 @@ export function validateCircuitSafety(
     return { valid: false, code: 'ammeter-both-ranges', message: '电流表只能接入一个量程接线柱（0.6A 或 3A）' }
   }
 
-  const meterTerminals = new Set<AmmeterTerminalId>(['ammeter-neg', 'ammeter-0.6', 'ammeter-3'])
-  const hasMeterWire = graph.edges.some((edge) => meterTerminals.has(edge.from) || meterTerminals.has(edge.to))
+  const hasMeterWire = graph.edges.some((edge) => isAmmeterTerminal(edge.from) || isAmmeterTerminal(edge.to))
 
-  // 电流表直接跨接在电源两极上（回路中没有灯泡等负载）
+  // 电流表（含其内部量程通路）直接跨接在电源两极上，回路中没有灯泡等负载
   if (hasMeterWire && activeRange !== null) {
     const meterOnlyEdges: IndexedCircuitEdge[] = [
       ...graph.edges
-        .filter((edge) => meterTerminals.has(edge.from) || meterTerminals.has(edge.to))
+        .filter((edge) => isAmmeterTerminal(edge.from) || isAmmeterTerminal(edge.to))
         .map((edge, index) => ({ ...edge, index, kind: 'wire' as const })),
       { from: AMMETER_INTERNAL_CONNECTIONS[activeRange][0], to: AMMETER_INTERNAL_CONNECTIONS[activeRange][1], index: 10_000, kind: 'ammeter' as const },
     ]
-    const meterLoop = buildAdjacency(meterOnlyEdges)
-    if (reachable(meterLoop, 'battery+').has('battery-')) {
+    if (reachable(buildAdjacency(meterOnlyEdges), 'battery+').has('battery-')) {
       return { valid: false, code: 'ammeter-short', message: '电流表不能直接接在电源两极上，会烧坏电流表' }
     }
   }
 
-  // 电源短路：不计灯泡内部电阻（灯泡仍算负载）在内，纯导线把两极接通
+  // 电源短路：把灯泡视为负载，纯导线/开关把两极接通即为短路
   const conductiveEdges = indexedEdges(graph, switchClosed, activeRange).filter((edge) => edge.kind !== 'lamp')
   if (reachable(buildAdjacency(conductiveEdges), 'battery+').has('battery-')) {
     return { valid: false, code: 'battery-short', message: '电源两极不能用导线直接相连，会烧坏电源' }
@@ -373,25 +378,16 @@ function currentFromSupply(equivalentResistance: number): number {
   return SUPPLY_VOLTAGE / (equivalentResistance + AMMETER_RESISTANCE)
 }
 
-interface CircuitAnalysis {
-  readonly range: AmmeterRangeId
-  readonly position: 'main' | 'branch'
-  readonly reading: number
-  readonly overRange: boolean
-}
-
 /**
  * 电流方向判定：电流必须从电流表的 “+” 接线柱流入。
- * 把电流表内部视为开路，看 “+” 侧接线柱接到的是电源正极还是负极。
+ * 把电流表内部视为开路，看 “+” 接线柱接到的是电源正极还是负极。
  */
 function currentFlowsIntoPositiveTerminal(graph: CircuitGraph, range: AmmeterRangeId): boolean {
   const terminal = ammeterTerminalForRange(range)
-  const meterWireEdges = graph.edges.filter((edge) => isAmmeterTerminal(edge.from) || isAmmeterTerminal(edge.to))
-  const positiveWires = meterWireEdges.filter((edge) => edge.from === terminal || edge.to === terminal)
+  const positiveWires = graph.edges.filter((edge) => edge.from === terminal || edge.to === terminal)
   if (positiveWires.length === 0) return false
 
   const railTerminal = positiveWires[0]!.from === terminal ? positiveWires[0]!.to : positiveWires[0]!.from
-  // 只保留导线与元件内部连接（不含电流表内部），检查正极侧
   const passiveEdges: IndexedCircuitEdge[] = [
     ...graph.edges.map((edge, index) => ({ ...edge, index, kind: 'wire' as const })),
     ...lampContinuities.map(([from, to], offset) => ({ from, to, index: 1000 + offset, kind: 'lamp' as const })),
@@ -400,26 +396,24 @@ function currentFlowsIntoPositiveTerminal(graph: CircuitGraph, range: AmmeterRan
   return reachable(adjacency, 'battery+').has(railTerminal) && !reachable(adjacency, 'battery-').has(railTerminal)
 }
 
-function analysisFromCurrent(reading: number, range: AmmeterRangeId, position: 'main' | 'branch'): CircuitAnalysis {
+function analysisFromCurrent(reading: number, range: AmmeterRangeId, position: AmmeterPosition): CircuitAnalysis {
   return { range, position, reading, overRange: reading > RANGE_SPEC[range].max }
 }
 
 /** 串联电路：两灯与电流表串成一条路径 */
 export function analyzeSeries(graph: CircuitGraph): CircuitAnalysis | null {
   const range = usedRange(graph)
-  if (!range) return null
+  if (range === null) return null
   if (!currentFlowsIntoPositiveTerminal(graph, range)) return null
-  const edges = indexedEdges(graph, true, range)
-  const adjacency = buildAdjacency(edges)
+  const adjacency = buildAdjacency(indexedEdges(graph, true, range))
   if (!reachable(adjacency, 'battery+').has('battery-')) return null
 
   const paths = simplePaths(adjacency, 'battery+', 'battery-', new Set(terminalList))
   if (paths.length !== 1) return null
   const path = paths[0]!
-  const lamps = path.filter((edge) => edge.kind === 'lamp').length
-  const meters = path.filter((edge) => edge.kind === 'ammeter').length
-  const switches = path.filter((edge) => edge.kind === 'switch').length
-  if (lamps !== 2 || meters !== 1 || switches !== 1) return null
+  if (path.filter((edge) => edge.kind === 'lamp').length !== 2) return null
+  if (path.filter((edge) => edge.kind === 'ammeter').length !== 1) return null
+  if (path.filter((edge) => edge.kind === 'switch').length !== 1) return null
 
   return analysisFromCurrent(currentFromSupply(LAMP_RESISTANCE * 2), range, 'main')
 }
@@ -428,10 +422,10 @@ function ammeterEdgeOnPath(path: readonly IndexedCircuitEdge[]): boolean {
   return path.some((edge) => edge.kind === 'ammeter')
 }
 
-/** 并联电路：两灯并联，电流表接在干路（测总电流）或某支路（测支路电流） */
-export function analyzeParallel(graph: CircuitGraph, requested: 'main' | 'branch' = 'main'): CircuitAnalysis | null {
+/** 并联电路：两灯并联，电流表接在干路（测总电流）或支路（测支路电流） */
+export function analyzeParallel(graph: CircuitGraph, requested: AmmeterPosition = 'main'): CircuitAnalysis | null {
   const range = usedRange(graph)
-  if (!range) return null
+  if (range === null) return null
   if (!currentFlowsIntoPositiveTerminal(graph, range)) return null
 
   const edges = indexedEdges(graph, true, range)
@@ -445,7 +439,7 @@ export function analyzeParallel(graph: CircuitGraph, requested: 'main' | 'branch
   const secondComponent = reachable(adjacency, switchEdge.to, switchEdge.index)
   const lampTerminals = new Set<AmmeterTerminalId>(lampContinuities.flat())
   const isolated = [firstComponent, secondComponent].find((component) => {
-    const batteryCount = ['battery+', 'battery-'].filter((entry) => component.has(entry as AmmeterTerminalId)).length
+    const batteryCount = (['battery+', 'battery-'] as AmmeterTerminalId[]).filter((entry) => component.has(entry)).length
     return batteryCount === 1 && ![...lampTerminals].some((entry) => component.has(entry))
   })
   const network = isolated === firstComponent ? secondComponent : firstComponent
@@ -453,24 +447,21 @@ export function analyzeParallel(graph: CircuitGraph, requested: 'main' | 'branch
   if (![...lampTerminals].every((terminal) => network.has(terminal))) return null
 
   const networkSwitchTerminal = network.has(switchEdge.from) ? switchEdge.from : switchEdge.to
-  const networkBatteryTerminal = network.has('battery+') ? 'battery+' : network.has('battery-') ? 'battery-' : null
+  const networkBatteryTerminal: AmmeterTerminalId | null = network.has('battery+') ? 'battery+' : network.has('battery-') ? 'battery-' : null
   if (!networkBatteryTerminal) return null
 
   const paths = simplePaths(adjacency, networkSwitchTerminal, networkBatteryTerminal, network)
   if (paths.length !== 2) return null
-  const lampCounts = paths.map((path) => path.filter((edge) => edge.kind === 'lamp').length)
-  if (lampCounts.some((count) => count !== 1)) return null
+  if (paths.some((path) => path.filter((edge) => edge.kind === 'lamp').length !== 1)) return null
 
+  // 接线位置以实际拓扑为准（导线接在哪里就测哪里），并校验与用户选择的测量位置一致
   const onMainPath = paths.filter((path) => ammeterEdgeOnPath(path)).length
   if (onMainPath !== 1 && onMainPath !== 2) return null
-  const isMain = onMainPath === 2
-
-  // 接线位置以实际拓扑为准（导线接在哪里就测哪里），并校验与用户选择一致
-  const position: 'main' | 'branch' = isMain ? 'main' : 'branch'
+  const position: AmmeterPosition = onMainPath === 2 ? 'main' : 'branch'
   if (position !== requested) return null
 
-  // 两灯并联：干路电流为两支路电流之和，支路电流为单支路电流
-  const reading = isMain
+  // 两灯并联：干路电流为两支路电流之和；支路电流为单支路电流
+  const reading = position === 'main'
     ? currentFromSupply(LAMP_RESISTANCE / 2)
     : currentFromSupply(LAMP_RESISTANCE)
   return analysisFromCurrent(reading, range, position)
@@ -483,23 +474,20 @@ export function analyzeCurrentState(state: AmmeterLabState): CircuitAnalysis | n
   return state.mode === 'series' ? analyzeSeries(graph) : analyzeParallel(graph, state.position)
 }
 
-export function validateSeriesCircuit(graph: CircuitGraph, position: 'main' | 'branch' = 'main'): CircuitValidation {
-  const range = usedRange(graph)
-  const safe = validateCircuitSafety(graph, true, range)
+export function validateSeriesCircuit(graph: CircuitGraph, position: AmmeterPosition = 'main'): CircuitValidation {
+  const safe = validateCircuitSafety(graph, true, usedRange(graph))
   if (!safe.valid) return safe
-  if (!analyzeSeries(graph)) return topologyError()
   if (position === 'branch') {
-    return { valid: false, code: 'ammeter-not-in-main', message: '串联电路只有一条路径，电流表接在哪里都是测同一个电流' }
+    return { valid: false, code: 'ammeter-not-in-main', message: '串联电路只有一条路径，电流表接在哪里测的都是同一个电流' }
   }
+  if (analyzeSeries(graph) === null) return topologyError()
   return { valid: true, message: '串联电路连接正确' }
 }
 
-export function validateParallelCircuit(graph: CircuitGraph, position: 'main' | 'branch' = 'main'): CircuitValidation {
-  const range = usedRange(graph)
-  const safe = validateCircuitSafety(graph, true, range)
+export function validateParallelCircuit(graph: CircuitGraph, position: AmmeterPosition = 'main'): CircuitValidation {
+  const safe = validateCircuitSafety(graph, true, usedRange(graph))
   if (!safe.valid) return safe
-  const analysis = analyzeParallel(graph, position)
-  if (!analysis) return topologyError()
+  if (analyzeParallel(graph, position) === null) return topologyError()
   return { valid: true, message: '并联电路连接正确' }
 }
 
@@ -519,37 +507,35 @@ export function createAmmeterState(): AmmeterLabState {
 
 function reduceConnect(state: AmmeterLabState, payload: unknown): LabTransition<AmmeterLabState> {
   if (state.switchClosed) return transition(state, rejected('开关闭合时不能改接导线，请先断开开关'))
-  if (typeof payload !== 'object' || payload === null) return transition(state, rejected('导线连接无效'))
+  if (!isRecord(payload)) return transition(state, rejected('导线连接无效'))
   const edge = payload as Partial<CircuitEdge>
   if (!isTerminalId(edge.from) || !isTerminalId(edge.to)) return transition(state, rejected('导线只能连接到器材接线柱'))
   const nextEdges = [...state.edges, { from: edge.from, to: edge.to }]
-  const nextRange = usedRange(circuitFromEdges(nextEdges))
-  const safety = validateCircuitSafety(circuitFromEdges(nextEdges), false, nextRange)
+  const nextGraph = circuitFromEdges(nextEdges)
+  const safety = validateCircuitSafety(nextGraph, false, usedRange(nextGraph))
   if (!safety.valid) return transition(state, rejected(safety.message))
-  const labels = CIRCUIT_TERMINALS[edge.from].label
   return transition(
-    stateWith(state, { edges: nextEdges, activeRange: nextRange, activeTrialId: null, overRangeWarning: null }),
-    accepted(`已从${labels}接出一条导线`),
+    stateWith(state, { edges: nextEdges, activeRange: usedRange(nextGraph), activeTrialId: null, overRangeWarning: null }),
+    accepted(`已从${CIRCUIT_TERMINALS[edge.from].label}接出一条导线`),
   )
 }
 
 function reduceSetMode(state: AmmeterLabState, payload: unknown): LabTransition<AmmeterLabState> {
   if (!isAmmeterMode(payload)) return transition(state, rejected('请选择串联或并联电路'))
   if (state.switchClosed) return transition(state, rejected('开关闭合时不能切换电路类型'))
-  const defaultPosition: 'main' | 'branch' = payload === 'series' ? 'main' : 'main'
-  if (payload === state.mode && state.edges.length === 0 && state.position === defaultPosition) {
+  if (payload === state.mode && state.edges.length === 0 && state.position === 'main') {
     return transition(state, accepted('当前已是该电路类型'))
   }
   return transition(
-    stateWith(state, { mode: payload, position: defaultPosition, edges: [], activeRange: null, activeTrialId: null, overRangeWarning: null }),
-    accepted(`已切换到${payload === 'series' ? '串联' : '并联'}电路，接线已清空`),
+    stateWith(state, { mode: payload, position: 'main', edges: [], activeRange: null, activeTrialId: null, overRangeWarning: null }),
+    accepted(`已切换到${payload === 'series' ? '串联' : '并联'}电路，当前接线已清空`),
   )
 }
 
 function reduceSetPosition(state: AmmeterLabState, payload: unknown): LabTransition<AmmeterLabState> {
   if (!isAmmeterPosition(payload)) return transition(state, rejected('测量位置无效'))
   if (state.mode === 'series') return transition(state, rejected('串联电路只有一条路径，无需选择测量位置'))
-  if (state.switchClosed) return transition(state, rejected('请先断开开关再改变电流表位置'))
+  if (state.switchClosed) return transition(state, rejected('请先断开开关再改变电流表的测量位置'))
   return transition(
     stateWith(state, { position: payload, edges: [], activeRange: null, activeTrialId: null, overRangeWarning: null }),
     accepted(payload === 'main' ? '电流表将接在干路，测量总电流' : '电流表将接在支路，测量支路电流'),
@@ -559,19 +545,21 @@ function reduceSetPosition(state: AmmeterLabState, payload: unknown): LabTransit
 function reduceSetRange(state: AmmeterLabState, payload: unknown): LabTransition<AmmeterLabState> {
   if (!isRangeId(payload)) return transition(state, rejected('量程无效，请选择 0.6A 或 3A'))
   if (state.switchClosed) return transition(state, rejected('请先断开开关再更换量程'))
-  const hasAmmeterWire = state.edges.some((edge) => isAmmeterTerminal(edge.from) || isAmmeterTerminal(edge.to))
-  if (!hasAmmeterWire) return transition(state, rejected('请先把电流表串入电路，再选择量程'))
+  const hasMeterWire = state.edges.some((edge) => isAmmeterTerminal(edge.from) || isAmmeterTerminal(edge.to))
+  if (!hasMeterWire) return transition(state, rejected('请先把电流表串入电路，再选择量程'))
+
   const other = payload === '0.6A' ? 'ammeter-3' : 'ammeter-0.6'
   const withoutOther = state.edges.filter((edge) => edge.from !== other && edge.to !== other)
   const terminal = ammeterTerminalForRange(payload)
-  const needsRewire = withoutOther.length === state.edges.length && !state.edges.some((edge) => edge.from === terminal || edge.to === terminal)
+  const needsRewire = withoutOther.length === state.edges.length
+    && !state.edges.some((edge) => edge.from === terminal || edge.to === terminal)
   return transition(
     stateWith(state, {
       edges: needsRewire ? state.edges : withoutOther,
       activeRange: needsRewire ? state.activeRange : payload,
     }),
     accepted(needsRewire
-      ? `已切换到 ${payload} 量程，请把导线接到 ${CIRCUIT_TERMINALS[terminal].label}`
+      ? `已选用 ${payload} 量程，请把导线接到${CIRCUIT_TERMINALS[terminal].label}`
       : `已选用 ${payload} 量程`),
   )
 }
@@ -591,9 +579,8 @@ function reduceSetSwitch(state: AmmeterLabState, payload: unknown): LabTransitio
   if (!safety.valid) return transition(state, rejected(safety.message))
 
   const analysis = state.mode === 'series' ? analyzeSeries(graph) : analyzeParallel(graph, state.position)
-  if (!analysis) return transition(state, rejected(topologyError().message))
+  if (analysis === null) return transition(state, rejected(topologyError().message))
 
-  const reading = roundToDivision(analysis.reading, range)
   const spec = RANGE_SPEC[range]
   if (analysis.overRange) {
     return transition(
@@ -601,11 +588,12 @@ function reduceSetSwitch(state: AmmeterLabState, payload: unknown): LabTransitio
         switchClosed: false,
         overRangeWarning: `被测电流约 ${analysis.reading.toFixed(3)} A，超过 ${spec.label} 量程（满载 ${spec.max} A），指针已打到最右端。请断开开关，改用 3A 量程试触。`,
       }),
-      rejected(`电流超过${spec.label}量程，指针打到最右端！请断开开关并改用大量程`),
+      rejected(`电流超过 ${spec.label} 量程，指针打到最右端！请断开开关并改用大量程`),
     )
   }
 
-  const position: 'main' | 'branch' = state.mode === 'series' ? 'main' : analysis.position
+  const reading = roundToDivision(analysis.reading, range)
+  const position: AmmeterPosition = state.mode === 'series' ? 'main' : analysis.position
   const trial: AmmeterTrial = Object.freeze({
     id: `ammeter-trial-${state.trials.length + 1}`,
     mode: state.mode,
@@ -618,7 +606,7 @@ function reduceSetSwitch(state: AmmeterLabState, payload: unknown): LabTransitio
     wireCount: state.edges.length,
     edges: freezeEdges(state.edges),
   })
-  const positionLabel = state.mode === 'series' ? '串联电路中' : position === 'main' ? '并联电路干路上' : '并联电路支路上'
+  const positionLabel = positionLabelOf(trial)
   return transition(
     stateWith(state, {
       switchClosed: true,
@@ -645,13 +633,13 @@ function activeTrial(state: AmmeterLabState): AmmeterTrial | undefined {
 }
 
 function positionLabelOf(trial: AmmeterTrial): string {
-  if (trial.mode === 'series') return '串联电路'
-  return trial.position === 'main' ? '并联电路干路' : '并联电路支路'
+  if (trial.mode === 'series') return '串联电路中'
+  return trial.position === 'main' ? '并联电路干路上' : '并联电路支路上'
 }
 
 function measurementsForTrial(trial: AmmeterTrial): readonly DerivedMeasurement[] {
   return [
-    { trialId: trial.id, key: 'reading', label: '电流表读数', value: trial.reading, unit: 'A', kind: 'raw' },
+    { trialId: trial.id, key: 'current', label: '电流', value: trial.reading, unit: 'A', kind: 'raw' },
     { trialId: trial.id, key: 'range', label: '选用量程', value: RANGE_SPEC[trial.range].label, unit: '', kind: 'observation' },
     { trialId: trial.id, key: 'division', label: '分度值', value: RANGE_SPEC[trial.range].division, unit: 'A', kind: 'observation' },
     { trialId: trial.id, key: 'position', label: '测量位置', value: positionLabelOf(trial), unit: '', kind: 'observation' },
@@ -671,16 +659,15 @@ function conditionsForTrial(trial: AmmeterTrial): readonly PhysicsExperimentalCo
 
 function deriveMeasurements(state: AmmeterLabState): readonly DerivedMeasurement[] {
   const trial = activeTrial(state)
-  if (!trial) return []
-  return measurementsForTrial(trial)
+  return trial === undefined ? [] : measurementsForTrial(trial)
 }
 
-export function ammeterConditions(state: AmmeterLabState): readonly PhysicsExperimentalCondition[] {
+function conditions(state: AmmeterLabState): readonly PhysicsExperimentalCondition[] {
   const trial = activeTrial(state)
   if (trial) return conditionsForTrial(trial)
   return [
     { label: '电路类型', value: state.mode === 'series' ? '串联' : '并联' },
-    { label: '选用量程', value: state.activeRange ? RANGE_SPEC[state.activeRange].label : '未选择' },
+    { label: '选用量程', value: state.activeRange === null ? '未选择' : RANGE_SPEC[state.activeRange].label },
     { label: '电源电压', value: `${SUPPLY_VOLTAGE} V` },
     { label: '导线数量', value: state.edges.length },
   ]
@@ -695,7 +682,9 @@ function measurementGroups(state: AmmeterLabState) {
 
 function report(state: AmmeterLabState) {
   const issues: string[] = []
-  if (state.trials.length > 0 && !state.hasTestedWithLargeRange) issues.push('未用大量程试触就直接精读，一旦超过量程指针会被打弯，应先试触再换小量程。')
+  if (state.trials.length > 0 && !state.hasTestedWithLargeRange) {
+    issues.push('没有先用大量程试触就直接精读，一旦超过量程指针会被打弯，应先试触再换小量程。')
+  }
   return {
     calculationResults: state.trials.map((trial, index) => (
       `第 ${index + 1} 次：${positionLabelOf(trial)}，选用 ${RANGE_SPEC[trial.range].label} 量程（分度值 ${RANGE_SPEC[trial.range].division} A），电流表读数 I = ${trial.reading.toFixed(2)} A。`
@@ -712,7 +701,9 @@ function report(state: AmmeterLabState) {
   }
 }
 
-export const ammeterController: LabController<AmmeterLabState> = {
+export const ammeterController: LabController<AmmeterLabState> & {
+  conditions(state: AmmeterLabState): readonly PhysicsExperimentalCondition[]
+} = {
   createInitialState: createAmmeterState,
   reduce: (state, action) => {
     switch (action.type) {
@@ -724,7 +715,7 @@ export const ammeterController: LabController<AmmeterLabState> = {
       case 'resetTrial': return reduceResetTrial(state)
       case 'dragStart': return state.switchClosed
         ? transition(state, rejected('开关闭合时不能开始连接导线，请先断开开关'))
-        : transition(state, accepted('请将导线另一端拖到另一个接线柱'))
+        : transition(state, accepted('请把导线另一端拖到另一个接线柱'))
       case 'dragCancel': return transition(state, accepted('已取消本次导线连接'))
       default: return transition(state, rejected('不支持的电路操作'))
     }
@@ -734,13 +725,14 @@ export const ammeterController: LabController<AmmeterLabState> = {
   restore,
   measurementGroups,
   report,
+  conditions,
   completion: (state) => {
     if (state.trials.length === 0) return { complete: false, message: '请先正确连接电路，闭合开关并读出电流表的示数' }
     const modes = new Set(state.trials.map((trial) => trial.mode))
     const smallRange = state.trials.some((trial) => trial.range === '0.6A')
-    if (state.mode === 'parallel') {
+    if (state.mode === 'parallel' || modes.has('parallel')) {
       const positions = new Set(state.trials.filter((trial) => trial.mode === 'parallel').map((trial) => trial.position))
-      if (modes.size === 2 && positions.size === 2 && smallRange) {
+      if (modes.has('series') && positions.has('main') && positions.has('branch') && smallRange) {
         return { complete: true, message: '已完成串联电路电流测量，并测出并联电路干路与支路电流，且正确使用了小量程精读' }
       }
       return { complete: false, message: '请分别测出并联电路干路电流与支路电流，并在串联实验中用 0.6A 量程精读' }
@@ -751,4 +743,3 @@ export const ammeterController: LabController<AmmeterLabState> = {
     return { complete: false, message: '读数偏小时应换用 0.6A 量程精读，请继续' }
   },
 }
-

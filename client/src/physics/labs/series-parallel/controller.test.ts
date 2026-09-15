@@ -254,5 +254,6 @@ describe('series parallel circuit controller', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
     expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'ammeter-use', 'electromagnetic-induction'])
     expect(available.map((experiment) => experiment.labId)).toEqual([...labRegistry.keys()])
+    expect([...labRegistry.keys()]).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'ammeter-use', 'electromagnetic-induction'])
   })
 })

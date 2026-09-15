@@ -1,8 +1,13 @@
 import type { Position } from '../../runtime/types'
 
+/** 电路类型：串联测量 / 并联测量 */
 export type AmmeterMode = 'series' | 'parallel'
 
+/** 电流表量程：0.6A 小量程（精读）/ 3A 大量程（试触） */
 export type AmmeterRangeId = '0.6A' | '3A'
+
+/** 测量位置：并联电路的干路 / 支路；串联电路只有一条路径，固定为 main */
+export type AmmeterPosition = 'main' | 'branch'
 
 export type AmmeterTerminalId =
   | 'battery+'
@@ -25,21 +30,21 @@ export interface CircuitTerminal extends Position {
   polarity: '+' | '-'
 }
 
-/** 接线柱吸附半径，与「串联和并联」实验台保持一致的手感 */
+/** 接线柱吸附半径（SVG 坐标），与「串联和并联」实验台保持一致的手感 */
 export const TERMINAL_SNAP_RADIUS = 24
 
 export const CIRCUIT_TERMINALS: Readonly<Record<AmmeterTerminalId, CircuitTerminal>> = {
-  'battery+': { id: 'battery+', label: '电源正极', polarity: '+', x: 96, y: 300 },
-  'battery-': { id: 'battery-', label: '电源负极', polarity: '-', x: 96, y: 470 },
+  'battery+': { id: 'battery+', label: '电源正极', polarity: '+', x: 96, y: 470 },
+  'battery-': { id: 'battery-', label: '电源负极', polarity: '-', x: 96, y: 300 },
   'switch-a': { id: 'switch-a', label: '开关 S₁ 左接线柱', polarity: '+', x: 176, y: 470 },
-  'switch-b': { id: 'switch-b', label: '开关 S₁ 右接线柱', polarity: '+', x: 262, y: 470 },
-  'lamp1-a': { id: 'lamp1-a', label: '灯泡 L₁ 左接线柱', polarity: '+', x: 356, y: 470 },
-  'lamp1-b': { id: 'lamp1-b', label: '灯泡 L₁ 右接线柱', polarity: '-', x: 494, y: 470 },
-  'lamp2-a': { id: 'lamp2-a', label: '灯泡 L₂ 左接线柱', polarity: '+', x: 356, y: 336 },
-  'lamp2-b': { id: 'lamp2-b', label: '灯泡 L₂ 右接线柱', polarity: '-', x: 494, y: 336 },
-  'ammeter-neg': { id: 'ammeter-neg', label: '电流表负接线柱（－）', polarity: '-', x: 640, y: 356 },
-  'ammeter-0.6': { id: 'ammeter-0.6', label: '电流表 0.6A 接线柱', polarity: '+', x: 776, y: 356 },
-  'ammeter-3': { id: 'ammeter-3', label: '电流表 3A 接线柱', polarity: '+', x: 880, y: 356 },
+  'switch-b': { id: 'switch-b', label: '开关 S₁ 右接线柱', polarity: '+', x: 268, y: 470 },
+  'lamp1-a': { id: 'lamp1-a', label: '灯泡 L₁ 左接线柱', polarity: '+', x: 390, y: 200 },
+  'lamp1-b': { id: 'lamp1-b', label: '灯泡 L₁ 右接线柱', polarity: '-', x: 520, y: 200 },
+  'lamp2-a': { id: 'lamp2-a', label: '灯泡 L₂ 左接线柱', polarity: '+', x: 390, y: 470 },
+  'lamp2-b': { id: 'lamp2-b', label: '灯泡 L₂ 右接线柱', polarity: '-', x: 520, y: 470 },
+  'ammeter-neg': { id: 'ammeter-neg', label: '电流表负接线柱（－）', polarity: '-', x: 640, y: 470 },
+  'ammeter-0.6': { id: 'ammeter-0.6', label: '电流表 0.6A 接线柱', polarity: '+', x: 770, y: 470 },
+  'ammeter-3': { id: 'ammeter-3', label: '电流表 3A 接线柱', polarity: '+', x: 856, y: 470 },
 }
 
 export const TERMINAL_IDS = Object.keys(CIRCUIT_TERMINALS) as AmmeterTerminalId[]
@@ -59,6 +64,8 @@ export const AMMETER_INTERNAL_CONNECTIONS: Readonly<Record<AmmeterRangeId, reado
 
 export const AMMETER_POSITIVE_TERMINALS: readonly AmmeterTerminalId[] = ['ammeter-0.6', 'ammeter-3']
 
+export const AMMETER_TERMINALS: readonly AmmeterTerminalId[] = ['ammeter-neg', 'ammeter-0.6', 'ammeter-3']
+
 export function isAmmeterTerminal(id: string): id is AmmeterTerminalId {
   return id === 'ammeter-neg' || id === 'ammeter-0.6' || id === 'ammeter-3'
 }
@@ -73,15 +80,17 @@ export function ammeterRangeForTerminal(id: AmmeterTerminalId): AmmeterRangeId |
   return null
 }
 
-/** 电源电压固定为 3V（两节干电池串联），与截图一致 */
+/** 电源电压固定为 3V（两节干电池串联） */
 export const SUPPLY_VOLTAGE = 3
 
+/** 小灯泡电阻 */
 export const LAMP_RESISTANCE = 10
+/** 电流表内阻，参与回路总电阻计算 */
 export const AMMETER_RESISTANCE = 0.1
 
 /**
- * 电表读数：真实的分度值与量程。
- * 0.6A 量程：分度值 0.02A；3A 量程：分度值 0.1A。
+ * 电表读数规格：真实的分度值与量程。
+ * 0.6A 量程：分度值 0.02A，可估读到 0.01A；3A 量程：分度值 0.1A。
  */
 export const RANGE_SPEC: Readonly<Record<AmmeterRangeId, { max: number; division: number; label: string }>> = {
   '0.6A': { max: 0.6, division: 0.02, label: '0～0.6 A' },
@@ -120,7 +129,7 @@ export function needleAngle(reading: number, range: AmmeterRangeId): number {
   return ratio * NEEDLE_LIMIT_ANGLE
 }
 
-/** 读数精度：按分度值的下一位估读 */
+/** 读数精度：按分度值取整（0.6A 量程分度值 0.02A，3A 量程分度值 0.1A） */
 export function roundToDivision(reading: number, range: AmmeterRangeId): number {
   const { division } = RANGE_SPEC[range]
   const steps = Math.round(reading / division)

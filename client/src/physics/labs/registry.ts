@@ -11,8 +11,9 @@ export interface RegisteredLab {
 }
 
 /**
- * 顺序与课程表中可用实验的出现顺序保持一致（heat-capacity-comparison → series-parallel-circuit
- * → ammeter-use → electromagnetic-induction），便于测试与目录卡片一一对应。
+ * 顺序与课程表中可用实验的出现顺序保持一致
+ * （heat-capacity-comparison → series-parallel-circuit → ammeter-use → electromagnetic-induction），
+ * 便于测试与目录卡片一一对应。
  */
 export const labRegistry = new Map<string, RegisteredLab>([
   ['heat-capacity-comparison', { experimentId: 'heat-capacity-comparison', Lab: HeatCapacityLab }],

@@ -263,7 +263,7 @@ describe('heat capacity comparison controller', () => {
     expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'ammeter-use', 'electromagnetic-induction'])
     expect(labRegistry.get('heat-capacity-comparison')?.experimentId).toBe('heat-capacity-comparison')
     expect(labRegistry.get('series-parallel-circuit')?.experimentId).toBe('series-parallel-circuit')
-    expect(labRegistry.get('electromagnetic-induction')?.experimentId).toBe('electromagnetic-induction')
     expect(labRegistry.get('ammeter-use')?.experimentId).toBe('ammeter-use')
+    expect(labRegistry.get('electromagnetic-induction')?.experimentId).toBe('electromagnetic-induction')
   })
 })
