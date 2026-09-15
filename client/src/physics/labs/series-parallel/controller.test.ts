@@ -250,10 +250,9 @@ describe('series parallel circuit controller', () => {
     })).toEqual(seriesParallelController.createInitialState())
   })
 
-  it('registers exactly the three available benchmark labs', () => {
+  it('registers every available benchmark lab', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
-    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
-    expect(available.map((experiment) => experiment.labId)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
-    expect([...labRegistry.keys()]).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'electromagnetic-induction'])
+    expect(available.map((experiment) => experiment.id)).toEqual(['heat-capacity-comparison', 'series-parallel-circuit', 'ammeter-use', 'electromagnetic-induction'])
+    expect(available.map((experiment) => experiment.labId)).toEqual([...labRegistry.keys()])
   })
 })

@@ -252,17 +252,19 @@ describe('electromagnetic induction controller', () => {
     })).toEqual(electromagneticInductionController.createInitialState())
   })
 
-  it('registers exactly three available benchmark labs with matching catalog labIds', () => {
+  it('registers every available benchmark lab with matching catalog labIds', () => {
     const available = textbookPhysicsExperiments.filter((experiment) => experiment.availability === 'available')
     expect(available.map((experiment) => experiment.id)).toEqual([
       'heat-capacity-comparison',
       'series-parallel-circuit',
+      'ammeter-use',
       'electromagnetic-induction',
     ])
     expect(available.map((experiment) => experiment.labId)).toEqual([...labRegistry.keys()])
     expect([...labRegistry.keys()]).toEqual([
       'heat-capacity-comparison',
       'series-parallel-circuit',
+      'ammeter-use',
       'electromagnetic-induction',
     ])
   })
