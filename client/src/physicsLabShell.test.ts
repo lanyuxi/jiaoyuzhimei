@@ -410,13 +410,17 @@ describe('physics lab shell', () => {
     expect(sceneWidth).toBeGreaterThanOrEqual(LAB_DESKTOP_LAYOUT.sceneMinWidth)
     expect(sceneWidth).toBeGreaterThanOrEqual(853.34)
     expect(sceneWidth / (16 / 9)).toBeGreaterThanOrEqual(480)
+    // 沉浸式实验详情页：不再使用「两侧栏 + 中间画布」的桌面栅格
+    expect(source).toContain('ImmersiveLabStage')
     expect(source).toContain('2xl:grid-cols-[240px_minmax(0,1fr)_300px]')
-    expect(source).toContain('2xl:min-h-[480px]')
+    // 布局层在实验详情页整体让位给全屏实验台（不渲染导航栏）
+    expect(layout).toContain('isImmersiveLabRoute')
     expect(layout).toContain("location.pathname.startsWith('/physics/labs/')")
     expect(layout).toContain('max-w-[1536px]')
     expect(layout).toContain('2xl:px-0')
     expect(layout).toContain("'max-w-[1420px] md:px-8'")
-    expect(textbookPage).toContain('max-w-[1536px]')
+    // 实验详情页高度使用动态视口高度，占满整屏
+    expect(textbookPage).toContain('h-[100dvh]')
     expect(textbookPage).toContain('mx-auto max-w-4xl')
   })
 

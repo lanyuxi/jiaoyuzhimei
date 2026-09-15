@@ -53,24 +53,22 @@ describe('竞品复原实验页面', () => {
     expect(html).toContain('练习使用电流表')
   })
 
-  it('顶部工具条包含竞品全部功能入口', () => {
+  it('画布本身是可无限缩放/平移的 3D 舞台', () => {
     const html = render()
-    for (const label of ['保存', '清空', '重置', '撤销', '恢复', '设置', '电路图', '表格']) {
-      expect(html).toContain(label)
-    }
-    for (const label of ['复制链接到PPT', '授课演示', '布置探究作业', '分享实验']) {
-      expect(html).toContain(label)
-    }
+    expect(html).toContain('data-immersive-canvas="true"')
+    expect(html).toContain('perspective:1600px')
+    expect(html).toContain('rotateX(')
+    expect(html).toContain('滚轮缩放')
+    expect(html).toContain('复位视角')
+    expect(html).toContain('铺满画布')
   })
 
-  it('画布浮层包含转电路图与协作入口', () => {
+  it('沉浸式页面不再出现主标题之外的排版元素（标题只剩画布浮条）', () => {
     const html = render()
-    expect(html).toContain('转电路图')
-    expect(html).toContain('边做边看')
-    expect(html).toContain('实验报告')
-    expect(html).toContain('交互热点')
-    expect(html).toContain('电与磁')
-    expect(html).toContain('108%')
+    // 副标题（教学页的说明文案）不应出现在实验详情页
+    expect(html).not.toContain('探索信号的时域与频域表示')
+    expect(html).not.toContain('实验器材')
+    expect(html).not.toContain('实验步骤')
   })
 
   it('器材标签与竞品一致（E1 / S1 / S2 / L1 / A1）', () => {

@@ -7,6 +7,7 @@ import { useLabRuntime } from './useLabRuntime'
 import type { LabAction, LabController } from './types'
 import ExperimentReportDialog from './ExperimentReportDialog'
 import MeasurementTable from './MeasurementTable'
+import ImmersiveLabStage, { RedoIcon, ReportIcon, ResetIcon, TableIcon, UndoIcon } from './immersive/ImmersiveLabStage'
 import {
   completeLabSession,
   createLabSessionCoordinator,
@@ -25,6 +26,15 @@ export interface PhysicsLabShellProps<TState> {
   controller: LabController<TState>
   Scene: ComponentType<PhysicsLabSceneProps<TState>>
   repository?: PhysicsSessionRepository
+  /**
+   * 沉浸式模式（实验详情页默认开启）：
+   *   · 隐藏页面级标题、副标题、实验器材清单、实验步骤清单
+   *   · 画布占满整个屏幕，读数/表格/报告收敛为画布上的浮层
+   * 关闭后回落到原先的教学页布局。
+   */
+  immersive?: boolean
+  /** 沉浸式模式下「返回」按钮的去向 */
+  backTo?: string
 }
 
 export const LAB_DESKTOP_LAYOUT = {
@@ -59,6 +69,8 @@ export default function PhysicsLabShell<TState>({
   controller,
   Scene,
   repository = browserPhysicsSessionRepository,
+  immersive = true,
+  backTo = '/physics',
 }: PhysicsLabShellProps<TState>) {
   const runtime = useLabRuntime(controller)
   const coordinatorRef = useRef<ReturnType<typeof createLabSessionCoordinator> | null>(null)
@@ -185,6 +197,99 @@ export default function PhysicsLabShell<TState>({
       </ol>
     </section>
   )
+
+  if (immersive) {
+    return (
+      <ImmersiveLabStage
+        title={experiment.title}
+        backTo={backTo}
+        feedback={runtime.feedback}
+        actions={[
+          { id: 'undo', label: '撤销', icon: <UndoIcon />, onClick: () => runToolbarCommand('undo'), disabled: isCompleted },
+          { id: 'redo', label: '重做', icon: <RedoIcon />, onClick: () => runToolbarCommand('redo'), disabled: isCompleted },
+          { id: 'reset', label: '重置实验', icon: <ResetIcon />, onClick: () => runToolbarCommand('reset'), disabled: isCompleted },
+        ]}
+        panels={[
+          {
+            id: 'table',
+            label: '数据表格',
+            content: (
+              <div className="space-y-4">
+                <button
+                  type="button"
+                  onClick={recordCurrentMeasurements}
+                  disabled={isCompleted}
+                  className="rounded-[6px] border border-[#165DFF] px-4 py-2 text-sm font-semibold text-[#165DFF] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  记录当前读数
+                </button>
+                <MeasurementTable measurements={recordedMeasurements} />
+              </div>
+            ),
+          },
+          {
+            id: 'report',
+            label: '实验报告',
+            content: (
+              <div className="space-y-3 text-sm leading-6 text-[#4b4742]">
+                {session?.report === undefined ? <p>完成实验后自动生成实验报告。</p> : null}
+                <button
+                  type="button"
+                  onClick={() => setReportOpen(true)}
+                  className="rounded-[6px] border border-[#165DFF] px-4 py-2 text-sm font-semibold text-[#165DFF]"
+                >
+                  打开实验报告
+                </button>
+              </div>
+            ),
+          },
+        ]}
+        overlay={
+          prompt === undefined || prompt === null ? null : (
+            <div className="absolute left-1/2 top-20 z-30 -translate-x-1/2">
+              <div role="status" className="flex items-center gap-3 rounded-[8px] border border-[#f0c66a] bg-[#fff8e6] px-4 py-2.5 text-sm text-[#725620] shadow-lg">
+                <span>{prompt.title}</span>
+                <button type="button" onClick={createNewSession} className="rounded-[6px] border border-[#d6a53e] bg-white px-3 py-1.5 text-sm font-semibold text-[#6f531b]">{prompt.actionLabel}</button>
+              </div>
+            </div>
+          )
+        }
+        footer={
+          <>
+            <span className="text-[13px] font-semibold text-[#e6ebf1]">实验台</span>
+            <span className="text-[12px] text-[#8b95a2]">{runtime.feedback?.message ?? '调整器材后记录读数。'}</span>
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                type="button"
+                data-canvas-pan-block
+                onClick={recordCurrentMeasurements}
+                disabled={isCompleted}
+                className="rounded-[6px] border border-[#165DFF] px-4 py-2 text-sm font-semibold text-[#8FB3FF] disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                记录当前读数
+              </button>
+              <span className="inline-flex items-center gap-1 rounded-[6px] border border-white/10 px-2 py-1.5 text-[12px] text-[#9aa4b2]">
+                <ReportIcon />
+                <TableIcon />
+              </span>
+              <button
+                type="button"
+                data-canvas-pan-block
+                onClick={completeExperiment}
+                disabled={isCompleted}
+                className="rounded-[6px] bg-[#165DFF] px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                完成实验
+              </button>
+            </div>
+          </>
+        }
+      >
+        <Scene state={runtime.state} dispatch={dispatchSemantic} />
+        <ExperimentReportDialog open={reportOpen} onClose={() => setReportOpen(false)} session={session} />
+      </ImmersiveLabStage>
+    )
+  }
 
   return (
     <div className="space-y-4">

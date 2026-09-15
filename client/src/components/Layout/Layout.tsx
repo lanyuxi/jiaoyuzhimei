@@ -5,6 +5,17 @@ import { BugReportButton } from '../BugReport'
 
 const logoSrc = `${import.meta.env.BASE_URL}education-beauty-logo.png`
 
+/**
+ * 沉浸式实验详情页路由（/physics/labs/:id）。
+ *
+ * 这些页面自己就是要占满整个屏幕的实验台，
+ * 因此宿主布局不再渲染顶部导航栏与页面内边距 —— 导航栏、
+ * 主/副标题、四周留白在实验详情页全部去掉。
+ */
+export function isImmersiveLabRoute(pathname: string): boolean {
+  return /^\/physics\/labs\/[^/]+$/.test(pathname)
+}
+
 export const LAB_MAIN_MAX_WIDTH = 1536
 export const LAB_MAIN_HORIZONTAL_PADDING = 0
 
@@ -15,6 +26,7 @@ function LayoutContent() {
   const isPresenterMode = narration?.playbackState.isPresenterMode || false
   const experimentPath = location.pathname
   const isPhysicsLabRoute = location.pathname.startsWith('/physics/labs/')
+  const isImmersiveLab = isImmersiveLabRoute(location.pathname)
   const nonExperimentPaths = new Set([
     '/',
     '/math',
@@ -43,6 +55,16 @@ function LayoutContent() {
     { label: '体育之美', to: '/sports', active: location.pathname.startsWith('/sports') },
     { label: '艺术之美', to: '/art', active: location.pathname.startsWith('/art') },
   ]
+
+  if (isImmersiveLab) {
+    return (
+      <div className="bg-[#181b20] text-[#242424]">
+        <main>
+          <Outlet />
+        </main>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-[#f7f7f5] text-[#242424]">
