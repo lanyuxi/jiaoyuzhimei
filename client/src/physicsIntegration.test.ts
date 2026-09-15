@@ -64,6 +64,7 @@ describe('physics project integration', () => {
     expect(textbookPhysicsExperiments).toHaveLength(65)
     expect(physicsExperiments).toHaveLength(133)
     expect([...labRegistry.keys()].sort()).toEqual([
+      'ammeter-use',
       'electromagnetic-induction',
       'heat-capacity-comparison',
       'series-parallel-circuit',
@@ -71,6 +72,7 @@ describe('physics project integration', () => {
     expect(availableExperimentIds).toEqual([
       'heat-capacity-comparison',
       'series-parallel-circuit',
+      'ammeter-use',
       'electromagnetic-induction',
     ])
     expect(routeOffsets.every((offset) => offset >= 0)).toBe(true)
