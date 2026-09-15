@@ -68,15 +68,27 @@ function checkRendererExists(courseId: string): boolean {
   // 处理特殊命名：conic-sections -> Conic, quadratic-function -> Quadratic 等
   const shortPascalCase = pascalCase.replace(/Sections$/, '').replace(/Function$/, '')
 
-  const possiblePaths = [
-    // 目录形式（主要形式）
-    path.join(RENDERERS_DIR, pascalCase),
-    path.join(RENDERERS_DIR, shortPascalCase),
-    // 文件形式
-    path.join(RENDERERS_DIR, `${pascalCase}SceneRenderer.tsx`),
-    path.join(RENDERERS_DIR, `${shortPascalCase}SceneRenderer.tsx`),
-  ]
-  return possiblePaths.some(p => fs.existsSync(p))
+  // 目录名/文件名大小写由作者决定（例如 pde -> PDE/PDESceneRenderer.tsx），
+  // 因此这里按大小写不敏感的方式比对，避免把已存在的渲染器误判为缺失。
+  const normalize = (value: string) => value.toLowerCase()
+  const candidates = new Set([
+    normalize(pascalCase),
+    normalize(shortPascalCase),
+    normalize(`${pascalCase}SceneRenderer.tsx`),
+    normalize(`${shortPascalCase}SceneRenderer.tsx`),
+  ])
+
+  if (!fs.existsSync(RENDERERS_DIR)) return false
+
+  for (const entry of fs.readdirSync(RENDERERS_DIR)) {
+    if (candidates.has(normalize(entry))) return true
+    // 目录形式：只要目录内存在渲染器实现即视为满足
+    const entryPath = path.join(RENDERERS_DIR, entry)
+    if (!fs.statSync(entryPath).isDirectory()) continue
+    if (candidates.has(normalize(entry)) && fs.readdirSync(entryPath).some(f => f.endsWith('.tsx'))) return true
+  }
+
+  return false
 }
 
 function checkRegisteredInFactory(courseId: string): boolean {
