@@ -1,11 +1,28 @@
 # 云原生构建流水线配置
 #
-# 用途：为 NPC（@CodeBuddy）显式指定底层大模型，锁定为 deepseek-v4.1-flash。
-# 说明：NPC 事件（issue.comment@npc / pull_request.comment@npc）默认使用平台默认模型；
-#       此处通过 npc:go 的 options.model 覆盖，使后续所有 NPC 交互均走该模型。
-#
-# 注意：指定自定义 model 后，平台默认模型自带的图片能力不会被继承；
-#       如需 NPC 读图，需同时声明 supportImage: true（且底层模型需支持图片输入）。
+# 本文件包含两部分：
+#   1) main 分支 push 时，把代码同步到 GitHub（lanyuxi/jiaoyuzhimei）
+#   2) 为 NPC（@CodeBuddy）显式指定底层大模型，锁定为 deepseek-v4.1-flash
+
+main:
+  push:
+    - name: sync-to-github
+      imports:
+        # 密钥仓库，提供 GIT_USERNAME / GIT_TOKEN（GitHub Fine-grained PAT）
+        - https://cnb.cool/xixi2060/gh-secret/-/blob/main/github.yml
+      stages:
+        - name: sync to github
+          image: tencentcom/git-sync
+          settings:
+            target_url: https://github.com/lanyuxi/jiaoyuzhimei.git
+            auth_type: https
+            username: $GIT_USERNAME
+            password: $GIT_TOKEN
+            branch: main
+            force: true
+            sync_mode: push
+            git_user: CodeBuddy
+            git_email: codebuddy@cnb.cool
 
 $:
   issue.comment@npc:
