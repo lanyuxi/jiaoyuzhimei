@@ -12,32 +12,15 @@
 import { useRef, useState, type PointerEvent } from 'react'
 import {
   Aperture,
-  ArrowLeft,
   BookOpen,
-  ClipboardList,
-  Crop,
-  FileSpreadsheet,
   FileText,
   Gauge,
   Grid3x3,
-  Link2,
-  Monitor,
-  PenTool,
   PlayCircle,
-  Redo2,
-  RotateCcw,
-  Save,
-  Settings2,
-  Share2,
-  SlidersHorizontal,
-  Trash2,
-  Undo2,
-  ZoomIn,
-  Type,
 } from 'lucide-react'
 import type { TextbookPhysicsExperiment } from '../../curriculum/types'
 import PhysicsLabShell, { type PhysicsLabSceneProps } from '../../runtime/PhysicsLabShell'
-import { mapClientPointToSvgViewBox } from '../../runtime/svgCoordinates'
+import InfiniteCanvas from '../../runtime/immersive/InfiniteCanvas'
 import { usePointerDrag } from '../../runtime/usePointerDrag'
 import type { LabAction, Position } from '../../runtime/types'
 import {
@@ -60,8 +43,19 @@ const workbenchHeight = WORKBENCH_VIEW_HEIGHT
 
 /** 竞品画布上的器材参考点（世界坐标已映射到视图坐标） */
 const canvasBackground = COMPETITOR_BACKGROUND
-const chromeBackground = '#22262c'
 const chromeBorder = '#33383f'
+
+/**
+ * 实验台坐标系（与竞品场景一致）之外的「无限画布」世界。
+ * 场景本体绘制在 0..960 / 0..540 内，但画布世界向四周无限延展，
+ * 仪器可以被平移/缩放到任意位置；这里给出世界坐标下的可见网格范围。
+ */
+export const CANVAS_WORLD = {
+  minX: -1440,
+  minY: -900,
+  maxX: 2400,
+  maxY: 1440,
+} as const
 
 function isPosition(value: unknown): value is Position {
   if (typeof value !== 'object' || value === null) return false
@@ -131,33 +125,6 @@ function CompetitorTerminal({ id, state, drag }: TerminalProps) {
   )
 }
 
-interface ChromeButtonProps {
-  label: string
-  onClick?(): void
-  disabled?: boolean
-  active?: boolean
-  children: React.ReactNode
-}
-
-/** 顶部工具条按钮：图标 + 中文标签，竞品同款两行排布 */
-function ChromeIcon({ label, onClick, disabled = false, active = false, children }: ChromeButtonProps) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      title={label}
-      onClick={onClick}
-      disabled={disabled}
-      className={`group flex w-[52px] shrink-0 flex-col items-center gap-1 rounded-[6px] px-1 py-1.5 text-[11px] leading-none transition ${
-        active ? 'bg-white/10 text-white' : 'text-[#9aa4b2] hover:bg-white/5 hover:text-white'
-      } disabled:cursor-not-allowed disabled:opacity-35`}
-    >
-      {children}
-      <span>{label}</span>
-    </button>
-  )
-}
-
 interface CompetitorSceneProps extends PhysicsLabSceneProps<AmmeterLabState> {
   onTogglePanel(): void
   onOpenReport(): void
@@ -167,6 +134,7 @@ interface CompetitorSceneProps extends PhysicsLabSceneProps<AmmeterLabState> {
 function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, panelOpen }: CompetitorSceneProps) {
   const stageRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+  const cameraRef = useRef<{ scale: number; x: number; y: number }>({ scale: 1, x: 0, y: 0 })
   const [preview, setPreview] = useState<{ from: AmmeterTerminalId; position: Position } | null>(null)
   const [showSchematic, setShowSchematic] = useState(false)
 
@@ -176,15 +144,24 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   const s1Closed = state.switchClosed
   const s2Closed = state.switchClosed
 
+  /**
+   * 指针坐标 → 场景坐标。
+   *
+   * 无限画布下 SVG 不再由 preserveAspectRatio 自适应铺满，
+   * 而是被相机做 scale + translate，因此反算必须走相机参数：
+   *   场景坐标 = (屏幕坐标 - 画布原点 - 相机平移) / 相机缩放
+   */
   const pointerDrag = usePointerDrag({
     stageRef,
     positionFor: (event) => {
-      const svg = svgRef.current
-      if (!svg) return null
-      return mapClientPointToSvgViewBox(event, {
-        rect: svg.getBoundingClientRect(),
-        viewBox: { x: 0, y: 0, width: workbenchWidth, height: workbenchHeight },
-      })
+      const stage = stageRef.current
+      if (stage === null) return null
+      const rect = stage.getBoundingClientRect()
+      const camera = cameraRef.current
+      return {
+        x: (event.clientX - rect.left - camera.x) / camera.scale,
+        y: (event.clientY - rect.top - camera.y) / camera.scale,
+      }
     },
     dispatch: (action: LabAction) => {
       const payload = action.payload as { subject?: unknown; position?: unknown } | undefined
@@ -225,140 +202,124 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   const batteryPoint = competitorComponentPoints.componentCenters.E1
 
   return (
-    <div className="flex h-full w-full min-h-0 flex-col" style={{ background: chromeBackground }}>
-      {/* 顶部标题栏 */}
-      <header className="flex h-12 shrink-0 items-center gap-2 border-b px-2" style={{ borderColor: chromeBorder }}>
-        <button type="button" aria-label="返回" title="返回" className="grid size-8 shrink-0 place-items-center rounded-[6px] text-[#9aa4b2] hover:bg-white/5 hover:text-white">
-          <ArrowLeft className="size-4" aria-hidden="true" />
-        </button>
-        <ChromeIcon label="保存"><Save className="size-4" aria-hidden="true" /></ChromeIcon>
-        <ChromeIcon label="清空"><Trash2 className="size-4" aria-hidden="true" /></ChromeIcon>
-        <ChromeIcon label="重置" onClick={() => dispatch({ type: 'resetTrial' }, 'reset-circuit')} disabled={state.switchClosed}><RotateCcw className="size-4" aria-hidden="true" /></ChromeIcon>
-        <ChromeIcon label="撤销" disabled><Undo2 className="size-4" aria-hidden="true" /></ChromeIcon>
-        <ChromeIcon label="恢复" disabled><Redo2 className="size-4" aria-hidden="true" /></ChromeIcon>
-        <ChromeIcon label="设置"><Settings2 className="size-4" aria-hidden="true" /></ChromeIcon>
-        <span className="mx-1 h-8 w-px shrink-0" style={{ background: chromeBorder }} />
-        <ChromeIcon label="电路图" active={showSchematic} onClick={() => setShowSchematic((current) => !current)}><CircuitIcon /></ChromeIcon>
-        <ChromeIcon label="表格" onClick={onOpenReport} active={panelOpen}><FileSpreadsheet className="size-4" aria-hidden="true" /></ChromeIcon>
-
-        <div className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
-          <span className="text-[15px] font-medium text-[#e6ebf1]">练习使用电流表</span>
-          <PenTool className="size-3.5 text-[#8b95a2]" aria-hidden="true" />
-        </div>
-
-        <div className="ml-auto flex shrink-0 items-center gap-1">
-          <ChromeIcon label="复制链接到PPT"><Monitor className="size-4" aria-hidden="true" /></ChromeIcon>
-          <ChromeIcon label="授课演示"><PlayCircle className="size-4" aria-hidden="true" /></ChromeIcon>
-          <ChromeIcon label="布置探究作业"><ClipboardList className="size-4" aria-hidden="true" /></ChromeIcon>
-          <ChromeIcon label="分享实验"><Share2 className="size-4" aria-hidden="true" /></ChromeIcon>
-        </div>
-      </header>
-
-      {/* 画布 */}
-      <div ref={stageRef} className="relative min-h-0 flex-1 touch-none overflow-hidden" style={{ background: canvasBackground }}>
-        {!showSchematic && (
-          <svg ref={svgRef} viewBox={`0 0 ${workbenchWidth} ${workbenchHeight}`} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 size-full" role="img" aria-label="练习使用电流表实验台">
-            <rect width={workbenchWidth} height={workbenchHeight} fill={canvasBackground} />
-
-            {/* 器材 */}
-            <BatteryHolderE1 x={batteryPoint.x} y={batteryPoint.y} />
-            <KnifeSwitch x={s1Point.x} y={s1Point.y} closed={s1Closed} label="S1" />
-            <KnifeSwitch x={s2Point.x} y={s2Point.y} closed={s2Closed} label="S2" />
-            <LampHolderL1 x={lampPoint.x} y={lampPoint.y} lit={lit} />
-            <AmmeterA1 x={ammeterPoint.x} y={ammeterPoint.y} reading={reading} range={state.activeRange} overRange={Boolean(state.overRangeWarning)} label="A1" />
-
-            {/* 导线：竞品同款红色实物导线 */}
-            <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-              {state.edges.map((edge, index) => (
-                <g key={`${edge.from}-${edge.to}`}>
-                  <path d={wirePath(edge, index)} stroke="#000000" strokeWidth="9" opacity="0.25" />
-                  <path d={wirePath(edge, index)} stroke="#8c1f16" strokeWidth="7" />
-                  <path d={wirePath(edge, index)} stroke="#c0392b" strokeWidth="5" />
-                  <path d={wirePath(edge, index)} stroke="#e8756a" strokeWidth="1.6" opacity="0.75" />
-                </g>
-              ))}
-              {preview && (
-                <path
-                  d={`M ${(competitorTerminalPoints.terminals[preview.from] ?? CIRCUIT_TERMINALS[preview.from]).x} ${(competitorTerminalPoints.terminals[preview.from] ?? CIRCUIT_TERMINALS[preview.from]).y} L ${preview.position.x} ${preview.position.y}`}
-                  stroke="#4c9be8"
-                  strokeWidth="4"
-                  strokeDasharray="9 7"
-                />
-              )}
-            </g>
-
-            {/* 接线柱（可拖拽） */}
-            {competitorTerminalPoints.order.map((id) => (
-              <CompetitorTerminal
-                key={id}
-                id={id}
-                state={state}
-                drag={{
-                  onPointerDown: (event) => pointerDrag.onPointerDown(pointerEvent(event), id),
-                  onPointerMove: (event) => pointerDrag.onPointerMove(pointerEvent(event)),
-                  onPointerUp: (event) => pointerDrag.onPointerUp(pointerEvent(event)),
-                  onPointerCancel: (event) => pointerDrag.onPointerCancel(pointerEvent(event)),
-                }}
-              />
-            ))}
-          </svg>
-        )}
-
-        {showSchematic && (
-          <svg viewBox={`0 0 ${workbenchWidth} ${workbenchHeight}`} preserveAspectRatio="xMidYMid meet" className="absolute inset-0 size-full" role="img" aria-label="练习使用电流表电路图">
-            <rect width={workbenchWidth} height={workbenchHeight} fill={canvasBackground} />
-            <AmmeterSchematic state={state} reading={reading} />
-          </svg>
-        )}
-
-        {/* 左上角「转电路图」浮层 */}
-        <button
-          type="button"
-          aria-pressed={showSchematic}
-          aria-label={showSchematic ? '回到实物图' : '转电路图'}
-          title={showSchematic ? '回到实物图' : '转电路图'}
-          onClick={() => setShowSchematic((current) => !current)}
-          className="absolute left-4 top-4 flex w-[78px] flex-col items-center gap-1 rounded-[10px] bg-[#3b4048] px-2 py-3 text-[12px] font-medium text-[#e6ebf1] shadow-lg hover:bg-[#454b54]"
+    <div className="relative h-full w-full min-h-0" style={{ background: canvasBackground }}>
+      {/* 无限画布 + 3D 透视舞台：器材铺满整块屏幕 */}
+      <InfiniteCanvas
+        stageRef={stageRef}
+        content={{ minX: 0, minY: 0, maxX: workbenchWidth, maxY: workbenchHeight }}
+        viewWidth={workbenchWidth}
+        viewHeight={workbenchHeight}
+        onCameraChange={(next) => { cameraRef.current = next }}
+      >
+        <svg
+          ref={svgRef}
+          width={workbenchWidth}
+          height={workbenchHeight}
+          viewBox={`0 0 ${workbenchWidth} ${workbenchHeight}`}
+          className="block"
+          role="img"
+          aria-label="练习使用电流表实验台"
+          style={{ filter: 'drop-shadow(0 26px 34px rgba(0,0,0,0.45))' }}
         >
-          <span className="grid size-9 place-items-center rounded-full bg-white/10"><Grid3x3 className="size-5" aria-hidden="true" /></span>
-          <span>{showSchematic ? '实物图' : '转电路图'}</span>
-        </button>
+          <defs>
+            <linearGradient id="ammeter-desk" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3f4650" />
+              <stop offset="100%" stopColor="#2b3038" />
+            </linearGradient>
+            {/* 3D 立体感：接线柱/器材底部的高光与阴影 */}
+            <radialGradient id="ammeter-vignette" cx="50%" cy="46%" r="72%">
+              <stop offset="60%" stopColor="#ffffff" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.35" />
+            </radialGradient>
+          </defs>
 
-        {/* 右上角协作入口 */}
-        <div className="absolute right-4 top-4 flex items-start gap-2">
-          <CanvasPill label="边做边看" onClick={onTogglePanel} active={panelOpen}><PlayCircle className="size-5" aria-hidden="true" /></CanvasPill>
-          <CanvasPill label="实验报告" onClick={onOpenReport}><FileText className="size-5" aria-hidden="true" /></CanvasPill>
-          <CanvasPill label="交互热点"><Aperture className="size-5" aria-hidden="true" /></CanvasPill>
-        </div>
+          {/* 桌面：给 3D 倾斜一个"地面"，让器材看起来立在实验台上 */}
+          <rect width={workbenchWidth} height={workbenchHeight} fill={canvasBackground} />
+          <rect x="0" y="0" width={workbenchWidth} height={workbenchHeight} fill="url(#ammeter-desk)" opacity="0.55" />
+          <g opacity="0.28" stroke="#7aa2ff" strokeWidth="1">
+            {Array.from({ length: 25 }).map((_, index) => (
+              <line key={`v-${index}`} x1={index * 40} y1={0} x2={index * 40} y2={workbenchHeight} />
+            ))}
+            {Array.from({ length: 15 }).map((_, index) => (
+              <line key={`h-${index}`} x1={0} y1={index * 40} x2={workbenchWidth} y2={index * 40} />
+            ))}
+          </g>
 
-        {/* 左下角缩放/工具条 */}
-        <div className="absolute bottom-4 left-4 flex items-center gap-2">
-          <span className="inline-flex h-9 items-center gap-2 rounded-[8px] px-3 text-[13px] font-medium text-[#e6ebf1]" style={{ background: '#3b4048' }}>
-            电与磁 <span className="text-[9px]">▼</span>
-          </span>
-          <span className="inline-flex h-9 items-center gap-2 rounded-[8px] px-3 text-[13px] font-medium text-[#e6ebf1]" style={{ background: '#3b4048' }}>
-            <Aperture className="size-4" aria-hidden="true" /> 108% <span className="text-[9px]">▼</span>
-          </span>
-          <span className="grid size-9 place-items-center rounded-[8px] text-[#e6ebf1]" style={{ background: '#3b4048' }}><Link2 className="size-4" aria-hidden="true" /></span>
-          <span className="inline-flex h-9 items-center gap-3 rounded-[8px] px-3 text-[#e6ebf1]" style={{ background: '#3b4048' }}>
-            <PenTool className="size-4" aria-hidden="true" />
-            <Crop className="size-4" aria-hidden="true" />
-            <ZoomIn className="size-4" aria-hidden="true" />
-            <Type className="size-4" aria-hidden="true" />
-          </span>
-        </div>
+          {!showSchematic && (
+            <>
+              {/* 器材（竞品同款实物） */}
+              <BatteryHolderE1 x={batteryPoint.x} y={batteryPoint.y} />
+              <KnifeSwitch x={s1Point.x} y={s1Point.y} closed={s1Closed} label="S1" />
+              <KnifeSwitch x={s2Point.x} y={s2Point.y} closed={s2Closed} label="S2" />
+              <LampHolderL1 x={lampPoint.x} y={lampPoint.y} lit={lit} />
+              <AmmeterA1 x={ammeterPoint.x} y={ammeterPoint.y} reading={reading} range={state.activeRange} overRange={Boolean(state.overRangeWarning)} label="A1" />
 
-        {/* 过载提示 */}
-        {state.overRangeWarning !== null && (
-          <div role="alert" className="absolute left-1/2 top-4 w-[min(560px,86%)] -translate-x-1/2 rounded-[8px] border border-[#c0392b] bg-[#3a2020] px-4 py-3 text-sm text-[#f0b0a8] shadow-lg">
-            <span className="mr-2 font-bold">量程过小</span>
-            {state.overRangeWarning}
-          </div>
-        )}
+              {/* 导线：竞品同款红色实物导线 */}
+              <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                {state.edges.map((edge, index) => (
+                  <g key={`${edge.from}-${edge.to}`}>
+                    <path d={wirePath(edge, index)} stroke="#000000" strokeWidth="9" opacity="0.25" />
+                    <path d={wirePath(edge, index)} stroke="#8c1f16" strokeWidth="7" />
+                    <path d={wirePath(edge, index)} stroke="#c0392b" strokeWidth="5" />
+                    <path d={wirePath(edge, index)} stroke="#e8756a" strokeWidth="1.6" opacity="0.75" />
+                  </g>
+                ))}
+                {preview && (
+                  <path
+                    d={`M ${(competitorTerminalPoints.terminals[preview.from] ?? CIRCUIT_TERMINALS[preview.from]).x} ${(competitorTerminalPoints.terminals[preview.from] ?? CIRCUIT_TERMINALS[preview.from]).y} L ${preview.position.x} ${preview.position.y}`}
+                    stroke="#4c9be8"
+                    strokeWidth="4"
+                    strokeDasharray="9 7"
+                  />
+                )}
+              </g>
+
+              {/* 接线柱（可拖拽） */}
+              {competitorTerminalPoints.order.map((id) => (
+                <CompetitorTerminal
+                  key={id}
+                  id={id}
+                  state={state}
+                  drag={{
+                    onPointerDown: (event) => pointerDrag.onPointerDown(pointerEvent(event), id),
+                    onPointerMove: (event) => pointerDrag.onPointerMove(pointerEvent(event)),
+                    onPointerUp: (event) => pointerDrag.onPointerUp(pointerEvent(event)),
+                    onPointerCancel: (event) => pointerDrag.onPointerCancel(pointerEvent(event)),
+                  }}
+                />
+              ))}
+            </>
+          )}
+
+          {showSchematic && <AmmeterSchematic state={state} reading={reading} />}
+
+          <rect width={workbenchWidth} height={workbenchHeight} fill="url(#ammeter-vignette)" pointerEvents="none" />
+        </svg>
+      </InfiniteCanvas>
+
+      {/* 左上角「转电路图」浮层 */}
+      <button
+        type="button"
+        data-canvas-pan-block
+        aria-pressed={showSchematic}
+        aria-label={showSchematic ? '回到实物图' : '转电路图'}
+        title={showSchematic ? '回到实物图' : '转电路图'}
+        onClick={() => setShowSchematic((current) => !current)}
+        className="absolute left-4 top-16 z-30 flex w-[78px] flex-col items-center gap-1 rounded-[10px] bg-[#3b4048] px-2 py-3 text-[12px] font-medium text-[#e6ebf1] shadow-lg hover:bg-[#454b54]"
+      >
+        <span className="grid size-9 place-items-center rounded-full bg-white/10"><Grid3x3 className="size-5" aria-hidden="true" /></span>
+        <span>{showSchematic ? '实物图' : '转电路图'}</span>
+      </button>
+
+      {/* 右侧协作入口 */}
+      <div className="absolute right-[68px] top-16 z-30 flex items-start gap-2">
+        <CanvasPill label="边做边看" onClick={onTogglePanel} active={panelOpen}><PlayCircle className="size-5" aria-hidden="true" /></CanvasPill>
+        <CanvasPill label="实验报告" onClick={onOpenReport}><FileText className="size-5" aria-hidden="true" /></CanvasPill>
+        <CanvasPill label="交互热点"><Aperture className="size-5" aria-hidden="true" /></CanvasPill>
       </div>
 
-      {/* 底部读数条 */}
-      <div className="flex shrink-0 flex-wrap items-center gap-2 border-t px-3 py-2.5" style={{ background: chromeBackground, borderColor: chromeBorder }}>
+      {/* 底部读数条：悬浮在画布之上，不占用画布空间 */}
+      <div className="absolute bottom-4 left-1/2 z-30 flex max-w-[min(1080px,94vw)] -translate-x-1/2 flex-wrap items-center gap-2 rounded-[10px] border border-white/10 bg-[#22262c]/90 px-3 py-2 backdrop-blur">
         <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#e6ebf1]">
           <Gauge className="size-4" aria-hidden="true" />
           {activeTrial ? `读数 ${activeTrial.reading.toFixed(2)} A` : '读数 0.00 A'}
@@ -368,6 +329,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
             <button
               key={range}
               type="button"
+              data-canvas-pan-block
               aria-pressed={state.activeRange === range}
               onClick={() => dispatch({ type: 'setRange', payload: range }, 'set-ammeter-range')}
               disabled={state.switchClosed}
@@ -384,6 +346,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
         <div className="ml-auto flex items-center gap-2">
           <button
             type="button"
+            data-canvas-pan-block
             aria-label={state.switchClosed ? '断开开关' : '闭合开关'}
             onClick={() => dispatch({ type: 'setSwitch', payload: state.switchClosed ? 'open' : 'closed' }, 'toggle-switch')}
             className={`inline-flex h-9 items-center gap-2 rounded-[6px] px-4 text-[13px] font-bold text-white ${state.switchClosed ? 'bg-[#c0392b]' : 'bg-[#2e7d4f]'}`}
@@ -396,6 +359,14 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
           </span>
         </div>
       </div>
+
+      {/* 过载提示 */}
+      {state.overRangeWarning !== null && (
+        <div role="alert" className="absolute left-1/2 top-20 z-30 w-[min(560px,86%)] -translate-x-1/2 rounded-[8px] border border-[#c0392b] bg-[#3a2020] px-4 py-3 text-sm text-[#f0b0a8] shadow-lg">
+          <span className="mr-2 font-bold">量程过小</span>
+          {state.overRangeWarning}
+        </div>
+      )}
     </div>
   )
 }
@@ -414,10 +385,6 @@ function CanvasPill({ label, onClick, active = false, children }: { label: strin
       <span>{label}</span>
     </button>
   )
-}
-
-function CircuitIcon() {
-  return <SlidersHorizontal className="size-4" aria-hidden="true" />
 }
 
 /** 右侧实验报告抽屉：文案与竞品 textPanel 完全一致 */
@@ -472,12 +439,16 @@ export function AmmeterScene(props: PhysicsLabSceneProps<AmmeterLabState>) {
   )
 }
 
+/**
+ * 实验详情页入口：沉浸式 + 无限画布。
+ *
+ * 高度使用 dvh（动态视口高度）而不是固定 640px —— 实验台占满整个屏幕，
+ * 不再缩在页面中间一小块；移动端浏览器地址栏收起/展开也不会被裁切。
+ */
 export function AmmeterLab({ experiment }: { experiment: TextbookPhysicsExperiment }) {
   return (
-    <div className="overflow-hidden rounded-[10px] border border-[#dedad2]">
-      <div className="h-[640px] w-full">
-        <PhysicsLabShell experiment={experiment} controller={ammeterController} Scene={AmmeterScene} />
-      </div>
+    <div className="h-[100dvh] w-full">
+      <PhysicsLabShell experiment={experiment} controller={ammeterController} Scene={AmmeterScene} backTo="/physics" />
     </div>
   )
 }
