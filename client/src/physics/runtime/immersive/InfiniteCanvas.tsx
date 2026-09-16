@@ -16,6 +16,20 @@ import { Maximize2, Minus, Move, Plus, RotateCcw } from 'lucide-react'
 import { useInfiniteCanvas } from './useInfiniteCanvas'
 import { isIdentityCamera, type ContentBounds } from './canvas'
 
+/**
+ * 3D 透视舞台的固定参数（**唯一来源**）。
+ *
+ * 这些值同时决定两件事：
+ *   1. CSS 的 `perspective` / `rotateX`（渲染）；
+ *   2. 屏幕↔画布的反投影（`buildVisibleRect` 用到的透视参数）。
+ * 两者必须一致 —— 曾经 CSS 写死 `1600px` + `rotateX(13deg)`，
+ * 而可见范围反算只做线性 scale+translate，完全忽略透视，
+ * 导致"画布坐标合法但屏幕上仍探出 92px"。
+ */
+export const PERSPECTIVE_DEPTH = 1600
+export const PERSPECTIVE_ORIGIN = '50% 58%'
+export const STAGE_TILT_DEG = 13
+
 export interface InfiniteCanvasProps {
   /** 画布内容包围盒（画布坐标） */
   content: ContentBounds
@@ -47,7 +61,7 @@ export default function InfiniteCanvas({
   stageRef,
   viewWidth = 960,
   viewHeight = 540,
-  tilt = 13,
+  tilt = STAGE_TILT_DEG,
   showToolbar = true,
   padding,
   className = '',
@@ -71,8 +85,8 @@ export default function InfiniteCanvas({
   }, [camera.scale, camera.x, camera.y, onCameraChange])
 
   const stageStyle: CSSProperties = {
-    perspective: '1600px',
-    perspectiveOrigin: '50% 58%',
+    perspective: `${PERSPECTIVE_DEPTH}px`,
+    perspectiveOrigin: PERSPECTIVE_ORIGIN,
   }
   const worldStyle: CSSProperties = {
     width: `${viewWidth}px`,

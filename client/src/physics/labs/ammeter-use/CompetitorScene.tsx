@@ -9,7 +9,7 @@
  *   · 右侧「实验报告」抽屉：目的/原理/器材/步骤/结论/补充（文案取自竞品原文）
  *   · 底部读数条：实时读数、闭合开关、量程切换、灯泡状态
  */
-import { useCallback, useRef, useState, type PointerEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
 import {
   Aperture,
   BookOpen,
@@ -21,7 +21,10 @@ import {
 } from 'lucide-react'
 import type { TextbookPhysicsExperiment } from '../../curriculum/types'
 import PhysicsLabShell, { type PhysicsLabSceneProps } from '../../runtime/PhysicsLabShell'
-import InfiniteCanvas from '../../runtime/immersive/InfiniteCanvas'
+import InfiniteCanvas, {
+  PERSPECTIVE_DEPTH,
+  STAGE_TILT_DEG,
+} from '../../runtime/immersive/InfiniteCanvas'
 import { usePointerDrag } from '../../runtime/usePointerDrag'
 import type { LabAction, Position } from '../../runtime/types'
 import {
@@ -41,11 +44,15 @@ import {
   COMPONENT_HIT_RADIUS,
   COMPONENT_LABELS,
   LAB_COMPONENT_IDS,
+  buildVisibleRect,
   createDefaultLayout,
   layoutBounds,
+  offCanvasComponents,
+  rescueAllComponents,
   terminalPosition,
   wireHandlePosition,
   wirePathD,
+  type CanvasVisibleRect,
   type LabComponentId,
   type LabLayout,
 } from './layout'
@@ -54,6 +61,26 @@ import { AmmeterSchematic } from './SchematicView'
 
 const workbenchWidth = WORKBENCH_VIEW_WIDTH
 const workbenchHeight = WORKBENCH_VIEW_HEIGHT
+
+/** 顶部悬浮控件（返回 + 实验名 + 工具栏）占用的安全高度，避免器材被压在控件下面 */
+const SAFE_TOP = 56
+/** 底部读数条占用的安全高度 */
+const SAFE_BOTTOM = 60
+
+/**
+ * 3D 透视舞台参数（与 InfiniteCanvas 的 CSS 保持同一套常量）。
+ *
+ * `perspective-origin: 50% 58%` 是**相对舞台**的百分比，
+ * 因此必须按舞台实际尺寸换算成像素再交给反投影。
+ */
+function perspectiveOf(width: number, height: number) {
+  return {
+    tilt: STAGE_TILT_DEG,
+    perspective: PERSPECTIVE_DEPTH,
+    originX: width * 0.5,
+    originY: height * 0.58,
+  }
+}
 
 /** 竞品画布上的器材参考点（世界坐标已映射到视图坐标） */
 const canvasBackground = COMPETITOR_BACKGROUND
@@ -221,6 +248,13 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   const stageRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const cameraRef = useRef<{ scale: number; x: number; y: number }>({ scale: 1, x: 0, y: 0 })
+  /**
+   * 相机的**纯数值快照**（渲染期可安全读取）。
+   * cameraRef 供事件回调使用，cameraState 供渲染期计算可见矩形使用。
+   */
+  const [cameraState, setCameraState] = useState({ scale: 1, x: 0, y: 0 })
+  /** 舞台尺寸快照（渲染期可安全读取） */
+  const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
   const [preview, setPreview] = useState<{ from: AmmeterTerminalId; position: Position } | null>(null)
   const [showSchematic, setShowSchematic] = useState(false)
   /**
@@ -259,8 +293,9 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
 
   // 命中测试需要在事件回调里读取"最新的"布局，用 ref 镜像避免回调频繁重建
   const layoutRef = useRef(layout)
-  // eslint-disable-next-line react-hooks/refs -- 事件回调需要读到最新布局，写入 ref 是刻意为之
-  layoutRef.current = layout
+  useEffect(() => {
+    layoutRef.current = layout
+  }, [layout])
 
   /** 最近的接线柱（含坐标）：由布局推导，拖动器材后命中区同步移动 */
   const nearestTerminalTo = useCallback((position: Position) => nearestTerminal(layoutRef.current, position), [])
@@ -300,13 +335,86 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
 
   const pointerEvent = (event: PointerEvent<SVGElement>) => event as unknown as PointerEvent<HTMLElement>
 
+  /**
+   * 当前可见的画布矩形（布局坐标）。
+   *
+   * 全屏无限画布的判定基础：屏幕上是整块画布，器材放到哪都看得见。
+   * 这里把「舞台可视区域」减去顶部悬浮标题条与底部读数条的安全边距，
+   * 再用相机参数反算成布局坐标，交给拖动逻辑做不变量校验。
+   */
+  const visibleRect = useCallback((): CanvasVisibleRect => {
+    const stage = stageRef.current
+    if (stage === null) return null
+    const rect = stage.getBoundingClientRect()
+    return buildVisibleRect(
+      { left: 0, top: SAFE_TOP, right: rect.width, bottom: Math.max(SAFE_TOP + 1, rect.height - SAFE_BOTTOM) },
+      cameraRef.current,
+      perspectiveOf(rect.width, rect.height),
+    )
+    // visibleRect 只在事件回调里被调用（松手收回）。
+    // 渲染期用的是下面的 visibleRectState（由纯状态派生，不碰 ref）。
+  }, [])
+
+  /**
+   * 测量舞台尺寸。
+   *
+   * 这是「订阅外部系统」的合法 effect 用法：ResizeObserver 是外部订阅源，
+   * setState 发生在它的回调里（而不是 effect 主体里同步调用），
+   * 因此不会触发级联渲染。
+   */
+  useEffect(() => {
+    const stage = stageRef.current
+    if (stage === null) return
+    const measure = () => {
+      const rect = stage.getBoundingClientRect()
+      setStageSize((current) =>
+        Math.abs(current.width - rect.width) > 0.5 || Math.abs(current.height - rect.height) > 0.5
+          ? { width: rect.width, height: rect.height }
+          : current,
+      )
+    }
+    measure()
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', measure)
+      return () => window.removeEventListener('resize', measure)
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(stage)
+    return () => observer.disconnect()
+  }, [])
+
+  /**
+   * 渲染期读的可见矩形快照。
+   *
+   * 为什么要有这一层：`visibleRect()` 需要读 stageRef / cameraRef，
+   * 而 React 禁止在渲染期访问 ref。
+   *
+   * 实现上刻意**不用 effect + setState**（那会触发级联渲染，被
+   * `react-hooks` 明确劝阻），而是把「相机快照」也提成 state：
+   * 相机变化时由 onCameraChange 把纯数值写进 state，渲染期直接用它算可见矩形，
+   * 全程不碰 ref。
+   */
+  const visibleRectState = useMemo(
+    () =>
+      buildVisibleRect(
+        { left: 0, top: SAFE_TOP, right: stageSize.width, bottom: Math.max(SAFE_TOP + 1, stageSize.height - SAFE_BOTTOM) },
+        cameraState,
+        perspectiveOf(stageSize.width, stageSize.height),
+      ),
+    [stageSize.width, stageSize.height, cameraState],
+  )
+
   /** 器材 / 导线拖动（无限画布：器材任意摆放、导线任意弯折） */
   const labDrag = useLabLayoutDrag({
     layout,
     setLayout,
     nearestTerminal: nearestTerminalTo,
     scenePosition: scenePositionFor as (event: PointerEvent<SVGElement>) => Position | null,
+    visibleRect,
   })
+
+  /** 拖出屏幕的器材（实时给出「全部收回」入口，避免学生以为器材丢了） */
+  const strayComponents = offCanvasComponents(layout, visibleRectState)
 
   const ammeterPoint = layout.components.A1
   const lampPoint = layout.components.L1
@@ -328,7 +436,12 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
         content={initialBounds}
         viewWidth={workbenchWidth}
         viewHeight={workbenchHeight}
-        onCameraChange={(next) => { cameraRef.current = next }}
+        onCameraChange={(next) => {
+          cameraRef.current = next
+          setCameraState((current) =>
+            current.scale === next.scale && current.x === next.x && current.y === next.y ? current : next,
+          )
+        }}
       >
         <svg
           ref={svgRef}
@@ -462,8 +575,25 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
 
       {/* 操作提示：告诉学生器材和导线都可以直接拖 */}
       <div className="pointer-events-none absolute left-4 top-[224px] z-30 w-[132px] rounded-[8px] border border-white/10 bg-[#22262c]/80 px-3 py-2 text-[11px] leading-5 text-[#9aa4b2] backdrop-blur">
-        拖器材任意摆放<br />拖导线中点可弯折<br />拖接线柱接导线
+        全屏画布任意摆放<br />拖导线中点可弯折<br />拖接线柱接导线
       </div>
+
+      {/*
+        器材被拖出可见范围时的「全部收回」入口。
+        全屏无限画布下器材几乎不可能被拖丢，但万一学生把器材甩到视野之外，
+        这里给一个一键收回，避免出现"器材找不到了"。
+      */}
+      {strayComponents.length > 0 && (
+        <button
+          type="button"
+          data-canvas-pan-block
+          aria-label="把拖出屏幕的器材收回可见范围"
+          onClick={() => setLayout((current) => rescueAllComponents(current, visibleRect()))}
+          className="absolute left-1/2 top-16 z-30 -translate-x-1/2 rounded-full border border-amber-400/40 bg-amber-500/15 px-4 py-1.5 text-[12px] font-semibold text-amber-200 backdrop-blur hover:bg-amber-500/25"
+        >
+          有 {strayComponents.length} 件器材在屏幕外 · 点此全部收回
+        </button>
+      )}
 
       {/* 右侧协作入口 */}
       <div className="absolute right-[68px] top-16 z-30 flex items-start gap-2">

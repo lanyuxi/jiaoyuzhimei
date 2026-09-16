@@ -57,7 +57,7 @@ describe('器材可任意拖动', () => {
 
   it('画布上给出「器材可拖 / 导线可弯折」的操作提示', () => {
     const html = render()
-    expect(html).toContain('拖器材任意摆放')
+    expect(html).toContain('全屏画布任意摆放')
     expect(html).toContain('拖导线中点可弯折')
     expect(html).toContain('拖接线柱接导线')
   })
