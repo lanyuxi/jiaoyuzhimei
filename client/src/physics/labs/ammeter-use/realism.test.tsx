@@ -681,6 +681,25 @@ function renderedPathBounds(html: string, part: string): Array<{ minX: number; m
   return list
 }
 
+/**
+ * 某个 `data-anchor="root"` 的**声明原点**在世界坐标里的位置。
+ *
+ * 这是本轮补上的"外部锚"地基：前面所有几何判据都是「零件 vs 主体」，而主体又是从
+ * 被检对象自己那组元素里算出来的（`unionBounds(renderedParts(html, 'cell-body'))`），
+ * 于是"零件带着主体一起挪"时，包含关系永远成立 —— 实测把整节电池右移 200px，
+ * 185 条判据全绿而电池 158px 悬在底座之外。
+ *
+ * 器材的声明原点（`<g data-anchor="root" transform="translate(x y)">`）是**不随零件移动**的
+ * 外部参照（`x` / `y` 由 layout.ts 传入），所有零件在局部坐标下都必须落在它周围。
+ */
+function rootAnchorOffset(html: string, x = 0, y = 0): { x: number; y: number } {
+  const index = html.search(/<g\b[^>]*data-anchor="root"/)
+  expect(index, '没有找到 data-anchor="root" 的器材根节点（外部锚缺失）').toBeGreaterThanOrEqual(0)
+  // 预先声明过：渲染时把器材摆在 (x, y)，因此声明原点必须落回 (x, y)
+  expect(worldOffsetAt(html, index), '器材根节点的声明原点与传入的摆位不一致').toEqual({ x, y })
+  return { x, y }
+}
+
 /** 某组矩形的合并包围盒 */
 function unionBounds(list: Array<{ x: number; y: number; width: number; height: number }>) {
   return {
@@ -1344,6 +1363,166 @@ function paintPalette(html: string): Map<string, { tag: string; part: string | n
   return palette
 }
 
+/* ------------------------------------------------------------------ *
+ * 遮挡感知的可见性出口（本轮新增的地基）
+ * ------------------------------------------------------------------ */
+
+/**
+ * 画面上的一块**覆盖层**：一个不透明的几何图元 + 它在绘制顺序里的位置。
+ *
+ * 背景（第七轮复审实测出的两条绕过，都 185/185 全绿）：
+ *   · 在橙色环标上盖一块 `#e6e9ec` 的不透明矩形 → 画面上一点橙都看不见，
+ *     而 `paintPalette` 遍历的是**全部 DOM 元素**，底层那圈橙色依然在色板里；
+ *   · 把筒身（不透明底层）挪到环标**之后**绘制 → 环标全被盖掉，同样全绿。
+ *
+ * 根因：`paintPalette` 给的是"DOM 里声明了哪些颜色"，不是"画面上看得见哪些颜色"。
+ * 它没有遮挡概念、没有绘制顺序概念。这里补一个**保守近似**：按 SVG 的绘制顺序，
+ * 后绘制的不透明图元覆盖先绘制的，被完全覆盖的图元从可见色板里剔除。
+ *
+ * 用的是**声明几何**（世界坐标），不做光栅化 —— 因此只覆盖"矩形盖矩形""矩形盖椭圆"
+ * 这类正交包围盒判断，对旋转/奇形图元只会**高估**可见性（宁可漏判也不误杀）。
+ */
+type CoverLayer = { x: number; y: number; width: number; height: number; order: number }
+
+/** 椭圆的内接矩形（保守：只用内接矩形做覆盖判断，避免把"角上还露着"误判成全盖） */
+const ELLIPSE_INSCRIBE = Math.SQRT1_2
+
+/**
+ * 把渲染出的**每一份**不透明图元解析成覆盖层（世界坐标 + 绘制顺序）。
+ *
+ * 纪律：绘制顺序取的是**该实例自己的下标**，不是"这一组的第一次出现"。
+ * 测试自己注入的覆盖层经常落在同一组实例的中间（例如插在两段环标之间），
+ * 用"组内第一次出现"会把覆盖层误判成画在零件之前 → 永远算作不遮挡（静默失效）。
+ */
+function coverLayersOf(html: string): CoverLayer[] {
+  const layers: CoverLayer[] = []
+  for (const part of allDataParts(html)) {
+    if (!isOpaqueGeometry(html, part)) continue
+    const pattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+    for (const match of html.matchAll(pattern)) {
+      const index = match.index ?? 0
+      const box = shapeBoundsAt(html, index)
+      if (box === null) continue
+      layers.push({ ...box, order: index })
+    }
+  }
+  return layers
+}
+
+/** 单个图元（按渲染下标定位）的包围盒 —— 世界坐标；解析不了返回 null */
+function shapeBoundsAt(html: string, index: number): { x: number; y: number; width: number; height: number } | null {
+  const end = html.indexOf('>', index)
+  if (end === -1) return null
+  const tag = html.slice(index, end + 1)
+  const o = worldOffsetAt(html, index)
+  const num = (re: RegExp) => {
+    const value = Number(tag.match(re)?.[1])
+    return Number.isFinite(value) ? value : null
+  }
+  const x = num(/\bx="(-?[\d.]+)"/)
+  const y = num(/\by="(-?[\d.]+)"/)
+  const width = num(/\bwidth="(-?[\d.]+)"/)
+  const height = num(/\bheight="(-?[\d.]+)"/)
+  if (x !== null && y !== null && width !== null && height !== null) {
+    return { x: o.x + x, y: o.y + y, width, height }
+  }
+  const cx = num(/\bcx="(-?[\d.]+)"/)
+  const cy = num(/\bcy="(-?[\d.]+)"/)
+  const r = num(/\br="(-?[\d.]+)"/)
+  const rx = num(/\brx="(-?[\d.]+)"/)
+  const ry = num(/\bry="(-?[\d.]+)"/)
+  if (cx !== null && cy !== null && r !== null) {
+    const dx = r * ELLIPSE_INSCRIBE
+    return { x: o.x + cx - dx, y: o.y + cy - dx, width: dx * 2, height: dx * 2 }
+  }
+  if (cx !== null && cy !== null && rx !== null && ry !== null) {
+    return { x: o.x + cx - rx * ELLIPSE_INSCRIBE, y: o.y + cy - ry * ELLIPSE_INSCRIBE, width: rx * 2 * ELLIPSE_INSCRIBE, height: ry * 2 * ELLIPSE_INSCRIBE }
+  }
+  if (/<path\b/.test(tag)) {
+    const points = pathPoints(tag)
+    if (points.length === 0) return null
+    const xs = points.map(([px]) => px + o.x)
+    const ys = points.map(([, py]) => py + o.y)
+    return { x: Math.min(...xs), y: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) }
+  }
+  return null
+}
+
+/**
+ * 一组 `data-part` 实例的**每份实例**在画面上的**可见占比**（0～1，保守下界）。
+ *
+ * 判据写成"下界"而不是"精确值"：任何拿不准的情形（渐变当半透明、看不到颜色写法、
+ * 形状不能用矩形表达）都会让可见占比偏高 —— 也就是说**只会漏判、不会误杀**。
+ * 而复审那两条绕过（整块不透明矩形盖住、不透明底层后画）都是"完全覆盖"，
+ * 可见占比直接掉到 0，一定会红。
+ */
+function visibleFractionOf(html: string, part: string): { fraction: number } {
+  const own = renderedParts(html, part)
+  expect(own.length, `可见性判据：${part} 没有渲染出矩形实例`).toBeGreaterThan(0)
+
+  /**
+   * 注意：**不能**因为"零件自己用了渐变 / 半透明"就跳过遮挡判定 ——
+   * 遮挡是几何关系，与被覆盖者是渐变还是纯色无关。
+   * 实测踩过这一步：橙色印刷带用的就是渐变，一放行就等于整条判据空转（fraction 恒为 1）。
+   */
+  const ownPattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const ownOrders = [...html.matchAll(ownPattern)].map((match) => match.index ?? 0)
+  expect(ownOrders.length, `可见性判据：${part} 的绘制顺序无法定位`).toBe(own.length)
+
+  const others = coverLayersOf(html).filter((layer) => !ownOrders.includes(layer.order))
+
+  let visible = 0
+  let total = 0
+  for (const [index, item] of own.entries()) {
+    total += item.width * item.height
+    const ownOrder = ownOrders[index]
+    let covered = 0
+    for (const layer of others) {
+      if (layer.order <= ownOrder) continue
+      const overlap =
+        Math.max(0, Math.min(item.x + item.width, layer.x + layer.width) - Math.max(item.x, layer.x)) *
+        Math.max(0, Math.min(item.y + item.height, layer.y + layer.height) - Math.max(item.y, layer.y))
+      covered += overlap
+    }
+    visible += Math.max(0, item.width * item.height - covered)
+  }
+  return { fraction: total === 0 ? 1 : visible / total }
+}
+
+/**
+ * 一种颜色写法在画面上是否"完全不透明"。
+ *
+ * - hex / rgb() → 不透明；
+ * - rgba(...,a) → 只有 a ≥ 0.99 才算不透明；
+ * - `url(#id)` → 解析到渐变的色标：**只有所有色标都是不透明色**才算不透明（保守近似）。
+ *   实测踩过：筒身用的是圆柱渐变（色标全是 hex），若一律把渐变当成"可能半透明"，
+ *   复审那条「筒身挪到环标之后绘制」就完全看不见（判据静默失效）。
+ */
+function isOpaquePaint(colour: string, html?: string): boolean {
+  const raw = colour.trim()
+  if (raw.startsWith('url(') && html !== undefined) {
+    const stops = resolvedStopColours(html, raw)
+    return stops.length > 0 && stops.every((stop) => isOpaquePaint(stop))
+  }
+  if (raw.startsWith('url(')) return false
+  const rgba = raw.match(/^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)$/)
+  if (rgba !== null) return Number(rgba[1]) >= 0.99
+  return hexToRgb(raw) !== null
+}
+
+/** 某个 data-part 的图元是否都是"不透明几何"（能当覆盖层用） */
+function isOpaqueGeometry(html: string, part: string): boolean {
+  const fills = paintFillsOfPart(html, part)
+  if (fills.length === 0) return false
+  if (!fills.every((colour) => isOpaquePaint(colour, html))) return false
+  // 带透明度的元素（例如 cel-highlight 的 opacity="0.26"）挡不住东西
+  const tags = [...html.matchAll(new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g'))]
+  return tags.every((match) => {
+    const opacity = Number(match[0].match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
+    return Number.isFinite(opacity) && opacity >= 0.99
+  })
+}
+
 /** 只有"看得见颜色"的颜色写法才纳入色板断言（url(#…) 需要先解析到色标） */
 function directColoursOfPalette(palette: Map<string, { colour: string }>): string[] {
   return [...palette.values()].map((item) => item.colour).filter((colour) => !colour.startsWith('url('))
@@ -1513,6 +1692,70 @@ describe('写实外观（颜色 / 光影 / 材质）不得被无声改坏', () =
         expect(saturation(rgb!), `筒身本体出现高饱和色 ${colour}（锌壳应当是中性的）`).toBeLessThan(0.25)
       }
     }
+  })
+
+  it('橙色品牌环标必须在画面上**真的看得见**（遮挡 / 绘制顺序都要红）', () => {
+    /**
+     * 第七轮复审实测的第 3 / 4 条绕过（都 185/185 全绿）：
+     *   · C：在橙色环标上盖一块 `#e6e9ec` 不透明矩形 —— 画面上一点橙都看不见；
+     *   · D：把筒身（不透明底层）挪到环标**之后**绘制 —— 环标整片被盖掉。
+     *
+     * 根因：`paintPalette` 读的是"DOM 里声明了哪些颜色"，缺了**渲染层的遮挡与绘制顺序**。
+     * 判据：按绘制顺序做**保守近似**的可见性计算（见 `visibleFractionOf`），
+     * 要求橙色印刷带在画面上基本可见（不被完全覆盖）。
+     */
+    expect(E1, '渲染结果为空，可见性判据无从判定').toContain('data-part="cell-band"')
+
+    // 橙色印刷带的可见占比必须接近 1（它贴在筒身上，没有任何东西该盖住它）
+    const bandVisible = visibleFractionOf(E1, 'cell-band')
+    expect(
+      bandVisible.fraction,
+      `橙色品牌环标在画面上只剩 ${(bandVisible.fraction * 100).toFixed(1)}% 可见（被覆盖层挡住了）`,
+    ).toBeGreaterThan(0.95)
+
+    // 筒身本身也必须基本可见（它是整节电池的"底"）
+    expect(visibleFractionOf(E1, 'cell-body').fraction, '筒身被盖住了，电池看着是空的').toBeGreaterThan(0.95)
+
+    /**
+     * 反向自证 1（绕过 C）：在橙色环标上盖一块同尺寸的不透明矩形。
+     * 判据必须立刻变红 —— 覆盖层的 `data-part` 是任意名字，判据不依赖"我知不知道它叫什么"。
+     *
+     * 注入点必须落在**橙色印刷带那一份**环标的**后面**。
+     * 底层的黑色环标比橙色带先画，若把覆盖层插在它后面，覆盖层就画在橙色带之前
+     * —— 那是"覆盖层被橙色带盖住"，属于注错了位置（复审的变异体是插在橙色带之后）。
+     */
+    const orangeBand = E1.match(/<rect\b[^>]*data-part="cell-band"[^>]*fill="url\(#[^)]*-band\)"[^>]*>/)
+    expect(orangeBand, '没有找到橙色品牌印刷带').not.toBeNull()
+    const covered = E1.replace(orangeBand![0], `${orangeBand![0]}<rect data-part="cell-band-cover" x="-38" y="-42" width="58" height="36" fill="#e6e9ec" />`)
+    expect(covered, '覆盖层注入失败').not.toBe(E1)
+    expect(
+      visibleFractionOf(covered, 'cell-band').fraction,
+      '在橙色环标上盖了一块不透明矩形，可见性判据却没红',
+    ).toBeLessThan(0.5)
+
+    /**
+     * 反向自证 2（绕过 D）：把筒身挪到环标**之后**绘制（绘制顺序回归）。
+     * 后画的不透明底层会盖掉先画的印刷带。
+     *
+     * 真实源码变异是「把筒身那一行挪到两段黑色环标之后」：
+     *   渲染结果里 `cell-body` 的下标会落到橙色印刷带之后，于是后画的不透明底层盖掉印刷带。
+     * 这里直接在渲染结果上复现同一件事：先把筒身整段摘出来，再插到橙色印刷带之后。
+     */
+    const bodyTag = E1.match(/<rect\b[^>]*data-part="cell-body"[^>]*>(?:<\/rect>)?/)
+    expect(bodyTag, '没有找到筒身本体').not.toBeNull()
+    const reordered = E1.replace(bodyTag![0], '').replace(orangeBand![0], `${orangeBand![0]}${bodyTag![0]}`)
+    // 复现后的绘制顺序：橙色印刷带必须先于筒身
+    expect(reordered.indexOf('data-part="cell-body"')).toBeGreaterThan(reordered.indexOf('url(#_R_0_-band)'))
+
+    expect(reordered, '绘制顺序变异体没有注入成功').not.toBe(E1)
+    expect(
+      visibleFractionOf(reordered, 'cell-band').fraction,
+      '筒身被挪到环标之后绘制（后画的不透明底层盖掉印刷带），可见性判据却没红',
+    ).toBeLessThan(0.5)
+
+    // 反向自证 3：判据不能把"整块删掉"当成"看不见" —— 删掉后精度判据要能区分出来
+    const removed = E1.replace(/<rect\b[^>]*data-part="cell-band"[^>]*>/g, '')
+    expect(paintFillsOfPart(removed, 'cell-band').length, '环标整块删掉后应当没有实例').toBe(0)
   })
 
   it('端正/负极的金属件必须有分层亮面（删掉任一层都要红）', () => {
@@ -2401,6 +2644,75 @@ describe('零件必须画在所属主体内（零件飘出器材体即红）', (
     ).toBe(true)
   })
 
+  /**
+   * 外部锚：零件（连同"主体"自己）不得整体飘出器材的**声明原点**。
+   *
+   * 第七轮复审实测的绕过 A：整节电池（筒身 + 环标 + 铜帽）右移 200px，
+   * `ammeter-use` **185/185 全绿**，而电池 158px 悬在底座右侧之外、画面彻底散架。
+   *
+   * 根因：`assertAllInside` 的"主体"取自 `unionBounds(renderedParts(html, 'cell-body'))`，
+   * **主体和数据源是同一个东西** —— 零件和主体一起平移时，包含关系永远成立。
+   * 所以主体不能只跟"自己"比，必须挂一个**不随被检对象移动的外部参照**：
+   *   · 底座 / 表壳（`baseplate-face`、`ammeter-shell`）—— 电池必须坐在底座上；
+   *   · 器材自身的 `data-anchor="root"` 声明原点 —— 所有零件在局部坐标下必须落在声明的包围盒内。
+   */
+  it('电池不得整体飘出底座（主体与零件同源移动也要红）', () => {
+    const html = render(<BatteryHolderE1 x={0} y={0} />)
+    // 外部锚 1：器材的声明原点（由 layout.ts 传入的 x/y，不随零件移动）
+    rootAnchorOffset(html)
+
+    const plate = unionBounds(renderedParts(html, 'baseplate-face'))
+    const body = unionBounds(renderedParts(html, 'cell-body'))
+    const bands = renderedParts(html, 'cell-band')
+    const positives = renderedParts(html, 'cell-positive')
+    expect(bands.length).toBeGreaterThan(0)
+    expect(positives.length).toBeGreaterThan(0)
+
+    /**
+     * 外部锚 2：底座面。真实的干电池是**躺在**电池座上的，筒身的横向范围必须基本落在底座面内。
+     * 实测：底座面 x∈[-122,122]，筒身 x∈[-80,80]。
+     */
+    expect(body.minX, '电池筒身整体飘出底座左侧（不再躺在底座上）').toBeGreaterThan(plate.minX - 4)
+    expect(body.maxX, '电池筒身整体飘出底座右侧（不再躺在底座上）').toBeLessThan(plate.maxX + 4)
+    // 环标与铜帽是贴在筒身上的印刷/端盖，必须与筒身横向重叠（整体挪走会红）
+    for (const [label, list] of [['环标', bands], ['正极铜帽', positives]] as const) {
+      expect(Math.min(...list.map((i) => i.x)), `${label}整体飘到筒身右侧之外`).toBeLessThan(body.maxX)
+      expect(Math.max(...list.map((i) => i.x + i.width)), `${label}整体飘到筒身左侧之外`).toBeGreaterThan(body.minX)
+    }
+    // 两道卡箍（也会跟着"主体"一起挪）必须仍然落在底座面内
+    for (const [index, clamp] of renderedPathBounds(html, 'E1-clamp').entries()) {
+      expect(clamp.minX, `第 ${index + 1} 道卡箍飘出底座左侧`).toBeGreaterThan(plate.minX - 4)
+      expect(clamp.maxX, `第 ${index + 1} 道卡箍飘出底座右侧`).toBeLessThan(plate.maxX + 4)
+    }
+
+    /**
+     * 反向自证（真注入，不是空转）：把整节电池（筒身这一层及其所有贴皮零件）
+     * 在外面包一层 200px 平移，等价于复审那次的"整节电池右移 200px"。
+     * 主体与零件一起走，`assertAllInside` 抓不到 —— 必须由外部锚抓到。
+     */
+    const injected = html.replace(
+      /<[a-z]+\b[^>]*data-part="cell-(body|band|highlight|negative|positive|outline)"[^>]*>/g,
+      (tag) => `<g transform="translate(200 0)">${tag}</g>`,
+    )
+    expect(injected, '注入失败').not.toBe(html)
+    const shiftedBody = unionBounds(renderedParts(injected, 'cell-body'))
+    // 变异体是"电池整体右移 200px"：真实的坏画面是电池大半悬在底座右侧之外。
+    // 实测筒身 x∈[120,280]，底座右沿 122 —— 120 之后全部悬空（158px）。
+    expect(shiftedBody.maxX - plate.maxX, '整节电池右移 200px 后竟然仍整体落在底座内，说明这个反向自证不成立')
+      .toBeGreaterThan(50)
+    // 而"主体 vs 主体"的旧口径在这种情形下依然成立（这正是它失效的原因）
+    const shiftedBands = renderedParts(injected, 'cell-band')
+    expect(shiftedBands.every((band) => band.x >= shiftedBody.minX - 1.5 && band.x + band.width <= shiftedBody.maxX + 1.5))
+      .toBe(true)
+
+    /**
+     * 反向自证 2：复审 A 的**真实源码变异**（`left = x - halfLength + 200`）也必须被外部锚抓到。
+     * 这里直接在"渲染结果"上加 200 是等价形态，两种写法都覆盖到了。
+     */
+    const shiftedPlate = unionBounds(renderedParts(injected, 'baseplate-face'))
+    expect(shiftedPlate).toEqual(plate)
+  })
+
   it('电池座：卡箍 / 螺钉 / 刻字必须落在底座或电池上（不能飘空）', () => {
     const html = render(<BatteryHolderE1 x={0} y={0} />)
     const plate = unionBounds(renderedParts(html, 'baseplate-face'))
@@ -2592,10 +2904,21 @@ describe('零件必须画在所属主体内（零件飘出器材体即红）', (
      * 所以不能用"最右的角点"定位刀尖（那样取到的是靠铰链的那一端，落差变成负数）。
      * 唯一稳定的定义是「离转轴最远」。
      */
-    // 铰链位（与 CompetitorParts.tsx 的装配基准一致；这里只作为"转轴在哪"的参照点）
-    const hingeX = -58
-    const pivotY = -6
-    const HINGE = { x: hingeX, y: pivotY }
+    /**
+     * 转轴参照点：**从渲染结果里取销钉的真实位置**，不再手抄源码常量。
+     *
+     * 第七轮复审点名的绕过 B：把刀片 `rotate()` 的基准从铰链 (-58,-6) 改到 (-52,-6)，
+     * 刀片绕一个**不存在的轴**摆动，`ammeter-use` 仍然 **185/185 全绿**。
+     * 根因有两层：
+     *   1. 转轴参照点手抄成常量 `-58,-6` —— 判据自己不知道销钉画在哪，"基准被改"看不见；
+     *   2. 半径不变性用「断开态半径 − 闭合态半径」的**差值**判：闭合态角度为 0，
+     *      半径天然不受转轴影响，等于用一半的样本去判一个两端量（实测差值 0.826 < 1 → 放过）。
+     *
+     * 修正为：拿销钉的真实渲染位置做参照，并且**每个姿态各自**与销钉比对。
+     */
+    const hingePins = renderedCircles(closedSource, 'switch-hinge')
+    expect(hingePins.length, '没有渲染出铰链销钉，无法取得转轴参照').toBeGreaterThan(0)
+    const HINGE = { x: hingePins[0].cx, y: hingePins[0].cy }
     const bladeTipY = (source: string) => {
       const blades = renderedPartsRotated(source, 'switch-blade')
       expect(blades.length, '没有渲染出刀片').toBeGreaterThan(0)
@@ -2632,29 +2955,66 @@ describe('零件必须画在所属主体内（零件飘出器材体即红）', (
         Math.hypot(point.x - HINGE.x, point.y - HINGE.y) > Math.hypot(best.x - HINGE.x, best.y - HINGE.y) ? point : best,
       ).x
     expect(tipX(html), '刀尖横向没有移动，说明刀片是整体上移而不是绕铰链旋转').toBeLessThan(tipX(closedSource) - 10)
-    // 且刀片必须仍以铰链为轴（旋转时转轴处不动）
-    // 刀片上离转轴最近的那个角点，与转轴的距离在任何姿态下都必须基本不变 ——
-    // 这才是"绕铰链旋转"的定义（实测约 8.1px，即刀片左端留出的那一点间距）。
-    const nearestToHinge = (source: string) =>
+    /**
+     * 刀片上**离转轴最近**的那个角点，就是"刀片左端"（刀片左端刻意留出一点间距不越过销钉）。
+     *
+     * 注意不能判「那个角点坐标不变」：绕轴旋转时角点本来就沿弧线扫动（实测动了 3.4px），
+     * 但**到转轴的距离**恒定（实测两种姿态都是 6.18）。
+     */
+    const bladeLeftEnd = (source: string) =>
       renderedPartsRotated(source, 'switch-blade')
         .flatMap((item) => item.corners)
         .reduce((best, point) =>
           Math.hypot(point.x - HINGE.x, point.y - HINGE.y) < Math.hypot(best.x - HINGE.x, best.y - HINGE.y) ? point : best,
         )
     const radiusToHinge = (source: string) => {
-      const point = nearestToHinge(source)
+      const point = bladeLeftEnd(source)
       return Math.hypot(point.x - HINGE.x, point.y - HINGE.y)
     }
+    const openRadius = radiusToHinge(html)
+    const closedRadius = radiusToHinge(closedSource)
+
     /**
-     * 判据是「刀片左端到转轴的距离**不随姿态变化**」——
-     * 注意不能判「那个角点坐标不变」：绕轴旋转时角点本来就沿弧线扫动（实测动了 3.4px），
-     * 但半径恒定（实测两种姿态都是 6.32）。
-     * 若刀片改成"整体平移"而不是绕轴旋转，这个半径会跟着变，判据立刻红。
+     * 判据 1（绝对参照）：**每个姿态各自**必须与销钉保持住这段固定间距。
+     * 真实装配里刀片左端到销钉总有约 6px 的间隙（刀片从销钉旁边掠过，不穿过轴心）。
+     * 实测两种姿态都是 6.18 —— 一旦转轴基准被改成别的点，这个值会立刻偏离。
+     *
+     * 注意这里不能只用"两姿态差值"：闭合态角度为 0，半径天然不受转轴影响，
+     * 差值判法等于用一半的样本去判一个两端量（复审实测：基准改到 -52 时差值只有 0.826，
+     * 容差 1 直接放过）。所以改成对**每个姿态**分别做上下界。
+     */
+    expect(openRadius, `断开态刀片左端离销钉 ${openRadius.toFixed(2)}px，说明刀片不是绕销钉摆动（转轴基准被改）`)
+      .toBeGreaterThan(5)
+    expect(openRadius, `断开态刀片左端离销钉 ${openRadius.toFixed(2)}px，刀片左端压到销钉上了`)
+      .toBeLessThan(7.5)
+    expect(closedRadius, `闭合态刀片左端离销钉 ${closedRadius.toFixed(2)}px，说明刀片不是绕销钉摆动（转轴基准被改）`)
+      .toBeGreaterThan(5)
+    expect(closedRadius, `闭合态刀片左端离销钉 ${closedRadius.toFixed(2)}px，刀片左端压到销钉上了`)
+      .toBeLessThan(7.5)
+    /**
+     * 两姿态的间距必须**一致**（真正的"绕轴旋转"意味着半径严格恒定）。
+     *
+     * 容差 0.2px：基线的两端半径完全相同（实测都是 6.185，差 0），
+     * 所以任何"换了转轴基准"的改动都会远远超出这个容差。
+     * 复审把基准从 -58 改到 -52 时差值是 0.827 —— 老实现用容差 1 直接放过（185/185 全绿）。
      */
     expect(
-      Math.abs(radiusToHinge(html) - radiusToHinge(closedSource)),
-      '刀片左端到转轴的距离随姿态变了，说明不是绕铰链旋转（而是整体平移/换了基准）',
-    ).toBeLessThan(1)
+      Math.abs(openRadius - closedRadius),
+      `刀片左端到转轴的距离随姿态变了（${openRadius.toFixed(3)} vs ${closedRadius.toFixed(3)}），`
+        + '说明不是绕铰链旋转（而是整体平移 / 换了转轴基准）',
+    ).toBeLessThan(0.2)
+
+    /**
+     * 判据 2（方向）：断开时刀片左端朝**销钉方向**收拢（左端 x 更大、更靠近轴），
+     * 摆开时刀尖上抬，左端沿弧线往轴心一侧挪。
+     * 这条能直接钉死"绕错轴"：基准改到 -52 时左端朝销钉**外侧**摆（实测基线 -55.83 → 变异 -54.91，
+     * 数值上仍小于销钉 x，但与"朝轴心靠拢"的方向相反）。
+     */
+    expect(
+      Math.abs(bladeLeftEnd(html).x - HINGE.x),
+      `断开时刀片左端没有朝销钉方向收拢（断开 |Δx|=${Math.abs(bladeLeftEnd(html).x - HINGE.x).toFixed(2)}，`
+        + `闭合 |Δx|=${Math.abs(bladeLeftEnd(closedSource).x - HINGE.x).toFixed(2)}），说明刀片绕的不是这只销钉`,
+    ).toBeLessThan(Math.abs(bladeLeftEnd(closedSource).x - HINGE.x))
 
     // 手柄防滑纹必须画在手柄上（三道路纹在手柄矩形范围内）
     const handle = unionBounds(renderedParts(html, 'switch-handle'))
