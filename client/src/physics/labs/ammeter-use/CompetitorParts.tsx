@@ -18,6 +18,7 @@
  * 而不是一块纯色。所有坐标仍然只用 <g transform="translate(x y)"> 定位，
  * 器材内部几何以参考点为原点，因此 layout.ts 推导出的接线柱坐标不会受影响。
  */
+import { useId } from 'react'
 import {
   NEEDLE_LIMIT_ANGLE,
   RANGE_SPEC,
@@ -116,7 +117,7 @@ function BasePlate({ halfWidth, y, depth = 20 }: { halfWidth: number; y: number;
 }
 
 /** 单节 1 号干电池（筒身 + 环标 + 正极铜帽 + 负极锌底） */
-export function BatteryCell({ x, y, halfLength = 76, radius = 17 }: { x: number; y: number; halfLength?: number; radius?: number }) {
+export function BatteryCell({ x, y, halfLength = 76, radius = 17, uid }: { x: number; y: number; halfLength?: number; radius?: number; uid: string }) {
   const bodyTop = y - radius
   const bodyHeight = radius * 2
   const left = x - halfLength
@@ -124,20 +125,20 @@ export function BatteryCell({ x, y, halfLength = 76, radius = 17 }: { x: number;
     <g>
       {/* 筒身本体：竖向渐变做出圆柱体积感 */}
       <defs>
-        <linearGradient id="cell-cyl" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={`${uid}-cyl`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#5a5f66" />
           <stop offset="18%" stopColor="#8d939b" />
           <stop offset="42%" stopColor="#767c84" />
           <stop offset="72%" stopColor="#4d5259" />
           <stop offset="100%" stopColor="#33373d" />
         </linearGradient>
-        <linearGradient id="cell-band" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={`${uid}-band`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#8a4a12" />
           <stop offset="20%" stopColor="#e2953a" />
           <stop offset="55%" stopColor="#c9772a" />
           <stop offset="100%" stopColor="#7c3f0d" />
         </linearGradient>
-        <linearGradient id="cell-black" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={`${uid}-black`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#1f2226" />
           <stop offset="22%" stopColor="#4a4e54" />
           <stop offset="60%" stopColor="#31353a" />
@@ -149,14 +150,14 @@ export function BatteryCell({ x, y, halfLength = 76, radius = 17 }: { x: number;
       <rect x={left - 7} y={bodyTop + 3} width="10" height="4" rx="2" fill="#7b8188" opacity="0.75" />
       <rect x={left - 7} y={bodyTop + 2} width="10" height={bodyHeight - 4} rx="4" fill="none" stroke="#2b2e32" strokeWidth="0.7" />
       {/* 筒身 */}
-      <rect x={left - 2} y={bodyTop} width={halfLength * 2 + 4} height={bodyHeight} rx={radius * 0.72} fill="url(#cell-cyl)" />
+      <rect x={left - 2} y={bodyTop} width={halfLength * 2 + 4} height={bodyHeight} rx={radius * 0.72} fill={`url(#${uid}-cyl)`} />
       {/* 黑色环标（负极侧） */}
-      <rect x={left + 12} y={bodyTop} width="13" height={bodyHeight} fill="url(#cell-black)" />
+      <rect x={left + 12} y={bodyTop} width="13" height={bodyHeight} fill={`url(#${uid}-black)`} />
       {/* 橙色环标（电池品牌印刷区，正极侧） */}
-      <rect x={left + 40} y={bodyTop} width="58" height={bodyHeight} fill="url(#cell-band)" />
+      <rect x={left + 40} y={bodyTop} width="58" height={bodyHeight} fill={`url(#${uid}-band)`} />
       <rect x={left + 40} y={bodyTop + 3} width="58" height="3.5" rx="1.8" fill="#f4bd6f" opacity="0.5" />
       {/* 黑色环标（正极侧） */}
-      <rect x={left + 112} y={bodyTop} width="13" height={bodyHeight} fill="url(#cell-black)" />
+      <rect x={left + 112} y={bodyTop} width="13" height={bodyHeight} fill={`url(#${uid}-black)`} />
       {/* 筒身顶部镜面反射带 */}
       <rect x={left + 6} y={bodyTop + 3} width={halfLength * 2 - 12} height="5" rx="2.5" fill="#ffffff" opacity="0.26" />
       {/* 筒身底部反光 */}
@@ -179,6 +180,7 @@ export function BatteryCell({ x, y, halfLength = 76, radius = 17 }: { x: number;
  * 电池横卧在底座上，正极铜帽在右（+），锌底在左（－）。
  */
 export function BatteryHolderE1({ x, y }: { x: number; y: number }) {
+  const uid = useId()
   return (
     <g transform={`translate(${x} ${y})`}>
       <GroundShadow cy={26} rx={126} ry={9} />
@@ -191,7 +193,7 @@ export function BatteryHolderE1({ x, y }: { x: number; y: number }) {
         </g>
       ))}
       {/* 电池本体：躺在托架上（底边略高于底座顶面） */}
-      <BatteryCell x={0} y={-24} halfLength={78} radius={18} />
+      <BatteryCell x={0} y={-24} halfLength={78} radius={18} uid={uid} />
       {/* 底座上的正负极刻印 */}
       <text x="-92" y="21" fill="#f0f3f6" fontSize="13" fontWeight="700" textAnchor="middle">－</text>
       <text x="92" y="21" fill="#f0f3f6" fontSize="13" fontWeight="700" textAnchor="middle">+</text>
@@ -292,7 +294,7 @@ function ScrewCap({ top, height, radius }: { top: number; height: number; radius
 }
 
 /** 玻璃泡（含灯丝、引线、颈部） */
-function GlassBulb({ top, bottom, halfWidth, lit }: { top: number; bottom: number; halfWidth: number; lit: boolean }) {
+function GlassBulb({ top, bottom, halfWidth, lit, uid }: { top: number; bottom: number; halfWidth: number; lit: boolean; uid: string }) {
   const bulbTop = top
   const centerY = top + (bottom - top) * 0.42
   const glassPath = `M ${-halfWidth} ${bottom - 6}
@@ -306,14 +308,14 @@ function GlassBulb({ top, bottom, halfWidth, lit }: { top: number; bottom: numbe
   return (
     <g>
       <defs>
-        <radialGradient id="bulb-glass" cx="0.4" cy="0.34" r="0.8">
+        <radialGradient id={`${uid}-glass`} cx="0.4" cy="0.34" r="0.8">
           <stop offset="0%" stopColor={lit ? '#fffdf2' : 'rgba(238,245,252,0.8)'} />
           <stop offset="48%" stopColor={lit ? '#fff0b8' : 'rgba(204,219,233,0.42)'} />
           <stop offset="100%" stopColor={lit ? '#f0cf83' : 'rgba(150,170,190,0.3)'} />
         </radialGradient>
       </defs>
       {/* 玻璃体 */}
-      <path d={glassPath} fill="url(#bulb-glass)" stroke={lit ? '#f0cf7a' : '#b9c7d5'} strokeWidth="1.6" />
+      <path d={glassPath} fill={`url(#${uid}-glass)`} stroke={lit ? '#f0cf7a' : '#b9c7d5'} strokeWidth="1.6" />
       {/* 左侧高光条 */}
       <path d={`M ${-halfWidth * 0.62} ${bottom - 22} C ${-halfWidth * 0.72} ${centerY} ${-halfWidth * 0.6} ${bulbTop + 12} ${-halfWidth * 0.28} ${bulbTop + 6}`} fill="none" stroke="#ffffff" strokeWidth="3.4" opacity="0.5" strokeLinecap="round" />
       {/* 颈缩部：玻璃与灯头过渡（喇叭口收进螺纹灯头） */}
@@ -340,6 +342,7 @@ function GlassBulb({ top, bottom, halfWidth, lit }: { top: number; bottom: numbe
  * 灯泡 L1：玻璃泡 + 螺旋灯头 + 金属灯座 + 底座 + 红黑接线柱。
  */
 export function LampHolderL1({ x, y, lit }: { x: number; y: number; lit: boolean }) {
+  const uid = useId()
   const socketTop = -26
   return (
     <g transform={`translate(${x} ${y})`}>
@@ -364,7 +367,7 @@ export function LampHolderL1({ x, y, lit }: { x: number; y: number; lit: boolean
       ))}
       {/* 螺旋灯头 + 玻璃泡：玻璃颈部直接坐在灯头螺纹上，中间不留缝（否则灯泡像飘着） */}
       <ScrewCap top={socketTop - 13} height={15} radius={11.5} />
-      <GlassBulb top={socketTop - 84} bottom={socketTop - 11} halfWidth={25} lit={lit} />
+      <GlassBulb top={socketTop - 84} bottom={socketTop - 11} halfWidth={25} lit={lit} uid={uid} />
       <text x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">L1</text>
     </g>
   )

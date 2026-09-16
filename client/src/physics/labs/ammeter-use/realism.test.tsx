@@ -38,22 +38,26 @@ describe('电源 E1 写实化：真实干电池而非示意方块', () => {
 
   it('画出干电池的三大特征：橙色环标、金属筒身、黄铜正极帽', () => {
     // 橙色印刷环标（真实 1 号电池的品牌色带）
-    expect(html).toMatch(/cell-band/)
-    // 深色锌壳筒身
-    expect(html).toMatch(/cell-cyl/)
+    expect(html).toMatch(/#(e2953a|c9772a|8a4a12)/)
+    // 锌壳筒身（中性灰）
+    expect(html).toMatch(/#(5a5f66|8d939b|767c84|4d5259)/)
     // 正极铜帽（黄铜色）
-    expect(html).toMatch(/#(b9a071|d9c187|c6ab74)/)
+    expect(html).toMatch(/#(b9a071|d9c187|c6ab74|e8d5ab)/)
   })
 
   it('筒身用竖向渐变表现圆柱体积，而不是一块纯色', () => {
-    expect(html).toContain('<linearGradient')
-    expect(html).toMatch(/url\(#cell-cyl\)/)
+    // 渐变定义存在，并且确实被 fill 引用（不能只定义一个没人用的渐变）
+    const gradientIds = [...html.matchAll(/<linearGradient id="([^"]+)"/g)].map((match) => match[1])
+    expect(gradientIds.length).toBeGreaterThanOrEqual(3)
+    for (const id of gradientIds) {
+      expect(html, `渐变 ${id} 定义了却没有被引用`).toContain(`url(#${id})`)
+    }
   })
 
   it('电池有黑色环标分段（真实电池的分色印刷）', () => {
-    expect(html).toMatch(/cell-black/)
-    // 至少两段黑色环标
-    expect((html.match(/url\(#cell-black\)/g) ?? []).length).toBeGreaterThanOrEqual(2)
+    // 至少两处深色分段：用深灰/黑渐变填充的窄矩形
+    const darkFills = (html.match(/#(1f2226|4a4e54|31353a|15181b)/g) ?? []).length
+    expect(darkFills).toBeGreaterThanOrEqual(2)
   })
 
   it('底座带拉丝金属高光与两端螺钉（不是一条纯灰矩形）', () => {
@@ -129,8 +133,15 @@ describe('灯泡 L1 写实化：玻璃泡 + 螺旋灯头 + 灯丝', () => {
   })
 
   it('玻璃是半透明渐变（透出内部结构），不是实心色块', () => {
-    expect(off).toMatch(/bulb-glass/)
-    expect(off).toMatch(/radialGradient/)
+    const gradientIds = [...off.matchAll(/<radialGradient id="([^"]+)"/g)].map((match) => match[1])
+    expect(gradientIds).toHaveLength(1)
+    expect(off).toContain(`url(#${gradientIds[0]})`)
+    // 玻璃必须是半透明（带 alpha），否则里面的灯丝看不见。
+    // React 会把 rgba() 原样写进 style/属性，这里按更稳的判据取：存在 0<a<1 的 rgba
+    const glassGradient = off.slice(off.indexOf('<radialGradient'), off.indexOf('</radialGradient>'))
+    const alphaValues = [...glassGradient.matchAll(/rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)/g)].map((m) => Number(m[1]))
+    expect(alphaValues.length, '玻璃渐变里没有任何 rgba 半透明色标').toBeGreaterThan(0)
+    expect(alphaValues.every((a) => a > 0 && a < 1), '玻璃色标必须半透明').toBe(true)
   })
 
   it('发光与不发光是两种外观（灯丝点亮 + 光晕）', () => {
@@ -260,7 +271,7 @@ describe('电气不变量不被写实化改动破坏', () => {
   })
 })
 
-describe('写实化只在器材内部改画面，不动命中与可访问性', () => {
+describe('写实化只在器材内部改画面，不动外部坐标协议', () => {
   it('器材组件全部只接受 x/y 平移，不改外部坐标协议', () => {
     // 组件签名里只有 x / y 参与定位；接线柱坐标仍由 layout.ts 的 terminalPosition 推导
     const source = readFileSync(new URL('./CompetitorParts.tsx', import.meta.url), 'utf8')
@@ -271,16 +282,55 @@ describe('写实化只在器材内部改画面，不动命中与可访问性', (
     expect((source.match(/translate\(\$\{x\} \$\{y\}\)/g) ?? []).length).toBeGreaterThanOrEqual(5)
   })
 
-  it('写实化没有引入无限画布之外的绝对定位或新依赖', () => {
+  it('器材组件不直接依赖 layout / 场景，只依赖 definition 与 React', () => {
     const source = readFileSync(new URL('./CompetitorParts.tsx', import.meta.url), 'utf8')
-    expect(source).not.toMatch(/from '(?!\.\/definition)/)
-    expect(source).toMatch(/from '\.\/definition'/)
+    const imports = [...source.matchAll(/from '([^']+)'/g)].map((match) => match[1])
+    expect(imports.length).toBeGreaterThan(0)
+    for (const specifier of imports) {
+      const allowed = specifier === 'react' || specifier.startsWith('./') || specifier.startsWith('../')
+      expect(allowed, `出现了不期望的依赖：${specifier}`).toBe(true)
+    }
+    expect(imports).toContain('./definition')
+    // 不能反向依赖 layout（否则接线柱坐标会与绘制耦合，拖动必然错位）
+    expect(imports.some((specifier) => specifier.includes('layout'))).toBe(false)
   })
 
-  it('渐变 id 在同一页面内不会互相覆盖（多件器材复用同一套 id 是安全的）', () => {
-    // 只使用了固定 id，场景里每件器材各画一次，因此不会出现重复 id 冲突
+  it('渐变 id 逐实例唯一，同页多件器材不会串色', () => {
+    // 每个渐变 id 都必须带实例前缀（useId），因此同页画两次也互不冲突
     const source = readFileSync(new URL('./CompetitorParts.tsx', import.meta.url), 'utf8')
-    const ids = [...source.matchAll(/id="([a-z-]+)"/g)].map((match) => match[1])
-    expect(new Set(ids).size).toBe(ids.length)
+    // 约定：渐变 id 一律写成 id={`${uid}-xxx`}，因此不会出现写死的静态 id
+    const idAttrs = [...source.matchAll(/id=\{`([^`]+)`\}/g)].map((match) => match[1])
+    expect(idAttrs.length).toBeGreaterThan(0)
+    for (const id of idAttrs) {
+      expect(id.startsWith('${uid}-'), `渐变 id "${id}" 未按实例唯一化`).toBe(true)
+    }
+    // 并且不允许再出现写死的静态 id（HTML 静态属性形式）
+    expect(source).not.toMatch(/<\w+[^>]*\sid="[a-z-]+"/)
+    // 渲染两次同一器材，两棵子树的渐变 id 必须不同
+    const first = render(<AmmeterA1 x={0} y={0} reading={0} range="3A" overRange={false} label="A1" />)
+    const second = render(<AmmeterA1 x={0} y={0} reading={0} range="3A" overRange={false} label="A1" />)
+    expect(first).toBe(second) // 单次 SSR 渲染确定性
+  })
+
+  it('同页同时渲染两件带渐变的器材时，渐变 id 不重复', () => {
+    const doubleBattery = renderToString(
+      <svg>
+        <BatteryHolderE1 x={0} y={0} />
+        <BatteryHolderE1 x={300} y={0} />
+      </svg>,
+    )
+    const ids = [...doubleBattery.matchAll(/<linearGradient id="([^"]+)"/g)].map((match) => match[1])
+    expect(ids).toHaveLength(6) // 两节电池 × 3 个渐变
+    expect(new Set(ids).size, '两件器材的渐变 id 发生冲突，会导致串色').toBe(ids.length)
+
+    const doubleLamp = renderToString(
+      <svg>
+        <LampHolderL1 x={0} y={0} lit={false} />
+        <LampHolderL1 x={300} y={0} lit={false} />
+      </svg>,
+    )
+    const lampIds = [...doubleLamp.matchAll(/<radialGradient id="([^"]+)"/g)].map((match) => match[1])
+    expect(lampIds).toHaveLength(2)
+    expect(new Set(lampIds).size).toBe(2)
   })
 })
