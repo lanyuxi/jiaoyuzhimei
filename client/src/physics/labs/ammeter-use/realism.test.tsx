@@ -36,6 +36,82 @@ function render(node: React.ReactElement): string {
  * 那它只是「一个常量 vs 另一个常量」，画面怎么改都不会红，等于没守。
  * 这里改为解析真实渲染结果，绘制一旦挪位，测试立刻跟着变。
  */
+/**
+ * 统一的「世界坐标」口径。
+ *
+ * 复审连续三轮指出的根因是同一个：**几何口径不统一**。
+ * 只修 `renderedBounds` 是不够的 —— 只要别的判据改成直接读 `data-part` 标签上的
+ * **声明属性**（局部坐标），那么任何「在目标元素外面再包一层 `<g transform>`」的改动
+ * 都会整体平移坐标，而「局部 vs 局部」的相对比较对共同祖先的平移完全免疫：
+ *   · 表盘整棵子树包一层 translate(66 0) → 表盘画到表壳右边外面，测试全绿；
+ *   · 接线台肩包一层 translate(40 0) → 接线柱与画面脱开 40px，测试全绿。
+ *
+ * 所以这里把「按祖先链累计 translate → 世界坐标」做成**唯一出口**，
+ * 所有几何判据（包围盒、矩形结构件、指针转轴、路径点）一律走它。
+ */
+
+/** 解析 HTML，维护 `<g>` 栈并累计 translate，得到某个下标处的世界坐标偏移 */
+function worldOffsetAt(html: string, index: number): { x: number; y: number } {
+  const stack: Array<{ x: number; y: number }> = []
+  let cursor = 0
+  while (cursor < index) {
+    const lt = html.indexOf('<', cursor)
+    if (lt === -1 || lt >= index) break
+    let end = lt + 1
+    let quote: string | null = null
+    while (end < html.length) {
+      const ch = html[end]
+      if (quote !== null) {
+        if (ch === quote) quote = null
+      } else if (ch === '"' || ch === "'") {
+        quote = ch
+      } else if (ch === '>') {
+        break
+      }
+      end += 1
+    }
+    const rawTag = html.slice(lt + 1, end)
+    const isClose = rawTag.startsWith('/')
+    const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+    if (isClose) {
+      if (name === 'g') stack.pop()
+    } else if (name === 'g') {
+      const translate = rawTag.match(/transform="translate\((-?[\d.]+)[ ,]+(-?[\d.]+)\)"/)
+      stack.push(
+        translate !== null
+          ? { x: Number(translate[1]), y: Number(translate[2]) }
+          : { x: 0, y: 0 },
+      )
+    }
+    cursor = end + 1
+  }
+  return stack.reduce((acc, item) => ({ x: acc.x + item.x, y: acc.y + item.y }), { x: 0, y: 0 })
+}
+
+/** 遍历所有匹配标签，回调拿到标签原文、起始下标与**世界坐标偏移** */
+function eachTag(
+  html: string,
+  regex: RegExp,
+  handler: (tag: string, index: number, offset: { x: number; y: number }) => void,
+): void {
+  for (const match of html.matchAll(regex)) {
+    const index = match.index ?? 0
+    handler(match[0], index, worldOffsetAt(html, index))
+  }
+}
+
+/** 某个带 data-part 的元素所处位置的世界坐标偏移（用于自证式红线） */
+function worldOffsetOfPart(html: string, part: string): { x: number; y: number } | null {
+  const match = html.match(new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`))
+  if (match === null) return null
+  return worldOffsetAt(html, match.index ?? 0)
+}
+
+/** 列出渲染结果里所有带 data-part 的元素名 */
+function allDataParts(html: string): string[] {
+  return [...new Set([...html.matchAll(/data-part="([^"]+)"/g)].map((m) => m[1]))]
+}
+
 function renderedBounds(html: string): { minX: number; maxX: number; minY: number; maxY: number } | null {
   let minX = Number.POSITIVE_INFINITY
   let maxX = Number.NEGATIVE_INFINITY
@@ -51,135 +127,73 @@ function renderedBounds(html: string): { minX: number; maxX: number; minY: numbe
     maxY = Math.max(maxY, y)
   }
 
-  /**
-   * 解析 SVG 时**必须按祖先链累计 translate 偏移**，不能把 `<g>` 的平移原点当成几何点。
-   *
-   * 这是第三轮复审点出的根因：把 `<g transform="translate(x y)">` 的原点也算进包围盒，
-   * 只要器材内部任意一层 `<g>` 挪走，包围盒会跟着膨胀到新位置，
-   * 接线柱于是永远"落在里面" —— 画面崩了测试却全绿（实测：电池本体横移 200px 仍 49/49 通过）。
-   *
-   * 这里的做法：对每个绘图元素，按它的祖先链把 translate 叠加起来，算成**世界坐标**再收进包围盒。
-   */
-  const offsetAt = (index: number): { x: number; y: number } => {
-    // 从头扫到 index，维护 <g> 栈
-    const stack: Array<{ x: number; y: number }> = []
-    let cursor = 0
-    let offset = { x: 0, y: 0 }
-    while (cursor < index) {
-      const lt = html.indexOf('<', cursor)
-      if (lt === -1 || lt >= index) break
-      let end2 = lt + 1
-      let quote: string | null = null
-      while (end2 < html.length) {
-        const ch = html[end2]
-        if (quote !== null) {
-          if (ch === quote) quote = null
-        } else if (ch === '"' || ch === "'") {
-          quote = ch
-        } else if (ch === '>') {
-          break
-        }
-        end2 += 1
-      }
-      const rawTag = html.slice(lt + 1, end2)
-      const isClose = rawTag.startsWith('/')
-      const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
-      if (isClose) {
-        if (name === 'g') stack.pop()
-      } else if (name === 'g') {
-        const translate = rawTag.match(/transform="translate\((-?[\d.]+)[ ,]+(-?[\d.]+)\)"/)
-        if (translate !== null) stack.push({ x: Number(translate[1]), y: Number(translate[2]) })
-        else if (/transform="rotate\(/.test(rawTag)) {
-          // 旋转组（指针）不改变包围盒的可比性：其内容本身就是围绕转轴的小图形，
-          // 这里仍按同一原点累加，避免因为缺少 translate 而漏掉父级偏移。
-          stack.push({ x: 0, y: 0 })
-        } else {
-          stack.push({ x: 0, y: 0 })
-        }
-      }
-      cursor = end2 + 1
-    }
-    offset = stack.reduce((acc, item) => ({ x: acc.x + item.x, y: acc.y + item.y }), offset)
-    return offset
-  }
-
-  /** 声明式遍历：同时拿到标签原文与起始下标，便于按祖先链算偏移 */
-  const walkTags = (regex: RegExp, handler: (tag: string, index: number) => void) => {
-    for (const match of html.matchAll(regex)) {
-      handler(match[0], match.index ?? 0)
-    }
-  }
-
-  walkTags(/<rect\b[^>]*>/g, (tag, index) => {
+  eachTag(html, /<rect\b[^>]*>/g, (tag, _index, o) => {
     const x = Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1])
     const y = Number(tag.match(/\by="(-?[\d.]+)"/)?.[1])
     const w = Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1])
     const h = Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1])
     if (![x, y, w, h].every(Number.isFinite)) return
-    const o = offsetAt(index)
     visit(o.x + x, o.y + y)
     visit(o.x + x + w, o.y + y + h)
   })
-  walkTags(/<circle\b[^>]*>/g, (tag, index) => {
+  eachTag(html, /<circle\b[^>]*>/g, (tag, _index, o) => {
     const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
     const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
     const r = Number(tag.match(/\br="(-?[\d.]+)"/)?.[1])
     if (![cx, cy, r].every(Number.isFinite)) return
-    const o = offsetAt(index)
     visit(o.x + cx - r, o.y + cy - r)
     visit(o.x + cx + r, o.y + cy + r)
   })
-  walkTags(/<ellipse\b[^>]*>/g, (tag, index) => {
+  eachTag(html, /<ellipse\b[^>]*>/g, (tag, _index, o) => {
     const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
     const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
     const rx = Number(tag.match(/\brx="(-?[\d.]+)"/)?.[1])
     const ry = Number(tag.match(/\bry="(-?[\d.]+)"/)?.[1])
     if (![cx, cy, rx, ry].every(Number.isFinite)) return
-    const o = offsetAt(index)
     visit(o.x + cx - rx, o.y + cy - ry)
     visit(o.x + cx + rx, o.y + cy + ry)
   })
-  walkTags(/<line\b[^>]*>/g, (tag, index) => {
-    const o = offsetAt(index)
-    visit(o.x + Number(tag.match(/\bx1="(-?[\d.]+)"/)?.[1]), o.y + Number(tag.match(/\by1="(-?[\d.]+)"/)?.[1]))
-    visit(o.x + Number(tag.match(/\bx2="(-?[\d.]+)"/)?.[1]), o.y + Number(tag.match(/\by2="(-?[\d.]+)"/)?.[1]))
+  eachTag(html, /<line\b[^>]*>/g, (tag, _index, o) => {
+    visit(
+      o.x + Number(tag.match(/\bx1="(-?[\d.]+)"/)?.[1]),
+      o.y + Number(tag.match(/\by1="(-?[\d.]+)"/)?.[1]),
+    )
+    visit(
+      o.x + Number(tag.match(/\bx2="(-?[\d.]+)"/)?.[1]),
+      o.y + Number(tag.match(/\by2="(-?[\d.]+)"/)?.[1]),
+    )
   })
-  /**
-   * `<path d>` 的坐标解析：**按指令跳步**，不能每两个数字取一对。
-   * `A`（弧）后面是 `rx ry rot laf sf x y` 共 7 个参数，按 2 个一组会整体错位（虚胖/虚瘦）。
-   */
-  walkTags(/<path\b[^>]*\bd="([^"]+)"/g, (tag, index) => {
-    const d = tag.match(/\bd="([^"]+)"/)?.[1]
-    if (d === undefined) return
-    const o = offsetAt(index)
-    const tokens = d.match(/[A-Za-z]|-?\d*\.?\d+(?:e[-+]?\d+)?/gi) ?? []
-    let cursor = 0
-    let command = ''
-    while (cursor < tokens.length) {
-      const token = tokens[cursor]
-      if (/^[A-Za-z]$/.test(token)) {
-        command = token
-        cursor += 1
-        if (command === 'Z' || command === 'z') continue
-      }
-      const nums: number[] = []
-      const need = command === 'A' || command === 'a' ? 7 : command === 'C' || command === 'c' ? 6 : command === 'Q' || command === 'q' ? 4 : 2
-      let read = 0
-      while (read < need && cursor < tokens.length && !/^[A-Za-z]$/.test(tokens[cursor])) {
-        nums.push(Number(tokens[cursor]))
-        cursor += 1
-        read += 1
-      }
-      if (nums.length < need) break
-      if (command === 'A' || command === 'a') {
-        // 只有最后两个数是端点
-        visit(o.x + nums[5], o.y + nums[6])
-      } else {
-        for (let k = 0; k + 1 < nums.length; k += 2) visit(o.x + nums[k], o.y + nums[k + 1])
-      }
-    }
+  eachTag(html, /<path\b[^>]*\bd="([^"]+)"/g, (tag, _index, o) => {
+    for (const [x, y] of pathPoints(tag)) visit(o.x + x, o.y + y)
   })
   return found ? { minX, maxX, minY, maxY } : null
+}
+
+/** 按 data-part 取某个矩形结构件的**世界坐标**矩形 */
+function renderedPart(html: string, part: string): { x: number; y: number; width: number; height: number } | null {
+  const match = html.match(new RegExp(`<rect\\b[^>]*data-part="${part}"[^>]*>`))
+  if (match === null) return null
+  const tag = match[0]
+  const local = {
+    x: Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1]),
+    y: Number(tag.match(/\by="(-?[\d.]+)"/)?.[1]),
+    width: Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1]),
+    height: Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1]),
+  }
+  if (![local.x, local.y, local.width, local.height].every(Number.isFinite)) return null
+  const o = worldOffsetAt(html, match.index ?? 0)
+  return { x: o.x + local.x, y: o.y + local.y, width: local.width, height: local.height }
+}
+
+/** 取某个带 data-part 的文本元素（世界坐标） */
+function renderedText(html: string, part: string, label: string): { x: number; y: number } | null {
+  const match = html.match(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>${label}</text>`))
+  if (match === null) return null
+  const o = worldOffsetAt(html, match.index ?? 0)
+  return {
+    x: o.x + Number(match[0].match(/\bx="(-?[\d.]+)"/)?.[1] ?? 0),
+    y: o.y + Number(match[0].match(/\by="(-?[\d.]+)"/)?.[1] ?? 0),
+  }
 }
 
 /** 从完整的标签里取出 `d` 并解析坐标点 */
@@ -222,25 +236,14 @@ function pathPoints(tag: string): Array<[number, number]> {
 
 /** 提取指针的 rotate()：角度 + 转轴（用于判断指针是否画在表盘内） */
 function needlePivot(html: string): { angle: number; pivot: { x: number; y: number } } | null {
-  const match = html.match(/<g transform="rotate\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\)"/)
-  if (match === null) return null
-  return { angle: Number(match[1]), pivot: { x: Number(match[2]), y: Number(match[3]) } }
-}
-
-/**
- * 从渲染结果里按 `data-part` 取出某个矩形结构件的**真实几何**。
- * 用 data 属性绑定，测试读到的就是画出来的那块几何，而不是测试里手抄的常量
- * —— 这才是"改坏了会红"的前提。
- */
-function renderedPart(html: string, part: string): { x: number; y: number; width: number; height: number } | null {
-  const match = html.match(new RegExp(`<rect\\b[^>]*data-part="${part}"[^>]*>`))
-  if (match === null) return null
-  const tag = match[0]
+  // 恰好一个 rotate 组（指针）。多了说明引入了装饰性 rotate，判据会静默指向错元素。
+  const matches = [...html.matchAll(/<g transform="rotate\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\)"/g)]
+  if (matches.length !== 1) return null
+  const match = matches[0]
+  const o = worldOffsetAt(html, match.index ?? 0)
   return {
-    x: Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1]),
-    y: Number(tag.match(/\by="(-?[\d.]+)"/)?.[1]),
-    width: Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1]),
-    height: Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1]),
+    angle: Number(match[1]),
+    pivot: { x: o.x + Number(match[2]), y: o.y + Number(match[3]) },
   }
 }
 
@@ -778,6 +781,83 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
     expect(nestedBox.maxY - nestedBox.minY).toBeCloseTo(flatBox.maxY - flatBox.minY, 6)
   })
 
+  it('自证式红线：声明坐标系必须与渲染坐标系重合（外包一层 <g> 就红）', () => {
+    /**
+     * 这是复审给的"一次性封住整类问题"的红线。
+     *
+     * 前面所有几何判据都是「某一组元素互相包含」。如果**整组一起**被外层
+     * `<g transform>` 平移，包含关系不变，判据就静默失效；而画面已经崩了。
+     * 所以这里要求：每个带 `data-part` 的元素，其**世界坐标偏移必须为 0**
+     * —— 也就是「声明属性写在哪里，就画在哪里」。
+     *
+     * 真实代码里恰好在根 `<g transform="translate(0 0)">` 内，因此该值恒为 0，零成本；
+     * 而任何"在目标元素外再包一层平移"的改动都会让 ≥1 处立刻变红。
+     */
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const parts = allDataParts(html)
+    expect(parts.length, '没有找到任何 data-part 元素').toBeGreaterThan(0)
+
+    // 覆盖面自证：这些结构件必须都被标记到，
+    // 否则「只标记了一部分」时，未标记的那些就会成为绕过路径（实测踩过：labels / arcs）。
+    for (const required of [
+      'ammeter-shell',
+      'ammeter-dial',
+      'ammeter-terminal-flange',
+      'ammeter-needle',
+      'ammeter-needle-hub',
+      'ammeter-glyph',
+      'ammeter-arc',
+      'ammeter-scale-outer',
+      'ammeter-scale-inner',
+      'ammeter-label-neg',
+      'ammeter-label-06',
+      'ammeter-label-3',
+    ]) {
+      expect(parts, `${required} 没有被标记 data-part，会成为几何回归的绕过路径`).toContain(required)
+    }
+
+    for (const part of parts) {
+      const offset = worldOffsetOfPart(html, part)
+      expect(offset, `${part} 的偏移解析失败`).not.toBeNull()
+      expect(offset, `${part} 的声明坐标系与渲染坐标系不重合（被外层 <g transform> 平移了）`)
+        .toEqual({ x: 0, y: 0 })
+    }
+
+    // 反向自证：给它套一层平移后，这条红线必须变红
+    const shifted = html.replace(
+      /(<rect\b[^>]*data-part="ammeter-dial"[^>]*>)/,
+      '<g transform="translate(66 0)">$1</g>',
+    )
+    expect(shifted, '没有成功注入平移层').not.toBe(html)
+    expect(worldOffsetOfPart(shifted, 'ammeter-dial')).toEqual({ x: 66, y: 0 })
+  })
+
+  it('整组外观被外层 <g> 平移时也会红（表盘/台肩分别验证）', () => {
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+
+    // (b) 表盘整棵子树平移 66px：表盘会跑到表壳右边外面
+    const dialShifted = html.replace(
+      /(<rect\b[^>]*data-part="ammeter-dial"[^>]*>)/,
+      '<g transform="translate(66 0)">$1</g>',
+    )
+    const dial = renderedPart(dialShifted, 'ammeter-dial')!
+    const shell = renderedPart(html, 'ammeter-shell')!
+    // 平移后的表盘必须整体（或大部分）落在表壳之外 —— 即该改动确实是坏的
+    const dialRight = dial.x + dial.width
+    const shellRight = shell.x + shell.width
+    expect(dialRight, '表盘平移后仍在表壳内，这个变异体不成立').toBeGreaterThan(shellRight)
+
+    // 而世界坐标口径能把这个偏移如实读出来（局部口径读不出来）
+    expect(worldOffsetOfPart(dialShifted, 'ammeter-dial')).toEqual({ x: 66, y: 0 })
+
+    // (a) 接线台肩平移 40px：接线柱与画面脱开
+    const flangeShifted = html.replace(
+      /(<rect\b[^>]*data-part="ammeter-terminal-flange"[^>]*>)/,
+      '<g transform="translate(40 0)">$1</g>',
+    )
+    expect(worldOffsetOfPart(flangeShifted, 'ammeter-terminal-flange')).toEqual({ x: 40, y: 0 })
+  })
+
   it('平移原点本身不会被算成几何点（否则包围盒会被"撑大"）', () => {
     // 只有 <g translate> 没有任何绘图元素时，包围盒应为空 ——
     // 这直接证明 `<g>` 的平移原点不再被当成几何点。
@@ -835,13 +915,12 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
   it('接线柱刻字必须落在**渲染出的**台肩范围内（把刻字挪回表体下方会红）', () => {
     const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
     const flange = renderedPart(html, 'ammeter-terminal-flange')!
-    // 三处刻字分别带 data-part，读出它们的真实 y
+    // 三处刻字分别带 data-part，读它们的**世界坐标** y
     for (const [part, label] of [['ammeter-label-neg', '－'], ['ammeter-label-06', '0.6A'], ['ammeter-label-3', '3A']] as const) {
-      const match = html.match(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>${label}</text>`))
-      expect(match, `${part} 刻字没有渲染出来`).not.toBeNull()
-      const y = Number(match![0].match(/\by="(-?[\d.]+)"/)?.[1])
-      expect(y, `${label} 刻字跑到了台肩外面（会飘在表体下方）`).toBeGreaterThanOrEqual(flange.y)
-      expect(y, `${label} 刻字跑到了台肩外面`).toBeLessThanOrEqual(flange.y + flange.height)
+      const point = renderedText(html, part, label)
+      expect(point, `${part} 刻字没有渲染出来`).not.toBeNull()
+      expect(point!.y, `${label} 刻字跑到了台肩外面（会飘在表体下方）`).toBeGreaterThanOrEqual(flange.y)
+      expect(point!.y, `${label} 刻字跑到了台肩外面`).toBeLessThanOrEqual(flange.y + flange.height)
     }
   })
 
