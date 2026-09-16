@@ -386,6 +386,188 @@ function renderedPart(html: string, part: string): { x: number; y: number; width
   return { x: o.x + local.x, y: o.y + local.y, width: local.width, height: local.height }
 }
 
+/**
+ * 某个带 data-part 的**矩形**实例的枚举（世界坐标），用于"每份实例都必须画在自己的主体里"。
+ * 与 `renderedPart` 的区别：`renderedPart` 只取第一份，这里取全部 —— 前面反复踩过
+ * 「只守住第一份」的坑（4 圈螺纹只判 1 圈、5 颗螺钉只判第 1 颗）。
+ */
+function renderedParts(html: string, part: string): Array<{ x: number; y: number; width: number; height: number }> {
+  const pattern = new RegExp(`<rect\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const list: Array<{ x: number; y: number; width: number; height: number }> = []
+  for (const match of html.matchAll(pattern)) {
+    const tag = match[0]
+    const local = {
+      x: Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1]),
+      y: Number(tag.match(/\by="(-?[\d.]+)"/)?.[1]),
+      width: Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1]),
+      height: Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1]),
+    }
+    if (![local.x, local.y, local.width, local.height].every(Number.isFinite)) continue
+    const o = worldOffsetAt(html, match.index ?? 0)
+    list.push({ x: o.x + local.x, y: o.y + local.y, width: local.width, height: local.height })
+  }
+  return list
+}
+
+/** 某个带 data-part 的**线段**实例（世界坐标端点） */
+function renderedLines(html: string, part?: string): Array<{ x1: number; y1: number; x2: number; y2: number }> {
+  const pattern = part === undefined ? /<line\b[^>]*>/g : new RegExp(`<line\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const list: Array<{ x1: number; y1: number; x2: number; y2: number }> = []
+  for (const match of html.matchAll(pattern)) {
+    const tag = match[0]
+    const local = {
+      x1: Number(tag.match(/\bx1="(-?[\d.]+)"/)?.[1]),
+      y1: Number(tag.match(/\by1="(-?[\d.]+)"/)?.[1]),
+      x2: Number(tag.match(/\bx2="(-?[\d.]+)"/)?.[1]),
+      y2: Number(tag.match(/\by2="(-?[\d.]+)"/)?.[1]),
+    }
+    if (![local.x1, local.y1, local.x2, local.y2].every(Number.isFinite)) continue
+    const o = worldOffsetAt(html, match.index ?? 0)
+    list.push({ x1: o.x + local.x1, y1: o.y + local.y1, x2: o.x + local.x2, y2: o.y + local.y2 })
+  }
+  return list
+}
+
+/** 某个带 data-part 的圆实例（世界坐标） */
+function renderedCircles(html: string, part: string): Array<{ cx: number; cy: number; r: number }> {
+  const pattern = new RegExp(`<circle\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const list: Array<{ cx: number; cy: number; r: number }> = []
+  for (const match of html.matchAll(pattern)) {
+    const tag = match[0]
+    const local = {
+      cx: Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1]),
+      cy: Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1]),
+      r: Number(tag.match(/\br="(-?[\d.]+)"/)?.[1]),
+    }
+    if (![local.cx, local.cy, local.r].every(Number.isFinite)) continue
+    const o = worldOffsetAt(html, match.index ?? 0)
+    list.push({ cx: o.x + local.cx, cy: o.y + local.cy, r: local.r })
+  }
+  return list
+}
+
+/**
+ * 某组矩形，**并且把祖先链上的 rotate 真正施加到角点上**（世界坐标）。
+ *
+ * 背景：`worldOffsetAt` 只累加 translate —— 这对绝大多数判据是对的（几何红线要求
+ * 除 `data-anchor` 外不得有变换），但**开关刀片**与**电流表指针**是刻意用
+ * `<g data-anchor="local" transform="rotate(...)">` 装配的。
+ * 只读声明坐标会让"刀片抬起 32°"完全看不见（实测落差 0.0px，判据假绿）。
+ *
+ * 所以这里单独提供一个"带旋转"的解析出口，**仅**用于确实带 rotate 的局部装配件。
+ */
+function renderedPartsRotated(
+  html: string,
+  part: string,
+): Array<{ corners: Array<{ x: number; y: number }> }> {
+  const pattern = new RegExp(`<rect\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const list: Array<{ corners: Array<{ x: number; y: number }> }> = []
+  for (const match of html.matchAll(pattern)) {
+    const tag = match[0]
+    const x = Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1])
+    const y = Number(tag.match(/\by="(-?[\d.]+)"/)?.[1])
+    const width = Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1])
+    const height = Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1])
+    if (![x, y, width, height].every(Number.isFinite)) continue
+
+    // 收集祖先链上的 translate 与 rotate（按从外到内的顺序施加）
+    const operations = ancestorOperations(html, match.index ?? 0)
+    const corners = [
+      { x, y },
+      { x: x + width, y },
+      { x: x + width, y: y + height },
+      { x, y: y + height },
+    ].map((point) => {
+      let current = point
+      for (const operation of operations) {
+        if (operation.fn === 'translate') {
+          current = { x: current.x + (operation.args[0] ?? 0), y: current.y + (operation.args[1] ?? 0) }
+        } else if (operation.fn === 'rotate') {
+          const angle = ((operation.args[0] ?? 0) * Math.PI) / 180
+          const cx = operation.args[1] ?? 0
+          const cy = operation.args[2] ?? 0
+          const dx = current.x - cx
+          const dy = current.y - cy
+          current = { x: cx + dx * Math.cos(angle) - dy * Math.sin(angle), y: cy + dx * Math.sin(angle) + dy * Math.cos(angle) }
+        }
+      }
+      return current
+    })
+    list.push({ corners })
+  }
+  return list
+}
+
+/** 祖先 `<g>` 链上的变换操作，按从外到内排列（供带旋转的解析使用） */
+function ancestorOperations(html: string, index: number): TransformPart[] {
+  const stack: string[] = []
+  let cursor = 0
+  while (cursor < index) {
+    const lt = html.indexOf('<', cursor)
+    if (lt === -1 || lt >= index) break
+    let end = lt + 1
+    let quote: string | null = null
+    while (end < html.length) {
+      const ch = html[end]
+      if (quote !== null) {
+        if (ch === quote) quote = null
+      } else if (ch === '"' || ch === "'") {
+        quote = ch
+      } else if (ch === '>') {
+        break
+      }
+      end += 1
+    }
+    const rawTag = html.slice(lt + 1, end)
+    const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+    if (rawTag.startsWith('/')) {
+      if (name === 'g') stack.pop()
+    } else if (name === 'g') {
+      stack.push(rawTag)
+      if (rawTag.endsWith('/')) stack.pop()
+    }
+    cursor = end + 1
+  }
+  const operations: TransformPart[] = []
+  for (const tag of stack) {
+    const raw = rawTransformOf(tag)
+    if (raw === null) continue
+    operations.push(...parseTransform(raw, 'ancestorOperations').filter((part) => part.fn === 'translate' || part.fn === 'rotate'))
+  }
+  return operations
+}
+
+/**
+ * 某个带 `data-part` 的 **path** 实例的几何包围盒（世界坐标）。
+ *
+ * 补齐 `renderedParts`（只认 rect）的缺口：电池卡箍（`E1-clamp`）、灯座筒口（`lamp-socket`）、
+ * 玻璃泡（`lamp-glass`）这些承力结构都是 `<path>`，
+ * 用 rect 解析会得到空集合，于是"零件飘出主体"的判据对它们整类失效（实测漏检过）。
+ */
+function renderedPathBounds(html: string, part: string): Array<{ minX: number; maxX: number; minY: number; maxY: number }> {
+  const pattern = new RegExp(`<path\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const list: Array<{ minX: number; maxX: number; minY: number; maxY: number }> = []
+  for (const match of html.matchAll(pattern)) {
+    const points = pathPoints(match[0])
+    if (points.length === 0) continue
+    const o = worldOffsetAt(html, match.index ?? 0)
+    const xs = points.map(([x]) => x + o.x)
+    const ys = points.map(([, y]) => y + o.y)
+    list.push({ minX: Math.min(...xs), maxX: Math.max(...xs), minY: Math.min(...ys), maxY: Math.max(...ys) })
+  }
+  return list
+}
+
+/** 某组矩形的合并包围盒 */
+function unionBounds(list: Array<{ x: number; y: number; width: number; height: number }>) {
+  return {
+    minX: Math.min(...list.map((item) => item.x)),
+    maxX: Math.max(...list.map((item) => item.x + item.width)),
+    minY: Math.min(...list.map((item) => item.y)),
+    maxY: Math.max(...list.map((item) => item.y + item.height)),
+  }
+}
+
 /** 取某个带 data-part 的文本元素（世界坐标） */
 function renderedText(html: string, part: string, label: string): { x: number; y: number } | null {
   const match = html.match(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>${label}</text>`))
@@ -485,21 +667,51 @@ describe('电源 E1 写实化：真实干电池而非示意方块', () => {
   const html = render(<BatteryHolderE1 x={0} y={0} />)
 
   it('画出干电池的三大特征：橙色环标、金属筒身、黄铜正极帽', () => {
-    // 橙色印刷环标（真实 1 号电池的品牌色带）
-    expect(html).toMatch(/#(e2953a|c9772a|8a4a12)/)
-    // 锌壳筒身（中性灰）
-    expect(html).toMatch(/#(5a5f66|8d939b|767c84|4d5259)/)
-    // 正极铜帽（黄铜色）
-    expect(html).toMatch(/#(b9a071|d9c187|c6ab74|e8d5ab)/)
-  })
+    /**
+     * 判据纪律：必须按**渲染出的元素**逐层判色，不能用 `expect(html).toMatch(/#e2953a/)`
+     * 这种「全文出现过这个色就算过」的写法 —— 那正是本轮补的第 5 条盲区：
+     * 色一样、角色不一样（例如把橙色刷到正极铜帽上、把环标刷成灰色），全文搜色照样通过。
+     * 这里改成读**色板**（见 `paintPalette`）：每个可绘制元素的真实颜色都在里面，
+     * 因此可以直接断言「品牌环标的色相必须是橙色系」。
+     */
+    const palette = paintPalette(html)
+    // 色板必须真的有内容，否则后面的颜色判据都是空转
+    expect(palette.size, '色板为空，说明颜色判据抓不到任何东西').toBeGreaterThan(10)
 
-  it('筒身用竖向渐变表现圆柱体积，而不是一块纯色', () => {
-    // 渐变定义存在，并且确实被 fill 引用（不能只定义一个没人用的渐变）
-    const gradientIds = [...html.matchAll(/<linearGradient id="([^"]+)"/g)].map((match) => match[1])
-    expect(gradientIds.length).toBeGreaterThanOrEqual(3)
-    for (const id of gradientIds) {
-      expect(html, `渐变 ${id} 定义了却没有被引用`).toContain(`url(#${id})`)
+    /** 把一个"颜色写法"解析成它实际呈现的颜色序列（渐变引用要先展开到色标） */
+    const coloursOf = (fill: string): Array<{ r: number; g: number; b: number }> => {
+      const raw = fill.startsWith('url(') ? resolvedStopColours(html, fill) : [fill]
+      return raw
+        .map((colour) => colourToRgb(colour))
+        .filter((rgb): rgb is { r: number; g: number; b: number } => rgb !== null)
     }
+
+    // 橙色印刷环标：色相必须落在橙/琥珀区间（real 1 号电池的品牌色带）
+    const bandFills = paintFillsOfPart(html, 'cell-band')
+    expect(bandFills.length, '电池环标一个都没渲染出来').toBeGreaterThanOrEqual(4)
+    expect(
+      bandFills.some((fill) => coloursOf(fill).some((rgb) => isOrangeHue(rgb))),
+      '电池环标里没有橙色印刷带',
+    ).toBe(true)
+
+    // 锌壳筒身：本体必须用中性灰（低饱和）
+    const bodyFills = paintFillsOfPart(html, 'cell-body')
+    expect(bodyFills.length).toBeGreaterThan(0)
+    for (const fill of bodyFills) {
+      const rgbs = coloursOf(fill)
+      expect(rgbs.length, `筒身本体的颜色 ${fill} 解析不了`).toBeGreaterThan(0)
+      for (const rgb of rgbs) {
+        expect(saturation(rgb), `筒身本体饱和度太高（看着像塑料彩壳而不是锌壳）：${fill}`).toBeLessThan(0.18)
+      }
+    }
+
+    // 正极铜帽必须带黄铜色相（暖色、中低饱和）
+    const positiveFills = paintFillsOfPart(html, 'cell-positive')
+    expect(positiveFills.length).toBeGreaterThanOrEqual(4)
+    expect(
+      positiveFills.some((fill) => coloursOf(fill).some((rgb) => isWarmBrass(rgb))),
+      '正极铜帽没有黄铜色',
+    ).toBe(true)
   })
 
   it('电池有黑色环标分段（真实电池的分色印刷）', () => {
@@ -801,6 +1013,592 @@ describe('接线柱写实化：香蕉插座结构', () => {
     const negative = render(<TerminalPost x={0} y={0} polarity="-" connected={false} />)
     expect(html).toMatch(/#b32d21/)
     expect(negative).toMatch(/#23262b/)
+  })
+})
+
+/* ------------------------------------------------------------------ *
+ * 外观（颜色 / 光影 / 材质）判据
+ *
+ * 前六轮复审把**几何**维度守得很死，但外观维度整类没有被守：
+ * 实测把「橙色品牌环标」的色相从橙改成绿、把环标箔高光删掉、
+ * 把圆柱体积渐变的首尾压成同一个颜色，`ammeter-use` 目录 **173/173 全绿**，
+ * 而器材立刻退回"灰盒子"观感 —— 正是需求原话「跟真实的器材一模一样」最核心的部分。
+ *
+ * 所以下面这组判据把**颜色本身**也纳入红线，并且同样遵守前几轮的纪律：
+ *   · 读**渲染结果**，不读源码文本、不手抄常量；
+ *   · 逐**元素实例**判色，不做"全文出现过这个色"的弱判据；
+ *   · 渐变按**色标序列**判（首尾明度跨度、真被引用），而不是只看渐变存不存在。
+ * ------------------------------------------------------------------ */
+
+/** `#rgb` / `#rrggbb` -> 0-255 三元组；解析不了返回 null（绝不静默当成某个默认色） */
+function hexToRgb(raw: string | undefined): { r: number; g: number; b: number } | null {
+  if (raw === undefined) return null
+  const value = raw.trim()
+  const short = value.match(/^#([0-9a-f]{3})$/i)
+  if (short !== null) {
+    const [r, g, b] = short[1].split('')
+    return { r: Number.parseInt(r + r, 16), g: Number.parseInt(g + g, 16), b: Number.parseInt(b + b, 16) }
+  }
+  const long = value.match(/^#([0-9a-f]{6})$/i)
+  if (long !== null) {
+    return {
+      r: Number.parseInt(long[1].slice(0, 2), 16),
+      g: Number.parseInt(long[1].slice(2, 4), 16),
+      b: Number.parseInt(long[1].slice(4, 6), 16),
+    }
+  }
+  return null
+}
+
+/** rgba(r, g, b, a) -> 三元组（忽略 alpha；alpha 另有专用判据） */
+function rgbaToRgb(raw: string): { r: number; g: number; b: number } | null {
+  const match = raw.trim().match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*[\d.]+)?\s*\)$/)
+  if (match === null) return null
+  return { r: Number(match[1]), g: Number(match[2]), b: Number(match[3]) }
+}
+
+/** 任意颜色写法 -> 三元组；解析不了返回 null */
+function colourToRgb(raw: string): { r: number; g: number; b: number } | null {
+  return hexToRgb(raw) ?? rgbaToRgb(raw)
+}
+
+/** 相对明度 0（黑）～1（白） */
+function luminance(rgb: { r: number; g: number; b: number }): number {
+  return (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) / 255
+}
+
+/** HSV 意义上的饱和度 0～1（用于"锌壳必须是中性灰""环标必须是彩色"这类判据） */
+function saturation(rgb: { r: number; g: number; b: number }): number {
+  const max = Math.max(rgb.r, rgb.g, rgb.b)
+  const min = Math.min(rgb.r, rgb.g, rgb.b)
+  return max === 0 ? 0 : (max - min) / max
+}
+
+/** 色相角 0～360 */
+function hueDegrees(rgb: { r: number; g: number; b: number }): number {
+  const r = rgb.r / 255
+  const g = rgb.g / 255
+  const b = rgb.b / 255
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const delta = max - min
+  if (delta === 0) return 0
+  let hue: number
+  if (max === r) hue = ((g - b) / delta) % 6
+  else if (max === g) hue = (b - r) / delta + 2
+  else hue = (r - g) / delta + 4
+  return ((hue * 60) + 360) % 360
+}
+
+/** 橙 / 琥珀色相区间（真实干电池品牌环标），并排除"灰得看不出颜色"的低饱和色 */
+function isOrangeHue(rgb: { r: number; g: number; b: number }): boolean {
+  const hue = hueDegrees(rgb)
+  return hue >= 15 && hue <= 48 && saturation(rgb) > 0.35
+}
+
+/** 黄铜：暖色相 + 中低饱和 + 不太暗（#b9a071 / #d9c187 / #e8d5ab 一类） */
+function isWarmBrass(rgb: { r: number; g: number; b: number }): boolean {
+  const hue = hueDegrees(rgb)
+  return hue >= 25 && hue <= 60 && saturation(rgb) > 0.12 && saturation(rgb) < 0.65 && luminance(rgb) > 0.35
+}
+
+/** 从渲染结果里取出某个渐变（linear/radial 都算）的色标颜色序列 */
+function gradientStops(html: string, gradientId: string): Array<{ offset: number; colour: string }> {
+  const definition = html.match(new RegExp(`<(linear|radial)Gradient id="${gradientId}"[^>]*>([\\s\\S]*?)</\\1Gradient>`))
+  if (definition === null) return []
+  return [...definition[2].matchAll(/<stop offset="([\d.]+)%"[^>]*stop-color="([^"]+)"/g)].map((match) => ({
+    offset: Number(match[1]),
+    colour: match[2],
+  }))
+}
+
+/** 某条 `fill="url(#uid-xxx)"` 引用解析出的全部色标颜色（按出现顺序） */
+function resolvedStopColours(html: string, fill: string): string[] {
+  const id = fill.match(/url\(#([^)]+)\)/)?.[1]
+  if (id === undefined) return []
+  return gradientStops(html, id).map((stop) => stop.colour)
+}
+
+/**
+ * 某个 data-part 的所有实例的**生效颜色**（fill / stroke），按渲染顺序。
+ *
+ * 关键：必须是**生效值**而不是「本元素自己有没有写这个属性」。
+ * SVG 的 `fill` / `stroke` 是继承属性，`<line data-part="switch-handle-grip" />` 的
+ * 颜色写在父级 `<g stroke="...">` 上 —— 只读元素自身的属性会取到空数组，
+ * 于是「把防滑纹删掉」这条判据会因为**判据自己取不到颜色**而假绿（实测踩过）。
+ * 所以这里按祖先链向上解析，取第一个声明该属性的祖先。
+ */
+function paintFillsOfPart(html: string, part: string, attribute: 'fill' | 'stroke' = 'fill'): string[] {
+  const pattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const values: string[] = []
+  for (const match of html.matchAll(pattern)) {
+    const own = match[0].match(new RegExp(`\\b${attribute}="([^"]+)"`))?.[1]
+    if (own !== undefined) {
+      values.push(own)
+      continue
+    }
+    // 向上找祖先链上的继承值（限定在 <g> 上，与几何判据同源）
+    const inherited = inheritedPresentation(html, match.index ?? 0, attribute)
+    if (inherited !== undefined) values.push(inherited)
+  }
+  return values
+}
+
+/** 从某个下标向前回溯，取祖先 `<g>` 链上最近一次声明的 `fill` / `stroke` */
+function inheritedPresentation(html: string, index: number, attribute: 'fill' | 'stroke'): string | undefined {
+  const stack: string[] = []
+  let cursor = 0
+  while (cursor < index) {
+    const lt = html.indexOf('<', cursor)
+    if (lt === -1 || lt >= index) break
+    let end = lt + 1
+    let quote: string | null = null
+    while (end < html.length) {
+      const ch = html[end]
+      if (quote !== null) {
+        if (ch === quote) quote = null
+      } else if (ch === '"' || ch === "'") {
+        quote = ch
+      } else if (ch === '>') {
+        break
+      }
+      end += 1
+    }
+    const rawTag = html.slice(lt + 1, end)
+    const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+    if (rawTag.startsWith('/')) {
+      if (name === 'g') stack.pop()
+    } else if (name === 'g') {
+      stack.push(rawTag)
+      if (rawTag.endsWith('/')) stack.pop()
+    }
+    cursor = end + 1
+  }
+  for (let i = stack.length - 1; i >= 0; i -= 1) {
+    const value = stack[i].match(new RegExp(`\\b${attribute}="([^"]+)"`))?.[1]
+    if (value !== undefined) return value
+  }
+  return undefined
+}
+
+/**
+ * 整张「色板」：渲染结果里**每个可绘制元素**（含 `<stop>`）的真实颜色与所属 data-part。
+ *
+ * 这是外观判据的唯一出口 —— 和几何判据的 `worldOffsetAt` 对应。
+ * 它同时给出**覆盖面**：`parts` 里出现过的 data-part 数量可以与元素总数互证，
+ * 从而保证"我不会漏检某个元素"，而不是靠我记得把清单写全。
+ */
+function paintPalette(html: string): Map<string, { tag: string; part: string | null; colour: string }> {
+  const palette = new Map<string, { tag: string; part: string | null; colour: string }>()
+  for (const match of html.matchAll(/<(rect|circle|ellipse|line|path|text|polygon|polyline)\b[^>]*>/g)) {
+    const tag = match[0]
+    const raw = tag.match(/\bfill="([^"]+)"/)?.[1] ?? tag.match(/\bstroke="([^"]+)"/)?.[1]
+    if (raw === undefined || raw === 'none') continue
+    const uid = `${match.index ?? 0}:${raw}`
+    palette.set(uid, { tag: match[1], part: tag.match(/data-part="([^"]+)"/)?.[1] ?? null, colour: raw })
+  }
+  // 渐变色标同样是"画面上真实的颜色"，必须一起纳入色板
+  for (const match of html.matchAll(/<stop offset="([\d.]+)%"[^>]*stop-color="([^"]+)"[^>]*\/>/g)) {
+    palette.set(`stop@${match.index ?? 0}`, { tag: 'stop', part: null, colour: match[2] })
+  }
+  return palette
+}
+
+/** 只有"看得见颜色"的颜色写法才纳入色板断言（url(#…) 需要先解析到色标） */
+function directColoursOfPalette(palette: Map<string, { colour: string }>): string[] {
+  return [...palette.values()].map((item) => item.colour).filter((colour) => !colour.startsWith('url('))
+}
+
+/**
+ * 外观回归（本轮新增）：把「颜色 / 光影 / 材质」纳入红线。
+ *
+ * 前六轮的判据全部落在**几何位置**上，于是外观维度整类失守。实测（每个变异体都真跑过）：
+ *
+ *   | 变异体                                       | 改前结果        |
+ *   | -------------------------------------------- | --------------- |
+ *   | 圆柱体积渐变首尾压成同一颜色（死色筒身）     | **173/173 全绿** |
+ *   | 筒身轮廓描边整条删除                          | **173/173 全绿** |
+ *   | 筒身镜面反射带整条删除                        | **173/173 全绿** |
+ *   | 正极铜帽的亮面分层删掉一层                    | **173/173 全绿** |
+ *   | 电流表盘内阴影（上沿）删除                    | **173/173 全绿** |
+ *   | 橙色品牌环标色相由橙改成绿                    | 仅 1 条红       |
+ *   | 橙色品牌环标箔亮边删除                        | **173/173 全绿** |
+ *
+ * 需求原话是「**跟真实的器材一模一样**」，而干电池最显眼的真实特征恰恰就是
+ * 那圈橙色品牌印刷、锌筒的体积光影与端部亮面。把它们改坏而测试全绿，
+ * 与第五轮那条「画面崩了但 169 全绿」是同一类问题，只是换了一个维度。
+ *
+ * 判据纪律与几何判据一致：读渲染结果、逐元素实例判、渐变按色标序列判。
+ */
+describe('写实外观（颜色 / 光影 / 材质）不得被无声改坏', () => {
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+  const A1 = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+  const L1 = render(<LampHolderL1 x={0} y={0} lit={false} />)
+  const L1_ON = render(<LampHolderL1 x={0} y={0} lit />)
+  const S1 = render(<KnifeSwitch x={0} y={0} closed={false} label="S1" />)
+
+  it('每个渐变色标都必须有可解析的颜色，且渐变必须真的被引用', () => {
+    /**
+     * 外观判据的地基：画面的颜色只有两种来源 —— 直接色值（hex/rgba）与渐变引用。
+     * 这里先保证「所有颜色都看得懂」，后面的判据才不会是假绿。
+     * 顺带守住「渐变定义了必须被引用」：把 `fill="url(#…)"` 换成纯色也一样要红。
+     */
+    for (const [name, html] of [['电池 E1', E1], ['电流表 A1', A1], ['灯泡 L1', L1], ['开关 S1', S1]] as const) {
+      const palette = paintPalette(html)
+      expect(palette.size, `${name} 的色板为空`).toBeGreaterThan(10)
+
+      const unreadable = directColoursOfPalette(palette).filter((colour) => colourToRgb(colour) === null && colour !== 'none')
+      expect(unreadable, `${name} 出现无法解析的颜色写法，外观判据会静默漏掉它们`).toEqual([])
+
+      // 渐变引用必须指向真实存在的渐变定义。
+      // 注意：这里**不**要求每件器材都必须用渐变 —— 电流表 A1 是纯色扁平写实（深壳浅盘 + 红针），
+      // 强制要求渐变会逼出"为了过测试而硬加渐变"的假写实。只要用到了，就必须可解析、可复现。
+      const referenced = [...new Set([...html.matchAll(/url\(#([^)]+)\)/g)].map((m) => m[1]))]
+      for (const id of referenced) {
+        expect(gradientStops(html, id).length, `${name} 引用了渐变 ${id} 但它没有可解析的色标`).toBeGreaterThanOrEqual(2)
+      }
+      // 但**金属筒身/玻璃泡**这类靠渐变表达体积的器材必须真的有渐变
+      if (['电池 E1', '灯泡 L1'].includes(name)) {
+        expect(referenced.length, `${name} 没有使用任何渐变（靠体积光影写实的器材失去渐变会退回色块）`).toBeGreaterThan(0)
+      }
+      // 反向：定义了的渐变不允许无人引用（防止"改了 id 导致全都退回纯色"）
+      const defined = [...html.matchAll(/<(?:linear|radial)Gradient id="([^"]+)"/g)].map((m) => m[1])
+      for (const id of defined) {
+        expect(html, `${name} 的渐变 ${id} 定义了却没有被引用（画面会退回纯色）`).toContain(`url(#${id})`)
+      }
+    }
+  })
+
+  it('圆柱体积渐变必须有真实的明暗跨度（首尾同色 = 死色筒身，必须红）', () => {
+    /**
+     * 这是本轮筛出的第 1 条外观盲区：把 `cyl` 渐变的 5 个色标压成同一个颜色，
+     * 干电池立刻变成一块灰色平板，`ammeter-use` 目录仍然 173/173 全绿。
+     *
+     * 判据：金属筒身的渐变**首尾色标明度跨度必须够大**。
+     * 实测真值 0.360（0.370 → 0.214），退化成同色时为 0，阈值 0.18 有充分余量。
+     */
+    const bodyFill = paintFillsOfPart(E1, 'cell-body')[0]
+    expect(bodyFill, '筒身本体没有渲染出来').toBeDefined()
+    const stops = resolvedStopColours(E1, bodyFill)
+    expect(stops.length, '圆柱渐变没有色标').toBeGreaterThanOrEqual(3)
+
+    const lums = stops.map((colour) => {
+      const rgb = colourToRgb(colour)
+      expect(rgb, `圆柱渐变色标 ${colour} 解析不了`).not.toBeNull()
+      return luminance(rgb!)
+    })
+    const span = Math.max(...lums) - Math.min(...lums)
+    expect(span, `圆柱渐变的明度跨度只有 ${span.toFixed(3)}，筒身看着是一块死色（真实金属筒身需要明显的明暗过渡）`)
+      .toBeGreaterThan(0.18)
+
+    // 并且**必须往两个方向走**：上亮下暗（竖向受光），而不是"亮—亮—更亮"这种单调渐变
+    expect(lums[0], '圆柱顶部应当受光（比中部亮）').toBeGreaterThan(lums[lums.length - 1])
+    expect(Math.max(...lums) - lums[lums.length - 1], '圆柱底部应当明显转暗，才有体积感').toBeGreaterThan(0.12)
+
+    // 品牌环标渐变同样要有跨度（否则印刷带平面化）
+    const bandStops = resolvedStopColours(E1, paintFillsOfPart(E1, 'cell-band').find((fill) => fill.startsWith('url('))!)
+    const bandLums = bandStops.map((colour) => luminance(colourToRgb(colour)!))
+    expect(Math.max(...bandLums) - Math.min(...bandLums), '橙色品牌环标渐变被压平，印刷带失去金属感').toBeGreaterThan(0.18)
+  })
+
+  it('电池的品牌环标必须是橙色印刷带，且带箔亮边（改色相 / 删亮边都要红）', () => {
+    /**
+     * 第 2 条盲区：把品牌环标的色相从橙整体改成绿，只有 1 条断言变红；
+     * 把 `#f4bd6f` 那条箔亮边删掉，**173/173 全绿**。
+     *
+     * 判据：环标里必须存在**橙色相**（色相 15°～48° 且饱和度 > 0.35）的填充，
+     * 并且必须存在一条明亮的箔边（高饱和暖色 + 高明度），而不是"有个橙色出现就算过"。
+     * 因为这里逐的是 `cell-band` 的**实例**，所以橙色被刷到别的零件上不算数。
+     */
+    const fills = paintFillsOfPart(E1, 'cell-band')
+    expect(fills.length, '电池环标实例数不对').toBeGreaterThanOrEqual(4)
+
+    // 橙色印刷带：要么是橙色渐变（看色标），要么是直接橙色
+    const orangeEvidence = fills.filter((fill) => {
+      const colours = fill.startsWith('url(') ? resolvedStopColours(E1, fill) : [fill]
+      return colours.some((colour) => {
+        const rgb = colourToRgb(colour)
+        return rgb !== null && isOrangeHue(rgb)
+      })
+    })
+    expect(orangeEvidence.length, '品牌环标里没有任何橙色印刷带（色相被改掉 / 被去色）').toBeGreaterThan(0)
+
+    // 箔亮边：环标里必须有一条高明度的暖色亮线（真实干电池的印刷箔边）
+    const foil = fills.find((fill) => {
+      const rgb = colourToRgb(fill)
+      return rgb !== null && isOrangeHue(rgb) && luminance(rgb) > 0.6
+    })
+    expect(foil, '品牌环标的箔亮边被删掉了（印刷带失去金属反光）').toBeDefined()
+
+    /**
+     * 关键补充（本轮变异测试自查出来的漏检）：只要求"环标里存在橙色"是不够的 ——
+     * 那层箔亮边本身就是实心橙色，于是把**品牌印刷带渐变的主色相**从橙改成绿，
+     * 断言依然被箔亮边满足（实测 180/180 全绿）。
+     * 所以必须直接判「品牌印刷带的渐变里面」有橙色，且**主体色标**也是橙色。
+     */
+    const bandGradients = fills.filter((fill) => fill.startsWith('url('))
+    expect(bandGradients.length, '品牌印刷带没有使用渐变').toBeGreaterThan(0)
+    const orangeGradients = bandGradients.filter((fill) => {
+      const stops = resolvedStopColours(E1, fill)
+      // 主体 = 面积占比最大的中段色标，这里取"最饱和的那个"，它就是印刷带的品牌色
+      const rgbs = stops.map((colour) => colourToRgb(colour)).filter((rgb): rgb is { r: number; g: number; b: number } => rgb !== null)
+      const saturated = rgbs.reduce((best, rgb) => (saturation(rgb) > saturation(best) ? rgb : best), rgbs[0])
+      return isOrangeHue(saturated)
+    })
+    expect(orangeGradients.length, '品牌印刷带的渐变主体色相不是橙色（印刷带被改成了别的颜色）').toBeGreaterThan(0)
+
+    /**
+     * 且橙色印刷带必须是环标里**面积最大**的那一片 —— 否则"把橙色缩成一小条"仍然能过。
+     * 用渲染出来的矩形面积判（`cell-band` 里用橙色渐变填充的那些）。
+     */
+    const bandRects = [...E1.matchAll(/<rect\b[^>]*data-part="cell-band"[^>]*>/g)].map((match) => {
+      const fill = match[0].match(/\bfill="([^"]+)"/)?.[1] ?? ''
+      const width = Number(match[0].match(/\bwidth="([\d.]+)"/)?.[1])
+      const height = Number(match[0].match(/\bheight="([\d.]+)"/)?.[1])
+      const stops = fill.startsWith('url(') ? resolvedStopColours(E1, fill) : [fill]
+      const rgbs = stops.map((colour) => colourToRgb(colour)).filter((rgb): rgb is { r: number; g: number; b: number } => rgb !== null)
+      const saturated = rgbs.reduce((best, rgb) => (saturation(rgb) > saturation(best) ? rgb : best), rgbs[0])
+      return { area: width * height, orange: saturated !== undefined && isOrangeHue(saturated) }
+    })
+    const orangeArea = Math.max(0, ...bandRects.filter((item) => item.orange).map((item) => item.area))
+    const totalArea = bandRects.reduce((sum, item) => sum + item.area, 0)
+    expect(totalArea, '环标矩形没有解析出面积').toBeGreaterThan(0)
+    expect(orangeArea / totalArea, '橙色印刷带在环标里的占比太小（真实干电池的品牌印刷带是主色）').toBeGreaterThan(0.3)
+
+    // 锌壳筒身必须仍是中性灰：把环标的橙色"扩散"到筒身上会红
+    for (const fill of paintFillsOfPart(E1, 'cell-body')) {
+      const colours = fill.startsWith('url(') ? resolvedStopColours(E1, fill) : [fill]
+      for (const colour of colours) {
+        const rgb = colourToRgb(colour)
+        expect(saturation(rgb!), `筒身本体出现高饱和色 ${colour}（锌壳应当是中性的）`).toBeLessThan(0.25)
+      }
+    }
+  })
+
+  it('端正/负极的金属件必须有分层亮面（删掉任一层都要红）', () => {
+    /**
+     * 第 3 / 4 条盲区：筒身轮廓描边、镜面反射带、正极铜帽亮面被整层删除时全绿。
+     * 真实金属件的写实感来自「本体 + 轮廓 + 亮面」三层，少一层就变成色块。
+     *
+     * 判据用**明度阶梯**：同一件器材的金属层里，必须同时存在
+     * 「暗部（luminance < 0.35）」「亮部（> 0.75）」两类颜色，并且数量足够；
+     * 单纯删掉任何一层都会让其中一侧塌掉。
+     */
+    const lumOf = (fill: string) => {
+      const rgb = colourToRgb(fill)
+      return rgb === null ? null : luminance(rgb)
+    }
+    const allDirect = (html: string, parts: string[]) =>
+      parts.flatMap((part) => paintFillsOfPart(html, part)).map(lumOf).filter((v): v is number => v !== null)
+
+    // (a) 电池筒身：反射带（白，fill）+ 轮廓描边（深，stroke）都必须在
+    const bodyLums = allDirect(E1, ['cell-body', 'cell-highlight'])
+    expect(bodyLums.some((lum) => lum > 0.9), '筒身的镜面反射带（近白高光）被删掉了').toBe(true)
+    // 轮廓是描边（stroke），单独取
+    const outlineStrokes = paintFillsOfPart(E1, 'cell-outline', 'stroke')
+    expect(outlineStrokes.length, '筒身的轮廓描边被删掉了，金属件变成没有边缘的色块').toBeGreaterThan(0)
+    for (const stroke of outlineStrokes) {
+      expect(luminance(colourToRgb(stroke)!), `筒身轮廓描边 ${stroke} 不够暗，金属件失去边缘`).toBeLessThan(0.3)
+    }
+
+    // (b) 正极铜帽：必须同时有亮面（近白/浅黄）与过渡面，不能只剩一片同色
+    const positiveLums = allDirect(E1, ['cell-positive'])
+    expect(positiveLums.length, '正极铜帽的分层不够').toBeGreaterThanOrEqual(4)
+    expect(positiveLums.some((lum) => lum > 0.85), '正极铜帽的高光亮面被删掉了').toBe(true)
+    expect(positiveLums.some((lum) => lum < 0.72 && lum > 0.3), '正极铜帽缺少中间过渡面（只剩高光与暗部，看着是贴纸）').toBe(true)
+
+    // (c) 表盘内凹：上沿暗 + 下沿亮，两个方向的内阴影都必须在
+    const dialShadowLums = allDirect(A1, ['ammeter-dial-shadow'])
+    expect(dialShadowLums.length, '表盘内阴影被整层删掉了').toBeGreaterThanOrEqual(2)
+    // 表盘提亮由「右沿」与「下沿」两层组成，删掉任一层都会让内凹感塌一半 —— 按层数严格判
+    const highlights = [...A1.matchAll(/<rect\b[^>]*data-part="ammeter-dial-highlight"[^>]*>/g)]
+    expect(highlights.length, '表盘提亮层数不对（右沿 + 下沿两层，删掉任一层都不行）').toBe(2)
+    const highlightLums = allDirect(A1, ['ammeter-dial-highlight'])
+    expect(highlightLums.every((lum) => lum > 0.9), '表盘提亮不是近白色（提亮失去作用）').toBe(true)
+    // 两层必须真的落在两个不同的方向：一层贴右沿（窄而高）、一层贴下沿（宽而扁）
+    const highlightTags = highlights.map((match) => ({
+      width: Number(match[0].match(/\bwidth="([\d.]+)"/)?.[1]),
+      height: Number(match[0].match(/\bheight="([\d.]+)"/)?.[1]),
+    }))
+    expect(highlightTags.some((t) => t.height > t.width), '贴右沿的竖向提亮层被删掉了').toBe(true)
+    expect(highlightTags.some((t) => t.width > t.height), '贴下沿的横向提亮层被删掉了').toBe(true)
+
+    // (d) 接线柱旋帽必须有顶面亮光与帽身暗部（真实可以手拧的旋帽）
+    const terminalHtml = render(<TerminalPost x={0} y={0} polarity="+" connected={false} />)
+    const capFills = [...terminalHtml.matchAll(/\bfill="(#[0-9a-fA-F]{3,6})"/g)].map((m) => m[1])
+    const capLums = capFills.map((fill) => luminance(colourToRgb(fill)!))
+    expect(capLums.some((lum) => lum > 0.55), '接线柱旋帽的顶面高光被删掉了').toBe(true)
+    expect(capLums.some((lum) => lum < 0.25), '接线柱旋帽的暗部被删掉了（旋帽变成一块平色）').toBe(true)
+  })
+
+  it('写实外观的实例覆盖面互证：按实例份数逐层验收，不能只守住第一份', () => {
+    /**
+     * 与几何判据同源的纪律：清单按"我记得的结构件"列，就等于没有覆盖面保证。
+     * 外观同样要按**实例份数**互证 —— 否则「4 圈螺纹只标记 1 圈」「5 颗螺钉只判第 1 颗」
+     * 这类遗漏仍然能溜过去。
+     *
+     * 这里同时做两件事：
+     *   1. 严例 —— 每一份实例都必须有可解析的颜色（漏标/漏配色就红）；
+     *   2. 反例 —— 把整份实例删掉，色板里该类实例的颜色种类数必须真的变少（证明判据不空转）。
+     */
+    const colourKindsOf = (html: string, part: string) =>
+      new Set(paintFillsOfPart(html, part).map((fill) => (fill.startsWith('url(') ? resolvedStopColours(html, fill).join('|') : fill)))
+
+    // 正极铜帽 5 层（本体 + 亮面 + 帽身 + 亮面 + 凸点），每一层的颜色都不同
+    const positive = paintFillsOfPart(E1, 'cell-positive')
+    expect(positive.length, '正极铜帽实例份数不对').toBe(5)
+    expect(new Set(positive).size, '正极铜帽存在完全同色的层（画了但看不出分层）').toBe(positive.length)
+
+    // 筒身反射带 2 条（上镜像 + 下反光），颜色或透明度不同
+    expect(paintFillsOfPart(E1, 'cell-highlight').length, '筒身反射带实例份数不对').toBe(2)
+
+    // 底座两端十字螺钉：2 颗 × 2 层圆 + 1 条十字槽
+    expect(paintFillsOfPart(E1, 'baseplate-screw').length, '底座螺钉实例份数不对').toBe(4)
+
+    // 灯泡螺旋灯头：4 圈螺纹 + 主体 + 两侧暗部 + 中部高光
+    expect(paintFillsOfPart(L1, 'lamp-thread-turn').length, '灯头螺纹圈数不对').toBe(4)
+
+    // 开关手柄 3 层（本体 + 上沿 + 描边）+ 3 道防滑纹（纹路是描边）
+    expect(paintFillsOfPart(S1, 'switch-handle').length, '开关手柄分层不够').toBe(3)
+    expect(paintFillsOfPart(S1, 'switch-handle-grip', 'stroke').length, '开关手柄防滑纹缺失').toBe(3)
+    // 灯座左右暗部（stroke-less fill）与中部高光
+    expect(paintFillsOfPart(L1, 'lamp-thread-shade').length, '灯头两侧暗部缺失').toBe(2)
+    expect(paintFillsOfPart(L1, 'lamp-thread-highlight').length, '灯头中部高光缺失').toBe(1)
+
+    // 反例：把筒身反射带整条删掉后，该类实例的颜色种类必须真的减少（证明判据不空转）
+    const stripped = E1.replace(/<rect\b[^>]*data-part="cell-highlight"[^>]*>/g, '')
+    expect(stripped, '变异体没有注入成功').not.toBe(E1)
+    expect(colourKindsOf(stripped, 'cell-highlight').size).toBe(0)
+    expect(colourKindsOf(E1, 'cell-highlight').size).toBeGreaterThan(0)
+
+    // 再补一个：把 5 层正极铜帽删成 1 层，实例份数判据必须红
+    const flattened = E1.replace(/<rect\b[^>]*data-part="cell-positive"[^>]*>/g, '').replace(
+      /<rect\b[^>]*data-part="cell-body"[^>]*\/>/,
+      (tag) => tag,
+    )
+    expect(flattened).not.toBe(E1)
+    expect(paintFillsOfPart(flattened, 'cell-positive').length, '正极铜帽整层删掉后，实例份数判据没红').toBe(0)
+
+    // 覆盖面的"严例"：所有列进清单的结构件在渲染结果里都必须真的有实例
+    for (const part of [
+      'cell-body', 'cell-band', 'cell-highlight', 'cell-outline', 'cell-positive', 'cell-negative',
+      'lamp-glass', 'lamp-thread-turn', 'lamp-thread-shade', 'lamp-thread-highlight', 'lamp-filament', 'lamp-lead',
+      'switch-blade', 'switch-blade-tip', 'switch-handle', 'switch-handle-grip', 'switch-jaw-hinge', 'switch-jaw-contact',
+      'ammeter-shell', 'ammeter-dial', 'ammeter-needle', 'ammeter-needle-tail', 'ammeter-scale-outer', 'ammeter-scale-inner',
+    ]) {
+      const owner = part.startsWith('cell-') ? E1
+        : part.startsWith('lamp-') ? L1
+        : part.startsWith('switch-') ? S1
+        : A1
+      const present = paintFillsOfPart(owner, part).length > 0
+        || paintFillsOfPart(owner, part, 'stroke').length > 0
+        || new RegExp(`data-part="${part}"`).test(owner)
+      expect(present, `${part} 在渲染结果里找不到实例，外观覆盖面清单已经失真`).toBe(true)
+    }
+  })
+
+  it('发光与不发光在**颜色**上必须真的不同（不只是多两个圆）', () => {
+    /**
+     * 灯泡"点亮"是写实的关键状态。上一版只断言"两种外观字符串不同"，
+     * 那只要多一个装饰元素就满足了。这里按颜色验收：点亮后必须出现暖色发光色，
+     * 且玻璃/灯丝的颜色温度必须整体变暖。
+     */
+    const warmth = (html: string) => {
+      const fills = paintFillsOfPart(html, 'lamp-filament').concat(paintFillsOfPart(html, 'lamp-glass'))
+      const rgbs = fills.map((fill) => (fill.startsWith('url(') ? resolvedStopColours(html, fill)[0] : fill))
+        .map((colour) => colourToRgb(colour))
+        .filter((rgb): rgb is { r: number; g: number; b: number } => rgb !== null)
+      // 暖度 = R - B
+      return rgbs.reduce((sum, rgb) => sum + (rgb.r - rgb.b), 0) / rgbs.length
+    }
+    const offWarmth = warmth(L1)
+    const onWarmth = warmth(L1_ON)
+    expect(onWarmth, `点亮后的灯丝/玻璃没有变暖（关 ${offWarmth.toFixed(1)} → 开 ${onWarmth.toFixed(1)}）`)
+      .toBeGreaterThan(offWarmth + 20)
+
+    // 点亮必须真的出现暖色发光色（灯丝/光晕）
+    const onColours = directColoursOfPalette(paintPalette(L1_ON))
+      .map((colour) => colourToRgb(colour))
+      .filter((rgb): rgb is { r: number; g: number; b: number } => rgb !== null)
+    expect(onColours.some((rgb) => rgb.r > 200 && rgb.r - rgb.b > 60), '点亮后没有任何暖色发光色').toBe(true)
+
+    // 灯丝点亮后必须更亮更粗（stroke-width 加大）
+    const offWidth = Number(paintFillsOfPart(L1, 'lamp-filament')[0] === undefined ? 0 : L1.match(/data-part="lamp-filament"[^>]*stroke-width="([\d.]+)"/)?.[1])
+    const onWidth = Number(L1_ON.match(/data-part="lamp-filament"[^>]*stroke-width="([\d.]+)"/)?.[1])
+    expect(onWidth, '点亮后灯丝没有变粗').toBeGreaterThan(offWidth)
+  })
+
+  it('电流表的"深壳 + 米白盘 + 红针"三色关系不能被改坏', () => {
+    /**
+     * 第 6 条盲区：电流表的颜色关系没有被任何判据守住。
+     * 真实教学电流表的识别度来自三件事：深色外壳、米白色表盘、红色指针。
+     * 这里按**元素到颜色的绑定关系**验收（而不是"全文出现过红色"）。
+     */
+    const shellFill = paintFillsOfPart(A1, 'ammeter-shell')[0]
+    const dialFill = paintFillsOfPart(A1, 'ammeter-dial')[0]
+    const shellRgb = colourToRgb(shellFill)!
+    const dialRgb = colourToRgb(dialFill)!
+
+    // 表壳必须明显比表盘暗（深壳浅盘）
+    expect(luminance(shellRgb), '表壳不够暗，与表盘分不出层次').toBeLessThan(0.3)
+    expect(luminance(dialRgb), '表盘不够亮，深壳浅盘的关系被破坏').toBeGreaterThan(0.8)
+    expect(luminance(dialRgb) - luminance(shellRgb), '表壳与表盘的明度差太小').toBeGreaterThan(0.5)
+
+    // 表盘应当偏暖的米白（不是冷白），否则不像老式教学仪表
+    expect(dialRgb.r, '表盘不是米白（偏冷）').toBeGreaterThan(dialRgb.b)
+
+    // 指针必须是高饱和红（正常）与更亮的告警红（过载）
+    const needleFill = paintFillsOfPart(A1, 'ammeter-needle')[0]
+    const needleRgb = colourToRgb(needleFill)!
+    expect(hueDegrees(needleRgb), '指针色相不在红色区间').toBeLessThan(15)
+    expect(saturation(needleRgb), '指针不够红（识别度丢失）').toBeGreaterThan(0.6)
+    const over = render(<AmmeterA1 x={0} y={0} reading={3} range="3A" overRange label="A1" />)
+    const overFill = paintFillsOfPart(over, 'ammeter-needle')[0]
+    expect(luminance(colourToRgb(overFill)!), '过载时的告警红没有比正常红更亮').toBeGreaterThan(luminance(needleRgb))
+    // 尾针配重必须是深红（不是和针体同色，否则配重看不出来）
+    const tailFill = paintFillsOfPart(A1, 'ammeter-needle-tail')[0]
+    expect(luminance(colourToRgb(tailFill)!), '尾针配重与针体颜色太接近').toBeLessThan(luminance(needleRgb))
+
+    // 刻度墨色必须深于表盘（否则刻度看不见）
+    const scaleFills = paintFillsOfPart(A1, 'ammeter-scale-outer', 'stroke')
+    expect(scaleFills.length).toBeGreaterThan(0)
+    for (const fill of scaleFills) {
+      expect(luminance(colourToRgb(fill)!), `刻度线 ${fill} 太浅，压在米白表盘上看不清`).toBeLessThan(luminance(dialRgb) - 0.4)
+    }
+  })
+
+  it('内阴影/高光必须落在**渲染出的**对应元素边界内（挪走内阴影要红）', () => {
+    /**
+     * 外观与几何的交界：颜色画对了但画到别的地方（例如把表盘内阴影挪到表壳上），
+     * 观感同样是坏的。这里把「颜色所属元素」与「几何位置」绑起来验收。
+     */
+    const dial = renderedPart(A1, 'ammeter-dial')!
+    const dialBox = { x0: dial.x, y0: dial.y, x1: dial.x + dial.width, y1: dial.y + dial.height }
+
+    const shadows = [...A1.matchAll(/<rect\b[^>]*data-part="ammeter-dial-shadow"[^>]*>/g)]
+    expect(shadows.length, '表盘内阴影缺失').toBeGreaterThanOrEqual(2)
+    for (const shadow of shadows) {
+      const index = shadow.index ?? 0
+      const offset = worldOffsetAt(A1, index)
+      const x = offset.x + Number(shadow[0].match(/\bx="(-?[\d.]+)"/)?.[1])
+      const y = offset.y + Number(shadow[0].match(/\by="(-?[\d.]+)"/)?.[1])
+      const w = Number(shadow[0].match(/\bwidth="(-?[\d.]+)"/)?.[1])
+      const h = Number(shadow[0].match(/\bheight="(-?[\d.]+)"/)?.[1])
+      expect(x, '表盘内阴影跑到表盘左边界外').toBeGreaterThanOrEqual(dialBox.x0 - 1)
+      expect(y, '表盘内阴影跑到表盘上边界外').toBeGreaterThanOrEqual(dialBox.y0 - 1)
+      expect(x + w, '表盘内阴影跑到表盘右边界外').toBeLessThanOrEqual(dialBox.x1 + 1)
+      expect(y + h, '表盘内阴影跑到表盘下边界外').toBeLessThanOrEqual(dialBox.y1 + 1)
+    }
+
+    // 接触阴影必须画在器材脚下：其世界坐标 y 必须落在器材渲染出的包围盒下沿附近
+    for (const [name, html] of [['电池 E1', E1], ['灯泡 L1', L1], ['电流表 A1', A1]] as const) {
+      const bounds = renderedBounds(html)!
+      const shadow = [...html.matchAll(/<ellipse\b[^>]*data-part="ground-shadow"[^>]*>/g)][0]
+      expect(shadow, `${name} 缺少接触阴影`).toBeDefined()
+      const cy = Number(shadow[0].match(/\bcy="(-?[\d.]+)"/)?.[1])
+      expect(cy, `${name} 的接触阴影跑到器材上方了（不再贴地）`).toBeGreaterThan(bounds.maxY - 30)
+      expect(cy, `${name} 的接触阴影离器材太远（飘在画面外）`).toBeLessThan(bounds.maxY)
+    }
   })
 })
 
@@ -1358,6 +2156,433 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
         expect(Math.abs(x2 - x1), `${id} 里有横跨视图的线`).toBeLessThan(view.width)
         expect(Math.abs(y2 - y1), `${id} 里有竖跨视图的线`).toBeLessThan(view.height)
       }
+    }
+  })
+})
+
+/**
+ * 「零件不得脱离主体」不变量（本轮补上的几何盲区）。
+ *
+ * 本轮变异测试自查时发现：把**橙色品牌印刷带**整片右移 200px 挪出电池体外，
+ * 全部几何判据仍然全绿 —— 因为既有判据只检查「接线柱是否落在器材包围盒内」，
+ * 而包围盒是按**所有元素**算的并集：环标一挪远，包围盒就跟着变大，包含关系反而更宽松。
+ *
+ * 正确的口径是：包围盒只应由**主体结构**（壳体 / 筒身 / 底板）决定，
+ * 其余每一份零件都必须落在主体之内。
+ *
+ * 判据：把某个 parts 组的**所有实例**的世界坐标包围盒，与主体组（shell）的包围盒比对，
+ * 任一实例越界即红。逐实例判（不是并集），因此"把一份挪走"一定会被抓到。
+ */
+describe('零件必须画在所属主体内（零件飘出器材体即红）', () => {
+  /** 断言：parts 里每一份实例都完整落在 shell 包围盒内（带容差，allow 用于允许压边） */
+  function assertAllInside(
+    html: string,
+    shellPart: string,
+    parts: string[],
+    options: { tolerance?: number; label: string },
+  ): void {
+    const tolerance = options.tolerance ?? 1.5
+    const shell = unionBounds(renderedParts(html, shellPart))
+    expect(Number.isFinite(shell.minX), `${options.label}：主体 ${shellPart} 没有渲染出矩形`).toBe(true)
+
+    for (const part of parts) {
+      const instances = renderedParts(html, part)
+      expect(instances.length, `${options.label}：${part} 没有渲染出任何实例`).toBeGreaterThan(0)
+      for (const [index, item] of instances.entries()) {
+        expect(item.x, `${options.label}：${part}[${index}] 飘到主体左边之外（x=${item.x.toFixed(1)} < ${shell.minX.toFixed(1)}）`)
+          .toBeGreaterThanOrEqual(shell.minX - tolerance)
+        expect(item.x + item.width, `${options.label}：${part}[${index}] 飘到主体右边之外`)
+          .toBeLessThanOrEqual(shell.maxX + tolerance)
+        expect(item.y, `${options.label}：${part}[${index}] 飘到主体上边之外`)
+          .toBeGreaterThanOrEqual(shell.minY - tolerance)
+        expect(item.y + item.height, `${options.label}：${part}[${index}] 飘到主体下边之外`)
+          .toBeLessThanOrEqual(shell.maxY + tolerance)
+      }
+    }
+  }
+
+  it('电池：品牌环标 / 反射带 / 正负极 / 上下环标 都必须画在筒身内', () => {
+    const html = render(<BatteryHolderE1 x={0} y={0} />)
+    // 筒身是 `cell-body`（rect）；所有贴皮的印刷层必须完整落在它里面
+    assertAllInside(html, 'cell-body', ['cell-band', 'cell-highlight'], { label: '电池' })
+
+    // 负极端子与正极铜帽必须贴在筒身两端（不能脱开）
+    const body = unionBounds(renderedParts(html, 'cell-body'))
+    const negative = renderedParts(html, 'cell-negative')
+    const positive = renderedParts(html, 'cell-positive')
+    expect(negative.length).toBeGreaterThan(0)
+    expect(positive.length).toBeGreaterThan(0)
+    /**
+     * 左端：锌底必须**套在筒口上**（真实的负极锌底是压扁压在筒身上的，两者必须重叠）。
+     * 实测：筒身左沿 x=-80，锌底 x∈[-87,-77] —— 重叠 3px。
+     * 判据取"锌底右沿必须越过筒身左沿"，把锌底整体左移 80px 会立刻红。
+     */
+    const negativeRight = Math.max(...negative.map((n) => n.x + n.width))
+    expect(negativeRight, `锌底与筒身脱开了（锌底右沿 ${negativeRight.toFixed(1)} < 筒身左沿 ${body.minX.toFixed(1)}）`)
+      .toBeGreaterThan(body.minX)
+    // 锌底左沿也不能飘到筒身右侧（整体挪到电池另一头）
+    expect(Math.min(...negative.map((n) => n.x)), '锌底被挪到电池右端去了').toBeLessThan(body.minX)
+    /**
+     * 纵向也必须贴在筒身上：锌底是"压在筒口上的扁帽"，
+     * 它的纵向范围必须与筒身**有重叠**，且不能整体跑到筒身上方/下方。
+     * 实测：筒身 y∈[-42,-6]，锌底 y∈[-40,-8]（嵌在里面）。
+     */
+    for (const [index, cap] of negative.entries()) {
+      const overlap = Math.min(cap.y + cap.height, body.maxY) - Math.max(cap.y, body.minY)
+      expect(overlap, `第 ${index + 1} 层锌底与筒身纵向没有重叠（被移到筒身上方/下方了）`).toBeGreaterThan(0)
+      expect(cap.y, `第 ${index + 1} 层锌底整体飘到筒身上方`).toBeGreaterThan(body.minY - 8)
+      expect(cap.y + cap.height, `第 ${index + 1} 层锌底整体飘到筒身下方`).toBeLessThan(body.maxY + 8)
+    }
+    // 正极铜帽同样必须与筒身纵向重叠（铜帽是套在筒口上的）
+    for (const [index, cap] of positive.entries()) {
+      const overlap = Math.min(cap.y + cap.height, body.maxY) - Math.max(cap.y, body.minY)
+      expect(overlap, `第 ${index + 1} 层正极铜帽与筒身纵向没有重叠`).toBeGreaterThan(0)
+    }
+    // 右端：铜帽向左必须与筒身重叠（真实的铜帽是套在筒口上的）
+    expect(Math.min(...positive.map((n) => n.x)), '正极铜帽与筒身脱开了').toBeLessThan(body.maxX + 4)
+
+    /**
+     * 反向自证（真实注入，不是空转）：给环标**渲染结果**整体外包一层 200px 平移，
+     * 必须立刻被 `assertAllInside` 判为越界。
+     * 这条既是"判据真的会红"的证明，也顺带守住 style/属性两种写法的注入路径。
+     */
+    const injected = html.replace(
+      /(<rect\b[^>]*data-part="cell-band"[^>]*>)/,
+      '<g transform="translate(200 0)">$1</g>',
+    )
+    expect(injected, '注入失败').not.toBe(html)
+    expect(worldOffsetOfPart(injected, 'cell-band'), '注入的平移没有被几何口径读到').toEqual({ x: 200, y: 0 })
+    const injectedBand = renderedParts(injected, 'cell-band')[0]
+    expect(
+      injectedBand.x > body.maxX,
+      '环标右移 200px 后竟然仍在筒身内，说明这个反向自证不成立',
+    ).toBe(true)
+  })
+
+  it('电池座：卡箍 / 螺钉 / 刻字必须落在底座或电池上（不能飘空）', () => {
+    const html = render(<BatteryHolderE1 x={0} y={0} />)
+    const plate = unionBounds(renderedParts(html, 'baseplate-face'))
+    const body = unionBounds(renderedParts(html, 'cell-body'))
+
+    /**
+     * 两道卡箍必须**同时**抱住电池筒身并坐在底座上。
+     * 注意：卡箍是 `<path>`，必须按 path 的几何取包围盒（用 rect 解析会得到空集合 = 判据失效）。
+     * 实测：卡箍 y∈[-19, 8]，筒身 y∈[-42,-6]，底座顶面 y=5。
+     * 判据分三段（这才是卡箍的真实几何关系）：
+     *   1. 顶端必须伸进筒身（minY 落在筒身纵向区间内）—— 把卡箍搬到筒身上方就会红；
+     *   2. 底端必须伸到底座顶面**以下**（压进底座，不是悬空）；
+     *   3. 顶底跨度必须够大（真的是一道"箍"），不能退化成一条短线。
+     */
+    const clamps = renderedPathBounds(html, 'E1-clamp')
+    expect(clamps.length, '没有渲染出卡箍（或卡箍不是 path，判据失效）').toBe(4)
+    for (const [index, clamp] of clamps.entries()) {
+      expect(clamp.minY, `第 ${index + 1} 道卡箍的顶端没有伸进筒身（被搬到筒身上方了）`).toBeGreaterThan(body.minY)
+      expect(clamp.minY, `第 ${index + 1} 道卡箍的顶端穿到筒身下方去了`).toBeLessThan(body.maxY)
+      expect(clamp.maxY, `第 ${index + 1} 道卡箍没有伸到底座里（悬空）`).toBeGreaterThan(plate.minY)
+      expect(clamp.maxY - clamp.minY, `第 ${index + 1} 道卡箍退化成了一条短线（不再箍住电池）`).toBeGreaterThan(15)
+    }
+    // 两道卡箍必须分别落在电池左右两段（不是挤在一处）
+    const clampCentres = clamps.map((clamp) => (clamp.minX + clamp.maxX) / 2).sort((a, b) => a - b)
+    const groups = [clampCentres.filter((c) => c < 0), clampCentres.filter((c) => c >= 0)]
+    expect(groups[0].length, '左段卡箍缺失').toBeGreaterThan(0)
+    expect(groups[1].length, '右段卡箍缺失').toBeGreaterThan(0)
+    expect(Math.abs(groups[0][0] - groups[1][0]), '两道卡箍挤在一起了').toBeGreaterThan(50)
+
+    // 底座两端螺钉：必须落在底座面内
+    for (const [index, screw] of renderedCircles(html, 'baseplate-screw').entries()) {
+      expect(screw.cx, `第 ${index + 1} 颗底座螺钉飘到左端之外`).toBeGreaterThanOrEqual(plate.minX - 3)
+      expect(screw.cx, `第 ${index + 1} 颗底座螺钉飘到右端之外`).toBeLessThanOrEqual(plate.maxX + 3)
+    }
+
+    // 正负极刻字：必须落在底座面内（不能飘到画面别处）
+    const labels = [...html.matchAll(/<text\b[^>]*data-part="E1-polarity"[^>]*>/g)]
+    expect(labels.length, '正负极刻字缺失').toBe(2)
+    for (const label of labels) {
+      const o = worldOffsetAt(html, label.index ?? 0)
+      const x = o.x + Number(label[0].match(/\bx="(-?[\d.]+)"/)?.[1])
+      const y = o.y + Number(label[0].match(/\by="(-?[\d.]+)"/)?.[1])
+      expect(x, '正负极刻字飘到底座之外').toBeGreaterThanOrEqual(plate.minX - 3)
+      expect(x, '正负极刻字飘到底座之外').toBeLessThanOrEqual(plate.maxX + 3)
+      expect(y, '正负极刻字飘到底座之外').toBeGreaterThanOrEqual(plate.minY - 3)
+      expect(y, '正负极刻字飘到底座之外').toBeLessThanOrEqual(plate.maxY + 6)
+    }
+  })
+
+  it('灯泡：玻璃泡 / 灯头 / 灯丝 / 引线 必须与灯座和螺纹自洽', () => {
+    const html = render(<LampHolderL1 x={0} y={0} lit={false} />)
+    // 螺旋灯头（`lamp-thread-body`）在灯座口内
+    const socketPoints = [...html.matchAll(/<path\b[^>]*data-part="lamp-socket"[^>]*>/g)]
+      .flatMap((match) => pathPoints(match[0]))
+    expect(socketPoints.length, '灯座没有解析出几何').toBeGreaterThan(0)
+    const socket = {
+      minY: Math.min(...socketPoints.map(([, y]) => y)),
+      maxY: Math.max(...socketPoints.map(([, y]) => y)),
+      minX: Math.min(...socketPoints.map(([x]) => x)),
+      maxX: Math.max(...socketPoints.map(([x]) => x)),
+    }
+    const threadBody = unionBounds(renderedParts(html, 'lamp-thread-body'))
+    expect(threadBody.minY, '螺旋灯头整体跑到灯座上方（灯泡飘了）').toBeLessThan(socket.maxY)
+    expect(threadBody.maxY, '螺旋灯头没有插进灯座口').toBeGreaterThan(socket.minY)
+    // 灯座口是椭圆（横向更宽），灯头左右必须仍在灯座横向范围内
+    expect(threadBody.minX, '螺旋灯头横向飘出灯座').toBeGreaterThanOrEqual(socket.minX - 2)
+    expect(threadBody.maxX, '螺旋灯头横向飘出灯座').toBeLessThanOrEqual(socket.maxX + 2)
+
+    // 玻璃泡是 path，它与螺纹灯头必须相接（玻璃颈部压在螺纹上，不能有缝）
+    const bulbPoints = [...html.matchAll(/<path\b[^>]*data-part="lamp-glass"[^>]*>/g)]
+      .flatMap((match) => pathPoints(match[0]))
+      .map(([x, y]) => ({ x, y }))
+    expect(bulbPoints.length, '玻璃泡没有解析出几何').toBeGreaterThan(0)
+    const bulbBottom = Math.max(...bulbPoints.map((p) => p.y))
+    /**
+     * 玻璃颈部必须**搭在螺纹灯头上**：真实灯泡玻璃泡的下沿压在灯头螺纹的上沿处。
+     * 实测：灯头螺纹 y∈[-39,-24]，玻璃泡底 y=-37 —— 两者重叠 2px（无缝）。
+     * 判据：底部必须伸进灯头（> 灯头顶沿），但不能越过灯头底面（否则穿到灯座里）。
+     */
+    /**
+     * 说明：`pathPoints` 解析的是路径的**指令点**，不含贝塞尔曲线的真实极值点，
+     * 所以玻璃泡底部的解析值（-43）会比实际包络略低一点，与灯头顶沿（-39）之间
+     * 存在几像素的解析误差。这里把口径定成「**不得脱开**」：缝隙必须小于 8px，
+     * 而且泡底必须落在灯头范围内（不能越过灯头底面插进灯座）。
+     * 整块挪走（例如把玻璃泡上移 80px）会立刻红。
+     */
+    const gap = threadBody.minY - bulbBottom
+    expect(gap, `玻璃泡与螺纹灯头之间出现 ${gap.toFixed(1)}px 的缝（灯泡像飘着）`).toBeLessThan(8)
+    expect(bulbBottom, '玻璃泡底部穿过整个灯头，插进灯座里了').toBeLessThan(threadBody.maxY)
+
+    // 灯丝与引线必须落在玻璃泡内
+    const filament = [...html.matchAll(/<path\b[^>]*data-part="lamp-filament"[^>]*>/g)]
+      .flatMap((match) => pathPoints(match[0]))
+    expect(filament.length, '灯丝没有解析出几何').toBeGreaterThan(0)
+    const bulbTop = Math.min(...bulbPoints.map((p) => p.y))
+    const bulbLeft = Math.min(...bulbPoints.map((p) => p.x))
+    const bulbRight = Math.max(...bulbPoints.map((p) => p.x))
+    for (const [x, y] of filament) {
+      expect(y, `灯丝点 y=${y.toFixed(1)} 跑到玻璃泡外（在泡顶之上）`).toBeGreaterThan(bulbTop)
+      expect(y, `灯丝点 y=${y.toFixed(1)} 跑到玻璃泡外（在泡底之下）`).toBeLessThan(bulbBottom)
+      expect(x, `灯丝点 x=${x.toFixed(1)} 跑到玻璃泡外`).toBeGreaterThan(bulbLeft)
+      expect(x, `灯丝点 x=${x.toFixed(1)} 跑到玻璃泡外`).toBeLessThan(bulbRight)
+    }
+    /**
+     * 两根引线必须落在玻璃泡内。
+     * 容差 4px：引线的下端正好接在玻璃泡底缘（`pathPoints` 只取指令点，
+     * 而玻璃泡底是贝塞尔曲线的极值点，两者会差几像素），这只表示"接在一起"，
+     * 不代表"跑出去"。整根引线被搬到泡外（几十像素）一定会红。
+     */
+    for (const [index, lead] of [...html.matchAll(/<path\b[^>]*data-part="lamp-lead"[^>]*>/g)].entries()) {
+      for (const [x, y] of pathPoints(lead[0])) {
+        expect(y, `第 ${index + 1} 根引线 y=${y.toFixed(1)} 跑到玻璃泡上方之外`).toBeGreaterThan(bulbTop - 4)
+        expect(y, `第 ${index + 1} 根引线 y=${y.toFixed(1)} 跑到玻璃泡下方之外`).toBeLessThan(bulbBottom + 4)
+        expect(x, `第 ${index + 1} 根引线横向跑到玻璃泡外`).toBeGreaterThan(bulbLeft)
+        expect(x, `第 ${index + 1} 根引线横向跑到玻璃泡外`).toBeLessThan(bulbRight)
+      }
+    }
+
+    /**
+     * 玻璃泡的宽度必须与灯座相称（`lamp-socket` 的透视筒口宽度就是它的落位基准）。
+     * 真实小灯泡的玻壳不会比灯座宽出一大截 —— 拉宽成 2 倍会像一个球压在细座上。
+     * 实测：灯座口横向 x∈[-22,22]，玻璃泡 halfWidth=25（略宽于灯座，符合真实比例）。
+     */
+    const bulbWidth = bulbRight - bulbLeft
+    const socketWidth = socket.maxX - socket.minX
+    expect(bulbWidth, `玻璃泡宽 ${bulbWidth.toFixed(1)} 远超灯座口宽 ${socketWidth.toFixed(1)}（比例失真，像个球压在细座上）`)
+      .toBeLessThan(socketWidth * 1.8)
+    expect(bulbWidth, '玻璃泡窄得比灯座口还小，不成比例').toBeGreaterThan(socketWidth * 0.6)
+
+    // 灯座固定螺钉必须落在底座面内
+    const plate = unionBounds(renderedParts(html, 'baseplate-face'))
+    for (const screw of renderedCircles(html, 'lamp-socket-screw')) {
+      expect(screw.cy).toBeGreaterThanOrEqual(plate.minY - 6)
+      expect(screw.cy).toBeLessThanOrEqual(plate.maxY + 3)
+      expect(screw.cx).toBeGreaterThanOrEqual(plate.minX - 3)
+      expect(screw.cx).toBeLessThanOrEqual(plate.maxX + 3)
+    }
+  })
+
+  it('开关：刀片 / 手柄 / 转轴 / 刀座 必须彼此相接', () => {
+    const html = render(<KnifeSwitch x={0} y={0} closed={false} label="S1" />)
+    const plate = unionBounds(renderedParts(html, 'switch-plate'))
+    // 四角螺钉（8 个 circle：4 颗 × 2 层）必须落在底板上
+    const screws = renderedCircles(html, 'switch-screw')
+    expect(screws.length, '开关底板螺钉层数不对').toBe(8)
+    for (const [index, screw] of screws.entries()) {
+      expect(screw.cx, `第 ${index + 1} 个螺钉层飘出底板左右`).toBeGreaterThanOrEqual(plate.minX - 2)
+      expect(screw.cx, `第 ${index + 1} 个螺钉层飘出底板左右`).toBeLessThanOrEqual(plate.maxX + 2)
+      expect(screw.cy, `第 ${index + 1} 个螺钉层飘出底板上下`).toBeGreaterThanOrEqual(plate.minY - 4)
+      expect(screw.cy, `第 ${index + 1} 个螺钉层飘出底板上下`).toBeLessThanOrEqual(plate.maxY + 4)
+    }
+
+    // 刀座（黄铜夹片）必须坐在底板上
+    for (const jaw of ['switch-jaw-hinge', 'switch-jaw-contact']) {
+      const instances = renderedParts(html, jaw)
+      expect(instances.length, `${jaw} 没有实例`).toBeGreaterThan(0)
+      const jawBottom = Math.max(...instances.map((item) => item.y + item.height))
+      const jawTop = Math.min(...instances.map((item) => item.y))
+      // 底板顶面 y=0、底面 y=22（`switch-plate` 的四个 rect 合成）。
+      // 刀座必须**骑在底板顶面上**：脚要伸进底板（>0），但不能穿过底板底面（<22）。
+      expect(jawBottom, `${jaw} 整体悬在底板上方，没有落进底板`).toBeGreaterThan(plate.minY)
+      expect(jawBottom, `${jaw} 整体穿过底板底面`).toBeLessThan(plate.maxY)
+      expect(jawTop, `${jaw} 整体飘到底板下方`).toBeLessThan(plate.maxY)
+    }
+
+    // 铰链轴销必须落在铰链刀座的中心（转轴与刀座不能脱开）
+    const hinge = renderedCircles(html, 'switch-hinge')
+    expect(hinge.length, '铰链轴销层数不对').toBe(2)
+    const jawHinge = unionBounds(renderedParts(html, 'switch-jaw-hinge'))
+    for (const pin of hinge) {
+      expect(pin.cx, '铰链轴销与铰链刀座横向脱开').toBeGreaterThanOrEqual(jawHinge.minX - 2)
+      expect(pin.cx, '铰链轴销与铰链刀座横向脱开').toBeLessThanOrEqual(jawHinge.maxX + 2)
+      expect(pin.cy, '铰链轴销与铰链刀座纵向脱开').toBeGreaterThanOrEqual(jawHinge.minY - 4)
+      expect(pin.cy, '铰链轴销与铰链刀座纵向脱开').toBeLessThanOrEqual(jawHinge.maxY + 4)
+    }
+
+    /**
+     * 断开时刀片必须**真的抬起**（真开关断开时刀片离开触点座）。
+     * 注意判据要用"刀片末端的**竖直落差**"，不能用"刀片中心到触点座中心的距离" ——
+     * 刀片只有 11px 高，绕左端旋转 32° 后末端的竖直落差约 25px，
+     * 而中心距的变化很小（实测只有 1.5px），拿它判会得到近乎恒定的假绿。
+     * 所以这里取刀片**最右端（刀尖侧）**的中心 y，比较两种姿态的落差。
+     */
+    const closedSource = render(<KnifeSwitch x={0} y={0} closed label="S1" />)
+    /**
+     * 刀片**刀尖**（离铰链最远的那个角点）的世界坐标 y —— 必须把祖先 `rotate()` 施加进去。
+     *
+     * 注意：断开时是绕左端铰链**逆时针**抬起，刀尖会同时"向左上"移动，
+     * 所以不能用"最右的角点"定位刀尖（那样取到的是靠铰链的那一端，落差变成负数）。
+     * 唯一稳定的定义是「离转轴最远」。
+     */
+    // 铰链位（与 CompetitorParts.tsx 的装配基准一致；这里只作为"转轴在哪"的参照点）
+    const hingeX = -58
+    const pivotY = -6
+    const HINGE = { x: hingeX, y: pivotY }
+    const bladeTipY = (source: string) => {
+      const blades = renderedPartsRotated(source, 'switch-blade')
+      expect(blades.length, '没有渲染出刀片').toBeGreaterThan(0)
+      const tip = blades
+        .flatMap((item) => item.corners)
+        .reduce((best, point) =>
+          Math.hypot(point.x - HINGE.x, point.y - HINGE.y) > Math.hypot(best.x - HINGE.x, best.y - HINGE.y) ? point : best,
+        )
+      return tip.y
+    }
+    const drop = bladeTipY(closedSource) - bladeTipY(html)
+    /**
+     * 实测：刀片绕铰链旋转 32° 后，刀尖（离转轴 112px）的竖直落差约 58.5px。
+     * 上限取 90px（转轴到刀尖的距离量级），防止"改成一个夸张角度"也能过。
+     */
+    expect(
+      drop,
+      `断开时刀片末端没有抬起（落差 ${drop.toFixed(1)}px，真实单刀开关断开时应抬起约 58px）`,
+    ).toBeGreaterThan(30)
+    expect(drop, `抬升量级不对（落差 ${drop.toFixed(1)}px），不像绕铰链旋转 32°`).toBeLessThan(90)
+
+    // 合闸时刀片末端必须对上触点座的高度（刀片真的落在夹口里）
+    const contact = unionBounds(renderedParts(closedSource, 'switch-jaw-contact'))
+    expect(
+      Math.abs(bladeTipY(closedSource) - (contact.minY + contact.maxY) / 2),
+      '合闸时刀片末端没有对齐触点座（没落进夹口）',
+    ).toBeLessThan(10)
+    // 断开时刀片末端必须明显高于触点座上沿（真的离开了）
+    expect(bladeTipY(html), '断开时刀片末端仍不低于触点座上沿').toBeLessThan(contact.minY)
+    // 刀尖的横向位置也要跟着走（不是只往上平移），这才是"绕铰链旋转"而不是"整体上移"
+    const tipX = (source: string) => renderedPartsRotated(source, 'switch-blade')
+      .flatMap((item) => item.corners)
+      .reduce((best, point) =>
+        Math.hypot(point.x - HINGE.x, point.y - HINGE.y) > Math.hypot(best.x - HINGE.x, best.y - HINGE.y) ? point : best,
+      ).x
+    expect(tipX(html), '刀尖横向没有移动，说明刀片是整体上移而不是绕铰链旋转').toBeLessThan(tipX(closedSource) - 10)
+    // 且刀片必须仍以铰链为轴（旋转时转轴处不动）
+    // 刀片上离转轴最近的那个角点，与转轴的距离在任何姿态下都必须基本不变 ——
+    // 这才是"绕铰链旋转"的定义（实测约 8.1px，即刀片左端留出的那一点间距）。
+    const nearestToHinge = (source: string) =>
+      renderedPartsRotated(source, 'switch-blade')
+        .flatMap((item) => item.corners)
+        .reduce((best, point) =>
+          Math.hypot(point.x - HINGE.x, point.y - HINGE.y) < Math.hypot(best.x - HINGE.x, best.y - HINGE.y) ? point : best,
+        )
+    const radiusToHinge = (source: string) => {
+      const point = nearestToHinge(source)
+      return Math.hypot(point.x - HINGE.x, point.y - HINGE.y)
+    }
+    /**
+     * 判据是「刀片左端到转轴的距离**不随姿态变化**」——
+     * 注意不能判「那个角点坐标不变」：绕轴旋转时角点本来就沿弧线扫动（实测动了 3.4px），
+     * 但半径恒定（实测两种姿态都是 6.32）。
+     * 若刀片改成"整体平移"而不是绕轴旋转，这个半径会跟着变，判据立刻红。
+     */
+    expect(
+      Math.abs(radiusToHinge(html) - radiusToHinge(closedSource)),
+      '刀片左端到转轴的距离随姿态变了，说明不是绕铰链旋转（而是整体平移/换了基准）',
+    ).toBeLessThan(1)
+
+    // 手柄防滑纹必须画在手柄上（三道路纹在手柄矩形范围内）
+    const handle = unionBounds(renderedParts(html, 'switch-handle'))
+    for (const [index, grip] of renderedLines(html, 'switch-handle-grip').entries()) {
+      expect(grip.y1, `第 ${index + 1} 道防滑纹画到手柄之外`).toBeGreaterThanOrEqual(handle.minY - 2)
+      expect(grip.y2, `第 ${index + 1} 道防滑纹画到手柄之外`).toBeLessThanOrEqual(handle.maxY + 2)
+    }
+  })
+
+  it('电流表：刻度 / 数字 / 指针 / 转轴 / 读数 必须落在表盘或壳体范围内', () => {
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const shell = unionBounds(renderedParts(html, 'ammeter-shell'))
+
+    // 两排刻度线（62 根）必须全部落在表壳内
+    for (const part of ['ammeter-scale-outer', 'ammeter-scale-inner']) {
+      const lines = renderedLines(html, part)
+      expect(lines.length, `${part} 根数不对`).toBe(31)
+      for (const [index, line] of lines.entries()) {
+        for (const [x, y] of [[line.x1, line.y1], [line.x2, line.y2]]) {
+          expect(x, `${part}[${index}] 飘出表壳左右`).toBeGreaterThanOrEqual(shell.minX - 1)
+          expect(x, `${part}[${index}] 飘出表壳左右`).toBeLessThanOrEqual(shell.maxX + 1)
+          expect(y, `${part}[${index}] 飘出表壳上下`).toBeGreaterThanOrEqual(shell.minY - 1)
+          expect(y, `${part}[${index}] 飘出表壳上下`).toBeLessThanOrEqual(shell.maxY + 1)
+        }
+      }
+    }
+
+    // 两排量程数字（8 个）必须落在表壳内 —— 这是第五轮那条「数字飘到表体下方 200px」的同源判据
+    for (const part of ['ammeter-number-outer', 'ammeter-number-inner']) {
+      const numbers = [...html.matchAll(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>`, 'g'))]
+      expect(numbers.length, `${part} 数字个数不对`).toBe(4)
+      for (const number of numbers) {
+        const o = worldOffsetAt(html, number.index ?? 0)
+        const x = o.x + Number(number[0].match(/\bx="(-?[\d.]+)"/)?.[1])
+        const y = o.y + Number(number[0].match(/\by="(-?[\d.]+)"/)?.[1])
+        expect(x, `${part} 数字飘出表壳左右`).toBeGreaterThanOrEqual(shell.minX - 1)
+        expect(x, `${part} 数字飘出表壳左右`).toBeLessThanOrEqual(shell.maxX + 1)
+        expect(y, `${part} 数字飘出表壳上下`).toBeGreaterThanOrEqual(shell.minY - 1)
+        expect(y, `${part} 数字飘出表壳上下`).toBeLessThanOrEqual(shell.maxY + 1)
+      }
+    }
+
+    /**
+     * 读数大字与器材名必须仍然与表壳**叠在一起**。
+     * 读数大字刻意压在壳顶上（"大字号方便投屏"是需求里的原始约束），
+     * 所以口径是"不许飘离表壳"（与表壳有实际重叠区间），而不是"完整落在壳内"。
+     * 容差按字号给（读数 15px / 器材名 16px），保证"整块挪到画面别处"一定会红。
+     */
+    for (const [part, fontSize] of [['ammeter-reading', 15], ['ammeter-name', 16]] as const) {
+      const tag = html.match(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>`))
+      expect(tag, `${part} 缺失`).not.toBeNull()
+      const o = worldOffsetAt(html, tag!.index ?? 0)
+      const x = o.x + Number(tag![0].match(/\bx="(-?[\d.]+)"/)?.[1])
+      const y = o.y + Number(tag![0].match(/\by="(-?[\d.]+)"/)?.[1])
+      // 横向必须与表壳有重叠：读数大字在壳内居中，器材名刻意压在壳右侧（铭牌位置），
+      // 因此口径是"不许飘离表壳"，容差按字号给。
+      expect(x, `${part} 横向飘到表壳左边太远`).toBeGreaterThanOrEqual(shell.minX - fontSize)
+      expect(x, `${part} 横向飘到表壳右边太远`).toBeLessThanOrEqual(shell.maxX + fontSize)
+      // 纵向必须与表壳有重叠（允许压边，最多一个字号的高度）
+      expect(y, `${part} 纵向飘到表壳上方太远`).toBeGreaterThan(shell.minY - fontSize)
+      expect(y, `${part} 纵向飘到表壳下方`).toBeLessThanOrEqual(shell.maxY + 1)
+    }
+
+    // 尾针与转轴帽必须贴在转轴上（配重不能飘走）
+    const needle = needlePivot(html)!
+    const tail = renderedParts(html, 'ammeter-needle-tail')
+    expect(tail.length, '尾针配重缺失').toBe(1)
+    expect(Math.hypot(tail[0].x - needle.pivot.x, tail[0].y - needle.pivot.y), '尾针配重与转轴脱开').toBeLessThan(6)
+    for (const hub of renderedCircles(html, 'ammeter-needle-hub')) {
+      expect(Math.hypot(hub.cx - needle.pivot.x, hub.cy - needle.pivot.y), '转轴帽与转轴脱开').toBeLessThan(1.5)
     }
   })
 })
