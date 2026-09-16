@@ -30,13 +30,6 @@ function render(node: React.ReactElement): string {
 }
 
 /**
- * 从**渲染出的 SVG**里提取某件器材壳体的实际包围盒，而不是在测试里手抄一份副本。
- *
- * 这一点是第二轮复审点名的关键：如果测试里的包围盒是 CompetitorParts.tsx 的手抄副本，
- * 那它只是「一个常量 vs 另一个常量」，画面怎么改都不会红，等于没守。
- * 这里改为解析真实渲染结果，绘制一旦挪位，测试立刻跟着变。
- */
-/**
  * 统一的「世界坐标」口径。
  *
  * 复审连续三轮指出的根因是同一个：**几何口径不统一**。
@@ -50,7 +43,104 @@ function render(node: React.ReactElement): string {
  * 所有几何判据（包围盒、矩形结构件、指针转轴、路径点）一律走它。
  */
 
-/** 解析 HTML，维护 `<g>` 栈并累计 translate，得到某个下标处的世界坐标偏移 */
+/**
+ * 解析一个标签的 `transform` / `style.transform`，返回平移量。
+ *
+ * 这是第五轮复审点名的根因：上一版只认**属性形式的单层** `<g transform="translate(x y)">`，
+ * 于是下面三条路整类溜过去（都已实测复现）：
+ *   · `style={{ transform: 'translate(66px, 0px)' }}` —— 表盘悬在表壳外，54/54 全绿；
+ *   · `rotate / scale / matrix` —— 任何解析不了的写法被静默跳过；
+ *   · 没被 `data-part` 标记的元素 —— 自证红线遍历不到，任何平移都不检查（169/169 全绿）。
+ *
+ * 所以这里改成「**要么完全懂，要么报错**」：
+ *   · 同时解析属性形式与 `style` 形式的 transform；
+ *   · 认识的平移（`translate` / `translateX` / `translateY`）如实累加；
+ *   · 认识的**非平移**变换（`rotate` / `scale` / `matrix` / `skew`）按原样透出，
+ *     由调用方决定是否合法（`<g transform="rotate(...)">` 是合法用法）；
+ *   · 只要出现**任何**解析不了的非零变换，**直接抛错** —— 静默跳过正是前几轮反复翻车的机制。
+ */
+const KNOWN_TRANSFORM_FUNCTIONS = ['translate', 'translateX', 'translateY', 'rotate', 'scale', 'matrix', 'skewX', 'skewY', 'skew']
+
+/** 把 `px` 之类的单位后缀去掉，留下数字；带未知单位时返回 NaN（交给调用方报错） */
+function numeric(raw: string | undefined): number {
+  if (raw === undefined) return Number.NaN
+  const match = raw.trim().match(/^(-?[\d.]+(?:e[-+]?\d+)?)(px|)$/i)
+  if (match === null) return Number.NaN
+  return Number(match[1])
+}
+
+type TransformPart = { fn: string; args: number[]; raw: string }
+
+/**
+ * 解析一条 transform 字符串为函数列表。写法不认识就直接抛错。
+ * 覆盖：`translate(66px, 0px)`、`translate(66 0)`、`translateX(20)`、
+ *      `rotate(45 0 0)`、`scale(1.2)`、`matrix(a b c d e f)`、多函数串联。
+ */
+function parseTransform(raw: string, where: string): TransformPart[] {
+  const parts: TransformPart[] = []
+  let cursor = 0
+  while (cursor < raw.length) {
+    const skipped = raw.slice(cursor).match(/^[\s,]+/)
+    if (skipped !== null) {
+      cursor += skipped[0].length
+      continue
+    }
+    const head = raw.slice(cursor).match(/^([A-Za-z]+)\s*\(([^)]*)\)/)
+    if (head === null) {
+      throw new Error(`${where}: 无法解析的 transform 片段 "${raw.slice(cursor)}"（只支持 ${KNOWN_TRANSFORM_FUNCTIONS.join(' / ')}）`)
+    }
+    const fn = head[1]
+    if (!KNOWN_TRANSFORM_FUNCTIONS.includes(fn)) {
+      throw new Error(`${where}: 出现未知变换函数 ${fn}()，几何判据看不懂它，拒绝静默跳过`)
+    }
+    const args = head[2].split(/[\s,]+/).filter((token) => token.length > 0).map((token) => {
+      const value = numeric(token)
+      if (!Number.isFinite(value)) {
+        throw new Error(`${where}: 变换参数 "${token}" 不是可解析的数值`)
+      }
+      return value
+    })
+    parts.push({ fn, args, raw: head[0] })
+    cursor += head[0].length
+  }
+  return parts
+}
+
+/** 从 HTML 标签原文里取出原始的 transform 字符串（属性形式与 style 形式都算） */
+function rawTransformOf(rawTag: string): string | null {
+  const attribute = rawTag.match(/\btransform="([^"]*)"/)
+  const styleAttribute = rawTag.match(/\bstyle="([^"]*)"/)
+  const fromStyle = styleAttribute === null ? undefined : styleAttribute[1].match(/(?:^|;)\s*transform\s*:\s*([^;]+)/)
+  const list = [attribute?.[1], fromStyle?.[1]].filter((item): item is string => item !== undefined)
+  if (list.length === 0) return null
+  return list.join(' ')
+}
+
+/** 把一条 transform 分解成「平移量」与「其它（旋转/缩放/矩阵）函数」 */
+function decomposeTransform(raw: string, where: string): { translate: { x: number; y: number }; others: TransformPart[] } {
+  const translate = { x: 0, y: 0 }
+  const others: TransformPart[] = []
+  for (const part of parseTransform(raw, where)) {
+    if (part.fn === 'translate') {
+      translate.x += part.args[0] ?? 0
+      translate.y += part.args[1] ?? 0
+    } else if (part.fn === 'translateX') {
+      translate.x += part.args[0] ?? 0
+    } else if (part.fn === 'translateY') {
+      translate.y += part.args[0] ?? 0
+    } else {
+      others.push(part)
+    }
+  }
+  return { translate, others }
+}
+
+/**
+ * 维护 `<g>` 栈并累计 translate / style.transform，得到某个下标处的世界坐标偏移。
+ *
+ * 关键纪律：**只认 `<g>` 的变换**。若在绘图元素（rect / path / text …）上直接写 transform，
+ * 说明几何口径已经失控，直接抛错而不是静默按 0 处理。
+ */
 function worldOffsetAt(html: string, index: number): { x: number; y: number } {
   const stack: Array<{ x: number; y: number }> = []
   let cursor = 0
@@ -76,16 +166,127 @@ function worldOffsetAt(html: string, index: number): { x: number; y: number } {
     if (isClose) {
       if (name === 'g') stack.pop()
     } else if (name === 'g') {
-      const translate = rawTag.match(/transform="translate\((-?[\d.]+)[ ,]+(-?[\d.]+)\)"/)
-      stack.push(
-        translate !== null
-          ? { x: Number(translate[1]), y: Number(translate[2]) }
-          : { x: 0, y: 0 },
-      )
+      const raw = rawTransformOf(rawTag)
+      const { translate, others } = raw === null
+        ? { translate: { x: 0, y: 0 }, others: [] }
+        : decomposeTransform(raw, 'worldOffsetAt')
+      if (others.length > 0 && !rawTag.includes('data-anchor="local"')) {
+        // 只算 translate 是不够的：`scale` / `matrix` / `rotate` 同样会改变图元落点，
+        // 若静默按 0 处理，几何判据就是"看着像覆盖了"（复审点名的同源问题）。
+        throw new Error(`worldOffsetAt: <g> 上有非平移变换 ${others.map((o) => o.raw).join(' ')}，几何口径无法推导`)
+      }
+      stack.push(translate)
+    } else if (rawTransformOf(rawTag) !== null) {
+      // 绘图元素上直接挂 transform：几何判据按「声明坐标 == 渲染坐标」推导，
+      // 这里看不懂就抛错，绝不静默当成 0（静默是前几轮反复翻车的机制）。
+      throw new Error(`worldOffsetAt: <${name}> 上直接写了 transform，几何口径无法推导`)
     }
     cursor = end + 1
   }
   return stack.reduce((acc, item) => ({ x: acc.x + item.x, y: acc.y + item.y }), { x: 0, y: 0 })
+}
+
+/**
+ * 渲染结果里**每一层 `<g>`** 的累计平移量，用于「画面上任何东西被挪走都要被看见」。
+ *
+ * 关键纪律（第五轮复审漏洞 C 的根治）：这里**不依赖 `data-part`**。
+ * 老实现只遍历带标记的元素，于是「没被标记的元素被平移」完全不检查 ——
+ * 实测把内圈量程数字包一层 `translate(0 200)`，目录 169/169 全绿而数字飘出表体 200px。
+ *
+ * 两种**合法**的平移在源码里必须显式声明 `data-anchor`，不能靠"恰好为 0"：
+ *   · `data-anchor="root"`  —— 组件根节点，把器材摆到世界坐标 (x, y)，任意值合法；
+ *   · `data-anchor="local"` —— 器材内部的局部装配（螺钉、卡箍、灯座、刀片转轴），
+ *                              它是"声明坐标即渲染坐标"的显式声明，因此不参与红线检查。
+ *
+ * 未声明的 `<g>`：累计平移必须为 0。任何"偷偷包一层 `<g>` 把零件挪走"的改动都会立刻红，
+ * 而且**无论它有没有被 `data-part` 标记**。
+ */
+type GroupInfo = { x: number; y: number; tag: string; anchor: string | null; hasNonTranslate: boolean }
+
+function groupInfos(html: string): GroupInfo[] {
+  const infos: GroupInfo[] = []
+  const stack: Array<{ x: number; y: number }> = []
+  let cursor = 0
+  while (cursor < html.length) {
+    const lt = html.indexOf('<', cursor)
+    if (lt === -1) break
+    let end = lt + 1
+    let quote: string | null = null
+    while (end < html.length) {
+      const ch = html[end]
+      if (quote !== null) {
+        if (ch === quote) quote = null
+      } else if (ch === '"' || ch === "'") {
+        quote = ch
+      } else if (ch === '>') {
+        break
+      }
+      end += 1
+    }
+    const rawTag = html.slice(lt + 1, end)
+    const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+    if (rawTag.startsWith('/')) {
+      if (name === 'g') stack.pop()
+      cursor = end + 1
+      continue
+    }
+    if (name === 'g') {
+      const raw = rawTransformOf(rawTag)
+      const { translate, others } = raw === null
+        ? { translate: { x: 0, y: 0 }, others: [] }
+        : decomposeTransform(raw, 'groupInfos')
+      const inherited = stack[stack.length - 1] ?? { x: 0, y: 0 }
+      stack.push({ x: inherited.x + translate.x, y: inherited.y + translate.y })
+      const anchor = rawTag.match(/data-anchor="([^"]+)"/)
+      infos.push({
+        x: stack[stack.length - 1].x,
+        y: stack[stack.length - 1].y,
+        tag: rawTag,
+        anchor: anchor === null ? null : anchor[1],
+        hasNonTranslate: others.length > 0,
+      })
+      if (rawTag.endsWith('/')) stack.pop()
+    }
+    cursor = end + 1
+  }
+  return infos
+}
+
+/**
+ * 未声明 `data-anchor` 的 `<g>` 必须既**没有平移**、也**没有其它变换** —— 否则几何口径与画面脱节。
+ *
+ * 只查平移是不够的：`scale` / `matrix` 同样改变图元落点，而它们不体现在 translate 累计里。
+ * 实测过这条：给表盘外包一层 `scale(1.4)` 时，只查平移的实现全绿（漏检）。
+ */
+function undeclaredOffsetGroups(html: string): GroupInfo[] {
+  return groupInfos(html).filter(
+    (info) =>
+      info.anchor === null &&
+      (Math.abs(info.x) > 1e-9 || Math.abs(info.y) > 1e-9 || info.hasNonTranslate),
+  )
+}
+
+/** 可绘制元素总数（不含 `<g>` / `<defs>` / 渐变等非图元），用于覆盖面互证 */
+const PAINTABLE_TAGS = ['rect', 'circle', 'ellipse', 'line', 'path', 'text', 'polygon', 'polyline'] as const
+
+function paintableElementCount(html: string): number {
+  let total = 0
+  for (const tag of PAINTABLE_TAGS) total += count(html, tag)
+  return total
+}
+
+/**
+ * 列出**没有** data-part 的可绘制元素标签原文。
+ *
+ * 注意不能拿「带标记的元素数」去和「图元总数」相减 —— 同一个 data-part 会被
+ * 多份实例复用（如 31 根刻度线共用 `ammeter-scale-outer`），数量口径根本对不上。
+ * 这里直接数"没标记的那些"，口径唯一且不会算错。
+ */
+function unmarkedPaintableTags(html: string): string[] {
+  const pattern = new RegExp(`<(${PAINTABLE_TAGS.join('|')})\\b[^>]*>`, 'g')
+  return [...html.matchAll(pattern)]
+    .map((match) => match[0])
+    .filter((tag) => !tag.includes('data-part='))
 }
 
 /** 遍历所有匹配标签，回调拿到标签原文、起始下标与**世界坐标偏移** */
@@ -234,16 +435,31 @@ function pathPoints(tag: string): Array<[number, number]> {
   return points
 }
 
-/** 提取指针的 rotate()：角度 + 转轴（用于判断指针是否画在表盘内） */
+/**
+ * 提取指针的 \`rotate()\`：角度 + 转轴（用于判断指针是否画在表盘内）。
+ *
+ * 纪律（复审选修改必修）：**恰好 1 个 rotate 组**。多了说明引入了装饰性 rotate，
+ * 判据会静默指向错的元素 —— 那正是前几轮翻车的形态，所以这里宁可"响亮地失败"。
+ * 同时转轴坐标必须换算到**世界坐标**（叠加祖先链的 translate / style.transform）。
+ */
 function needlePivot(html: string): { angle: number; pivot: { x: number; y: number } } | null {
-  // 恰好一个 rotate 组（指针）。多了说明引入了装饰性 rotate，判据会静默指向错元素。
-  const matches = [...html.matchAll(/<g transform="rotate\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\)"/g)]
-  if (matches.length !== 1) return null
-  const match = matches[0]
-  const o = worldOffsetAt(html, match.index ?? 0)
+  const tagPattern = /<g\b[^>]*>/g
+  const rotateGroups: Array<{ tag: string; index: number; parts: TransformPart[] }> = []
+  for (const match of html.matchAll(tagPattern)) {
+    const raw = rawTransformOf(match[0])
+    if (raw === null) continue
+    const parts = parseTransform(raw, 'needlePivot')
+    if (parts.some((part) => part.fn === 'rotate')) {
+      rotateGroups.push({ tag: match[0], index: match.index ?? 0, parts })
+    }
+  }
+  if (rotateGroups.length !== 1) return null
+  const [group] = rotateGroups
+  const rotate = group.parts.find((part) => part.fn === 'rotate')!
+  const offset = worldOffsetAt(html, group.index)
   return {
-    angle: Number(match[1]),
-    pivot: { x: o.x + Number(match[2]), y: o.y + Number(match[3]) },
+    angle: rotate.args[0] ?? 0,
+    pivot: { x: offset.x + (rotate.args[1] ?? 0), y: offset.y + (rotate.args[2] ?? 0) },
   }
 }
 
@@ -323,8 +539,9 @@ describe('开关 S 写实化：单刀开关的刀片/刀座/绝缘手柄', () =>
 
   it('有黄铜刀座与铰链轴销（真实开关的夹片结构）', () => {
     expect(open).toMatch(/#(c9a227|e6cc6a)/)
-    // 铰链轴销：不只判半径，还限定它必须落在刀片转轴处（旋转基准点 -58/-6）
-    expect(open).toMatch(/<circle cx="-58" cy="-6" r="6"/)
+    // 铰链轴销：不只判半径，还限定它必须落在刀片转轴处（旋转基准点 -58/-6）。
+    // 注意标签属性顺序（data-part 在最前），所以用不带顺序假设的子串判定。
+    expect(open).toMatch(/<circle\b[^>]*cx="-58"[^>]*cy="-6"[^>]*r="6"/)
   })
 
   it('刀片是金属高光条（冲压钢片），不是一条黑色线段', () => {
@@ -712,19 +929,26 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
     const needle = needlePivot(html)!
     const needleTag = html.match(/<path\b[^>]*data-part="ammeter-needle"[^>]*>/)
     expect(needleTag, '没有渲染出指针针体').not.toBeNull()
-    const needlePoints = pathPointsFromTag(needleTag![0])
-    expect(needlePoints.length, '没有解析出指针针体的坐标').toBeGreaterThan(0)
     /**
-     * 指针的「有效长度」= 转轴到针体两端的最大距离。
-     * 注意不能用「离转轴最远的点」——真实指针在转轴下还有一截配重尾针，
-     * 尾针到转轴的距离可能大于针尖，会把判据带偏（实测过：缩短针尖仍然通过）。
-     * 所以取**针体在转轴方向上到转轴的最大距离**，也就是针尖所在的半径。
+     * 判据是「**针尖**到转轴的距离」，所以必须先把针尖那个点**唯一定位**出来，
+     * 不能拿"针体所有点里最大的那个"——针体是条窄四边形，这个值对长度变化很不敏感
+     * （实测：针尖缩短 40px，最长点只缩了 3.2px，断言仍然通过 = 静默漏检）。
+     *
+     * 定位方式：针尖是**离转轴最远的那一对点**，取它们的**平均**。
+     * 这样即使将来针尖改成尖角（单点）或平口（两点），判据都稳定。
      */
+    const needlePoints = pathPointsFromTag(needleTag![0])
+    expect(needlePoints.length, '没有解析出指针针体的坐标').toBeGreaterThan(2)
     const radii = needlePoints.map(([x, y]) => Math.hypot(x - needle.pivot.x, y - needle.pivot.y))
-    const tipDistance = Math.max(...radii)
+    const maxRadius = Math.max(...radii)
+    // 与转轴距离「贴着最大值」的那些点就是针尖那一对（容差 1px）
+    const tipPoints = needlePoints.filter(([x, y]) => maxRadius - Math.hypot(x - needle.pivot.x, y - needle.pivot.y) < 1)
+    expect(tipPoints.length, '没有定位到指针针尖').toBeGreaterThan(0)
+    const tipDistance = tipPoints.reduce((sum, [x, y]) => sum + Math.hypot(x - needle.pivot.x, y - needle.pivot.y), 0) / tipPoints.length
+    // 尾针（离转轴最近的点）必须明显更短：真实的指针是"长针 + 短配重"
     const tailDistance = Math.min(...radii)
-    // 针尖必须比尾针长（真实的指针是"长针 + 短配重"）
-    expect(tipDistance, '指针的针尖没有比尾针长，形状不对').toBeGreaterThan(tailDistance)
+    expect(tipDistance, `指针形状不对：针尖(${tipDistance.toFixed(1)}) 没有比尾针(${tailDistance.toFixed(1)}) 长`)
+      .toBeGreaterThan(tailDistance + 20)
     // 刻度弧半径从弧线的 A 指令读出
     const arcRadius = Number(arcs[0][0].match(/A ([\d.]+) \1/)?.[1])
     expect(arcRadius).toBeGreaterThan(0)
@@ -732,15 +956,25 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
       .toBeGreaterThan(arcRadius - 12)
     expect(tipDistance, `针尖半径 ${tipDistance.toFixed(1)} 超出刻度半径 ${arcRadius.toFixed(1)} 太多`).toBeLessThan(arcRadius + 12)
 
+    // 尾针配重必须真的存在（整块删掉也要红）
+    const tail = html.match(/<rect\b[^>]*data-part="ammeter-needle-tail"[^>]*>/)
+    expect(tail, '指针尾部配重被删掉了').not.toBeNull()
+    // 针体高光也是针的一部分，一并守住
+    expect(html.match(/<path\b[^>]*data-part="ammeter-needle-gloss"[^>]*>/), '针体高光被删掉了').not.toBeNull()
+
     // 3) 转轴帽必须存在，且落在表盘内
-    const hub = html.match(/<circle\b[^>]*data-part="ammeter-needle-hub"[^>]*>/)
-    expect(hub, '转轴帽被删掉了').not.toBeNull()
-    const hubX = Number(hub![0].match(/\bcx="(-?[\d.]+)"/)?.[1])
-    const hubY = Number(hub![0].match(/\bcy="(-?[\d.]+)"/)?.[1])
-    expect(hubX).toBeGreaterThanOrEqual(dialBox.x0)
-    expect(hubX).toBeLessThanOrEqual(dialBox.x1)
-    expect(hubY, '转轴帽挪出了表盘').toBeGreaterThanOrEqual(dialBox.y0)
-    expect(hubY, '转轴帽挪出了表盘').toBeLessThanOrEqual(dialBox.y1)
+    const hubs = [...html.matchAll(/<circle\b[^>]*data-part="ammeter-needle-hub"[^>]*>/g)]
+    // 转轴帽由"实心帽 + 外圈描边"两层构成。只判 > 0 是不够的：
+    // 删掉实心层后描边还在，断言仍然通过（实测漏检）。所以按层数严格判。
+    expect(hubs.length, '转轴帽的两层（实心帽 + 外圈描边）必须都在，删掉任一层都不行').toBe(2)
+    for (const hub of hubs) {
+      const hubX = Number(hub[0].match(/\bcx="(-?[\d.]+)"/)?.[1])
+      const hubY = Number(hub[0].match(/\bcy="(-?[\d.]+)"/)?.[1])
+      expect(hubX).toBeGreaterThanOrEqual(dialBox.x0)
+      expect(hubX).toBeLessThanOrEqual(dialBox.x1)
+      expect(hubY, '转轴帽挪出了表盘').toBeGreaterThanOrEqual(dialBox.y0)
+      expect(hubY, '转轴帽挪出了表盘').toBeLessThanOrEqual(dialBox.y1)
+    }
 
     // 4) 中央「A」量程字符必须也存在且落在表盘内
     const glyph = html.match(/<text\b[^>]*data-part="ammeter-glyph"[^>]*>/)
@@ -804,14 +1038,21 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
       'ammeter-dial',
       'ammeter-terminal-flange',
       'ammeter-needle',
+      'ammeter-needle-tail',
       'ammeter-needle-hub',
       'ammeter-glyph',
       'ammeter-arc',
       'ammeter-scale-outer',
       'ammeter-scale-inner',
+      'ammeter-number-outer',
+      'ammeter-number-inner',
       'ammeter-label-neg',
       'ammeter-label-06',
       'ammeter-label-3',
+      'ammeter-reading',
+      'ammeter-name',
+      'ammeter-dial-shadow',
+      'ammeter-glass-reflection',
     ]) {
       expect(parts, `${required} 没有被标记 data-part，会成为几何回归的绕过路径`).toContain(required)
     }
@@ -830,6 +1071,179 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
     )
     expect(shifted, '没有成功注入平移层').not.toBe(html)
     expect(worldOffsetOfPart(shifted, 'ammeter-dial')).toEqual({ x: 66, y: 0 })
+  })
+
+  it('自证式红线：未被声明为 root/local 的 <g> 一律不得做任何变换（与 data-part 无关）', () => {
+    /**
+     * 第五轮复审的漏洞 C：自证红线原来只遍历**带 data-part 的元素**，
+     * 于是「没被标记的元素被平移」完全不检查 —— 实测把内圈量程数字包一层
+     * `translate(0 200)`，`ammeter-use` 目录 **169/169 全绿**，而整排数字飘到了表体下方 200px。
+     *
+     * 这里不依赖任何标记：直接遍历渲染结果里**每一层 `<g>`**。
+     * 只有显式声明 `data-anchor="root"`（器材摆位）与 `data-anchor="local"`（内部局部装配）
+     * 的两种 `<g>` 允许平移，其余一律必须为 0。画面上任何东西被挪走都会红，
+     * 跟"我记不记得标记它"无关。
+     */
+    const cases = [
+      ['电池 E1', render(<BatteryHolderE1 x={0} y={0} />)],
+      ['开关 S1', render(<KnifeSwitch x={0} y={0} closed={false} label="S1" />)],
+      ['灯泡 L1', render(<LampHolderL1 x={0} y={0} lit={false} />)],
+      ['电流表 A1', render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)],
+    ] as const
+    for (const [name, html] of cases) {
+      // 预条件：声明过的合法装配确实存在（否则这条红线是因为"没有任何 <g>"而假绿）
+      const anchors = groupInfos(html).map((info) => info.anchor)
+      expect(anchors, `${name} 没有声明任何 root 锚点`).toContain('root')
+      const offenders = undeclaredOffsetGroups(html).map((info) =>
+        info.hasNonTranslate
+          ? `<g> 带了非平移变换：${info.tag}`
+          : `<g> 平移了 ${JSON.stringify({ x: info.x, y: info.y })}：${info.tag}`,
+      )
+      expect(
+        offenders,
+        `${name} 里有 <g> 偷偷做了变换，但画面几何仍按声明坐标推导。` +
+          '（若这是合法的内部装配，必须显式声明 data-anchor="local"）',
+      ).toEqual([])
+    }
+
+    /**
+     * 反向自证 1 / 2 / 3：给一个元素包一层平移，必须被抓到。
+     *
+     * 这里直接对**渲染出的真实 HTML** 做注入（包在某个绘图元素外面），
+     * 而不是改源码再渲染 —— 这样才能精确模拟复审那种"外层注入 `<g>`"的变异体。
+     */
+    const base = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const inject = (wrapper: string) => {
+      const probe = base.match(/<ellipse\b[^>]*data-part="ammeter-needle-hub-shadow"[^>]*>/)
+      expect(probe, '找不到用于注入的探针元素').not.toBeNull()
+      const shifted = base.replace(probe![0], wrapper.replace('$1', probe![0]))
+      expect(shifted, '注入失败').not.toBe(base)
+      return shifted
+    }
+
+    // 属性形式，单层
+    expect(undeclaredOffsetGroups(inject('<g transform="translate(0 200)">$1</g>')).length).toBeGreaterThan(0)
+    // `style` 形式（复审实测的漏洞 A：老实现 54/54 全绿）
+    expect(undeclaredOffsetGroups(inject('<g style="transform: translate(0px, 200px)">$1</g>')).length).toBeGreaterThan(0)
+    // 混合形式
+    expect(undeclaredOffsetGroups(inject('<g transform="translate(3 4)"><g style="transform: translate(5px, 6px)">$1</g></g>')).length).toBeGreaterThan(0)
+
+    // 嵌套两层也要被抓到（复审实测"深度 1 能抓、深度 ≥2 就漏"）
+    expect(
+      undeclaredOffsetGroups(inject('<g transform="translate(30 0)"><g transform="translate(36 0)">$1</g></g>')).length,
+      '嵌套两层的平移被漏掉',
+    ).toBeGreaterThan(0)
+  })
+
+  it('覆盖面互证：每一个可绘制元素都必须被 data-part 标记（少标一个就红）', () => {
+    /**
+     * 第五轮复审的原话：「清单是按'我记得的结构件'列的，没有一处判据保证
+     * 画面上每一个图元都被某个判据看见」。实测 100 个可绘制元素只有 73 个带标记，
+     * 没标记的那 27 个里包含两排量程数字、读数、器材名 —— 全是用户直接读的内容。
+     *
+     * 所以这里把"必需清单"升级为**互证式**：标记率必须是 100%。
+     * 少标任何一个图元这件事本身就会红，而不是靠我记得把清单写全。
+     * （若将来确实加了纯装饰件，必须显式声明 data-part="decoration" 才会被放行。）
+     */
+    for (const [name, html] of [
+      ['电池 E1', render(<BatteryHolderE1 x={0} y={0} />)],
+      ['开关 S1', render(<KnifeSwitch x={0} y={0} closed={false} label="S1" />)],
+      ['灯泡 L1', render(<LampHolderL1 x={0} y={0} lit={false} />)],
+      ['电流表 A1', render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)],
+    ] as const) {
+      const total = paintableElementCount(html)
+      const unmarked = unmarkedPaintableTags(html)
+      expect(total, `${name} 没渲染出任何图元`).toBeGreaterThan(0)
+      expect(
+        unmarked.length,
+        `${name} 有 ${unmarked.length}/${total} 个可绘制元素没被 data-part 标记，它们会成为几何回归的绕过路径：${unmarked.slice(0, 3).join(' | ')}`,
+      ).toBe(0)
+    }
+
+    // 反向自证：摘掉一个 data-part，这条必须红
+    const stripped = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+      .replace(' data-part="ammeter-glyph"', '')
+    expect(unmarkedPaintableTags(stripped)).toHaveLength(1)
+  })
+
+  it('参数化的结构件每一份实例都必须被标记（多实例不能只标记第一个）', () => {
+    /**
+     * 复审指出的绕过形态之一是"只标记了一部分"。上面那条按总量互证，
+     * 这条再按**实例份数**互证：`data-part` 出现的次数必须等于该结构的真实实例数，
+     * 否则「画了 4 颗螺钉只标记 1 颗」这类改成遗漏仍然能溜过去。
+     */
+    const ammeter = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const countPart = (html: string, part: string) =>
+      (html.match(new RegExp(`data-part="${part}"`, 'g')) ?? []).length
+
+    // 两排刻度各 31 根，一根都不能漏标
+    expect(countPart(ammeter, 'ammeter-scale-outer')).toBe(31)
+    expect(countPart(ammeter, 'ammeter-scale-inner')).toBe(31)
+    // 两排量程数字：外圈 0/1/2/3（4 个）+ 内圈 0/0.2/0.4/0.6（4 个）
+    expect(countPart(ammeter, 'ammeter-number-outer')).toBe(4)
+    expect(countPart(ammeter, 'ammeter-number-inner')).toBe(4)
+    // 两条刻度弧
+    expect(countPart(ammeter, 'ammeter-arc')).toBe(2)
+
+    // 开关：底板四角 4 颗螺钉（位置在 data-anchor="local" 的 <g> 里，仍必须逐个标记）
+    const switchHtml = render(<KnifeSwitch x={0} y={0} closed={false} label="S1" />)
+    expect(countPart(switchHtml, 'switch-screw')).toBe(8)
+    // 手柄三道防滑纹
+    expect(countPart(switchHtml, 'switch-handle-grip')).toBe(3)
+
+    // 灯泡：4 圈螺纹、2 根引线、2 颗灯座螺钉
+    const lamp = render(<LampHolderL1 x={0} y={0} lit={false} />)
+    expect(countPart(lamp, 'lamp-thread-turn')).toBe(4)
+    expect(countPart(lamp, 'lamp-lead')).toBe(2)
+    expect(countPart(lamp, 'lamp-socket-screw')).toBe(4)
+  })
+
+  it('transform 解析必须是"要么完全懂、要么报错"，绝不静默跳过', () => {
+    /**
+     * 复审第 5 轮的根因：老实现只认**属性形式的单层** `translate(x y)`，
+     * 遇到 `style` 形式 / `rotate` / `scale` / `matrix` 一律静默当成 0 —— 静默跳过正是反复翻车的机制。
+     * 这里直接给解析器喂各种写法，要求它"如实读出"或"响亮失败"。
+     */
+    const cases: Array<[string, { x: number; y: number }]> = [
+      ['translate(66 0)', { x: 66, y: 0 }],
+      ['translate(66px, 0px)', { x: 66, y: 0 }],
+      ['translateX(40)', { x: 40, y: 0 }],
+      ['translateY(-30px)', { x: 0, y: -30 }],
+      ['translate(10 20) translate(5 -5)', { x: 15, y: 15 }],
+      ['translate(0.5 -0.25)', { x: 0.5, y: -0.25 }],
+    ]
+    for (const [raw, expected] of cases) {
+      expect(decomposeTransform(raw, 'test').translate, `${raw} 解析错了`).toEqual(expected)
+    }
+
+    // 非平移但"看得懂"的变换按原样透出，由调用方判断是否合法
+    for (const raw of ['rotate(45 0 0)', 'scale(1.2)', 'matrix(1 0 0 1 30 40)', 'skewX(10)']) {
+      const { translate, others } = decomposeTransform(raw, 'test')
+      expect(translate, `${raw} 不该被当成平移`).toEqual({ x: 0, y: 0 })
+      expect(others.length, `${raw} 应该被识别为已知的非平移变换`).toBeGreaterThan(0)
+    }
+
+    // 看不懂的写法必须**抛错**，不能静默返回 0
+    for (const raw of ['frobnicate(3)', 'translate(50%)', 'translate(1em 0)']) {
+      expect(() => decomposeTransform(raw, 'test'), `${raw} 被静默跳过了`).toThrow()
+    }
+
+    // 端到端：`style` 形式的表盘平移必须被如实读出（复审实测 54/54 全绿的漏洞 A）
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const styleShifted = html.replace(
+      /(<rect\b[^>]*data-part="ammeter-dial"[^>]*>)/,
+      '<g style="transform: translate(66px, 0px)">$1</g>',
+    )
+    expect(styleShifted).not.toBe(html)
+    expect(worldOffsetOfPart(styleShifted, 'ammeter-dial'), 'style 形式的平移被静默跳过了')
+      .toEqual({ x: 66, y: 0 })
+
+    // 端到端：嵌套多层的 style/属性混合平移必须被如实累加
+    const nestedShifted = html.replace(
+      /(<rect\b[^>]*data-part="ammeter-dial"[^>]*>)/,
+      '<g transform="translate(10 5)"><g style="transform: translate(20px, -15px)">$1</g></g>',
+    )
+    expect(worldOffsetOfPart(nestedShifted, 'ammeter-dial')).toEqual({ x: 30, y: -10 })
   })
 
   it('整组外观被外层 <g> 平移时也会红（表盘/台肩分别验证）', () => {

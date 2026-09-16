@@ -51,7 +51,7 @@ function safeReading(reading: number): number {
 
 /** 接触阴影：贴地的椭圆软阴影，让器材"落"在台面上而不是飘着 */
 function GroundShadow({ cx = 0, cy = 0, rx, ry, opacity = 0.32 }: { cx?: number; cy?: number; rx: number; ry: number; opacity?: number }) {
-  return <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="#05070a" opacity={opacity} />
+  return <ellipse data-part="ground-shadow" cx={cx} cy={cy} rx={rx} ry={ry} fill="#05070a" opacity={opacity} />
 }
 
 /* ------------------------------------------------------------------ *
@@ -68,7 +68,7 @@ export function TerminalPost({ x, y, polarity, connected }: { x: number; y: numb
   const capLight = isRed ? '#f0796a' : '#6f757d'
   const capDark = isRed ? '#7d1b12' : '#101216'
   return (
-    <g transform={`translate(${x} ${y})`} pointerEvents="none">
+    <g data-anchor="root" transform={`translate(${x} ${y})`} pointerEvents="none">
       {/* 接触阴影 */}
       <ellipse cx="0" cy="3.5" rx="10" ry="3.6" fill="#04060a" opacity="0.35" />
       {/* 底座法兰 */}
@@ -105,21 +105,21 @@ function BasePlate({ halfWidth, y, depth = 20 }: { halfWidth: number; y: number;
   return (
     <g>
       {/* 侧面（圆角金属块） */}
-      <rect x={-halfWidth} y={y} width={halfWidth * 2} height={h} rx="2.6" fill={METAL_DARK} />
+      <rect data-part="baseplate-face" x={-halfWidth} y={y} width={halfWidth * 2} height={h} rx="2.6" fill={METAL_DARK} />
       {/* 顶面：上浅下深，做出圆柱/倒角的高光 */}
-      <rect x={-halfWidth} y={y - 3.5} width={halfWidth * 2} height={h * 0.62} rx="2.4" fill={METAL_MID} />
-      <rect x={-halfWidth + 2} y={y - 3} width={halfWidth * 2 - 4} height="3.6" rx="1.8" fill={METAL_LIGHT} opacity="0.85" />
+      <rect data-part="baseplate-face" x={-halfWidth} y={y - 3.5} width={halfWidth * 2} height={h * 0.62} rx="2.4" fill={METAL_MID} />
+      <rect data-part="baseplate-highlight" x={-halfWidth + 2} y={y - 3} width={halfWidth * 2 - 4} height="3.6" rx="1.8" fill={METAL_LIGHT} opacity="0.85" />
       {/* 底边暗部 */}
-      <rect x={-halfWidth} y={y + h - 4} width={halfWidth * 2} height="4" rx="2" fill="#5a6067" opacity="0.8" />
+      <rect data-part="baseplate-face" x={-halfWidth} y={y + h - 4} width={halfWidth * 2} height="4" rx="2" fill="#5a6067" opacity="0.8" />
       {/* 左右端立边 */}
-      <rect x={-halfWidth} y={y - 3.5} width="4" height={h + 3.5} rx="1.6" fill="#9aa1a9" />
-      <rect x={halfWidth - 4} y={y - 3.5} width="4" height={h + 3.5} rx="1.6" fill="#9aa1a9" />
+      <rect data-part="baseplate-edge" x={-halfWidth} y={y - 3.5} width="4" height={h + 3.5} rx="1.6" fill="#9aa1a9" />
+      <rect data-part="baseplate-edge" x={halfWidth - 4} y={y - 3.5} width="4" height={h + 3.5} rx="1.6" fill="#9aa1a9" />
       {/* 两端十字螺钉 */}
       {[-halfWidth + 11, halfWidth - 11].map((cx) => (
-        <g key={cx} transform={`translate(${cx} ${y + h * 0.42})`}>
-          <circle cx="0" cy="0" r="4" fill={METAL_MID} stroke={METAL_EDGE} strokeWidth="0.6" />
-          <circle cx="0" cy="0" r="2.6" fill={METAL_LIGHT} opacity="0.7" />
-          <path d="M -2.6 0 L 2.6 0 M 0 -2.6 L 0 2.6" stroke="#6d747c" strokeWidth="0.7" />
+        <g key={cx} data-anchor="local" transform={`translate(${cx} ${y + h * 0.42})`}>
+          <circle data-part="baseplate-screw" cx="0" cy="0" r="4" fill={METAL_MID} stroke={METAL_EDGE} strokeWidth="0.6" />
+          <circle data-part="baseplate-screw" cx="0" cy="0" r="2.6" fill={METAL_LIGHT} opacity="0.7" />
+          <path data-part="baseplate-screw-slot" d="M -2.6 0 L 2.6 0 M 0 -2.6 L 0 2.6" stroke="#6d747c" strokeWidth="0.7" />
         </g>
       ))}
     </g>
@@ -156,31 +156,31 @@ export function BatteryCell({ x, y, halfLength = 76, radius = 17, uid }: { x: nu
         </linearGradient>
       </defs>
       {/* 负极（左端）：金属锌底 + 压扁的端面 */}
-      <rect x={left - 7} y={bodyTop + 2} width="10" height={bodyHeight - 4} rx="4" fill="#4b4f55" />
-      <rect x={left - 7} y={bodyTop + 3} width="10" height="4" rx="2" fill="#7b8188" opacity="0.75" />
-      <rect x={left - 7} y={bodyTop + 2} width="10" height={bodyHeight - 4} rx="4" fill="none" stroke="#2b2e32" strokeWidth="0.7" />
+      <rect data-part="cell-negative" x={left - 7} y={bodyTop + 2} width="10" height={bodyHeight - 4} rx="4" fill="#4b4f55" />
+      <rect data-part="cell-negative" x={left - 7} y={bodyTop + 3} width="10" height="4" rx="2" fill="#7b8188" opacity="0.75" />
+      <rect data-part="cell-negative" x={left - 7} y={bodyTop + 2} width="10" height={bodyHeight - 4} rx="4" fill="none" stroke="#2b2e32" strokeWidth="0.7" />
       {/* 筒身 */}
-      <rect x={left - 2} y={bodyTop} width={halfLength * 2 + 4} height={bodyHeight} rx={radius * 0.72} fill={`url(#${uid}-cyl)`} />
+      <rect data-part="cell-body" x={left - 2} y={bodyTop} width={halfLength * 2 + 4} height={bodyHeight} rx={radius * 0.72} fill={`url(#${uid}-cyl)`} />
       {/* 黑色环标（负极侧） */}
-      <rect x={left + 12} y={bodyTop} width="13" height={bodyHeight} fill={`url(#${uid}-black)`} />
+      <rect data-part="cell-band" x={left + 12} y={bodyTop} width="13" height={bodyHeight} fill={`url(#${uid}-black)`} />
       {/* 橙色环标（电池品牌印刷区，正极侧） */}
-      <rect x={left + 40} y={bodyTop} width="58" height={bodyHeight} fill={`url(#${uid}-band)`} />
-      <rect x={left + 40} y={bodyTop + 3} width="58" height="3.5" rx="1.8" fill="#f4bd6f" opacity="0.5" />
+      <rect data-part="cell-band" x={left + 40} y={bodyTop} width="58" height={bodyHeight} fill={`url(#${uid}-band)`} />
+      <rect data-part="cell-band" x={left + 40} y={bodyTop + 3} width="58" height="3.5" rx="1.8" fill="#f4bd6f" opacity="0.5" />
       {/* 黑色环标（正极侧） */}
-      <rect x={left + 112} y={bodyTop} width="13" height={bodyHeight} fill={`url(#${uid}-black)`} />
+      <rect data-part="cell-band" x={left + 112} y={bodyTop} width="13" height={bodyHeight} fill={`url(#${uid}-black)`} />
       {/* 筒身顶部镜面反射带 */}
-      <rect x={left + 6} y={bodyTop + 3} width={halfLength * 2 - 12} height="5" rx="2.5" fill="#ffffff" opacity="0.26" />
+      <rect data-part="cell-highlight" x={left + 6} y={bodyTop + 3} width={halfLength * 2 - 12} height="5" rx="2.5" fill="#ffffff" opacity="0.26" />
       {/* 筒身底部反光 */}
-      <rect x={left + 10} y={bodyTop + bodyHeight - 8} width={halfLength * 2 - 20} height="3" rx="1.5" fill="#ffffff" opacity="0.1" />
+      <rect data-part="cell-highlight" x={left + 10} y={bodyTop + bodyHeight - 8} width={halfLength * 2 - 20} height="3" rx="1.5" fill="#ffffff" opacity="0.1" />
       {/* 筒身轮廓描边 */}
-      <rect x={left - 2} y={bodyTop} width={halfLength * 2 + 4} height={bodyHeight} rx={radius * 0.72} fill="none" stroke="#22262a" strokeWidth="0.9" opacity="0.85" />
+      <rect data-part="cell-outline" x={left - 2} y={bodyTop} width={halfLength * 2 + 4} height={bodyHeight} rx={radius * 0.72} fill="none" stroke="#22262a" strokeWidth="0.9" opacity="0.85" />
       {/* 正极（右端）：铜帽 */}
-      <rect x={left + halfLength * 2 - 1} y={bodyTop + 3} width="16" height={bodyHeight - 6} rx="4.5" fill="#b9a071" />
-      <rect x={left + halfLength * 2 - 1} y={bodyTop + 4} width="16" height="5" rx="2.5" fill="#e8d5ab" opacity="0.8" />
-      <rect x={left + halfLength * 2 + 9} y={bodyTop + 6} width="7" height={bodyHeight - 12} rx="3" fill="#d9c187" />
-      <rect x={left + halfLength * 2 + 9} y={bodyTop + 7} width="7" height="4" rx="2" fill="#fbeecb" opacity="0.85" />
+      <rect data-part="cell-positive" x={left + halfLength * 2 - 1} y={bodyTop + 3} width="16" height={bodyHeight - 6} rx="4.5" fill="#b9a071" />
+      <rect data-part="cell-positive" x={left + halfLength * 2 - 1} y={bodyTop + 4} width="16" height="5" rx="2.5" fill="#e8d5ab" opacity="0.8" />
+      <rect data-part="cell-positive" x={left + halfLength * 2 + 9} y={bodyTop + 6} width="7" height={bodyHeight - 12} rx="3" fill="#d9c187" />
+      <rect data-part="cell-positive" x={left + halfLength * 2 + 9} y={bodyTop + 7} width="7" height="4" rx="2" fill="#fbeecb" opacity="0.85" />
       {/* 正极凸点 */}
-      <rect x={left + halfLength * 2 + 15} y={bodyTop + 10} width="3.5" height={bodyHeight - 20} rx="1.6" fill="#c6ab74" />
+      <rect data-part="cell-positive" x={left + halfLength * 2 + 15} y={bodyTop + 10} width="3.5" height={bodyHeight - 20} rx="1.6" fill="#c6ab74" />
     </g>
   )
 }
@@ -192,22 +192,22 @@ export function BatteryCell({ x, y, halfLength = 76, radius = 17, uid }: { x: nu
 export function BatteryHolderE1({ x, y }: { x: number; y: number }) {
   const uid = useId()
   return (
-    <g transform={`translate(${x} ${y})`}>
+    <g data-anchor="root" transform={`translate(${x} ${y})`}>
       <GroundShadow cy={26} rx={126} ry={9} />
-      <BasePlate halfWidth={122} y={8} depth={18} />
+      <g data-part="baseplate"><BasePlate halfWidth={122} y={8} depth={18} /></g>
       {/* 电池托架：两道金属卡箍，把电池"卡"在底座上 */}
       {[-52, 54].map((cx) => (
         <g key={cx}>
-          <path d={`M ${cx - 5} 8 L ${cx - 5} -14 Q ${cx} -19 ${cx + 5} -14 L ${cx + 5} 8 Z`} fill={METAL_MID} />
-          <path d={`M ${cx - 5} 8 L ${cx - 5} -14 Q ${cx} -19 ${cx + 5} -14 L ${cx + 5} 8 Z`} fill="none" stroke={METAL_EDGE} strokeWidth="0.8" />
+          <path data-part="E1-clamp" d={`M ${cx - 5} 8 L ${cx - 5} -14 Q ${cx} -19 ${cx + 5} -14 L ${cx + 5} 8 Z`} fill={METAL_MID} />
+          <path data-part="E1-clamp" d={`M ${cx - 5} 8 L ${cx - 5} -14 Q ${cx} -19 ${cx + 5} -14 L ${cx + 5} 8 Z`} fill="none" stroke={METAL_EDGE} strokeWidth="0.8" />
         </g>
       ))}
       {/* 电池本体：躺在托架上（底边略高于底座顶面） */}
       <BatteryCell x={0} y={-24} halfLength={78} radius={18} uid={uid} />
       {/* 底座上的正负极刻印 */}
-      <text x="-92" y="21" fill="#f0f3f6" fontSize="13" fontWeight="700" textAnchor="middle">－</text>
-      <text x="92" y="21" fill="#f0f3f6" fontSize="13" fontWeight="700" textAnchor="middle">+</text>
-      <text x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">E1</text>
+      <text data-part="E1-polarity" x="-92" y="21" fill="#f0f3f6" fontSize="13" fontWeight="700" textAnchor="middle">－</text>
+      <text data-part="E1-polarity" x="92" y="21" fill="#f0f3f6" fontSize="13" fontWeight="700" textAnchor="middle">+</text>
+      <text data-part="E1-name" x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">E1</text>
     </g>
   )
 }
@@ -226,51 +226,51 @@ export function KnifeSwitch({ x, y, closed, label }: { x: number; y: number; clo
   const pivotY = -6
   const bladeAngle = closed ? 0 : -32
   return (
-    <g transform={`translate(${x} ${y})`}>
+    <g data-anchor="root" transform={`translate(${x} ${y})`}>
       <GroundShadow cy={24} rx={94} ry={9} />
       {/* 胶木底板（深棕，比金属底座更暗） */}
-      <rect x="-88" y="4" width="176" height="18" rx="2.4" fill="#2a2622" />
-      <rect x="-88" y="0" width="176" height="7" rx="2.2" fill="#3d3730" />
-      <rect x="-86" y="0.6" width="172" height="3" rx="1.5" fill="#57504a" opacity="0.9" />
-      <rect x="-88" y="16" width="176" height="6" rx="2" fill="#1b1815" opacity="0.9" />
+      <rect data-part="switch-plate" x="-88" y="4" width="176" height="18" rx="2.4" fill="#2a2622" />
+      <rect data-part="switch-plate" x="-88" y="0" width="176" height="7" rx="2.2" fill="#3d3730" />
+      <rect data-part="switch-plate" x="-86" y="0.6" width="172" height="3" rx="1.5" fill="#57504a" opacity="0.9" />
+      <rect data-part="switch-plate" x="-88" y="16" width="176" height="6" rx="2" fill="#1b1815" opacity="0.9" />
       {/* 底板四角螺钉 */}
       {[[-76, 13], [76, 13], [-76, 22], [76, 22]].map(([sx, sy], index) => (
-        <g key={index} transform={`translate(${sx} ${sy})`}>
-          <circle cx="0" cy="0" r="3.2" fill="#6e767e" />
-          <circle cx="-0.6" cy="-0.6" r="2" fill="#a9b0b7" opacity="0.8" />
+        <g key={index} data-anchor="local" transform={`translate(${sx} ${sy})`}>
+          <circle data-part="switch-screw" cx="0" cy="0" r="3.2" fill="#6e767e" />
+          <circle data-part="switch-screw" cx="-0.6" cy="-0.6" r="2" fill="#a9b0b7" opacity="0.8" />
         </g>
       ))}
       {/* 左侧铰链刀座（带夹片） */}
-      <rect x={hingeX - 8} y={pivotY - 12} width="16" height="20" rx="1.6" fill={BRASS} />
-      <rect x={hingeX - 8} y={pivotY - 12} width="16" height="4" rx="1.6" fill={BRASS_LIGHT} />
-      <rect x={hingeX - 8} y={pivotY - 12} width="16" height="20" rx="1.6" fill="none" stroke="#8a6f16" strokeWidth="0.7" />
+      <rect data-part="switch-jaw-hinge" x={hingeX - 8} y={pivotY - 12} width="16" height="20" rx="1.6" fill={BRASS} />
+      <rect data-part="switch-jaw-hinge" x={hingeX - 8} y={pivotY - 12} width="16" height="4" rx="1.6" fill={BRASS_LIGHT} />
+      <rect data-part="switch-jaw-hinge" x={hingeX - 8} y={pivotY - 12} width="16" height="20" rx="1.6" fill="none" stroke="#8a6f16" strokeWidth="0.7" />
       {/* 右侧触点座（刀片落下时卡进夹口） */}
-      <rect x={contactX - 8} y={pivotY - 11} width="16" height="19" rx="1.6" fill={BRASS} />
-      <rect x={contactX - 8} y={pivotY - 11} width="16" height="4" rx="1.6" fill={BRASS_LIGHT} />
-      <rect x={contactX - 8} y={pivotY - 11} width="16" height="19" rx="1.6" fill="none" stroke="#8a6f16" strokeWidth="0.7" />
+      <rect data-part="switch-jaw-contact" x={contactX - 8} y={pivotY - 11} width="16" height="19" rx="1.6" fill={BRASS} />
+      <rect data-part="switch-jaw-contact" x={contactX - 8} y={pivotY - 11} width="16" height="4" rx="1.6" fill={BRASS_LIGHT} />
+      <rect data-part="switch-jaw-contact" x={contactX - 8} y={pivotY - 11} width="16" height="19" rx="1.6" fill="none" stroke="#8a6f16" strokeWidth="0.7" />
       {/* 刀片：以左端铰链为轴旋转 */}
-      <g transform={`rotate(${bladeAngle} ${hingeX} ${pivotY})`}>
-        <rect x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="11" rx="2.4" fill={METAL_LIGHT} />
-        <rect x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="4" rx="2" fill="#ffffff" opacity="0.8" />
-        <rect x={hingeX + 6} y={pivotY + 2} width={contactX - hingeX - 4} height="3.5" rx="1.75" fill="#868d95" opacity="0.75" />
-        <rect x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="11" rx="2.4" fill="none" stroke="#767d85" strokeWidth="0.8" />
+      <g data-anchor="local" transform={`rotate(${bladeAngle} ${hingeX} ${pivotY})`}>
+        <rect data-part="switch-blade" x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="11" rx="2.4" fill={METAL_LIGHT} />
+        <rect data-part="switch-blade" x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="4" rx="2" fill="#ffffff" opacity="0.8" />
+        <rect data-part="switch-blade" x={hingeX + 6} y={pivotY + 2} width={contactX - hingeX - 4} height="3.5" rx="1.75" fill="#868d95" opacity="0.75" />
+        <rect data-part="switch-blade" x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="11" rx="2.4" fill="none" stroke="#767d85" strokeWidth="0.8" />
         {/* 刀尖（斜切） */}
-        <path d={`M ${contactX - 2} ${pivotY - 4.5} L ${contactX + 2} ${pivotY} L ${contactX - 2} ${pivotY + 4.5} Z`} fill="#c4cad1" />
+        <path data-part="switch-blade-tip" d={`M ${contactX - 2} ${pivotY - 4.5} L ${contactX + 2} ${pivotY} L ${contactX - 2} ${pivotY + 4.5} Z`} fill="#c4cad1" />
         {/* 黑色绝缘手柄 */}
-        <rect x={contactX + 1} y={pivotY - 5.5} width="26" height="11" rx="4" fill="#2c2a28" />
-        <rect x={contactX + 1} y={pivotY - 5.5} width="26" height="3.6" rx="1.8" fill="#4c4a47" />
-        <rect x={contactX + 1} y={pivotY - 5.5} width="26" height="11" rx="4" fill="none" stroke="#171513" strokeWidth="0.7" />
+        <rect data-part="switch-handle" x={contactX + 1} y={pivotY - 5.5} width="26" height="11" rx="4" fill="#2c2a28" />
+        <rect data-part="switch-handle" x={contactX + 1} y={pivotY - 5.5} width="26" height="3.6" rx="1.8" fill="#4c4a47" />
+        <rect data-part="switch-handle" x={contactX + 1} y={pivotY - 5.5} width="26" height="11" rx="4" fill="none" stroke="#171513" strokeWidth="0.7" />
         <g stroke="#4a4744" strokeWidth="0.8" opacity="0.8">
-          <line x1={contactX + 8} y1={pivotY - 4} x2={contactX + 8} y2={pivotY + 4} />
-          <line x1={contactX + 14} y1={pivotY - 4} x2={contactX + 14} y2={pivotY + 4} />
-          <line x1={contactX + 20} y1={pivotY - 4} x2={contactX + 20} y2={pivotY + 4} />
+          <line data-part="switch-handle-grip" x1={contactX + 8} y1={pivotY - 4} x2={contactX + 8} y2={pivotY + 4} />
+          <line data-part="switch-handle-grip" x1={contactX + 14} y1={pivotY - 4} x2={contactX + 14} y2={pivotY + 4} />
+          <line data-part="switch-handle-grip" x1={contactX + 20} y1={pivotY - 4} x2={contactX + 20} y2={pivotY + 4} />
         </g>
       </g>
       {/* 铰链轴销 */}
-      <circle cx={hingeX} cy={pivotY} r="6" fill={METAL_DARK} />
-      <circle cx={hingeX} cy={pivotY} r="6" fill="none" stroke={METAL_EDGE} strokeWidth="0.7" />
-      <circle cx={hingeX - 1.4} cy={pivotY - 1.4} r="2.4" fill="#e3e7eb" opacity="0.8" />
-      <text x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
+      <circle data-part="switch-hinge" cx={hingeX} cy={pivotY} r="6" fill={METAL_DARK} />
+      <circle data-part="switch-hinge" cx={hingeX} cy={pivotY} r="6" fill="none" stroke={METAL_EDGE} strokeWidth="0.7" />
+      <circle data-part="switch-hinge-gloss" cx={hingeX - 1.4} cy={pivotY - 1.4} r="2.4" fill="#e3e7eb" opacity="0.8" />
+      <text data-part="switch-name" x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
     </g>
   )
 }
@@ -285,20 +285,20 @@ function ScrewCap({ top, height, radius }: { top: number; height: number; radius
   return (
     <g>
       {/* 螺纹主体 */}
-      <rect x={-radius} y={top} width={radius * 2} height={height} fill="#a9afb6" />
+      <rect data-part="lamp-thread-body" x={-radius} y={top} width={radius * 2} height={height} fill="#a9afb6" />
       {Array.from({ length: turns }, (_, index) => {
         const y = top + 3 + (index * (height - 7)) / turns
-        return <ellipse key={index} cx="0" cy={y} rx={radius} ry="2.4" fill={index % 2 === 0 ? '#e7ebef' : '#7f868e'} opacity="0.9" />
+        return <ellipse key={index} data-part="lamp-thread-turn" cx="0" cy={y} rx={radius} ry="2.4" fill={index % 2 === 0 ? '#e7ebef' : '#7f868e'} opacity="0.9" />
       })}
       {/* 左右边缘暗部 */}
-      <rect x={-radius} y={top} width="2.6" height={height} fill="#5e656c" opacity="0.75" />
-      <rect x={radius - 2.6} y={top} width="2.6" height={height} fill="#5e656c" opacity="0.75" />
+      <rect data-part="lamp-thread-shade" x={-radius} y={top} width="2.6" height={height} fill="#5e656c" opacity="0.75" />
+      <rect data-part="lamp-thread-shade" x={radius - 2.6} y={top} width="2.6" height={height} fill="#5e656c" opacity="0.75" />
       {/* 中部高光 */}
-      <rect x={-radius * 0.35} y={top} width="2.4" height={height} fill="#ffffff" opacity="0.4" />
+      <rect data-part="lamp-thread-highlight" x={-radius * 0.35} y={top} width="2.4" height={height} fill="#ffffff" opacity="0.4" />
       {/* 底部绝缘环 + 中央触点（正好塞进灯座口，不留缝） */}
-      <rect x={-radius} y={top + height - 1} width={radius * 2} height="6" fill="#25282c" />
-      <ellipse cx="0" cy={top + height + 4} rx={radius - 1} ry="2.4" fill="#3a3e43" />
-      <ellipse cx="0" cy={top + height + 6} rx="3.4" ry="1.8" fill="#c6ab74" />
+      <rect data-part="lamp-insulator" x={-radius} y={top + height - 1} width={radius * 2} height="6" fill="#25282c" />
+      <ellipse data-part="lamp-insulator" cx="0" cy={top + height + 4} rx={radius - 1} ry="2.4" fill="#3a3e43" />
+      <ellipse data-part="lamp-contact" cx="0" cy={top + height + 6} rx="3.4" ry="1.8" fill="#c6ab74" />
     </g>
   )
 }
@@ -325,16 +325,17 @@ function GlassBulb({ top, bottom, halfWidth, lit, uid }: { top: number; bottom: 
         </radialGradient>
       </defs>
       {/* 玻璃体 */}
-      <path d={glassPath} fill={`url(#${uid}-glass)`} stroke={lit ? '#f0cf7a' : '#b9c7d5'} strokeWidth="1.6" />
+      <path data-part="lamp-glass" d={glassPath} fill={`url(#${uid}-glass)`} stroke={lit ? '#f0cf7a' : '#b9c7d5'} strokeWidth="1.6" />
       {/* 左侧高光条 */}
-      <path d={`M ${-halfWidth * 0.62} ${bottom - 22} C ${-halfWidth * 0.72} ${centerY} ${-halfWidth * 0.6} ${bulbTop + 12} ${-halfWidth * 0.28} ${bulbTop + 6}`} fill="none" stroke="#ffffff" strokeWidth="3.4" opacity="0.5" strokeLinecap="round" />
+      <path data-part="lamp-glass-highlight" d={`M ${-halfWidth * 0.62} ${bottom - 22} C ${-halfWidth * 0.72} ${centerY} ${-halfWidth * 0.6} ${bulbTop + 12} ${-halfWidth * 0.28} ${bulbTop + 6}`} fill="none" stroke="#ffffff" strokeWidth="3.4" opacity="0.5" strokeLinecap="round" />
       {/* 颈缩部：玻璃与灯头过渡（喇叭口收进螺纹灯头） */}
-      <path d={`M ${-halfWidth} ${bottom - 8} C ${-halfWidth * 0.55} ${bottom - 2} ${-halfWidth * 0.5} ${bottom} ${-halfWidth * 0.48} ${bottom} L ${halfWidth * 0.48} ${bottom} C ${halfWidth * 0.5} ${bottom} ${halfWidth * 0.55} ${bottom - 2} ${halfWidth} ${bottom - 8} Z`} fill={lit ? 'rgba(255,224,150,0.55)' : 'rgba(178,196,214,0.45)'} />
+      <path data-part="lamp-neck" d={`M ${-halfWidth} ${bottom - 8} C ${-halfWidth * 0.55} ${bottom - 2} ${-halfWidth * 0.5} ${bottom} ${-halfWidth * 0.48} ${bottom} L ${halfWidth * 0.48} ${bottom} C ${halfWidth * 0.5} ${bottom} ${halfWidth * 0.55} ${bottom - 2} ${halfWidth} ${bottom - 8} Z`} fill={lit ? 'rgba(255,224,150,0.55)' : 'rgba(178,196,214,0.45)'} />
       {/* 内部引线两根 */}
-      <path d={`M -6 ${bottom - 4} L -6 ${centerY + 4} L -3 ${centerY - 4}`} fill="none" stroke="#8c939b" strokeWidth="1.4" />
-      <path d={`M 6 ${bottom - 4} L 6 ${centerY + 4} L 3 ${centerY - 4}`} fill="none" stroke="#8c939b" strokeWidth="1.4" />
+      <path data-part="lamp-lead" d={`M -6 ${bottom - 4} L -6 ${centerY + 4} L -3 ${centerY - 4}`} fill="none" stroke="#8c939b" strokeWidth="1.4" />
+      <path data-part="lamp-lead" d={`M 6 ${bottom - 4} L 6 ${centerY + 4} L 3 ${centerY - 4}`} fill="none" stroke="#8c939b" strokeWidth="1.4" />
       {/* 灯丝：M 形钨丝 */}
       <path
+        data-part="lamp-filament"
         d={`M -3 ${centerY - 4} L -6 ${centerY - 16} L 0 ${centerY - 6} L 6 ${centerY - 16} L 3 ${centerY - 4}`}
         fill="none"
         stroke={lit ? '#fff3b0' : '#c3ccd6'}
@@ -355,30 +356,30 @@ export function LampHolderL1({ x, y, lit }: { x: number; y: number; lit: boolean
   const uid = useId()
   const socketTop = -26
   return (
-    <g transform={`translate(${x} ${y})`}>
+    <g data-anchor="root" transform={`translate(${x} ${y})`}>
       {lit && <circle cx="0" cy="-58" r="52" fill="#ffd76b" opacity="0.2" />}
       {lit && <circle cx="0" cy="-58" r="30" fill="#ffe9a8" opacity="0.28" />}
       <GroundShadow cy={26} rx={88} ry={9} />
-      <BasePlate halfWidth={84} y={8} depth={18} />
+      <g data-part="baseplate"><BasePlate halfWidth={84} y={8} depth={18} /></g>
       {/* 灯座立柱：金属筒 + 上沿内收 */}
-      <path d="M -22 -26 L 22 -26 L 19 -6 L -19 -6 Z" fill={METAL_MID} />
-      <path d="M -22 -26 L -22 -22 L 22 -22 L 22 -26 Z" fill="#eef1f4" opacity="0.6" />
-      <ellipse cx="0" cy="-26" rx="22" ry="6" fill={METAL_DARK} />
-      <ellipse cx="0" cy="-27" rx="18" ry="4.6" fill="#3a3f45" />
+      <path data-part="lamp-socket" d="M -22 -26 L 22 -26 L 19 -6 L -19 -6 Z" fill={METAL_MID} />
+      <path data-part="lamp-socket" d="M -22 -26 L -22 -22 L 22 -22 L 22 -26 Z" fill="#eef1f4" opacity="0.6" />
+      <ellipse data-part="lamp-socket" cx="0" cy="-26" rx="22" ry="6" fill={METAL_DARK} />
+      <ellipse data-part="lamp-socket" cx="0" cy="-27" rx="18" ry="4.6" fill="#3a3f45" />
       {/* 灯座左高光 / 右暗部 */}
-      <path d="M -22 -26 L -19 -6 L -14 -6 L -17 -26 Z" fill="#f0f3f6" opacity="0.45" />
-      <path d="M 22 -26 L 19 -6 L 15 -6 L 18 -26 Z" fill="#5f666e" opacity="0.5" />
+      <path data-part="lamp-socket" d="M -22 -26 L -19 -6 L -14 -6 L -17 -26 Z" fill="#f0f3f6" opacity="0.45" />
+      <path data-part="lamp-socket" d="M 22 -26 L 19 -6 L 15 -6 L 18 -26 Z" fill="#5f666e" opacity="0.5" />
       {/* 底座上的两枚小螺钉（灯座固定） */}
       {[-58, 58].map((sx) => (
-        <g key={sx} transform={`translate(${sx} 17)`}>
-          <circle cx="0" cy="0" r="3.4" fill={METAL_MID} />
-          <circle cx="-0.7" cy="-0.7" r="2.1" fill="#dfe4e9" opacity="0.85" />
+        <g key={sx} data-anchor="local" transform={`translate(${sx} 17)`}>
+          <circle data-part="lamp-socket-screw" cx="0" cy="0" r="3.4" fill={METAL_MID} />
+          <circle data-part="lamp-socket-screw" cx="-0.7" cy="-0.7" r="2.1" fill="#dfe4e9" opacity="0.85" />
         </g>
       ))}
       {/* 螺旋灯头 + 玻璃泡：玻璃颈部直接坐在灯头螺纹上，中间不留缝（否则灯泡像飘着） */}
       <ScrewCap top={socketTop - 13} height={15} radius={11.5} />
       <GlassBulb top={socketTop - 84} bottom={socketTop - 11} halfWidth={25} lit={lit} uid={uid} />
-      <text x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">L1</text>
+      <text data-part="lamp-name" x="0" y="46" fill="#dfe4ea" fontSize="17" fontWeight="600" textAnchor="middle" letterSpacing="0.5">L1</text>
     </g>
   )
 }
@@ -453,7 +454,7 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
       {[0, 1, 2, 3].map((value, index) => {
         const point = polar(-NEEDLE_LIMIT_ANGLE + (index / 3) * NEEDLE_LIMIT_ANGLE * 2, radius - 18)
         return (
-          <text key={`ov${value}`} x={point.x} y={point.y + 3.4} fill="#1d1a16" fontSize="10.5" fontWeight="700" textAnchor="middle">
+          <text key={`ov${value}`} data-part="ammeter-number-outer" x={point.x} y={point.y + 3.4} fill="#1d1a16" fontSize="10.5" fontWeight="700" textAnchor="middle">
             {value}
           </text>
         )
@@ -462,25 +463,25 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
       {[0, 0.2, 0.4, 0.6].map((value, index) => {
         const point = polar(-NEEDLE_LIMIT_ANGLE + (index / 3) * NEEDLE_LIMIT_ANGLE * 2, radius - 35)
         return (
-          <text key={`iv${value}`} x={point.x} y={point.y + 3.2} fill="#463f37" fontSize="8.4" textAnchor="middle">
+          <text key={`iv${value}`} data-part="ammeter-number-inner" x={point.x} y={point.y + 3.2} fill="#463f37" fontSize="8.4" textAnchor="middle">
             {value}
           </text>
         )
       })}
       {/* 指针：细长红针 + 尾部配重 */}
-      <g transform={`rotate(${angle} 0 ${pivotY})`}>
+      <g data-anchor="local" transform={`rotate(${angle} 0 ${pivotY})`}>
         {/* 尾部配重（真实的动圈表头都有一小截反向尾针） */}
-        <rect x="-2.6" y={pivotY} width="5.2" height="7" rx="2.4" fill="#7d1c14" />
+        <rect data-part="ammeter-needle-tail" x="-2.6" y={pivotY} width="5.2" height="7" rx="2.4" fill="#7d1c14" />
         {/* 针体：细长、尖端收拢 */}
         <path data-part="ammeter-needle" d={`M -1 ${pivotY} L 1 ${pivotY} L 0.55 ${pivotY - radius + 5} L -0.55 ${pivotY - radius + 5} Z`} fill={overRange ? '#e02b1a' : '#c6281c'} />
         {/* 针体高光 */}
-        <path d={`M -0.4 ${pivotY} L 0.1 ${pivotY} L 0.25 ${pivotY - radius + 8} L -0.15 ${pivotY - radius + 8} Z`} fill="#f4796b" opacity="0.85" />
+        <path data-part="ammeter-needle-gloss" d={`M -0.4 ${pivotY} L 0.1 ${pivotY} L 0.25 ${pivotY - radius + 8} L -0.15 ${pivotY - radius + 8} Z`} fill="#f4796b" opacity="0.85" />
       </g>
       {/* 指针转轴帽 */}
-      <ellipse cx="0" cy={pivotY + 1} rx="6.8" ry="5.4" fill="#000000" opacity="0.22" />
+      <ellipse data-part="ammeter-needle-hub-shadow" cx="0" cy={pivotY + 1} rx="6.8" ry="5.4" fill="#000000" opacity="0.22" />
       <circle data-part="ammeter-needle-hub" cx="0" cy={pivotY} r="6" fill="#5d636a" />
-      <circle cx="0" cy={pivotY} r="6" fill="none" stroke="#393e44" strokeWidth="0.8" />
-      <path d="M -4.4 -0.6 A 5 5 0 0 1 3.2 -4.2" fill="none" stroke="#d7dce1" strokeWidth="1.5" opacity="0.85" />
+      <circle data-part="ammeter-needle-hub" cx="0" cy={pivotY} r="6" fill="none" stroke="#393e44" strokeWidth="0.8" />
+      <path data-part="ammeter-needle-hub-gloss" d="M -4.4 -0.6 A 5 5 0 0 1 3.2 -4.2" fill="none" stroke="#d7dce1" strokeWidth="1.5" opacity="0.85" />
       {/* 中央量程字符 A（真实表盘印在转轴下方，避开指针行程） */}
       <text data-part="ammeter-glyph" x="0" y={pivotY - 4} fill="#232019" fontSize="16" fontWeight="700" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic">A</text>
     </g>
@@ -510,7 +511,7 @@ export function AmmeterA1({
   const displayReading = safeReading(reading)
   const readingText = `${displayReading.toFixed(2)} A`
   return (
-    <g transform={`translate(${x} ${y})`}>
+    <g data-anchor="root" transform={`translate(${x} ${y})`}>
       <GroundShadow cy={44} rx={86} ry={9} />
       {/*
         真实电流表的结构：表壳正面是**完整的一大块表盘**，接线柱则长在壳体**下沿的接线台肩**上，
@@ -521,35 +522,35 @@ export function AmmeterA1({
       */}
       {/* 外壳：深色仪表壳，顶面受光、底面暗 */}
       <rect data-part="ammeter-shell" x="-84" y="-126" width="168" height="166" rx="6" fill="#25292e" />
-      <rect x="-84" y="-126" width="168" height="10" rx="5" fill="#3b4148" />
-      <rect x="-84" y="30" width="168" height="10" rx="5" fill="#14171a" />
-      <rect x="-84" y="-126" width="168" height="166" rx="6" fill="none" stroke="#101317" strokeWidth="1" />
+      <rect data-part="ammeter-shell-edge" x="-84" y="-126" width="168" height="10" rx="5" fill="#3b4148" />
+      <rect data-part="ammeter-shell-edge" x="-84" y="30" width="168" height="10" rx="5" fill="#14171a" />
+      <rect data-part="ammeter-shell-outline" x="-84" y="-126" width="168" height="166" rx="6" fill="none" stroke="#101317" strokeWidth="1" />
       {/* 顶面高光条 */}
-      <rect x="-78" y="-124" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
+      <rect data-part="ammeter-shell-highlight" x="-78" y="-124" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
       {/* 内凹表盘（带内阴影：上/左深，下/右浅）—— 收在台肩上沿之上 */}
       <rect data-part="ammeter-dial" x="-76" y="-122" width="152" height="66" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
-      <rect x="-76" y="-118" width="152" height="6" rx="3" fill="#000000" opacity="0.22" />
-      <rect x="-76" y="-118" width="5" height="58" rx="2" fill="#000000" opacity="0.16" />
-      <rect x="71" y="-118" width="5" height="58" rx="2" fill="#ffffff" opacity="0.5" />
-      <rect x="-76" y="-66" width="152" height="6" rx="3" fill="#ffffff" opacity="0.45" />
+      <rect data-part="ammeter-dial-shadow" x="-76" y="-118" width="152" height="6" rx="3" fill="#000000" opacity="0.22" />
+      <rect data-part="ammeter-dial-shadow" x="-76" y="-118" width="5" height="58" rx="2" fill="#000000" opacity="0.16" />
+      <rect data-part="ammeter-dial-highlight" x="71" y="-118" width="5" height="58" rx="2" fill="#ffffff" opacity="0.5" />
+      <rect data-part="ammeter-dial-highlight" x="-76" y="-66" width="152" height="6" rx="3" fill="#ffffff" opacity="0.45" />
       <DialFace activeRange={activeRange} reading={displayReading} overRange={overRange} />
       {/* 玻璃面反光斜条 */}
-      <path d="M -70 -66 L 18 -114 L 36 -114 L -52 -66 Z" fill="#ffffff" opacity="0.13" />
+      <path data-part="ammeter-glass-reflection" d="M -70 -66 L 18 -114 L 36 -114 L -52 -66 Z" fill="#ffffff" opacity="0.13" />
       {/*
         下沿的接线台肩：把三只接线柱整体包在槽里。
         必须画在**表盘之后**，否则会被表盘盖住；
         刻字也必须画在壳体之后（浏览器实测：先画会被壳体整个遮掉）。
       */}
       <rect data-part="ammeter-terminal-flange" x="-70" y="-58" width="140" height="62" rx="4" fill="#1e2126" />
-      <rect x="-70" y="-58" width="140" height="5" rx="2.5" fill="#3a4048" />
-      <rect x="-70" y="-22" width="140" height="30" rx="4" fill="none" stroke="#0d1013" strokeWidth="0.9" />
+      <rect data-part="ammeter-flange-highlight" x="-70" y="-58" width="140" height="5" rx="2.5" fill="#3a4048" />
+      <rect data-part="ammeter-flange-border" x="-70" y="-22" width="140" height="30" rx="4" fill="none" stroke="#0d1013" strokeWidth="0.9" />
       {/* 接线柱刻字：x 与接线柱局部坐标对齐（-43.8 / -0.7 / 40.8），压在旋帽下方 */}
       <text data-part="ammeter-label-neg" x="-43.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">－</text>
       <text data-part="ammeter-label-06" x="-0.7" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">0.6A</text>
       <text data-part="ammeter-label-3" x="40.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">3A</text>
       {/* 表盘上方的读数数字（大字，方便投屏） */}
-      <text x="0" y="-134" fill="#f2f5f8" fontSize="15" fontWeight="700" textAnchor="middle">{readingText}<tspan fill="#9aa4b2" fontSize="11" fontWeight="600">{`  ${spec.label}`}</tspan></text>
-      <text x="98" y="-24" fill="#dfe4ea" fontSize="16" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
+      <text data-part="ammeter-reading" x="0" y="-134" fill="#f2f5f8" fontSize="15" fontWeight="700" textAnchor="middle">{readingText}<tspan fill="#9aa4b2" fontSize="11" fontWeight="600">{`  ${spec.label}`}</tspan></text>
+      <text data-part="ammeter-name" x="98" y="-24" fill="#dfe4ea" fontSize="16" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
     </g>
   )
 }
