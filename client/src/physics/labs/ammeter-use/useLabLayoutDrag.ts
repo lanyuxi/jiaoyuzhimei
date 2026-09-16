@@ -76,7 +76,13 @@ export interface UseLabLayoutDragOptions {
    * 只有明确按在接线柱上才让位给拉线逻辑，其余区域一律算拖动器材。
    */
   nearestTerminal?(position: Position): { id: AmmeterTerminalId; position: Position } | null
-  /** 指针屏幕坐标 → 画布坐标 */
+  /**
+   * 指针屏幕坐标 → 画布坐标。
+   *
+   * **必须与 `visibleRect()` 同口径**（都经 `resolveViewport` 反投影）：
+   * 拖动映射与可见范围一旦用两套变换，"拖到底"的落点就会比"可见下界"多出若干像素，
+   * 那几像素既看不见也不会触发收回（实测 7～8px）。
+   */
   scenePosition(event: PointerEvent<SVGElement>): Position | null
   /**
    * 当前可见的画布矩形（布局坐标）。
