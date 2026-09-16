@@ -105,16 +105,22 @@ describe('器材名称与数字不可被选中', () => {
     expect(html).not.toContain('select-text')
   })
 
+  /**
+   * 用真正的嵌套关系判断，而不是「字符串下标大小」。
+   *
+   * 旧写法只断言 `第一个 <text> 出现在根标签之后`，这并不能保证每个 <text>
+   * 都在禁选子树里 —— 只要在禁选容器**之后**再挂一个游离 <text>，
+   * `indexOf('<text')` 仍指向第一个、`lastIndexOf('</text>')` 指向游离那个，
+   * 两个不等式照样成立，游离文字静默漏网（实测已复现）。
+   *
+   * 这里改为对 HTML 做一次简单的标签配平扫描：把每个 <text> 的开标签位置
+   * 与它所属的祖先链算出来，再要求**每一个** <text> 都能追溯到带 select-none
+   * 的祖先，否则点名报出是哪一段文字漏在禁选子树之外。
+   */
   it('器材名/读数所在的每个 <text> 都落在禁选子树内', () => {
     const html = render()
-    // 所有 <text> 都必须出现在禁选容器之后（即被它包含），不能游离在外
-    const rootClassEnd = html.indexOf('>') + 1
-    const firstText = html.indexOf('<text')
-    const lastText = html.lastIndexOf('</text>')
-    expect(firstText).toBeGreaterThan(rootClassEnd)
-    expect(lastText).toBeGreaterThan(firstText)
-    // 禁选容器之后的 DOM 里不能再出现「结束容器又开新容器」的旁路
-    expect(html.slice(rootClassEnd, firstText)).not.toContain('</svg>')
+    const orphans = collectTextsOutsideSelectNone(html)
+    expect(orphans, `以下 <text> 游离在禁选子树之外：${orphans.join(' / ')}`).toEqual([])
   })
 
   it('实验室里的表单控件不会被禁选误伤（输入/复制仍然可用）', () => {
@@ -246,3 +252,72 @@ describe('相机变换下的拖动（缩放/平移后仍要能正确拖动）', 
     expect(render()).toContain('复位视角')
   })
 })
+
+/**
+ * 扫描渲染出的 HTML，返回「不在任何 select-none 子树内」的 <text> 文本内容。
+ *
+ * 做法：逐字符做一次轻量标签扫描，维护祖先栈；遇到 `<text>` 时检查当前栈里
+ * 是否存在带 select-none class 的元素。只处理本项目会用到的简单 HTML 形状
+ * （无 `<script>` 内嵌、属性值里不含裸 `>` 的边界情况由引号扫描规避）。
+ */
+function collectTextsOutsideSelectNone(html: string): string[] {
+  const stack: Array<{ tag: string; selectNone: boolean }> = []
+  const orphans: string[] = []
+  let i = 0
+  while (i < html.length) {
+    const lt = html.indexOf('<', i)
+    if (lt === -1) break
+    // 属性值里可能含 '>'，按引号状态找到真正的标签结束位置
+    let j = lt + 1
+    let quote: string | null = null
+    while (j < html.length) {
+      const ch = html[j]
+      if (quote !== null) {
+        if (ch === quote) quote = null
+      } else if (ch === '"' || ch === "'") {
+        quote = ch
+      } else if (ch === '>') {
+        break
+      }
+      j += 1
+    }
+    const rawTag = html.slice(lt + 1, j)
+    const isClose = rawTag.startsWith('/')
+    const isSelfClosing = rawTag.endsWith('/')
+    const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+
+    if (isClose) {
+      // 弹到匹配的开标签
+      for (let k = stack.length - 1; k >= 0; k -= 1) {
+        if (stack[k].tag === name) {
+          stack.length = k
+          break
+        }
+      }
+      i = j + 1
+      continue
+    }
+
+    const inheritedSelectNone = stack.length > 0 && stack[stack.length - 1].selectNone
+    const ownSelectNone = /\bselect-none\b/.test(rawTag)
+
+    if (name === 'text') {
+      // SVG <text> 自身不会设 select-none，靠祖先继承
+      if (!ownSelectNone && !inheritedSelectNone) {
+        const close = html.indexOf('</text>', j)
+        orphans.push(html.slice(j + 1, close === -1 ? j + 1 : close).trim())
+      }
+    }
+
+    if (!isSelfClosing && !isVoidElement(name)) {
+      stack.push({ tag: name, selectNone: ownSelectNone || inheritedSelectNone })
+    }
+    i = j + 1
+  }
+  return orphans
+}
+
+const VOID_ELEMENTS = new Set(['br', 'hr', 'img', 'input', 'meta', 'link', 'source', 'path', 'circle', 'rect', 'ellipse', 'line', 'polyline', 'polygon', 'use', 'stop'])
+function isVoidElement(name: string): boolean {
+  return VOID_ELEMENTS.has(name)
+}
