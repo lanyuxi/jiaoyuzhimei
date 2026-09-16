@@ -88,9 +88,10 @@ describe('器材名称与数字不可被选中', () => {
 
   it('场景根容器自带 select-none（不依赖样式表加载顺序的双保险）', () => {
     const html = render()
-    const rootClass = html.slice(0, html.indexOf('>') + 1)
-    expect(rootClass).toContain('select-none')
-    expect(rootClass).not.toContain('select-text')
+    const rootTag = html.slice(0, html.indexOf('>') + 1)
+    // 必须是真的 class token，而不是「某个属性值里恰好含 select-none 子串」
+    expect(hasClass(rootTag, 'select-none'), '场景根容器缺少 select-none 类（真类名，不是属性值里的子串）').toBe(true)
+    expect(hasClass(rootTag, 'select-text'), '场景根容器不得放开文字选中').toBe(false)
   })
 
   it('器材名与刻度数字仍然渲染，只是不可选中（不能为了禁选而删掉文字）', () => {
@@ -261,7 +262,7 @@ describe('相机变换下的拖动（缩放/平移后仍要能正确拖动）', 
  * （无 `<script>` 内嵌、属性值里不含裸 `>` 的边界情况由引号扫描规避）。
  */
 function collectTextsOutsideSelectNone(html: string): string[] {
-  const stack: Array<{ tag: string; selectNone: boolean }> = []
+  const stack: Array<{ tag: string; ownNone: boolean; ownExempt: boolean; effectiveNone: boolean }> = []
   const orphans: string[] = []
   let i = 0
   while (i < html.length) {
@@ -298,23 +299,45 @@ function collectTextsOutsideSelectNone(html: string): string[] {
       continue
     }
 
-    const inheritedSelectNone = stack.length > 0 && stack[stack.length - 1].selectNone
-    const ownSelectNone = /\bselect-none\b/.test(rawTag)
+    // 按 index.css 的真实级联计算当前节点的有效 user-select：
+    //   1. [data-immersive-lab] *            → user-select: none
+    //   2. [data-immersive-lab] [data-selectable-content] * → user-select: text（更具体，覆盖上一条）
+    // 豁免子树会把继承来的 none **重置**回 text，所以「有 select-none 祖先 ⇒ 安全」这个模型是错的。
+    const ownNone = hasClass(rawTag, 'select-none')
+    const ownExempt = hasAttr(rawTag, 'data-selectable-content')
+    const parentEffectiveNone = stack.length > 0 ? stack[stack.length - 1].effectiveNone : false
+    const effectiveNone = ownNone || (ownExempt ? false : parentEffectiveNone)
 
     if (name === 'text') {
-      // SVG <text> 自身不会设 select-none，靠祖先继承
-      if (!ownSelectNone && !inheritedSelectNone) {
+      // SVG <text> 自身不会设 select-none，靠祖先链的级联结果决定可不可选
+      if (!effectiveNone) {
         const close = html.indexOf('</text>', j)
         orphans.push(html.slice(j + 1, close === -1 ? j + 1 : close).trim())
       }
     }
 
     if (!isSelfClosing && !isVoidElement(name)) {
-      stack.push({ tag: name, selectNone: ownSelectNone || inheritedSelectNone })
+      stack.push({ tag: name, ownNone, ownExempt, effectiveNone })
     }
     i = j + 1
   }
   return orphans
+}
+
+/**
+ * 真 class token 判定：只看 class="…" 属性值，按空白切分后精确匹配。
+ * 用 substring（`rawTag.includes('select-none')`）会被「把类名挪进无关属性值」骗过，
+ * 实测 `data-hint="select-none"` / `lab-select-none-x` 都能让旧断言静默全绿。
+ */
+function hasClass(rawTag: string, token: string): boolean {
+  const match = rawTag.match(/class\s*=\s*"([^"]*)"/i) ?? rawTag.match(/class\s*=\s*'([^']*)'/i)
+  if (!match) return false
+  return match[1].split(/\s+/).includes(token)
+}
+
+/** 真属性名判定（属性可以无值），避免 substring 误判 */
+function hasAttr(rawTag: string, attr: string): boolean {
+  return new RegExp(`(^|[\\s"'])${attr}([\\s=/>]|$)`, 'i').test(rawTag)
 }
 
 const VOID_ELEMENTS = new Set(['br', 'hr', 'img', 'input', 'meta', 'link', 'source', 'path', 'circle', 'rect', 'ellipse', 'line', 'polyline', 'polygon', 'use', 'stop'])
