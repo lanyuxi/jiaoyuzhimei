@@ -15,6 +15,7 @@
  * 全部为纯函数 + 不可变数据，便于单测（layout.test.ts）。
  */
 import type { Position } from '../../runtime/types'
+import { unprojectPerspective } from '../../runtime/immersive/canvas'
 import {
   COMPETITOR_TERMINAL_WORLD,
   COMPETITOR_WIRES,
@@ -193,11 +194,40 @@ export function terminalPositions(layout: LabLayout): Record<AmmeterTerminalId, 
 }
 
 /**
- * 器材可移动的世界范围。
- * 「无限画布」不等于无限乱飘：给一个足够大的工作世界（约 ±8 屏），
- * 学生可以把器材摆到任意位置构图，但不会因为拖太远而彻底丢失。
+ * 器材可移动的世界范围 —— **只是防丢失的兜底，不是画布边界**。
+ *
+ * 这里曾经是一个 `{minX:-1440, minY:-900, maxX:2400, maxY:1440}` 的硬钳制，
+ * 那正是"固定画布"的根因：
+ *   · 相机在 `fitContent` 之后把 960×540 视图放大到约 1.4～1.6 倍，
+ *     屏幕上能看到的世界范围只有约 1000×420；
+ *   · 而钳制允许的可拖世界宽 3840、高 2340 —— 比可见范围大好几倍。
+ *   结果是学生把器材往边上一拖，器材立刻跑到**屏幕外面**，
+ *   看起来就是"拖动一下就没了 / 被遮挡了"。
+ *
+ * 现在改成以「初始构图」为基准、向外放宽 `UNREACHABLE_WORLD_MARGIN` 的大范围，
+ * 语义是：**画布在屏幕范围内的任意位置都能放器材，这个范围只是防止
+ * 学生手滑把器材拖到再也找不回来的地方**（配合"复位摆位"可一键恢复）。
  */
-export const CANVAS_WORLD_BOUNDS = { minX: -1440, minY: -900, maxX: 2400, maxY: 1440 } as const
+export const UNREACHABLE_WORLD_MARGIN = 6000
+
+export const CANVAS_WORLD_BOUNDS = (() => {
+  let minX = Number.POSITIVE_INFINITY
+  let maxX = Number.NEGATIVE_INFINITY
+  let minY = Number.POSITIVE_INFINITY
+  let maxY = Number.NEGATIVE_INFINITY
+  for (const center of Object.values(DEFAULT_COMPONENT_CENTERS)) {
+    minX = Math.min(minX, center.x)
+    maxX = Math.max(maxX, center.x)
+    minY = Math.min(minY, center.y)
+    maxY = Math.max(maxY, center.y)
+  }
+  return {
+    minX: minX - UNREACHABLE_WORLD_MARGIN,
+    maxX: maxX + UNREACHABLE_WORLD_MARGIN,
+    minY: minY - UNREACHABLE_WORLD_MARGIN,
+    maxY: maxY + UNREACHABLE_WORLD_MARGIN,
+  } as const
+})()
 
 export function clampComponentPosition(id: LabComponentId, position: Position): Position {
   const margin = COMPONENT_BODY_MARGIN[id]
@@ -208,12 +238,20 @@ export function clampComponentPosition(id: LabComponentId, position: Position): 
 }
 
 /** 器材移动时应保持的最小可见边距（拖到边界也不让器材跑出世界） */
+/**
+ * 器材本体的可见边距（半宽 / 半高）。
+ *
+ * 语义是「器材中心 ± 该边距 = 器材本体外接矩形」，收回逻辑与命中区都以它为准。
+ * 历史上它比 `COMPONENT_HIT_RADIUS` 小 32px —— 那 32px 就是拖动命中区相对本体
+ * 多出来的"外扩量"，导致按边距收回时命中区仍会探出屏幕（器材看着被切掉一块）。
+ * 现在两者取同一个值：收回后器材本体与命中区都完整落在可见范围内。
+ */
 export const COMPONENT_BODY_MARGIN: Readonly<Record<LabComponentId, { x: number; y: number }>> = {
-  E1: { x: 128, y: 60 },
-  S1: { x: 96, y: 60 },
-  S2: { x: 96, y: 60 },
-  L1: { x: 90, y: 78 },
-  A1: { x: 92, y: 84 },
+  E1: { x: 124, y: 60 },
+  S1: { x: 92, y: 60 },
+  S2: { x: 92, y: 60 },
+  L1: { x: 86, y: 78 },
+  A1: { x: 86, y: 84 },
 }
 
 /** 移动一件器材：只改它自己的坐标，接线柱与导线端点自动跟随 */
@@ -221,14 +259,18 @@ export function moveComponent(layout: LabLayout, id: LabComponentId, position: P
   return { ...layout, components: { ...layout.components, [id]: clampComponentPosition(id, position) } }
 }
 
-/** 拖动器材本体（而不是拖接线柱）时的命中半径 */
-export const COMPONENT_HIT_RADIUS: Readonly<Record<LabComponentId, { rx: number; ry: number }>> = {
-  E1: { rx: 124, ry: 46 },
-  S1: { rx: 92, ry: 46 },
-  S2: { rx: 92, ry: 46 },
-  L1: { rx: 86, ry: 66 },
-  A1: { rx: 86, ry: 64 },
-}
+/**
+ * 拖动器材本体（而不是拖接线柱）时的命中半径。
+ *
+ * 必须与 `COMPONENT_BODY_MARGIN` 同宽同高：命中区一旦比本体大，
+ * 按本体边距收回之后命中区仍会探出可见范围，看起来就是"器材被切掉一块"。
+ */
+export const COMPONENT_HIT_RADIUS: Readonly<Record<LabComponentId, { rx: number; ry: number }>> = Object.fromEntries(
+  (Object.keys(COMPONENT_BODY_MARGIN) as LabComponentId[]).map((id) => [
+    id,
+    { rx: COMPONENT_BODY_MARGIN[id].x, ry: COMPONENT_BODY_MARGIN[id].y },
+  ]),
+) as Readonly<Record<LabComponentId, { rx: number; ry: number }>>
 
 /** 命中测试：画布坐标落在哪件器材上（后画的优先，与绘制顺序一致） */
 export function componentAt(layout: LabLayout, position: Position): LabComponentId | null {
@@ -360,4 +402,217 @@ export function layoutBounds(layout: LabLayout): { minX: number; minY: number; m
 /** 重置布局：回到竞品原始构图 */
 export function resetLayout(): LabLayout {
   return createDefaultLayout()
+}
+
+/* ------------------------------------------------------------------ *
+ * 布局不变量：全屏可见性（对应需求「整个屏幕的无限画布 / 拖动不被遮挡」）
+ * ------------------------------------------------------------------ */
+
+/**
+ * 画布可见范围（画布坐标）。
+ *
+ * 这是"整个屏幕的无限画布"的**可判定定义**：
+ * 一块相机变换后的画布，在屏幕上任何位置都是可达的，
+ * 因此真正需要保证的不是某个固定矩形，而是「器材不要被拖进一块再也够不着的地方」。
+ *
+ * 传入的值 = 布局坐标系里当前可见的那块矩形（由屏幕矩形经相机反算得到）。
+ * `null` 表示"不限制"（例如相机尺寸还没测量出来）。
+ */
+export type CanvasVisibleRect = { minX: number; minY: number; maxX: number; maxY: number } | null
+
+/** 触屏 / 悬浮控件会盖住画布边缘，留出安全内缩，避免器材被顶栏底栏压住 */
+export const VISIBLE_SAFE_INSET = 72
+
+/**
+ * 两套边界，一套用于「判有没有跑丢」，一套用于「收回到哪」。
+ *
+ * 这里必须分两套，不能只写一个阈值 —— 实测数据说明为什么：
+ * 1688×841 的屏幕上，扣掉顶部 56px 标题条与底部 60px 读数条后，
+ * 可见条带只剩约 512px 高，而初始构图里 E1 的纵向中心离可见顶边只有约 56px。
+ * 也就是说**初始构图本身就贴边**，"本体一丝不差地全在视野内"这个条件，
+ * 与"一进页面不要无谓地挪动器材"在物理上无法同时满足。
+ *
+ * 于是语义这样定义（两者天然不矛盾）：
+ *
+ *   · **判据（gate）**：器材中心落在「可见范围向外放宽 AUDIBLE_MARGIN」之内，
+ *     就算"还在屏幕上"。放宽量取器材自身的半宽/半高 ——
+ *     也就是**器材至少有一半在视野里**才叫跑丢。这对应学生真实的感受：
+ *     还能看见、还能抓住，就不该被系统挪走。
+ *   · **收回目标（rescue）**：把中心尽量挪到"本体完整可见"的位置；
+ *     若视野太窄放不下整件器材，就退化为"尽量贴边不越界"。
+ *
+ * 因为 gate 的可用范围（可见范围 + 半宽）**严格大于** rescue 的目标范围
+ * （可见范围 − 内缩 − 半宽），所以"收回之后必定不再被判出屏幕"是恒成立的，
+ * 不存在自相矛盾的死循环。
+ */
+/**
+ * 判据：器材中心是否仍落在可见范围之内。
+ *
+ * 语义刻意**不做任何放宽**。曾经试过"允许中心越出半个身位"，
+ * 代价是器材上缘会直接越出屏幕 `1.5 × 半高`（A1 实测越界 92px），
+ * 画面上就是"器材被切掉一块"。
+ *
+ * 取"中心必须在可见范围内"之后，这条判据同时满足两个要求：
+ *   · 语义干净：中心在视野里 → 本体至少一半在屏幕里，与学生"还看得见"的直观一致；
+ *   · 与收回逻辑自洽：收回目标（本体尽量完整可见）比判据更严格，
+ *     所以"收回之后必定不再被判为跑出屏幕"恒成立，不会互相打架。
+ */
+export function isComponentOffCanvas(
+  layout: LabLayout,
+  id: LabComponentId,
+  visible: CanvasVisibleRect,
+): boolean {
+  if (visible === null) return false
+  const center = layout.components[id]
+  return (
+    center.x < visible.minX || center.x > visible.maxX || center.y < visible.minY || center.y > visible.maxY
+  )
+}
+
+/**
+ * 收回目标盒：让器材本体尽量完整可见。
+ *
+ * 内缩量 = 器材半宽半高 + 舒适内缩，并夹在「视野放得下整件器材」的上限内。
+ *
+ * 这里**刻意不把"初始构图"纳入约束**。曾经为了让"初始构图一动不动"，
+ * 把内缩量按初始位置再收一次 —— 结果是收回盒被压到很窄的一段
+ * （实测 A1 的盒纵向只剩 180..379），器材被拖到下方后收回只能挪回 379，
+ * 画面上**照样被切掉 97px**。现在"别动没跑丢的器材"由判据那层门禁保证
+ * （判据通过就绝不调用收回），两个关注点分开，盒就不会被无谓压小。
+ */
+function rescueBox(id: LabComponentId, visible: NonNullable<CanvasVisibleRect>) {
+  const margin = COMPONENT_BODY_MARGIN[id]
+  const width = visible.maxX - visible.minX
+  const height = visible.maxY - visible.minY
+  const roomX = (width - margin.x * 2) / 2
+  const roomY = (height - margin.y * 2) / 2
+  const insetX = margin.x + Math.max(0, Math.min(VISIBLE_SAFE_INSET, roomX))
+  const insetY = margin.y + Math.max(0, Math.min(VISIBLE_SAFE_INSET, roomY))
+  const loX = visible.minX + insetX
+  const hiX = Math.max(loX, visible.maxX - insetX)
+  const loY = visible.minY + insetY
+  const hiY = Math.max(loY, visible.maxY - insetY)
+  return { minX: loX, maxX: hiX, minY: loY, maxY: hiY }
+}
+
+/** 当前跑出屏幕的器材（用于「全部收回」提示） */
+export function offCanvasComponents(layout: LabLayout, visible: CanvasVisibleRect): LabComponentId[] {
+  if (visible === null) return []
+  return LAB_COMPONENT_IDS.filter((id) => isComponentOffCanvas(layout, id, visible))
+}
+
+/**
+ * 把一件器材收回可见范围（保留它相对视野的相对位置，只做最小位移）。
+ *
+ * 这条是「拖动遮挡」的直接解药：一旦器材被拖到看不见的地方，
+ * 立刻把它挪回可视范围内最近的合法位置，而不是让它在屏幕外丢失。
+ */
+export function rescueComponent(layout: LabLayout, id: LabComponentId, visible: CanvasVisibleRect): LabLayout {
+  if (visible === null) return layout
+  /**
+   * 已经"在屏幕上"的器材一律不碰。
+   *
+   * 这条不只是为了省事，而是消除一个真实的自相矛盾：
+   * 窄视野下（可见条带仅 512px 高时）E1 的初始位置离上边界只有约 56px，
+   * 而"本体完整可见"要求至少 60px —— 物理上放不下。
+   * 若不做这层门禁，收回会把 E1 往下推 3.6px，
+   * 表现为**一进页面什么都没动，器材自己动了一下**。
+   * 门禁的语义是："判据说还在屏幕上 → 就别动它"。
+   */
+  if (!isComponentOffCanvas(layout, id, visible)) return layout
+  const center = layout.components[id]
+  const box = rescueBox(id, visible)
+  const clamped = {
+    x: Math.min(box.maxX, Math.max(box.minX, center.x)),
+    y: Math.min(box.maxY, Math.max(box.minY, center.y)),
+  }
+  if (samePositionPair(center, clamped)) return layout
+  return { ...layout, components: { ...layout.components, [id]: clampComponentPosition(id, clamped) } }
+}
+
+/** 把所有拖出可见范围的器材一次收回（「全部收回」按钮用） */
+export function rescueAllComponents(layout: LabLayout, visible: CanvasVisibleRect): LabLayout {
+  if (visible === null) return layout
+  let next = layout
+  for (const id of LAB_COMPONENT_IDS) next = rescueComponent(next, id, visible)
+  return next
+}
+
+function samePositionPair(a: Position, b: Position): boolean {
+  return Math.abs(a.x - b.x) < 1e-6 && Math.abs(a.y - b.y) < 1e-6
+}
+
+/**
+ * 布局坐标系里的可见矩形。
+ *
+ * 入参是屏幕坐标系里的可视区域（顶部悬浮标题条之下、底部读数条之上），
+ * 由相机的 scale/offset 反算。`buildVisibleRect` 是相机参数的纯函数入口，
+ * 因此可以脱离 DOM 单测：这条判据本身就是"全屏无限画布"的核心断言。
+ */
+export function buildVisibleRect(
+  screen: { left: number; top: number; right: number; bottom: number },
+  camera: { scale: number; x: number; y: number },
+  perspective?: { tilt: number; perspective: number; originX: number; originY: number } | null,
+): CanvasVisibleRect {
+  if (!(camera.scale > 0)) return null
+  if (![screen.left, screen.top, screen.right, screen.bottom].every((value) => Number.isFinite(value))) return null
+  if (screen.right <= screen.left || screen.bottom <= screen.top) return null
+
+  /**
+   * 有 3D 倾斜时必须用**透视反投影**，不能只做 scale+translate 的线性反算。
+   *
+   * 这是一个真实踩到过的坑：舞台带 `rotateX(13deg)`，
+   * 画布下方的内容投影到屏幕时会被放大、往下推。
+   * 线性反算得出的"合法画布区间"因此偏大 —— 器材按它夹取后，
+   * 画布坐标看着合法，**屏幕上却仍然探出屏幕 92px**（实测数据）。
+   * 这里对四条边分别做透视反投影，得到真正对应的画布矩形。
+   */
+  if (perspective !== undefined && perspective !== null) {
+    const stage = {
+      camera,
+      tilt: perspective.tilt,
+      perspective: perspective.perspective,
+      originX: perspective.originX,
+      originY: perspective.originY,
+      stage: { width: screen.right, height: screen.bottom },
+    }
+    // 四角反投影后取包围盒：3D 投影是单调的，四角即可覆盖整块可见区域
+    const corners = [
+      unprojectPerspective({ x: screen.left, y: screen.top }, stage),
+      unprojectPerspective({ x: screen.right, y: screen.top }, stage),
+      unprojectPerspective({ x: screen.left, y: screen.bottom }, stage),
+      unprojectPerspective({ x: screen.right, y: screen.bottom }, stage),
+    ]
+    const xs = corners.map((point) => point.x)
+    const ys = corners.map((point) => point.y)
+    return {
+      minX: Math.min(...xs),
+      maxX: Math.max(...xs),
+      minY: Math.min(...ys),
+      maxY: Math.max(...ys),
+    }
+  }
+
+  return {
+    minX: (screen.left - camera.x) / camera.scale,
+    minY: (screen.top - camera.y) / camera.scale,
+    maxX: (screen.right - camera.x) / camera.scale,
+    maxY: (screen.bottom - camera.y) / camera.scale,
+  }
+}
+
+/**
+ * 画布能被拖动到的世界范围必须**远大于**可见范围，否则就不是无限画布。
+ *
+ * 这条把历史上那个真实 BUG 固化成断言：
+ * 曾经的 `CANVAS_WORLD_BOUNDS` 宽 3840，而 fitContent 之后可见世界只有约 1000 宽，
+ * 于是"画布边界"缩在屏幕里，往边上一拖器材就出屏幕。
+ */
+export const MIN_WORLD_TO_VIEW_RATIO = 4
+
+export function worldSpan(): { width: number; height: number } {
+  return {
+    width: CANVAS_WORLD_BOUNDS.maxX - CANVAS_WORLD_BOUNDS.minX,
+    height: CANVAS_WORLD_BOUNDS.maxY - CANVAS_WORLD_BOUNDS.minY,
+  }
 }

@@ -17,9 +17,11 @@ import {
   clampComponentPosition,
   componentAt,
   moveComponent,
+  rescueComponent,
   setWireBend,
   terminalPosition,
   wireHandleAt,
+  type CanvasVisibleRect,
   type LabComponentId,
   type LabLayout,
 } from './layout'
@@ -58,7 +60,13 @@ export interface LabLayoutDragApi {
 
 export interface UseLabLayoutDragOptions {
   layout: LabLayout
-  setLayout(next: LabLayout): void
+  /**
+   * 更新布局。
+   *
+   * 接受函数式更新：松手时的可见性校验需要基于"最新布局"计算，
+   * 而事件回调闭包里的 `layout` 可能已经过期（拖动过程中每帧都在 setLayout）。
+   */
+  setLayout(next: LabLayout | ((current: LabLayout) => LabLayout)): void
   /**
    * 接线柱坐标查询：用于判断「这一按到底是接线还是搬器材」。
    *
@@ -70,6 +78,14 @@ export interface UseLabLayoutDragOptions {
   nearestTerminal?(position: Position): { id: AmmeterTerminalId; position: Position } | null
   /** 指针屏幕坐标 → 画布坐标 */
   scenePosition(event: PointerEvent<SVGElement>): Position | null
+  /**
+   * 当前可见的画布矩形（布局坐标）。
+   *
+   * 拖动结束时不变量校验用它：器材只要被拖到可见范围之外，就立刻收回到
+   * 最近的合法位置。这是"全屏无限画布 + 拖动不被遮挡"的兜底 ——
+   * 以前这里没有这层校验，器材一拖到边缘就整体滑出屏幕，看起来就是"被遮挡/丢了"。
+   */
+  visibleRect?(): CanvasVisibleRect
 }
 
 /** 指针离接线柱必须比离器材中心更近（且足够靠近），才认定为「按在接线柱上」 */
@@ -79,18 +95,28 @@ function samePosition(a: Position, b: Position): boolean {
   return Math.abs(a.x - b.x) < 1e-6 && Math.abs(a.y - b.y) < 1e-6
 }
 
-export function useLabLayoutDrag({ layout, setLayout, nearestTerminal, scenePosition }: UseLabLayoutDragOptions): LabLayoutDragApi {
+export function useLabLayoutDrag({ layout, setLayout, nearestTerminal, scenePosition, visibleRect }: UseLabLayoutDragOptions): LabLayoutDragApi {
   const componentRef = useRef<ComponentDragState | null>(null)
   const wireRef = useRef<WireDragState | null>(null)
   const [dragging, setDragging] = useState<LabLayoutDragApi['dragging']>(null)
 
-  const endComponent = (event: PointerEvent<SVGElement>) => {
+  const endComponent = useCallback((event: PointerEvent<SVGElement>) => {
     const active = componentRef.current
     if (active === null || active.pointerId !== event.pointerId) return
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
     componentRef.current = null
     setDragging(null)
-  }
+    /**
+     * 松手时的可见性不变量：器材必须仍在可见范围内。
+     *
+     * 用 setLayout 的函数式更新拿"最新的"布局，而不是在渲染期往 ref 里写值 ——
+     * 后者是 React 明确禁止的（`react-hooks/refs`），也会在并发渲染下读到过期快照。
+     */
+    if (visibleRect !== undefined) {
+      const visible = visibleRect()
+      if (visible !== null) setLayout((current) => rescueComponent(current, active.id, visible))
+    }
+  }, [setLayout, visibleRect])
 
   const endWire = (event: PointerEvent<SVGElement>) => {
     const active = wireRef.current
@@ -133,7 +159,7 @@ export function useLabLayoutDrag({ layout, setLayout, nearestTerminal, scenePosi
       onPointerUp: endComponent,
       onPointerCancel: endComponent,
     }),
-    [layout, setLayout, scenePosition, nearestTerminal],
+    [layout, setLayout, scenePosition, nearestTerminal, endComponent],
   )
 
   const wireHandlers = useCallback(
