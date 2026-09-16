@@ -50,55 +50,174 @@ function renderedBounds(html: string): { minX: number; maxX: number; minY: numbe
     minY = Math.min(minY, y)
     maxY = Math.max(maxY, y)
   }
-  // 每个 <g transform="translate(x y)"> 的相对原点也要算进来（用于换算局部坐标）
-  for (const match of html.matchAll(/<g transform="translate\((-?[\d.]+) (-?[\d.]+)\)"/g)) {
-    visit(Number(match[1]), Number(match[2]))
+
+  /**
+   * 解析 SVG 时**必须按祖先链累计 translate 偏移**，不能把 `<g>` 的平移原点当成几何点。
+   *
+   * 这是第三轮复审点出的根因：把 `<g transform="translate(x y)">` 的原点也算进包围盒，
+   * 只要器材内部任意一层 `<g>` 挪走，包围盒会跟着膨胀到新位置，
+   * 接线柱于是永远"落在里面" —— 画面崩了测试却全绿（实测：电池本体横移 200px 仍 49/49 通过）。
+   *
+   * 这里的做法：对每个绘图元素，按它的祖先链把 translate 叠加起来，算成**世界坐标**再收进包围盒。
+   */
+  const offsetAt = (index: number): { x: number; y: number } => {
+    // 从头扫到 index，维护 <g> 栈
+    const stack: Array<{ x: number; y: number }> = []
+    let cursor = 0
+    let offset = { x: 0, y: 0 }
+    while (cursor < index) {
+      const lt = html.indexOf('<', cursor)
+      if (lt === -1 || lt >= index) break
+      let end2 = lt + 1
+      let quote: string | null = null
+      while (end2 < html.length) {
+        const ch = html[end2]
+        if (quote !== null) {
+          if (ch === quote) quote = null
+        } else if (ch === '"' || ch === "'") {
+          quote = ch
+        } else if (ch === '>') {
+          break
+        }
+        end2 += 1
+      }
+      const rawTag = html.slice(lt + 1, end2)
+      const isClose = rawTag.startsWith('/')
+      const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+      if (isClose) {
+        if (name === 'g') stack.pop()
+      } else if (name === 'g') {
+        const translate = rawTag.match(/transform="translate\((-?[\d.]+)[ ,]+(-?[\d.]+)\)"/)
+        if (translate !== null) stack.push({ x: Number(translate[1]), y: Number(translate[2]) })
+        else if (/transform="rotate\(/.test(rawTag)) {
+          // 旋转组（指针）不改变包围盒的可比性：其内容本身就是围绕转轴的小图形，
+          // 这里仍按同一原点累加，避免因为缺少 translate 而漏掉父级偏移。
+          stack.push({ x: 0, y: 0 })
+        } else {
+          stack.push({ x: 0, y: 0 })
+        }
+      }
+      cursor = end2 + 1
+    }
+    offset = stack.reduce((acc, item) => ({ x: acc.x + item.x, y: acc.y + item.y }), offset)
+    return offset
   }
-  for (const match of html.matchAll(/<rect\b[^>]*>/g)) {
-    const tag = match[0]
+
+  /** 声明式遍历：同时拿到标签原文与起始下标，便于按祖先链算偏移 */
+  const walkTags = (regex: RegExp, handler: (tag: string, index: number) => void) => {
+    for (const match of html.matchAll(regex)) {
+      handler(match[0], match.index ?? 0)
+    }
+  }
+
+  walkTags(/<rect\b[^>]*>/g, (tag, index) => {
     const x = Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1])
     const y = Number(tag.match(/\by="(-?[\d.]+)"/)?.[1])
     const w = Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1])
     const h = Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1])
-    if (![x, y, w, h].every(Number.isFinite)) continue
-    visit(x, y)
-    visit(x + w, y + h)
-  }
-  for (const match of html.matchAll(/<circle\b[^>]*>/g)) {
-    const tag = match[0]
+    if (![x, y, w, h].every(Number.isFinite)) return
+    const o = offsetAt(index)
+    visit(o.x + x, o.y + y)
+    visit(o.x + x + w, o.y + y + h)
+  })
+  walkTags(/<circle\b[^>]*>/g, (tag, index) => {
     const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
     const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
     const r = Number(tag.match(/\br="(-?[\d.]+)"/)?.[1])
-    if ([cx, cy, r].every(Number.isFinite)) {
-      visit(cx - r, cy - r)
-      visit(cx + r, cy + r)
-    }
-  }
-  for (const match of html.matchAll(/<ellipse\b[^>]*>/g)) {
-    const tag = match[0]
+    if (![cx, cy, r].every(Number.isFinite)) return
+    const o = offsetAt(index)
+    visit(o.x + cx - r, o.y + cy - r)
+    visit(o.x + cx + r, o.y + cy + r)
+  })
+  walkTags(/<ellipse\b[^>]*>/g, (tag, index) => {
     const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
     const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
     const rx = Number(tag.match(/\brx="(-?[\d.]+)"/)?.[1])
     const ry = Number(tag.match(/\bry="(-?[\d.]+)"/)?.[1])
-    if ([cx, cy, rx, ry].every(Number.isFinite)) {
-      visit(cx - rx, cy - ry)
-      visit(cx + rx, cy + ry)
+    if (![cx, cy, rx, ry].every(Number.isFinite)) return
+    const o = offsetAt(index)
+    visit(o.x + cx - rx, o.y + cy - ry)
+    visit(o.x + cx + rx, o.y + cy + ry)
+  })
+  walkTags(/<line\b[^>]*>/g, (tag, index) => {
+    const o = offsetAt(index)
+    visit(o.x + Number(tag.match(/\bx1="(-?[\d.]+)"/)?.[1]), o.y + Number(tag.match(/\by1="(-?[\d.]+)"/)?.[1]))
+    visit(o.x + Number(tag.match(/\bx2="(-?[\d.]+)"/)?.[1]), o.y + Number(tag.match(/\by2="(-?[\d.]+)"/)?.[1]))
+  })
+  /**
+   * `<path d>` 的坐标解析：**按指令跳步**，不能每两个数字取一对。
+   * `A`（弧）后面是 `rx ry rot laf sf x y` 共 7 个参数，按 2 个一组会整体错位（虚胖/虚瘦）。
+   */
+  walkTags(/<path\b[^>]*\bd="([^"]+)"/g, (tag, index) => {
+    const d = tag.match(/\bd="([^"]+)"/)?.[1]
+    if (d === undefined) return
+    const o = offsetAt(index)
+    const tokens = d.match(/[A-Za-z]|-?\d*\.?\d+(?:e[-+]?\d+)?/gi) ?? []
+    let cursor = 0
+    let command = ''
+    while (cursor < tokens.length) {
+      const token = tokens[cursor]
+      if (/^[A-Za-z]$/.test(token)) {
+        command = token
+        cursor += 1
+        if (command === 'Z' || command === 'z') continue
+      }
+      const nums: number[] = []
+      const need = command === 'A' || command === 'a' ? 7 : command === 'C' || command === 'c' ? 6 : command === 'Q' || command === 'q' ? 4 : 2
+      let read = 0
+      while (read < need && cursor < tokens.length && !/^[A-Za-z]$/.test(tokens[cursor])) {
+        nums.push(Number(tokens[cursor]))
+        cursor += 1
+        read += 1
+      }
+      if (nums.length < need) break
+      if (command === 'A' || command === 'a') {
+        // 只有最后两个数是端点
+        visit(o.x + nums[5], o.y + nums[6])
+      } else {
+        for (let k = 0; k + 1 < nums.length; k += 2) visit(o.x + nums[k], o.y + nums[k + 1])
+      }
     }
-  }
-  for (const match of html.matchAll(/<line\b[^>]*>/g)) {
-    const tag = match[0]
-    visit(Number(tag.match(/\bx1="(-?[\d.]+)"/)?.[1]), Number(tag.match(/\by1="(-?[\d.]+)"/)?.[1]))
-    visit(Number(tag.match(/\bx2="(-?[\d.]+)"/)?.[1]), Number(tag.match(/\by2="(-?[\d.]+)"/)?.[1]))
-  }
-  // <path d="..."> 里所有坐标对（M/L/C/Q/A 后续的数字对）
-  for (const match of html.matchAll(/<path\b[^>]*\bd="([^"]+)"/g)) {
-    const d = match[1]
-    const tokens = d.match(/-?\d+(?:\.\d+)?/g) ?? []
-    for (let index = 0; index + 1 < tokens.length; index += 2) {
-      visit(Number(tokens[index]), Number(tokens[index + 1]))
-    }
-  }
+  })
   return found ? { minX, maxX, minY, maxY } : null
+}
+
+/** 从完整的标签里取出 `d` 并解析坐标点 */
+function pathPointsFromTag(tag: string): Array<[number, number]> {
+  return pathPoints(tag)
+}
+
+/**
+ * 按指令跳步解析 `<path d>` 的坐标点（`A` 是 7 个参数，不能两两取对）。
+ *
+ * 注意：**必须先只取出 `d` 属性再解析**。
+ * 直接对整个标签扫数字会把 `fill="#c6281c"` 里的 `6281` 也当成坐标，
+ * 于是指针的"有效长度"被一个幽灵点顶满，缩短针尖也测不出来（实测踩过）。
+ */
+function pathPoints(tag: string): Array<[number, number]> {
+  const d = tag.match(/\bd="([^"]+)"/)?.[1]
+  if (d === undefined) return []
+  const tokens = d.match(/[A-Za-z]|-?\d*\.?\d+(?:e[-+]?\d+)?/gi) ?? []
+  const points: Array<[number, number]> = []
+  let cursor = 0
+  let command = ''
+  while (cursor < tokens.length) {
+    if (/^[A-Za-z]$/.test(tokens[cursor])) {
+      command = tokens[cursor]
+      cursor += 1
+      if (command === 'Z' || command === 'z') continue
+    }
+    const need = command === 'A' || command === 'a' ? 7 : command === 'C' || command === 'c' ? 6 : command === 'Q' || command === 'q' ? 4 : 2
+    const nums: number[] = []
+    while (nums.length < need && cursor < tokens.length && !/^[A-Za-z]$/.test(tokens[cursor])) {
+      nums.push(Number(tokens[cursor]))
+      cursor += 1
+    }
+    if (nums.length < need) break
+    if (command === 'A' || command === 'a') points.push([nums[5], nums[6]])
+    else for (let k = 0; k + 1 < nums.length; k += 2) points.push([nums[k], nums[k + 1]])
+  }
+  return points
 }
 
 /** 提取指针的 rotate()：角度 + 转轴（用于判断指针是否画在表盘内） */
@@ -567,6 +686,120 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
       expect(point.y - center.y).toBeGreaterThanOrEqual(box.minY)
       expect(point.y - center.y).toBeLessThanOrEqual(box.maxY)
     }
+  })
+
+  it('表盘、刻度弧、指针、转轴帽必须彼此自洽（任何一件挪走/缩没都要红）', () => {
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const dial = renderedPart(html, 'ammeter-dial')!
+    const dialBox = { x0: dial.x, y0: dial.y, x1: dial.x + dial.width, y1: dial.y + dial.height }
+
+    // 1) 刻度弧（两条）必须整体落在表盘内 —— 表盘被挪走 / 刻度悬空都会红
+    const arcs = [...html.matchAll(/<path\b[^>]*data-part="ammeter-arc"[^>]*>/g)]
+    expect(arcs.length, '缺少刻度弧线').toBeGreaterThan(0)
+    for (const arc of arcs) {
+      for (const [x, y] of pathPoints(arc[0])) {
+        expect(x, `刻度弧的 x=${x.toFixed(1)} 悬在表盘外`).toBeGreaterThanOrEqual(dialBox.x0 - 1)
+        expect(x, `刻度弧的 x=${x.toFixed(1)} 悬在表盘外`).toBeLessThanOrEqual(dialBox.x1 + 1)
+        expect(y, `刻度弧的 y=${y.toFixed(1)} 悬在表盘外`).toBeGreaterThanOrEqual(dialBox.y0 - 1)
+        expect(y, `刻度弧的 y=${y.toFixed(1)} 悬在表盘外`).toBeLessThanOrEqual(dialBox.y1 + 1)
+      }
+    }
+
+    // 2) 指针针尖到转轴的距离必须接近刻度半径（针被缩短/拉长都要红）
+    const needle = needlePivot(html)!
+    const needleTag = html.match(/<path\b[^>]*data-part="ammeter-needle"[^>]*>/)
+    expect(needleTag, '没有渲染出指针针体').not.toBeNull()
+    const needlePoints = pathPointsFromTag(needleTag![0])
+    expect(needlePoints.length, '没有解析出指针针体的坐标').toBeGreaterThan(0)
+    /**
+     * 指针的「有效长度」= 转轴到针体两端的最大距离。
+     * 注意不能用「离转轴最远的点」——真实指针在转轴下还有一截配重尾针，
+     * 尾针到转轴的距离可能大于针尖，会把判据带偏（实测过：缩短针尖仍然通过）。
+     * 所以取**针体在转轴方向上到转轴的最大距离**，也就是针尖所在的半径。
+     */
+    const radii = needlePoints.map(([x, y]) => Math.hypot(x - needle.pivot.x, y - needle.pivot.y))
+    const tipDistance = Math.max(...radii)
+    const tailDistance = Math.min(...radii)
+    // 针尖必须比尾针长（真实的指针是"长针 + 短配重"）
+    expect(tipDistance, '指针的针尖没有比尾针长，形状不对').toBeGreaterThan(tailDistance)
+    // 刻度弧半径从弧线的 A 指令读出
+    const arcRadius = Number(arcs[0][0].match(/A ([\d.]+) \1/)?.[1])
+    expect(arcRadius).toBeGreaterThan(0)
+    expect(tipDistance, `针尖半径 ${tipDistance.toFixed(1)} 远小于刻度半径 ${arcRadius.toFixed(1)}（指针被缩短）`)
+      .toBeGreaterThan(arcRadius - 12)
+    expect(tipDistance, `针尖半径 ${tipDistance.toFixed(1)} 超出刻度半径 ${arcRadius.toFixed(1)} 太多`).toBeLessThan(arcRadius + 12)
+
+    // 3) 转轴帽必须存在，且落在表盘内
+    const hub = html.match(/<circle\b[^>]*data-part="ammeter-needle-hub"[^>]*>/)
+    expect(hub, '转轴帽被删掉了').not.toBeNull()
+    const hubX = Number(hub![0].match(/\bcx="(-?[\d.]+)"/)?.[1])
+    const hubY = Number(hub![0].match(/\bcy="(-?[\d.]+)"/)?.[1])
+    expect(hubX).toBeGreaterThanOrEqual(dialBox.x0)
+    expect(hubX).toBeLessThanOrEqual(dialBox.x1)
+    expect(hubY, '转轴帽挪出了表盘').toBeGreaterThanOrEqual(dialBox.y0)
+    expect(hubY, '转轴帽挪出了表盘').toBeLessThanOrEqual(dialBox.y1)
+
+    // 4) 中央「A」量程字符必须也存在且落在表盘内
+    const glyph = html.match(/<text\b[^>]*data-part="ammeter-glyph"[^>]*>/)
+    expect(glyph, '中央 A 被删掉了').not.toBeNull()
+    const glyphY = Number(glyph![0].match(/\by="(-?[\d.]+)"/)?.[1])
+    expect(glyphY, '中央 A 挪出了表盘').toBeGreaterThanOrEqual(dialBox.y0)
+    expect(glyphY, '中央 A 挪出了表盘').toBeLessThanOrEqual(dialBox.y1)
+  })
+
+  it('包围盒按祖先链累计平移算世界坐标（回归：<g> 原点不再被当成几何点）', () => {
+    /**
+     * 复审实测的反例：把电池本体整体平移 200px，旧实现把 `<g>` 的平移原点也算成几何点，
+     * 包围盒跟着"膨胀"到新位置 → 看起来什么都没变，49/49 全绿而画面已崩。
+     *
+     * 这里直接验证渲染 + 解析这条链路：同一个 <rect> 放在不同层级的 translate 里，
+     * 解析出的包围盒必须落在对应的世界坐标上。
+     */
+    const flat = renderToString(
+      <svg>
+        <rect x={0} y={0} width={10} height={10} />
+      </svg>,
+    )
+    const nested = renderToString(
+      <svg>
+        <g transform="translate(100 50)">
+          <g transform="translate(30 -10)">
+            <rect x={0} y={0} width={10} height={10} />
+          </g>
+        </g>
+      </svg>,
+    )
+    const flatBox = renderedBounds(flat)!
+    const nestedBox = renderedBounds(nested)!
+    // 累加后应落在 (130, 40) 起、10×10 的方块上
+    expect(nestedBox.minX).toBeCloseTo(flatBox.minX + 130, 6)
+    expect(nestedBox.minY).toBeCloseTo(flatBox.minY + 40, 6)
+    expect(nestedBox.maxX - nestedBox.minX).toBeCloseTo(flatBox.maxX - flatBox.minX, 6)
+    expect(nestedBox.maxY - nestedBox.minY).toBeCloseTo(flatBox.maxY - flatBox.minY, 6)
+  })
+
+  it('平移原点本身不会被算成几何点（否则包围盒会被"撑大"）', () => {
+    // 只有 <g translate> 没有任何绘图元素时，包围盒应为空 ——
+    // 这直接证明 `<g>` 的平移原点不再被当成几何点。
+    const onlyGroup = renderToString(
+      <svg>
+        <g transform="translate(500 300)" />
+      </svg>,
+    )
+    const withRect = renderToString(
+      <svg>
+        <g transform="translate(500 300)">
+          <rect x={0} y={0} width={10} height={10} />
+        </g>
+      </svg>,
+    )
+    expect(renderedBounds(onlyGroup), '<g> 的平移原点被当成了几何点').toBeNull()
+    // 有绘图元素时，几何只来自那个元素（10×10），不会因为 translate 而变大
+    const box = renderedBounds(withRect)!
+    expect(box.maxX - box.minX).toBeCloseTo(10, 6)
+    expect(box.maxY - box.minY).toBeCloseTo(10, 6)
+    expect(box.minX).toBeCloseTo(500, 6)
+    expect(box.minY).toBeCloseTo(300, 6)
   })
 
   it('电流表的接线柱真的坐在**渲染出的**接线台肩里（挪动台肩立刻红）', () => {

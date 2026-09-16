@@ -411,8 +411,8 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
   return (
     <g>
       {/* 刻度弧线 */}
-      <path d={arcPath(radius)} fill="none" stroke="#3a352f" strokeWidth="1.1" opacity="0.85" />
-      <path d={arcPath(radius - 22)} fill="none" stroke="#6a645b" strokeWidth="0.7" opacity="0.7" />
+      <path data-part="ammeter-arc" d={arcPath(radius)} fill="none" stroke="#3a352f" strokeWidth="1.1" opacity="0.85" />
+      <path data-part="ammeter-arc" d={arcPath(radius - 22)} fill="none" stroke="#6a645b" strokeWidth="0.7" opacity="0.7" />
       {/* 外圈刻度 0～3 */}
       {ticks.map((tick, index) => {
         const outer = polar(tick.a, radius)
@@ -472,17 +472,17 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
         {/* 尾部配重（真实的动圈表头都有一小截反向尾针） */}
         <rect x="-2.6" y={pivotY} width="5.2" height="7" rx="2.4" fill="#7d1c14" />
         {/* 针体：细长、尖端收拢 */}
-        <path d={`M -1 ${pivotY} L 1 ${pivotY} L 0.55 ${pivotY - radius + 5} L -0.55 ${pivotY - radius + 5} Z`} fill={overRange ? '#e02b1a' : '#c6281c'} />
+        <path data-part="ammeter-needle" d={`M -1 ${pivotY} L 1 ${pivotY} L 0.55 ${pivotY - radius + 5} L -0.55 ${pivotY - radius + 5} Z`} fill={overRange ? '#e02b1a' : '#c6281c'} />
         {/* 针体高光 */}
         <path d={`M -0.4 ${pivotY} L 0.1 ${pivotY} L 0.25 ${pivotY - radius + 8} L -0.15 ${pivotY - radius + 8} Z`} fill="#f4796b" opacity="0.85" />
       </g>
       {/* 指针转轴帽 */}
       <ellipse cx="0" cy={pivotY + 1} rx="6.8" ry="5.4" fill="#000000" opacity="0.22" />
-      <circle cx="0" cy={pivotY} r="6" fill="#5d636a" />
+      <circle data-part="ammeter-needle-hub" cx="0" cy={pivotY} r="6" fill="#5d636a" />
       <circle cx="0" cy={pivotY} r="6" fill="none" stroke="#393e44" strokeWidth="0.8" />
       <path d="M -4.4 -0.6 A 5 5 0 0 1 3.2 -4.2" fill="none" stroke="#d7dce1" strokeWidth="1.5" opacity="0.85" />
       {/* 中央量程字符 A（真实表盘印在转轴下方，避开指针行程） */}
-      <text x="0" y={pivotY + 17} fill="#232019" fontSize="16" fontWeight="700" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic">A</text>
+      <text data-part="ammeter-glyph" x="0" y={pivotY - 4} fill="#232019" fontSize="16" fontWeight="700" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic">A</text>
     </g>
   )
 }
@@ -527,7 +527,7 @@ export function AmmeterA1({
       {/* 顶面高光条 */}
       <rect x="-78" y="-124" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
       {/* 内凹表盘（带内阴影：上/左深，下/右浅）—— 收在台肩上沿之上 */}
-      <rect data-part="ammeter-dial" x="-76" y="-118" width="152" height="58" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
+      <rect data-part="ammeter-dial" x="-76" y="-122" width="152" height="66" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
       <rect x="-76" y="-118" width="152" height="6" rx="3" fill="#000000" opacity="0.22" />
       <rect x="-76" y="-118" width="5" height="58" rx="2" fill="#000000" opacity="0.16" />
       <rect x="71" y="-118" width="5" height="58" rx="2" fill="#ffffff" opacity="0.5" />
