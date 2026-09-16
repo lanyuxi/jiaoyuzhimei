@@ -170,10 +170,19 @@ function worldOffsetAt(html: string, index: number): { x: number; y: number } {
       const { translate, others } = raw === null
         ? { translate: { x: 0, y: 0 }, others: [] }
         : decomposeTransform(raw, 'worldOffsetAt')
-      if (others.length > 0 && !rawTag.includes('data-anchor="local"')) {
-        // 只算 translate 是不够的：`scale` / `matrix` / `rotate` 同样会改变图元落点，
-        // 若静默按 0 处理，几何判据就是"看着像覆盖了"（复审点名的同源问题）。
-        throw new Error(`worldOffsetAt: <g> 上有非平移变换 ${others.map((o) => o.raw).join(' ')}，几何口径无法推导`)
+      /**
+       * 只算 translate 是不够的：`scale` / `matrix` / `rotate` 同样会改变图元落点。
+       *
+       * 第六轮复审必修 1：这里原来按属性名 `data-anchor="local"` 放行，是一条绕过路径。
+       * 现在唯一合法的非平移装配是**源码里写死并登记过的 rotate**
+       * （`data-anchor="rotate-declared"`），由 `assertRotationAnchorsAreDeclared`
+       * 逐条与源码字面量核对；其它任何非平移变换一律抛错。
+       */
+      if (others.length > 0) {
+        const onlyDeclaredRotate = others.every((other) => other.fn === 'rotate')
+        if (!onlyDeclaredRotate || !rawTag.includes('data-anchor="rotate-declared"')) {
+          throw new Error(`worldOffsetAt: <g> 上有非平移变换 ${others.map((o) => o.raw).join(' ')}，几何口径无法推导`)
+        }
       }
       stack.push(translate)
     } else if (rawTransformOf(rawTag) !== null) {
@@ -253,17 +262,131 @@ function groupInfos(html: string): GroupInfo[] {
 }
 
 /**
- * 未声明 `data-anchor` 的 `<g>` 必须既**没有平移**、也**没有其它变换** —— 否则几何口径与画面脱节。
+ * 未声明 `data-anchor="root"` 的 `<g>` 必须既**没有平移**、也**没有其它变换**。
  *
- * 只查平移是不够的：`scale` / `matrix` 同样改变图元落点，而它们不体现在 translate 累计里。
- * 实测过这条：给表盘外包一层 `scale(1.4)` 时，只查平移的实现全绿（漏检）。
+ * 第六轮复审点名的必修 1：老实现给 `data-anchor="local"` 开了**整类豁免**，
+ * 于是「把指针整组包进一个 `data-anchor="local"` 的 `<g>` 再 `scale(0.35)`」
+ * 目录 173/173 全绿 —— 指针只剩 1/3 长、漂在表盘中央，所有判据照过。
+ * 原因：豁免是按**属性名**放行的，"贴没贴标签是作者自我声明，不是判据"。
+ *
+ * 现在改成**不许豁免**：
+ *   · `data-anchor="root"`  —— 唯一的绝对锚：只能是器材根节点（平移量由测试从源码核对）；
+ *   · 其余每一层 `<g>`（含原来的 `local`）—— 一律不得有任何变换，
+ *     必须把平移量**直接写进子元素的声明坐标**里（源码里已经这么做了）。
+ *
+ * 唯一例外是**确实需要旋转**的装配（开关刀片、电流表指针）：
+ * 它不是"平移"，而是"绕一个源码里写死的轴旋转"，
+ * 由 `assertRotationAnchorsAreDeclared` 按**源码字面量**逐个核对，
+ * 而不是靠 `data-anchor` 这个名字放行。
  */
 function undeclaredOffsetGroups(html: string): GroupInfo[] {
-  return groupInfos(html).filter(
-    (info) =>
-      info.anchor === null &&
-      (Math.abs(info.x) > 1e-9 || Math.abs(info.y) > 1e-9 || info.hasNonTranslate),
-  )
+  return groupInfos(html).filter((info) => {
+    // root 是唯一的绝对锚（平移量由测试与源码核对）；
+    // rotate-declared 只允许"纯 rotate"，且必须能过源码白名单（在断言里单独核对）。
+    if (info.anchor === 'root') return false
+    if (info.anchor === 'rotate-declared') {
+      return Math.abs(info.x) > 1e-9 || Math.abs(info.y) > 1e-9
+    }
+    return Math.abs(info.x) > 1e-9 || Math.abs(info.y) > 1e-9 || info.hasNonTranslate
+  })
+}
+
+/**
+ * 允许存在的**旋转装配**白名单：从源码里解析出的 `rotate(a x y)` 字面量集合。
+ *
+ * 声明式核对（必修 1 的修法 (b)）：不再用 `data-anchor="local"` 这个名字放行，
+ * 而是要求渲染出的每一处 rotate **就是源码里那一条写死的 rotate**（角度与轴心都要对上）。
+ * 这样"临时包一层带变换的 `<g>`"无论贴什么标签都过不去。
+ */
+function sourceRotationAnchors(): Array<{ angle: number; x: number; y: number; source: string }> {
+  const source = readFileSync(new URL('./CompetitorParts.tsx', import.meta.url), 'utf8')
+  const list: Array<{ angle: number; x: number; y: number; source: string }> = []
+
+  /**
+   * 把一个可能带 `${}` 模板占位符的 token 解析成**候选值集合**。
+   *
+   * 注意同名常量会在不同组件里重复声明（`pivotY` 在 KnifeSwitch 是 -6、在 DialFace 是 -62），
+   * 所以必须把所有声明都收成候选，而不是取第一个（实测：只取第一个会让 A1 的转轴判成未声明）。
+   */
+  const resolveAll = (token: string): number[] => {
+    const bare = token.trim().replace(/^\$\{/, '').replace(/\}$/, '')
+    if (/^-?[\d.]+$/.test(bare)) return [Number(bare)]
+    const literal = [...source.matchAll(new RegExp(`const ${bare}\\s*=\\s*(-?[\\d.]+)`, 'g'))].map((m) => Number(m[1]))
+    if (literal.length > 0) return literal
+    // 三元常量：`const bladeAngle = closed ? 0 : -32` —— 两个分支都是合法姿态
+    const ternary = [...source.matchAll(new RegExp(`const ${bare}\\s*=\\s*[^\\n]*\\?\\s*(-?[\\d.]+)\\s*:\\s*(-?[\\d.]+)`, 'g'))]
+      .flatMap((m) => [Number(m[1]), Number(m[2])])
+    return ternary
+  }
+
+  /**
+   * 角度是**状态量**的几处（源码里不是字面量而是函数调用）：
+   *   · `needleAngle(...)` —— 电流表指针角度，由读数决定，行程 ±NEEDLE_LIMIT_ANGLE；
+   *   · `bladeAngle = closed ? 0 : -32` —— 开关刀片，已由 `resolveAll` 收到两个分支。
+   * 状态量的角度不可能是任意值，必须被 `needleAngle` 本身夹在 ±NEEDLE_LIMIT_ANGLE 内
+   * （这一点 `definition.ts` 与既有电气不变量测试都保证），所以：
+   * 轴心（转轴位置）允许登记，角度按"该轴允许的最大行程"接纳，**轴心必须精确匹配**。
+   */
+  const STATE_ANGLE_LIMIT = NEEDLE_LIMIT_ANGLE
+
+  const pattern = new RegExp('transform=\\{`rotate\\(([^)]*)\\)`\\}', 'g')
+  for (const match of source.matchAll(pattern)) {
+    const args = match[1].split(/[\s,]+/).filter((token) => token.length > 0)
+    if (args.length < 3) continue
+    const candidates = args.map((token, index) => {
+      const values = resolveAll(token)
+      // 角度（第 0 个参数）是状态量时，用行程上限登记
+      if (values.length === 0 && index === 0 && /^\$\{/.test(token.trim())) return [STATE_ANGLE_LIMIT]
+      return values
+    })
+    if (candidates.some((values) => values.length === 0)) continue
+    // 笛卡尔积：把每一组的候选两两组合，全部登记（数量很小，且每个都要能对上渲染结果）
+    for (const angle of candidates[0]) {
+      for (const x of candidates[1]) {
+        for (const y of candidates[2]) {
+          list.push({ angle, x, y, source: match[0] })
+        }
+      }
+    }
+  }
+  return list
+}
+
+/**
+ * 渲染结果里出现的每一处 `rotate` 必须**就是源码里声明的那一处**（角度 + 轴心）。
+ * 任何"临时包一层带 rotate 的 `<g>`"都会因为它不在白名单里而红。
+ */
+function assertRotationAnchorsAreDeclared(html: string, label: string): void {
+  const declared = sourceRotationAnchors()
+  expect(declared.length, '源码里没有解析到任何 rotate 装配，白名单口径失效').toBeGreaterThan(0)
+  for (const match of html.matchAll(/<g\b[^>]*>/g)) {
+    const raw = rawTransformOf(match[0])
+    if (raw === null) continue
+    const parts = parseTransform(raw, 'assertRotationAnchorsAreDeclared').filter((part) => part.fn === 'rotate')
+    for (const rotate of parts) {
+      const angle = rotate.args[0] ?? 0
+      const x = rotate.args[1] ?? 0
+      const y = rotate.args[2] ?? 0
+      /**
+       * 核对口径：
+       *   · **轴心必须精确匹配**源码声明的某一处——轴心是"转轴装在哪"的几何事实，不允许漂；
+       *   · 角度是**状态量**（指针读数、开关合闸/断开），因此只要求落在源码声明的
+       *     「状态量程」内（`±|声明角度|` 之间），越界即红。
+       * 这样"临时包一层带 rotate 的 `<g>`"（轴心不在白名单里）会立刻红。
+       */
+      const sameAxis = declared.filter((item) => Math.abs(item.x - x) < 1e-6 && Math.abs(item.y - y) < 1e-6)
+      expect(
+        sameAxis.length,
+        `${label}: 渲染结果里出现了源码未声明的 rotate 轴心 (${x}, ${y}) —— ` +
+          '`data-anchor` 不是放行依据，旋转轴必须在源码里写死并登记进白名单',
+      ).toBeGreaterThan(0)
+      const limit = Math.max(...sameAxis.map((item) => Math.abs(item.angle)))
+      expect(
+        Math.abs(angle),
+        `${label}: rotate 角度 ${angle} 超出了源码声明该轴的量程 ±${limit}（指针/刀片只能落在自身行程内）`,
+      ).toBeLessThanOrEqual(limit + 1e-6)
+    }
+  }
 }
 
 /** 可绘制元素总数（不含 `<g>` / `<defs>` / 渐变等非图元），用于覆盖面互证 */
@@ -721,9 +844,26 @@ describe('电源 E1 写实化：真实干电池而非示意方块', () => {
   })
 
   it('底座带两端十字螺钉（真实电池座是拧在底板上的）', () => {
-    // 按结构判定：十字槽是「横竖两条短 path」，一左一右两颗螺钉 => 恰好 2 条横槽 + 2 条竖槽
-    const crossSlots = html.match(/M -2\.6 0 L 2\.6 0 M 0 -2\.6 L 0 2\.6/g) ?? []
-    expect(crossSlots).toHaveLength(2)
+    /**
+     * 按结构判定：十字槽是「一横一竖两条短线段」拼成的一条 path，一左一右两颗螺钉 => 恰好 2 条。
+     * 螺钉坐标现在直接写在子元素上（不再靠 `data-anchor="local"` 的 `<g translate>` 定位），
+     * 所以这里按"十字槽 path 的条数"判，并逐条验证它确实是十字形（两段、互相垂直、长度相等）。
+     */
+    const slots = [...html.matchAll(/<path\b[^>]*data-part="baseplate-screw-slot"[^>]*\bd="([^"]+)"/g)].map((m) => m[1])
+    expect(slots, '底座十字螺钉的十字槽缺失').toHaveLength(2)
+    for (const slot of slots) {
+      // 一条十字槽 = 两段：`M x1 y1 L x2 y2 M x3 y3 L x4 y4`
+      const numbers = (slot.match(/-?[\d.]+/g) ?? []).map(Number)
+      expect(numbers, `十字槽 ${slot} 的坐标个数不对`).toHaveLength(8)
+      const [x1, y1, x2, y2, x3, y3, x4, y4] = numbers
+      const isHorizontal = Math.abs(y1 - y2) < 1e-6 && Math.abs(x1 - x2) > 1
+      const isVertical = Math.abs(x1 - x2) < 1e-6 && Math.abs(y1 - y2) > 1
+      const isHorizontal2 = Math.abs(y3 - y4) < 1e-6 && Math.abs(x3 - x4) > 1
+      const isVertical2 = Math.abs(x3 - x4) < 1e-6 && Math.abs(y3 - y4) > 1
+      // 两段必须一段横、一段竖（真正的"十字"），而不是两条平行线
+      const crossed = (isHorizontal && isVertical2) || (isVertical && isHorizontal2)
+      expect(crossed, `十字槽 ${slot} 不是一横一竖（不成十字）`).toBe(true)
+    }
     // 底座顶面必须有独立的高光带（不是一块纯色）
     expect(html).toMatch(/fill="#f2f4f6"/)
   })
@@ -1871,7 +2011,7 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
     expect(worldOffsetOfPart(shifted, 'ammeter-dial')).toEqual({ x: 66, y: 0 })
   })
 
-  it('自证式红线：未被声明为 root/local 的 <g> 一律不得做任何变换（与 data-part 无关）', () => {
+  it('自证式红线：除根节点与已声明的 rotate 外，任何 <g> 都不得做变换（与 data-part 无关）', () => {
     /**
      * 第五轮复审的漏洞 C：自证红线原来只遍历**带 data-part 的元素**，
      * 于是「没被标记的元素被平移」完全不检查 —— 实测把内圈量程数字包一层
@@ -1900,8 +2040,10 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
       expect(
         offenders,
         `${name} 里有 <g> 偷偷做了变换，但画面几何仍按声明坐标推导。` +
-          '（若这是合法的内部装配，必须显式声明 data-anchor="local"）',
+          '（平移必须直接写进子元素声明坐标；旋转必须在源码里写死并登记白名单）',
       ).toEqual([])
+      // 必修 1：每一处 rotate 都必须是源码里声明的那一处（属性名不是放行依据）
+      assertRotationAnchorsAreDeclared(html, name)
     }
 
     /**
@@ -2584,6 +2726,299 @@ describe('零件必须画在所属主体内（零件飘出器材体即红）', (
     for (const hub of renderedCircles(html, 'ammeter-needle-hub')) {
       expect(Math.hypot(hub.cx - needle.pivot.x, hub.cy - needle.pivot.y), '转轴帽与转轴脱开').toBeLessThan(1.5)
     }
+  })
+})
+
+/**
+ * 必修 2（第六轮复审点名）：**「标记了」不等于「被判据读到了」**。
+ *
+ * 复审抠出的引用账：A1 的 `data-part` 里约 1/4 从未进入任何断言
+ * （`ammeter-shell-edge` / `ammeter-shell-highlight` / `ammeter-number-outer` /
+ * `ammeter-number-inner` / `ammeter-dial-highlight` / `ammeter-label-*` …），
+ * 于是「标记率 100%」这层自证只是必要条件、不是充分条件 —— 标记成了**装饰**。
+ * 实测当时这些改动全绿：外圈刻度数字压到指针行程上、接线柱刻字与柱子错位、
+ * 表壳上下高光互换、表盘高光左右互换、指针针体反装、玻璃反光斜条翻转。
+ *
+ * 下面两条把方向反过来：
+ *   1. **满射台账** —— 每个 `data-part` 必须至少被一条判据消费过（写死一份清单，缺一即红）；
+ *   2. **方向性 / 形状** 判据 —— 高光在哪一侧、暗边在上下两端、刻度数字落在哪个半径带、
+ *      刻字与接线柱是否同 x、指针针体是否朝行程一侧…… 全部按世界坐标判。
+ */
+describe('必修 2：标记的每个 data-part 都必须被判据读到，方向性要素必须有方向判据', () => {
+  const A1 = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+  const L1 = render(<LampHolderL1 x={0} y={0} lit={false} />)
+  const S1 = render(<KnifeSwitch x={0} y={0} closed={false} label="S1" />)
+
+  /**
+   * 台账：`data-part` -> 消费它的判据名。
+   * 这是**满射自证**：新增 part 但不给它写判据，这里就会红
+   * （而不是靠"我记得把清单写全"）。
+   */
+  const CONSUMED: Readonly<Record<string, string>> = {
+    // —— 电源 E1 ——
+    'ground-shadow': '接地阴影位置（贴地接触阴影必须画在器材脚下）',
+    baseplate: '<g> 容器：底座整体（卡箍/螺钉判据的落位基准）',
+    'baseplate-face': '底座面/主体范围（零件不得飘出主体）',
+    'baseplate-highlight': '底座顶面高光带存在',
+    'baseplate-edge': '底座两端立边存在',
+    'baseplate-screw': '两端十字螺钉份数与落位',
+    'baseplate-screw-slot': '十字槽必须是"一横一竖"',
+    'E1-clamp': '两道卡箍必须同时抱住电池并坐在底座上',
+    'cell-body': '筒身是主体（环标/反射带必须落在其中）',
+    'cell-band': '品牌环标：橙色相 + 箔亮边 + 面积占比 + 落在筒身内',
+    'cell-highlight': '筒身镜面反射带：两层 + 近白 + 落在筒身内',
+    'cell-outline': '筒身轮廓描边必须是深色 stroke',
+    'cell-positive': '正极铜帽：5 层分层 + 黄铜色相 + 与筒身三向相接',
+    'cell-negative': '负极锌底：与筒身三向重叠（不脱开）',
+    'E1-polarity': '正负极刻字落在底座面内',
+    'E1-name': '器材名存在（E1）',
+    // —— 开关 S1 ——
+    'switch-plate': '胶木底板是主体（螺钉/刀座必须落在其上）',
+    'switch-screw': '底板四角螺钉份数（4 颗 × 2 层）与落位',
+    'switch-jaw-hinge': '铰链刀座整体落到底板上',
+    'switch-jaw-contact': '触点座整体落到底板上',
+    'switch-blade': '刀片：金属高光 + 合闸/断开两种姿态的刀尖落差',
+    'switch-blade-tip': '刀尖斜切存在',
+    'switch-handle': '绝缘手柄 3 层分层',
+    'switch-handle-grip': '手柄防滑纹 3 道且在柄内',
+    'switch-hinge': '铰链轴销 2 层且与刀座同心（转轴半径恒定）',
+    'switch-hinge-gloss': '轴销高光存在',
+    'switch-name': '器材名可配置（S1/S2）',
+    // —— 灯泡 L1 ——
+    'lamp-glass': '玻璃泡：半透明渐变 + 与灯头不脱开 + 宽度与灯座相称',
+    'lamp-glass-highlight': '玻璃左侧高光条存在',
+    'lamp-neck': '玻璃颈缩部存在',
+    'lamp-lead': '两根引线落在玻璃泡内',
+    'lamp-filament': '灯丝落在玻璃泡内 + 点亮后变暖变粗',
+    'lamp-thread-body': '螺旋灯头本体落在灯座口内',
+    'lamp-thread-turn': '螺纹 4 圈',
+    'lamp-thread-shade': '灯头两侧暗部 2 层',
+    'lamp-thread-highlight': '灯头中部高光 1 层',
+    'lamp-insulator': '灯头底部绝缘环存在',
+    'lamp-contact': '中央触点存在',
+    'lamp-socket': '灯座筒口是主体（灯头/灯丝必须落在其中）',
+    'lamp-socket-screw': '灯座固定螺钉落在底座面内',
+    'lamp-name': '器材名存在（L1）',
+    // —— 电流表 A1 ——
+    'ammeter-shell': '表壳是主体（刻度/数字/读数都必须落在其中）',
+    'ammeter-shell-edge': '【方向性】上下两条端边必须分别落在壳体的上下两端',
+    'ammeter-shell-highlight': '表壳顶面高光条落在壳体上端',
+    'ammeter-shell-outline': '表壳描边存在',
+    'ammeter-dial': '表盘是主体（刻度弧/内阴影/提亮必须落在其中）',
+    'ammeter-dial-shadow': '表盘内阴影落在表盘内',
+    'ammeter-dial-highlight': '【方向性】右侧竖提亮 + 下沿横提亮，方向不能互换',
+    'ammeter-terminal-flange': '接线台肩落在表壳内 + 接线柱坐在其中',
+    'ammeter-flange-highlight': '台肩上沿高光存在',
+    'ammeter-flange-border': '台肩下沿描边存在',
+    'ammeter-arc': '两条刻度弧半径不同且落在表盘内',
+    'ammeter-scale-outer': '外圈 31 根刻度落在表壳内',
+    'ammeter-scale-inner': '内圈 31 根刻度落在表壳内',
+    'ammeter-number-outer': '【位置】外圈数字必须落在自己的半径带内（不得压进指针行程）',
+    'ammeter-number-inner': '【位置】内圈数字必须落在自己的半径带内',
+    'ammeter-needle': '指针针尖半径与刻度弧相称 + 针体朝行程一侧（反装要红）',
+    'ammeter-needle-gloss': '针体高光与针体同向且落在针体跨度内',
+    'ammeter-needle-tail': '尾针配重贴在转轴上',
+    'ammeter-needle-hub': '转轴帽 2 层且与转轴同心',
+    'ammeter-needle-hub-shadow': '转轴帽投影存在',
+    'ammeter-needle-hub-gloss': '转轴帽高光存在',
+    'ammeter-glyph': '中央 A 字符落在表盘内',
+    'ammeter-glass-reflection': '【方向性】玻璃反光斜条必须自左上向右下',
+    'ammeter-label-neg': '【对齐】－ 刻字与左侧接线柱同 x',
+    'ammeter-label-06': '【对齐】0.6A 刻字与中间接线柱同 x',
+    'ammeter-label-3': '【对齐】3A 刻字与右侧接线柱同 x',
+    'ammeter-reading': '读数大字与表壳有重叠',
+    'ammeter-name': '器材名与表壳有重叠',
+  }
+
+  it('满射台账：每个 data-part 都必须落在"被消费清单"里（有标记无判据就红）', () => {
+    const allParts = new Set([
+      ...allDataParts(A1),
+      ...allDataParts(E1),
+      ...allDataParts(L1),
+      ...allDataParts(S1),
+    ])
+    expect(allParts.size, '没有渲染出任何 data-part').toBeGreaterThan(40)
+
+    // 遗漏 / 多余两个方向都查：清单必须是渲染结果的**精确**映射
+    const missing = [...allParts].filter((part) => !(part in CONSUMED))
+    expect(
+      missing,
+      `这些 data-part 被标记了但没有任何判据消费它们（"标记"沦为装饰）：${missing.join(', ')}`,
+    ).toEqual([])
+
+    const stale = Object.keys(CONSUMED).filter((part) => !allParts.has(part))
+    expect(stale, `清单里有已不存在的 data-part（判据指向幽灵元素）：${stale.join(', ')}`).toEqual([])
+  })
+
+  it('【方向性】表壳上下两条端边必须分别落在壳体上下两端（互换要红）', () => {
+    const shell = renderedPart(A1, 'ammeter-shell')!
+    const edges = renderedParts(A1, 'ammeter-shell-edge')
+    expect(edges.length, '表壳端边条数不对').toBe(2)
+    const sorted = [...edges].sort((a, b) => a.y - b.y)
+    // 上端边：贴近壳体上沿
+    expect(sorted[0].y, '上端边没有落在壳体上端').toBeLessThan(shell.y + shell.height * 0.1)
+    // 下端边：贴近壳体下沿
+    expect(sorted[1].y, '下端边没有落在壳体下端').toBeGreaterThan(shell.y + shell.height * 0.85)
+    // 两条必须分居上下（不能都在同一端）
+    expect(sorted[1].y - sorted[0].y, '两条端边挤在同一端了').toBeGreaterThan(shell.height * 0.7)
+    // 顶面高光条必须落在壳体上端
+    const highlight = renderedParts(A1, 'ammeter-shell-highlight')
+    expect(highlight.length).toBe(1)
+    expect(highlight[0].y, '表壳顶面高光条没落在壳体上端').toBeLessThan(shell.y + shell.height * 0.1)
+  })
+
+  it('【方向性】表盘提亮必须"一竖在右、一横在下"（左右/上下互换要红）', () => {
+    const dial = renderedPart(A1, 'ammeter-dial')!
+    const highlights = renderedParts(A1, 'ammeter-dial-highlight')
+    expect(highlights.length, '表盘提亮层数不对').toBe(2)
+    const vertical = highlights.find((item) => item.height > item.width)!
+    const horizontal = highlights.find((item) => item.width > item.height)!
+    expect(vertical, '缺少竖向提亮层').toBeDefined()
+    expect(horizontal, '缺少横向提亮层').toBeDefined()
+    // 竖向那条必须贴**右沿**（内凹光源在左上，右下受提亮）
+    expect(
+      vertical.x + vertical.width,
+      `竖向提亮贴在左沿了（光照方向反了）：右沿 ${(vertical.x + vertical.width).toFixed(1)} vs 表盘右沿 ${(dial.x + dial.width).toFixed(1)}`,
+    ).toBeGreaterThan(dial.x + dial.width * 0.85)
+    // 横向那条必须贴**下沿**
+    expect(
+      horizontal.y + horizontal.height,
+      '横向提亮贴到上沿去了（光照方向反了）',
+    ).toBeGreaterThan(dial.y + dial.height * 0.85)
+  })
+
+  it('【位置】两排量程数字必须落在各自的半径带内，不得压进指针行程', () => {
+    const needle = needlePivot(A1)!
+    const pivot = needle.pivot
+    const arcRadius = Number(A1.match(/<path\b[^>]*data-part="ammeter-arc"[^>]*\bd="M [\d.-]+ [\d.-]+ A ([\d.]+)/)?.[1])
+    expect(arcRadius).toBeGreaterThan(0)
+
+    const radiusOfText = (part: string) => {
+      const list = [...A1.matchAll(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>`, 'g'))].map((match) => {
+        const o = worldOffsetAt(A1, match.index ?? 0)
+        const x = o.x + Number(match[0].match(/\bx="(-?[\d.]+)"/)?.[1])
+        const y = o.y + Number(match[0].match(/\by="(-?[\d.]+)"/)?.[1])
+        return Math.hypot(x - pivot.x, y - pivot.y)
+      })
+      return list
+    }
+
+    const outer = radiusOfText('ammeter-number-outer')
+    const inner = radiusOfText('ammeter-number-inner')
+    expect(outer.length, '外圈数字缺失').toBe(4)
+    expect(inner.length, '内圈数字缺失').toBe(4)
+
+    // 外圈数字必须落在刻度弧**之内**（贴在弧的内侧），不能压到弧外面去
+    for (const radius of outer) {
+      expect(radius, `外圈数字半径 ${radius.toFixed(1)} 跑出刻度弧半径 ${arcRadius} 之外`).toBeLessThan(arcRadius + 2)
+      expect(radius, `外圈数字半径 ${radius.toFixed(1)} 太靠近转轴（压进指针行程）`).toBeGreaterThan(arcRadius - 32)
+    }
+    // 内圈数字必须比外圈明显更靠内，且不能越过转轴
+    const mean = (values: number[]) => values.reduce((sum, v) => sum + v, 0) / values.length
+    expect(mean(outer) - mean(inner), '内外两排数字半径带重叠').toBeGreaterThan(8)
+    expect(Math.min(...inner), `内圈数字半径 ${Math.min(...inner).toFixed(1)} 越过转轴了`).toBeGreaterThan(4)
+  })
+
+  it('【对齐】三处接线柱刻字必须与对应接线柱同 x（刻字错位要红）', () => {
+    const layout = createDefaultLayout()
+    const center = layout.components.A1
+    const flange = renderedPart(A1, 'ammeter-terminal-flange')!
+    for (const [part, label, terminalId] of [
+      ['ammeter-label-neg', '－', 'ammeter-neg'],
+      ['ammeter-label-06', '0.6A', 'ammeter-0.6'],
+      ['ammeter-label-3', '3A', 'ammeter-3'],
+    ] as const) {
+      const text = renderedText(A1, part, label)
+      expect(text, `${part} 刻字缺失`).not.toBeNull()
+      const post = terminalPosition(layout, terminalId)
+      const localX = post.x - center.x
+      expect(
+        Math.abs(text!.x - localX),
+        `${label} 刻字与接线柱错位：刻字 x=${text!.x.toFixed(1)} vs 接线柱 x=${localX.toFixed(1)}`,
+      ).toBeLessThan(3)
+      // 刻字仍必须横向落在台肩内（纵向另有既有判据）
+      expect(text!.x).toBeGreaterThanOrEqual(flange.x - 1)
+      expect(text!.x).toBeLessThanOrEqual(flange.x + flange.width + 1)
+    }
+  })
+
+  it('【形状】指针针体必须朝刻度一侧，不能反装到转轴另一侧', () => {
+    const needle = needlePivot(A1)!
+    const needleTag = A1.match(/<path\b[^>]*data-part="ammeter-needle"[^>]*>/)!
+    const points = pathPointsFromTag(needleTag[0])
+    expect(points.length).toBeGreaterThan(2)
+    /**
+     * 真实表头的指针是"**长针指向刻度、短尾反向配重**"。
+     * 针体（`ammeter-needle`）的**主体**必须全部落在转轴的刻度一侧，
+     * 反装（把针尖算成 pivotY + radius）会让针身跨到转轴另一侧。
+     * 这里按"针体点相对转轴的 y 偏移"判：所有点都应在转轴的**上方**（表盘刻度在转轴上方）。
+     */
+    /**
+     * 针体是"转轴处一小段 + 向刻度侧伸出的针尖"：
+     * `M -1 pivotY L 1 pivotY L 0.55 pivotY-r+5 L -0.55 pivotY-r+5 Z`
+     * 即 2 个点在转轴、2 个点在针尖（转轴上方 r-5）。
+     * 所以正确口径是：**针尖那一对点必须在刻度一侧**，且**任何点都不得穿到转轴下方**。
+     */
+    const tipYs = points.map(([, y]) => y).filter((y) => y < needle.pivot.y - 1)
+    expect(tipYs.length, `指针针体只有 ${tipYs.length}/4 个点在刻度一侧（针尖反装了？）`).toBe(2)
+    // 针尖必须真的伸出足够长（不能退化成贴着转轴的一小段）
+    const tipReach = needle.pivot.y - Math.min(...tipYs)
+    expect(tipReach, `针尖只伸出 ${tipReach.toFixed(1)}px，太短`).toBeGreaterThan(30)
+    // 任何点都不得穿到转轴另一侧
+    for (const [, y] of points) {
+      expect(y, `指针针体点 y=${y} 穿到了转轴(${needle.pivot.y})另一侧`).toBeLessThanOrEqual(needle.pivot.y + 2)
+    }
+    // 针体高光必须与针体同向（也在刻度一侧）
+    const glossTag = A1.match(/<path\b[^>]*data-part="ammeter-needle-gloss"[^>]*>/)!
+    const glossPoints = pathPointsFromTag(glossTag[0])
+    expect(glossPoints.length).toBeGreaterThan(2)
+    expect(
+      glossPoints.every(([, y]) => y <= needle.pivot.y + 2),
+      '针体高光穿到转轴另一侧了（与针体不同向）',
+    ).toBe(true)
+  })
+
+  it('【方向性】玻璃反光斜条必须自左上向右下（翻转要红）', () => {
+    const path = A1.match(/<path\b[^>]*data-part="ammeter-glass-reflection"[^>]*>/)!
+    const points = pathPointsFromTag(path[0])
+    expect(points.length, '玻璃反光斜条没有解析出几何').toBeGreaterThan(2)
+    // 取最左与最右的点，比较它们的 y：左端点必须更高（y 更小）= 自左上向右下
+    const left = points.reduce((best, point) => (point[0] < best[0] ? point : best))
+    const right = points.reduce((best, point) => (point[0] > best[0] ? point : best))
+    const rise = Math.abs(right[1] - left[1])
+    const run = Math.abs(right[0] - left[0])
+    expect(rise, `玻璃反光斜条退化成水平条（两端 y 相同：${left[1]} / ${right[1]}）`).toBeGreaterThan(15)
+    expect(run, '玻璃反光斜条退化成竖直条').toBeGreaterThan(40)
+    // 斜条必须落在表盘（米白面板）范围内，否则反光跑到表壳上就看不见
+    const dial = renderedPart(A1, 'ammeter-dial')!
+    for (const [, y] of points) {
+      expect(y, `玻璃反光斜条点 y=${y} 超出表盘`).toBeGreaterThanOrEqual(dial.y - 20)
+      expect(y, `玻璃反光斜条点 y=${y} 超出表盘`).toBeLessThanOrEqual(dial.y + dial.height + 2)
+    }
+    // 反向自证：把斜条改成水平后必须红
+    const flattened = A1.replace(
+      /d="M -70 -66 L 18 -114 L 36 -114 L -52 -66 Z"/,
+      'd="M -70 -90 L 18 -90 L 36 -90 L -52 -90 Z"',
+    )
+    expect(flattened).not.toBe(A1)
+    const flatPoints = pathPointsFromTag(flattened.match(/<path\b[^>]*data-part="ammeter-glass-reflection"[^>]*>/)![0])
+    const flatLeft = flatPoints.reduce((best, point) => (point[0] < best[0] ? point : best))
+    const flatRight = flatPoints.reduce((best, point) => (point[0] > best[0] ? point : best))
+    expect(
+      Math.abs(flatRight[1] - flatLeft[1]),
+      '把斜条压平后两端 y 仍然不同，这个反向自证不成立',
+    ).toBeLessThan(1)
+  })
+
+  it('【方向性】电池正负极方位不能被互换（＋在右、－在左）', () => {
+    const body = unionBounds(renderedParts(E1, 'cell-body'))
+    const positive = renderedParts(E1, 'cell-positive')
+    const negative = renderedParts(E1, 'cell-negative')
+    const positiveCentre = positive.reduce((sum, item) => sum + item.x + item.width / 2, 0) / positive.length
+    const negativeCentre = negative.reduce((sum, item) => sum + item.x + item.width / 2, 0) / negative.length
+    expect(positiveCentre, '正极铜帽跑到电池左端了（正负极装反）').toBeGreaterThan((body.minX + body.maxX) / 2)
+    expect(negativeCentre, '负极锌底跑到电池右端了（正负极装反）').toBeLessThan((body.minX + body.maxX) / 2)
   })
 })
 

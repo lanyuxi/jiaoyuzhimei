@@ -115,13 +115,16 @@ function BasePlate({ halfWidth, y, depth = 20 }: { halfWidth: number; y: number;
       <rect data-part="baseplate-edge" x={-halfWidth} y={y - 3.5} width="4" height={h + 3.5} rx="1.6" fill="#9aa1a9" />
       <rect data-part="baseplate-edge" x={halfWidth - 4} y={y - 3.5} width="4" height={h + 3.5} rx="1.6" fill="#9aa1a9" />
       {/* 两端十字螺钉 */}
-      {[-halfWidth + 11, halfWidth - 11].map((cx) => (
-        <g key={cx} data-anchor="local" transform={`translate(${cx} ${y + h * 0.42})`}>
-          <circle data-part="baseplate-screw" cx="0" cy="0" r="4" fill={METAL_MID} stroke={METAL_EDGE} strokeWidth="0.6" />
-          <circle data-part="baseplate-screw" cx="0" cy="0" r="2.6" fill={METAL_LIGHT} opacity="0.7" />
-          <path data-part="baseplate-screw-slot" d="M -2.6 0 L 2.6 0 M 0 -2.6 L 0 2.6" stroke="#6d747c" strokeWidth="0.7" />
-        </g>
-      ))}
+      {[-halfWidth + 11, halfWidth - 11].map((cx) => {
+        const cy = y + h * 0.42
+        return (
+          <g key={cx}>
+            <circle data-part="baseplate-screw" cx={cx} cy={cy} r="4" fill={METAL_MID} stroke={METAL_EDGE} strokeWidth="0.6" />
+            <circle data-part="baseplate-screw" cx={cx} cy={cy} r="2.6" fill={METAL_LIGHT} opacity="0.7" />
+            <path data-part="baseplate-screw-slot" d={`M ${cx - 2.6} ${cy} L ${cx + 2.6} ${cy} M ${cx} ${cy - 2.6} L ${cx} ${cy + 2.6}`} stroke="#6d747c" strokeWidth="0.7" />
+          </g>
+        )
+      })}
     </g>
   )
 }
@@ -235,9 +238,9 @@ export function KnifeSwitch({ x, y, closed, label }: { x: number; y: number; clo
       <rect data-part="switch-plate" x="-88" y="16" width="176" height="6" rx="2" fill="#1b1815" opacity="0.9" />
       {/* 底板四角螺钉 */}
       {[[-76, 13], [76, 13], [-76, 22], [76, 22]].map(([sx, sy], index) => (
-        <g key={index} data-anchor="local" transform={`translate(${sx} ${sy})`}>
-          <circle data-part="switch-screw" cx="0" cy="0" r="3.2" fill="#6e767e" />
-          <circle data-part="switch-screw" cx="-0.6" cy="-0.6" r="2" fill="#a9b0b7" opacity="0.8" />
+        <g key={index}>
+          <circle data-part="switch-screw" cx={sx} cy={sy} r="3.2" fill="#6e767e" />
+          <circle data-part="switch-screw" cx={sx - 0.6} cy={sy - 0.6} r="2" fill="#a9b0b7" opacity="0.8" />
         </g>
       ))}
       {/* 左侧铰链刀座（带夹片） */}
@@ -249,7 +252,7 @@ export function KnifeSwitch({ x, y, closed, label }: { x: number; y: number; clo
       <rect data-part="switch-jaw-contact" x={contactX - 8} y={pivotY - 11} width="16" height="4" rx="1.6" fill={BRASS_LIGHT} />
       <rect data-part="switch-jaw-contact" x={contactX - 8} y={pivotY - 11} width="16" height="19" rx="1.6" fill="none" stroke="#8a6f16" strokeWidth="0.7" />
       {/* 刀片：以左端铰链为轴旋转 */}
-      <g data-anchor="local" transform={`rotate(${bladeAngle} ${hingeX} ${pivotY})`}>
+      <g data-anchor="rotate-declared" transform={`rotate(${bladeAngle} ${hingeX} ${pivotY})`}>
         <rect data-part="switch-blade" x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="11" rx="2.4" fill={METAL_LIGHT} />
         <rect data-part="switch-blade" x={hingeX + 6} y={pivotY - 5.5} width={contactX - hingeX - 4} height="4" rx="2" fill="#ffffff" opacity="0.8" />
         <rect data-part="switch-blade" x={hingeX + 6} y={pivotY + 2} width={contactX - hingeX - 4} height="3.5" rx="1.75" fill="#868d95" opacity="0.75" />
@@ -371,9 +374,9 @@ export function LampHolderL1({ x, y, lit }: { x: number; y: number; lit: boolean
       <path data-part="lamp-socket" d="M 22 -26 L 19 -6 L 15 -6 L 18 -26 Z" fill="#5f666e" opacity="0.5" />
       {/* 底座上的两枚小螺钉（灯座固定） */}
       {[-58, 58].map((sx) => (
-        <g key={sx} data-anchor="local" transform={`translate(${sx} 17)`}>
-          <circle data-part="lamp-socket-screw" cx="0" cy="0" r="3.4" fill={METAL_MID} />
-          <circle data-part="lamp-socket-screw" cx="-0.7" cy="-0.7" r="2.1" fill="#dfe4e9" opacity="0.85" />
+        <g key={sx}>
+          <circle data-part="lamp-socket-screw" cx={sx} cy="17" r="3.4" fill={METAL_MID} />
+          <circle data-part="lamp-socket-screw" cx={sx - 0.7} cy="16.3" r="2.1" fill="#dfe4e9" opacity="0.85" />
         </g>
       ))}
       {/* 螺旋灯头 + 玻璃泡：玻璃颈部直接坐在灯头螺纹上，中间不留缝（否则灯泡像飘着） */}
@@ -469,7 +472,7 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
         )
       })}
       {/* 指针：细长红针 + 尾部配重 */}
-      <g data-anchor="local" transform={`rotate(${angle} 0 ${pivotY})`}>
+      <g data-anchor="rotate-declared" transform={`rotate(${angle} 0 ${pivotY})`}>
         {/* 尾部配重（真实的动圈表头都有一小截反向尾针） */}
         <rect data-part="ammeter-needle-tail" x="-2.6" y={pivotY} width="5.2" height="7" rx="2.4" fill="#7d1c14" />
         {/* 针体：细长、尖端收拢 */}
