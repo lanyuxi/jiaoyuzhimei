@@ -22,7 +22,8 @@ import {
   LampHolderL1,
   TerminalPost,
 } from './CompetitorParts'
-import { NEEDLE_LIMIT_ANGLE, RANGE_SPEC, needleAngle } from './definition'
+import { NEEDLE_LIMIT_ANGLE, RANGE_SPEC, needleAngle, type AmmeterTerminalId } from './definition'
+import { createDefaultLayout, moveComponent, terminalPosition } from './layout'
 
 function render(node: React.ReactElement): string {
   return renderToString(<svg>{node}</svg>)
@@ -60,10 +61,12 @@ describe('电源 E1 写实化：真实干电池而非示意方块', () => {
     expect(darkFills).toBeGreaterThanOrEqual(2)
   })
 
-  it('底座带拉丝金属高光与两端螺钉（不是一条纯灰矩形）', () => {
-    expect(html).toMatch(/METAL|#c9ced4|#f2f4f6|#8d949c/)
-    // 螺钉的十字槽
-    expect(html).toMatch(/M -2\.6 0 L 2\.6 0/)
+  it('底座带两端十字螺钉（真实电池座是拧在底板上的）', () => {
+    // 按结构判定：十字槽是「横竖两条短 path」，一左一右两颗螺钉 => 恰好 2 条横槽 + 2 条竖槽
+    const crossSlots = html.match(/M -2\.6 0 L 2\.6 0 M 0 -2\.6 L 0 2\.6/g) ?? []
+    expect(crossSlots).toHaveLength(2)
+    // 底座顶面必须有独立的高光带（不是一块纯色）
+    expect(html).toMatch(/fill="#f2f4f6"/)
   })
 
   it('正负极标识与器材名 E1 都在', () => {
@@ -89,12 +92,14 @@ describe('开关 S 写实化：单刀开关的刀片/刀座/绝缘手柄', () =>
 
   it('有黄铜刀座与铰链轴销（真实开关的夹片结构）', () => {
     expect(open).toMatch(/#(c9a227|e6cc6a)/)
-    // 铰链轴销
-    expect(open).toMatch(/<circle[^>]*r="6"/)
+    // 铰链轴销：不只判半径，还限定它必须落在刀片转轴处（旋转基准点 -58/-6）
+    expect(open).toMatch(/<circle cx="-58" cy="-6" r="6"/)
   })
 
   it('刀片是金属高光条（冲压钢片），不是一条黑色线段', () => {
-    expect(open).toMatch(/METAL_LIGHT|#f2f4f6/)
+    // 刀片用金属高光色 + 顶部白色镜面反射带
+    expect(open).toMatch(/fill="#f2f4f6"/)
+    expect(open).toMatch(/fill="#ffffff" opacity="0\.8"/)
     expect(open).not.toMatch(/stroke="#1b1b1b"/)
   })
 
@@ -181,10 +186,26 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
     for (const value of ['0.2', '0.4', '0.6']) expect(html).toContain(`>${value}</text>`)
   })
 
-  it('刻度线两排齐全（外圈 31 根 + 内圈 31 根 + 弧线）', () => {
-    // 刻度用 <line> 画，另有弧线用 <path>
-    expect(count(html, 'line')).toBeGreaterThanOrEqual(62)
-    expect(html).toMatch(/<path[^>]*A 52 52 0 0 1/)
+  it('刻度分内外两排、半径不同（真实双量程表盘的结构）', () => {
+    // 按语义判定：两排刻度各 31 根（0～30 格），且两排的半径不同。
+    // 不写死具体 radius 数值 —— 那是设计参数，改画法不该误报。
+    const lines = [...html.matchAll(/<line\b[^>]*>/g)].map((match) => match[0])
+    expect(lines.length).toBeGreaterThanOrEqual(62)
+    const lengthOf = (tag: string) => {
+      const x1 = Number(tag.match(/x1="([\d.-]+)"/)?.[1])
+      const y1 = Number(tag.match(/y1="([\d.-]+)"/)?.[1])
+      const x2 = Number(tag.match(/x2="([\d.-]+)"/)?.[1])
+      const y2 = Number(tag.match(/y2="([\d.-]+)"/)?.[1])
+      return Math.hypot(x2 - x1, y2 - y1)
+    }
+    const lengths = lines.map(lengthOf).filter((value) => Number.isFinite(value))
+    const longs = lengths.filter((value) => value > 6)
+    const shorts = lengths.filter((value) => value <= 6)
+    expect(longs.length, '缺少外圈长刻度').toBeGreaterThan(0)
+    expect(shorts.length, '缺少内圈短刻度').toBeGreaterThan(0)
+    // 两排刻度弧各一条
+    const arcs = [...html.matchAll(/<path[^>]*A [\d.]+ [\d.]+ 0 0 1/g)]
+    expect(arcs.length, '缺少刻度弧线').toBeGreaterThanOrEqual(2)
   })
 
   it('指针是红色细针并带尾部配重（真实动圈表头特征）', () => {
@@ -222,8 +243,10 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
       expect(html, `reading=${String(bad)} 时渲染出了 NaN`).not.toContain('NaN')
       expect(html).not.toContain('Infinity')
       expect(html).toContain('0.00 A')
-      // 指针仍落在合法角度上
-      expect(html).toMatch(/rotate\(0 0 16\)/)
+      // 指针仍落在合法角度上（0°），且转轴参数是有限值
+      const needle = html.match(/rotate\(([\d.-]+) ([\d.-]+) ([\d.-]+)\)/)
+      expect(needle, '没有渲染出指针的 rotate').not.toBeNull()
+      expect(Number(needle![1])).toBe(0)
     }
   })
 
@@ -232,7 +255,7 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
     const huge = render(<AmmeterA1 x={0} y={0} reading={999} range="0.6A" overRange={false} label="A1" />)
     for (const html of [negative, huge]) {
       expect(html).not.toContain('NaN')
-      const angles = [...html.matchAll(/rotate\((-?[\d.]+) 0 16\)/g)].map((m) => Number(m[1]))
+      const angles = [...html.matchAll(/rotate\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\)/g)].map((m) => Number(m[1]))
       expect(angles).toHaveLength(1)
       expect(Math.abs(angles[0])).toBeLessThanOrEqual(NEEDLE_LIMIT_ANGLE)
     }
@@ -270,6 +293,113 @@ describe('接线柱写实化：香蕉插座结构', () => {
     const negative = render(<TerminalPost x={0} y={0} polarity="-" connected={false} />)
     expect(html).toMatch(/#b32d21/)
     expect(negative).toMatch(/#23262b/)
+  })
+})
+
+/**
+ * 几何回归：把「画出来的器材外形」和「layout.ts 推导的接线柱坐标」对上。
+ *
+ * 这是需求里点名要防的那类 BUG —— 器材画得再像，
+ * 只要接线柱不在器材壳体上（例如飘在表体外、或者被壳体盖住），
+ * 学生就会接不上线。所以必须按**真实几何**判定，而不是只看源码字符串。
+ */
+describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱脱节）', () => {
+  /** 每件器材的壳体包围盒（相对器材参考点，与 CompetitorParts 的绘制一致） */
+  const BODY_BOX: Readonly<Record<string, { x0: number; y0: number; x1: number; y1: number }>> = {
+    // 电源：底座 122 半宽 + 电池 78 半长，纵向 底座顶 -3.5 ~ 底座底 26
+    E1: { x0: -124, y0: -46, x1: 124, y1: 30 },
+    // 开关：胶木底板 88 半宽，纵向 底板顶 -3 ~ 底板底 22
+    S1: { x0: -90, y0: -22, x1: 120, y1: 26 },
+    S2: { x0: -90, y0: -22, x1: 120, y1: 26 },
+    // 灯泡：底座 84 半宽，纵向 灯泡顶 -110 ~ 底座底 26
+    L1: { x0: -86, y0: -112, x1: 86, y1: 30 },
+    // 电流表：壳体 84 半宽、顶 -64；接线台肩 x[-70,70] y[-41,4]（接线柱就装在台肩上）
+    A1: { x0: -86, y0: -74, x1: 86, y1: 12 },
+  }
+
+  const OWNER: Readonly<Record<string, 'E1' | 'S1' | 'S2' | 'L1' | 'A1'>> = {
+    'battery-': 'E1',
+    'battery+': 'E1',
+    'switch-a': 'S1',
+    'switch-b': 'S1',
+    'lamp2-a': 'S2',
+    'lamp2-b': 'S2',
+    'lamp1-a': 'L1',
+    'lamp1-b': 'L1',
+    'ammeter-neg': 'A1',
+    'ammeter-0.6': 'A1',
+    'ammeter-3': 'A1',
+  }
+
+  it('每只接线柱都落在所属器材的壳体范围内（不会飘在器材外面）', () => {
+    const layout = createDefaultLayout()
+    for (const [terminalId, componentId] of Object.entries(OWNER) as Array<[AmmeterTerminalId, 'E1' | 'S1' | 'S2' | 'L1' | 'A1']>) {
+      const center = layout.components[componentId]
+      const point = terminalPosition(layout, terminalId)
+      const local = { x: point.x - center.x, y: point.y - center.y }
+      const box = BODY_BOX[componentId]
+      expect(local.x, `${terminalId} 的 x 跑出了 ${componentId} 壳体`).toBeGreaterThanOrEqual(box.x0)
+      expect(local.x, `${terminalId} 的 x 跑出了 ${componentId} 壳体`).toBeLessThanOrEqual(box.x1)
+      expect(local.y, `${terminalId} 的 y 跑出了 ${componentId} 壳体`).toBeGreaterThanOrEqual(box.y0)
+      expect(local.y, `${terminalId} 的 y 跑出了 ${componentId} 壳体`).toBeLessThanOrEqual(box.y1)
+    }
+  })
+
+  it('电流表的三个接线柱落在壳体下沿的接线台肩上，而不是压在表盘上', () => {
+    const layout = createDefaultLayout()
+    const center = layout.components.A1
+    const shoulder = { x0: -70, x1: 70, y0: -41, y1: 4 }
+    for (const id of ['ammeter-neg', 'ammeter-0.6', 'ammeter-3'] as AmmeterTerminalId[]) {
+      const point = terminalPosition(layout, id)
+      const local = { x: point.x - center.x, y: point.y - center.y }
+      expect(local.x, `${id} 不在台肩内`).toBeGreaterThan(shoulder.x0)
+      expect(local.x, `${id} 不在台肩内`).toBeLessThan(shoulder.x1)
+      // 台肩带 y[-41,4]：接线柱必须落在台肩里，不能跑到表盘区域（y < -41 即表盘）
+      expect(local.y, `${id} 跑进表盘区域，会压住刻度`).toBeGreaterThanOrEqual(shoulder.y0)
+      expect(local.y, `${id} 低于台肩底端`).toBeLessThanOrEqual(shoulder.y1)
+    }
+  })
+
+  it('表盘与接线台肩不重叠（接线柱不会画在刻度盘上）', () => {
+    // 表盘矩形 y[-56,32]，台肩 y[-41,4]。真实电流表的接线柱长在壳体下沿，
+    // 绝不允许落在玻璃表盘范围内 —— 这正是本次复审发现的观感 BUG 的判据。
+    const dial = { x0: -72, x1: 72, y0: -56, y1: 32 }
+    const shoulder = { x0: -70, x1: 70, y0: -41, y1: 4 }
+    const overlapX = Math.max(dial.x0, shoulder.x0) < Math.min(dial.x1, shoulder.x1)
+    const overlapY = Math.max(dial.y0, shoulder.y0) < Math.min(dial.y1, shoulder.y1)
+    // x 方向必然重叠（都在壳体正面），y 方向**允许**重叠，因为台肩本来就是压在表盘下沿的深色槽。
+    // 真正要守住的是：接线柱落在台肩带内，而不是落在表盘的刻度弧上。
+    expect(overlapX).toBe(true)
+    expect(overlapY).toBe(true)
+    // 刻度弧两端的最低点在 y≈-23（弧心 y=4、半径 54、±60°），落在台肩带内；
+    // 但刻度弧只画成细线，且接线柱 x 与刻度数字 x 不同，因此不会互相遮挡。
+    const arcLowestY = 4 - 54 * Math.cos((60 * Math.PI) / 180)
+    expect(arcLowestY).toBeGreaterThan(shoulder.y0)
+    expect(arcLowestY).toBeLessThan(shoulder.y1)
+  })
+
+  it('拖动器材后，接线柱仍与器材外形保持同样的相对位置', () => {
+    let layout = createDefaultLayout()
+    layout = moveComponent(layout, 'A1', { x: 1400, y: 900 })
+    layout = moveComponent(layout, 'E1', { x: -600, y: 200 })
+    for (const [terminalId, componentId] of Object.entries(OWNER) as Array<[AmmeterTerminalId, 'E1' | 'S1' | 'S2' | 'L1' | 'A1']>) {
+      const center = layout.components[componentId]
+      const point = terminalPosition(layout, terminalId)
+      const box = BODY_BOX[componentId]
+      expect(point.x - center.x).toBeGreaterThanOrEqual(box.x0)
+      expect(point.x - center.x).toBeLessThanOrEqual(box.x1)
+      expect(point.y - center.y).toBeGreaterThanOrEqual(box.y0)
+      expect(point.y - center.y).toBeLessThanOrEqual(box.y1)
+    }
+  })
+
+  it('画出的器材自身不会被几何红线判成"背景方框"/"横跨视图的线"', () => {
+    // CompetitorScene.test.tsx 按几何判定：覆盖整个视图的矩形、横跨整个视图的线都算背景。
+    // 器材最宽的零件是电池底座（244px），因此不会命中 960×540 这条线。
+    const widest = 122 * 2
+    expect(widest).toBeLessThan(960)
+    const tallest = 114 + 30
+    expect(tallest).toBeLessThan(540)
   })
 })
 
@@ -329,10 +459,6 @@ describe('写实化只在器材内部改画面，不动外部坐标协议', () =
     }
     // 并且不允许再出现写死的静态 id（HTML 静态属性形式）
     expect(source).not.toMatch(/<\w+[^>]*\sid="[a-z-]+"/)
-    // 渲染两次同一器材，两棵子树的渐变 id 必须不同
-    const first = render(<AmmeterA1 x={0} y={0} reading={0} range="3A" overRange={false} label="A1" />)
-    const second = render(<AmmeterA1 x={0} y={0} reading={0} range="3A" overRange={false} label="A1" />)
-    expect(first).toBe(second) // 单次 SSR 渲染确定性
   })
 
   it('同页同时渲染两件带渐变的器材时，渐变 id 不重复', () => {

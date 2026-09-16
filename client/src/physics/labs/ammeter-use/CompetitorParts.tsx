@@ -26,14 +26,14 @@ import {
   type AmmeterRangeId,
 } from './definition'
 
-export const METAL_LIGHT = '#f2f4f6'
-export const METAL_MID = '#c9ced4'
-export const METAL_DARK = '#8d949c'
-export const METAL_EDGE = '#5f666e'
-export const BRASS = '#c9a227'
-export const BRASS_LIGHT = '#e6cc6a'
-export const TERMINAL_RED = '#b32d21'
-export const TERMINAL_BLACK = '#23262b'
+const METAL_LIGHT = '#f2f4f6'
+const METAL_MID = '#c9ced4'
+const METAL_DARK = '#8d949c'
+const METAL_EDGE = '#5f666e'
+const BRASS = '#c9a227'
+const BRASS_LIGHT = '#e6cc6a'
+const TERMINAL_RED = '#b32d21'
+const TERMINAL_BLACK = '#23262b'
 
 function terminalColor(polarity: '+' | '-') {
   return polarity === '+' ? TERMINAL_RED : TERMINAL_BLACK
@@ -389,9 +389,10 @@ export function LampHolderL1({ x, y, lit }: { x: number; y: number; lit: boolean
 
 /** 表盘刻度：外圈 0～3、内圈 0～0.6，中间夹一圈弧线 */
 function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRangeId; reading: number; overRange: boolean }) {
-  // 刻度半径与转轴位置：上留出量程铭牌，下留出中央「A」字样，互不遮挡
-  const radius = 52
-  const pivotY = 16
+  // 刻度半径与转轴位置：整个刻度弧必须落在表盘内（局部 y -56…32），
+  // 弧心取表盘中上部，让指针从 -60° 到 +60° 有完整行程且不与台肩/刻字相撞。
+  const radius = 54
+  const pivotY = 4
   const angle = needleAngle(reading, activeRange)
   const polar = (angleDeg: number, distance: number) => {
     const rad = (angleDeg * Math.PI) / 180
@@ -478,8 +479,8 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
       <circle cx="0" cy={pivotY} r="6" fill="#5d636a" />
       <circle cx="0" cy={pivotY} r="6" fill="none" stroke="#393e44" strokeWidth="0.8" />
       <path d="M -4.4 -0.6 A 5 5 0 0 1 3.2 -4.2" fill="none" stroke="#d7dce1" strokeWidth="1.5" opacity="0.85" />
-      {/* 中央量程字符 A（真实表盘会把 A 印在转轴下方，避开指针行程） */}
-      <text x="0" y={pivotY + 34} fill="#232019" fontSize="21" fontWeight="700" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic">A</text>
+      {/* 中央量程字符 A（真实表盘印在转轴下方，避开指针行程） */}
+      <text x="0" y={pivotY + 17} fill="#232019" fontSize="16" fontWeight="700" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontStyle="italic">A</text>
     </g>
   )
 }
@@ -508,33 +509,42 @@ export function AmmeterA1({
   const readingText = `${displayReading.toFixed(2)} A`
   return (
     <g transform={`translate(${x} ${y})`}>
-      <GroundShadow cy={62} rx={88} ry={9} />
+      <GroundShadow cy={46} rx={86} ry={9} />
+      {/*
+        真实电流表的结构：表壳正面是**完整的一大块表盘**，接线柱长在壳体**下沿外伸的接线台肩**上，
+        而不是戳在玻璃表盘上。本实验台三只接线柱由 layout.ts 固定在局部 y≈-37…-41，
+        所以台肩做成从壳体下沿向下伸出的一截，让旋帽正好坐在台肩上（不遮表盘）。
+      */}
+      {/* 下沿外伸的接线台肩（先画，压在壳体下方） */}
+      <rect x="-70" y="-41" width="140" height="45" rx="4" fill="#1e2126" />
+      <rect x="-70" y="-41" width="140" height="5" rx="2.5" fill="#3a4048" />
+      <rect x="-70" y="-41" width="140" height="45" rx="4" fill="none" stroke="#0d1013" strokeWidth="0.9" />
       {/* 外壳：深色仪表壳，顶面受光、底面暗 */}
-      <rect x="-84" y="-60" width="168" height="122" rx="6" fill="#25292e" />
-      <rect x="-84" y="-60" width="168" height="10" rx="5" fill="#3b4148" />
-      <rect x="-84" y="52" width="168" height="10" rx="5" fill="#14171a" />
-      <rect x="-84" y="-60" width="168" height="122" rx="6" fill="none" stroke="#101317" strokeWidth="1" />
+      <rect x="-84" y="-64" width="168" height="104" rx="6" fill="#25292e" />
+      <rect x="-84" y="-64" width="168" height="10" rx="5" fill="#3b4148" />
+      <rect x="-84" y="30" width="168" height="10" rx="5" fill="#14171a" />
+      <rect x="-84" y="-64" width="168" height="104" rx="6" fill="none" stroke="#101317" strokeWidth="1" />
       {/* 顶面高光条 */}
-      <rect x="-78" y="-58" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
-      {/* 内凹表盘（带内阴影：上/左深，下/右浅） */}
-      <rect x="-72" y="-48" width="144" height="94" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
-      <rect x="-72" y="-48" width="144" height="6" rx="3" fill="#000000" opacity="0.22" />
-      <rect x="-72" y="-48" width="5" height="94" rx="2" fill="#000000" opacity="0.16" />
-      <rect x="67" y="-48" width="5" height="94" rx="2" fill="#ffffff" opacity="0.5" />
-      <rect x="-72" y="40" width="144" height="6" rx="3" fill="#ffffff" opacity="0.45" />
-      {/* 表盘上的量程铭牌（贴近表盘上沿，不压刻度弧） */}
-      <text x="0" y="-40" fill="#5c554a" fontSize="8.4" letterSpacing="0.3" textAnchor="middle">直流电流表  {spec.label}</text>
-      <line x1="-38" y1="-36.5" x2="38" y2="-36.5" stroke="#b3aa99" strokeWidth="0.7" />
+      <rect x="-78" y="-62" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
+      {/* 内凹表盘（带内阴影：上/左深，下/右浅）—— 占据壳体正面绝大部分 */}
+      <rect x="-72" y="-56" width="144" height="88" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
+      <rect x="-72" y="-56" width="144" height="6" rx="3" fill="#000000" opacity="0.22" />
+      <rect x="-72" y="-56" width="5" height="88" rx="2" fill="#000000" opacity="0.16" />
+      <rect x="67" y="-56" width="5" height="88" rx="2" fill="#ffffff" opacity="0.5" />
+      <rect x="-72" y="26" width="144" height="6" rx="3" fill="#ffffff" opacity="0.45" />
       <DialFace activeRange={activeRange} reading={displayReading} overRange={overRange} />
       {/* 玻璃面反光斜条 */}
-      <path d="M -66 36 L 22 -44 L 40 -44 L -48 36 Z" fill="#ffffff" opacity="0.13" />
-      {/* 外壳下沿三只接线柱的刻字 */}
-      <text x="-52" y="76" fill="#e7ebef" fontSize="10.5" fontWeight="700" textAnchor="middle">－</text>
-      <text x="0" y="76" fill="#e7ebef" fontSize="10.5" fontWeight="700" textAnchor="middle">0.6A</text>
-      <text x="52" y="76" fill="#e7ebef" fontSize="10.5" fontWeight="700" textAnchor="middle">3A</text>
-      {/* 表盘上方的读数/量程数字（大字，方便投屏） */}
-      <text x="0" y="-68" fill="#f2f5f8" fontSize="16" fontWeight="700" textAnchor="middle">{readingText}</text>
-      <text x="96" y="4" fill="#dfe4ea" fontSize="16" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
+      <path d="M -66 24 L 22 -52 L 40 -52 L -48 24 Z" fill="#ffffff" opacity="0.13" />
+      {/*
+        台肩正面的接线柱刻字：x 与接线柱局部坐标对齐（-43.8 / -0.7 / 40.8），
+        必须画在**壳体之后**，否则会被壳体盖住（浏览器实测：刻字全被遮掉）。
+      */}
+      <text x="-43.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">－</text>
+      <text x="-0.7" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">0.6A</text>
+      <text x="40.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">3A</text>
+      {/* 表盘上方的读数数字（大字，方便投屏） */}
+      <text x="0" y="-72" fill="#f2f5f8" fontSize="15" fontWeight="700" textAnchor="middle">{readingText}<tspan fill="#9aa4b2" fontSize="11" fontWeight="600">{`  ${spec.label}`}</tspan></text>
+      <text x="98" y="-20" fill="#dfe4ea" fontSize="16" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
     </g>
   )
 }
