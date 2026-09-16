@@ -392,7 +392,7 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
   // 刻度半径与转轴位置：整个刻度弧必须落在表盘内（局部 y -56…32），
   // 弧心取表盘中上部，让指针从 -60° 到 +60° 有完整行程且不与台肩/刻字相撞。
   const radius = 54
-  const pivotY = 4
+  const pivotY = -62
   const angle = needleAngle(reading, activeRange)
   const polar = (angleDeg: number, distance: number) => {
     const rad = (angleDeg * Math.PI) / 180
@@ -424,6 +424,7 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
             y1={inner.y}
             x2={outer.x}
             y2={outer.y}
+            data-part="ammeter-scale-outer"
             stroke="#2b2721"
             strokeWidth={tick.major ? 1.6 : 0.85}
             strokeLinecap="round"
@@ -432,7 +433,7 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
       })}
       {/* 内圈刻度 0～0.6 */}
       {ticks.map((tick, index) => {
-        const outer = polar(tick.a, radius - 23)
+        const outer = polar(tick.a, radius - 21)
         const inner = polar(tick.a, radius - (tick.major ? 29 : 27))
         return (
           <line
@@ -441,6 +442,7 @@ function DialFace({ activeRange, reading, overRange }: { activeRange: AmmeterRan
             y1={inner.y}
             x2={outer.x}
             y2={outer.y}
+            data-part="ammeter-scale-inner"
             stroke="#4c473f"
             strokeWidth={tick.major ? 1.2 : 0.7}
             strokeLinecap="round"
@@ -509,42 +511,45 @@ export function AmmeterA1({
   const readingText = `${displayReading.toFixed(2)} A`
   return (
     <g transform={`translate(${x} ${y})`}>
-      <GroundShadow cy={46} rx={86} ry={9} />
+      <GroundShadow cy={44} rx={86} ry={9} />
       {/*
-        真实电流表的结构：表壳正面是**完整的一大块表盘**，接线柱长在壳体**下沿外伸的接线台肩**上，
+        真实电流表的结构：表壳正面是**完整的一大块表盘**，接线柱则长在壳体**下沿的接线台肩**上，
         而不是戳在玻璃表盘上。本实验台三只接线柱由 layout.ts 固定在局部 y≈-37…-41，
-        所以台肩做成从壳体下沿向下伸出的一截，让旋帽正好坐在台肩上（不遮表盘）。
+        旋帽顶端再往上约 15px（y≈-56）。
+        所以台肩做成 y[-58,4] 的深色槽，把「底座 + 立柱 + 旋帽」整体包在里面，
+        刻字与接线柱同 x 对齐，压在旋帽下方。
       */}
-      {/* 下沿外伸的接线台肩（先画，压在壳体下方） */}
-      <rect x="-70" y="-41" width="140" height="45" rx="4" fill="#1e2126" />
-      <rect x="-70" y="-41" width="140" height="5" rx="2.5" fill="#3a4048" />
-      <rect x="-70" y="-41" width="140" height="45" rx="4" fill="none" stroke="#0d1013" strokeWidth="0.9" />
       {/* 外壳：深色仪表壳，顶面受光、底面暗 */}
-      <rect x="-84" y="-64" width="168" height="104" rx="6" fill="#25292e" />
-      <rect x="-84" y="-64" width="168" height="10" rx="5" fill="#3b4148" />
+      <rect data-part="ammeter-shell" x="-84" y="-126" width="168" height="166" rx="6" fill="#25292e" />
+      <rect x="-84" y="-126" width="168" height="10" rx="5" fill="#3b4148" />
       <rect x="-84" y="30" width="168" height="10" rx="5" fill="#14171a" />
-      <rect x="-84" y="-64" width="168" height="104" rx="6" fill="none" stroke="#101317" strokeWidth="1" />
+      <rect x="-84" y="-126" width="168" height="166" rx="6" fill="none" stroke="#101317" strokeWidth="1" />
       {/* 顶面高光条 */}
-      <rect x="-78" y="-62" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
-      {/* 内凹表盘（带内阴影：上/左深，下/右浅）—— 占据壳体正面绝大部分 */}
-      <rect x="-72" y="-56" width="144" height="88" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
-      <rect x="-72" y="-56" width="144" height="6" rx="3" fill="#000000" opacity="0.22" />
-      <rect x="-72" y="-56" width="5" height="88" rx="2" fill="#000000" opacity="0.16" />
-      <rect x="67" y="-56" width="5" height="88" rx="2" fill="#ffffff" opacity="0.5" />
-      <rect x="-72" y="26" width="144" height="6" rx="3" fill="#ffffff" opacity="0.45" />
+      <rect x="-78" y="-124" width="156" height="3" rx="1.5" fill="#ffffff" opacity="0.22" />
+      {/* 内凹表盘（带内阴影：上/左深，下/右浅）—— 收在台肩上沿之上 */}
+      <rect data-part="ammeter-dial" x="-76" y="-118" width="152" height="58" rx="3" fill="#efe9dc" stroke="#8d8577" strokeWidth="1.2" />
+      <rect x="-76" y="-118" width="152" height="6" rx="3" fill="#000000" opacity="0.22" />
+      <rect x="-76" y="-118" width="5" height="58" rx="2" fill="#000000" opacity="0.16" />
+      <rect x="71" y="-118" width="5" height="58" rx="2" fill="#ffffff" opacity="0.5" />
+      <rect x="-76" y="-66" width="152" height="6" rx="3" fill="#ffffff" opacity="0.45" />
       <DialFace activeRange={activeRange} reading={displayReading} overRange={overRange} />
       {/* 玻璃面反光斜条 */}
-      <path d="M -66 24 L 22 -52 L 40 -52 L -48 24 Z" fill="#ffffff" opacity="0.13" />
+      <path d="M -70 -66 L 18 -114 L 36 -114 L -52 -66 Z" fill="#ffffff" opacity="0.13" />
       {/*
-        台肩正面的接线柱刻字：x 与接线柱局部坐标对齐（-43.8 / -0.7 / 40.8），
-        必须画在**壳体之后**，否则会被壳体盖住（浏览器实测：刻字全被遮掉）。
+        下沿的接线台肩：把三只接线柱整体包在槽里。
+        必须画在**表盘之后**，否则会被表盘盖住；
+        刻字也必须画在壳体之后（浏览器实测：先画会被壳体整个遮掉）。
       */}
-      <text x="-43.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">－</text>
-      <text x="-0.7" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">0.6A</text>
-      <text x="40.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">3A</text>
+      <rect data-part="ammeter-terminal-flange" x="-70" y="-58" width="140" height="62" rx="4" fill="#1e2126" />
+      <rect x="-70" y="-58" width="140" height="5" rx="2.5" fill="#3a4048" />
+      <rect x="-70" y="-22" width="140" height="30" rx="4" fill="none" stroke="#0d1013" strokeWidth="0.9" />
+      {/* 接线柱刻字：x 与接线柱局部坐标对齐（-43.8 / -0.7 / 40.8），压在旋帽下方 */}
+      <text data-part="ammeter-label-neg" x="-43.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">－</text>
+      <text data-part="ammeter-label-06" x="-0.7" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">0.6A</text>
+      <text data-part="ammeter-label-3" x="40.8" y="4" fill="#e7ebef" fontSize="9.5" fontWeight="700" textAnchor="middle">3A</text>
       {/* 表盘上方的读数数字（大字，方便投屏） */}
-      <text x="0" y="-72" fill="#f2f5f8" fontSize="15" fontWeight="700" textAnchor="middle">{readingText}<tspan fill="#9aa4b2" fontSize="11" fontWeight="600">{`  ${spec.label}`}</tspan></text>
-      <text x="98" y="-20" fill="#dfe4ea" fontSize="16" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
+      <text x="0" y="-134" fill="#f2f5f8" fontSize="15" fontWeight="700" textAnchor="middle">{readingText}<tspan fill="#9aa4b2" fontSize="11" fontWeight="600">{`  ${spec.label}`}</tspan></text>
+      <text x="98" y="-24" fill="#dfe4ea" fontSize="16" fontWeight="600" textAnchor="middle" letterSpacing="0.5">{label}</text>
     </g>
   )
 }

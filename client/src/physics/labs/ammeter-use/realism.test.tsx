@@ -29,6 +29,115 @@ function render(node: React.ReactElement): string {
   return renderToString(<svg>{node}</svg>)
 }
 
+/**
+ * 从**渲染出的 SVG**里提取某件器材壳体的实际包围盒，而不是在测试里手抄一份副本。
+ *
+ * 这一点是第二轮复审点名的关键：如果测试里的包围盒是 CompetitorParts.tsx 的手抄副本，
+ * 那它只是「一个常量 vs 另一个常量」，画面怎么改都不会红，等于没守。
+ * 这里改为解析真实渲染结果，绘制一旦挪位，测试立刻跟着变。
+ */
+function renderedBounds(html: string): { minX: number; maxX: number; minY: number; maxY: number } | null {
+  let minX = Number.POSITIVE_INFINITY
+  let maxX = Number.NEGATIVE_INFINITY
+  let minY = Number.POSITIVE_INFINITY
+  let maxY = Number.NEGATIVE_INFINITY
+  let found = false
+  const visit = (x: number, y: number) => {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return
+    found = true
+    minX = Math.min(minX, x)
+    maxX = Math.max(maxX, x)
+    minY = Math.min(minY, y)
+    maxY = Math.max(maxY, y)
+  }
+  // 每个 <g transform="translate(x y)"> 的相对原点也要算进来（用于换算局部坐标）
+  for (const match of html.matchAll(/<g transform="translate\((-?[\d.]+) (-?[\d.]+)\)"/g)) {
+    visit(Number(match[1]), Number(match[2]))
+  }
+  for (const match of html.matchAll(/<rect\b[^>]*>/g)) {
+    const tag = match[0]
+    const x = Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1])
+    const y = Number(tag.match(/\by="(-?[\d.]+)"/)?.[1])
+    const w = Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1])
+    const h = Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1])
+    if (![x, y, w, h].every(Number.isFinite)) continue
+    visit(x, y)
+    visit(x + w, y + h)
+  }
+  for (const match of html.matchAll(/<circle\b[^>]*>/g)) {
+    const tag = match[0]
+    const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
+    const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
+    const r = Number(tag.match(/\br="(-?[\d.]+)"/)?.[1])
+    if ([cx, cy, r].every(Number.isFinite)) {
+      visit(cx - r, cy - r)
+      visit(cx + r, cy + r)
+    }
+  }
+  for (const match of html.matchAll(/<ellipse\b[^>]*>/g)) {
+    const tag = match[0]
+    const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
+    const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
+    const rx = Number(tag.match(/\brx="(-?[\d.]+)"/)?.[1])
+    const ry = Number(tag.match(/\bry="(-?[\d.]+)"/)?.[1])
+    if ([cx, cy, rx, ry].every(Number.isFinite)) {
+      visit(cx - rx, cy - ry)
+      visit(cx + rx, cy + ry)
+    }
+  }
+  for (const match of html.matchAll(/<line\b[^>]*>/g)) {
+    const tag = match[0]
+    visit(Number(tag.match(/\bx1="(-?[\d.]+)"/)?.[1]), Number(tag.match(/\by1="(-?[\d.]+)"/)?.[1]))
+    visit(Number(tag.match(/\bx2="(-?[\d.]+)"/)?.[1]), Number(tag.match(/\by2="(-?[\d.]+)"/)?.[1]))
+  }
+  // <path d="..."> 里所有坐标对（M/L/C/Q/A 后续的数字对）
+  for (const match of html.matchAll(/<path\b[^>]*\bd="([^"]+)"/g)) {
+    const d = match[1]
+    const tokens = d.match(/-?\d+(?:\.\d+)?/g) ?? []
+    for (let index = 0; index + 1 < tokens.length; index += 2) {
+      visit(Number(tokens[index]), Number(tokens[index + 1]))
+    }
+  }
+  return found ? { minX, maxX, minY, maxY } : null
+}
+
+/** 提取指针的 rotate()：角度 + 转轴（用于判断指针是否画在表盘内） */
+function needlePivot(html: string): { angle: number; pivot: { x: number; y: number } } | null {
+  const match = html.match(/<g transform="rotate\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\)"/)
+  if (match === null) return null
+  return { angle: Number(match[1]), pivot: { x: Number(match[2]), y: Number(match[3]) } }
+}
+
+/**
+ * 从渲染结果里按 `data-part` 取出某个矩形结构件的**真实几何**。
+ * 用 data 属性绑定，测试读到的就是画出来的那块几何，而不是测试里手抄的常量
+ * —— 这才是"改坏了会红"的前提。
+ */
+function renderedPart(html: string, part: string): { x: number; y: number; width: number; height: number } | null {
+  const match = html.match(new RegExp(`<rect\\b[^>]*data-part="${part}"[^>]*>`))
+  if (match === null) return null
+  const tag = match[0]
+  return {
+    x: Number(tag.match(/\bx="(-?[\d.]+)"/)?.[1]),
+    y: Number(tag.match(/\by="(-?[\d.]+)"/)?.[1]),
+    width: Number(tag.match(/\bwidth="(-?[\d.]+)"/)?.[1]),
+    height: Number(tag.match(/\bheight="(-?[\d.]+)"/)?.[1]),
+  }
+}
+
+/**
+ * 指针转轴必须落在**渲染出的**表盘矩形内（不是手抄常量）。
+ * 表盘一挪，这条判据跟着挪，因此"指针画到表盘外面"一定会被抓到。
+ */
+function assertPivotInsideDial(html: string, pivot: { x: number; y: number }): void {
+  const dial = renderedPart(html, 'ammeter-dial')
+  expect(dial, '没有渲染出表盘').not.toBeNull()
+  expect(pivot.x, '指针转轴横向跑出了表盘').toBeGreaterThanOrEqual(dial!.x)
+  expect(pivot.x, '指针转轴横向跑出了表盘').toBeLessThanOrEqual(dial!.x + dial!.width)
+  expect(pivot.y, '指针转轴纵向跑出了表盘').toBeGreaterThanOrEqual(dial!.y)
+  expect(pivot.y, '指针转轴纵向跑出了表盘').toBeLessThanOrEqual(dial!.y + dial!.height)
+}
+
 /** 统计渲染结果里某类 SVG 元素的数量 */
 function count(html: string, tag: string): number {
   return (html.match(new RegExp(`<${tag}\\b`, 'g')) ?? []).length
@@ -186,26 +295,83 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
     for (const value of ['0.2', '0.4', '0.6']) expect(html).toContain(`>${value}</text>`)
   })
 
-  it('刻度分内外两排、半径不同（真实双量程表盘的结构）', () => {
-    // 按语义判定：两排刻度各 31 根（0～30 格），且两排的半径不同。
-    // 不写死具体 radius 数值 —— 那是设计参数，改画法不该误报。
-    const lines = [...html.matchAll(/<line\b[^>]*>/g)].map((match) => match[0])
-    expect(lines.length).toBeGreaterThanOrEqual(62)
-    const lengthOf = (tag: string) => {
+  it('内外两排刻度必须真的不同（删掉一排或两排画成一样都要红）', () => {
+    /**
+     * 判据取自**渲染出的几何**：两排刻度线到转轴的距离必须明显不同。
+     * 关键是用「线到转轴的距离」而不是「线的中点」，因为刻度线是沿半径方向画的，
+     * 中点会随刻度长度变化而漂移，用它比较会失真（实测：把内圈刻意挪到外圈位置中点却几乎不动）。
+     * 这里取每条线**靠近转轴的那一端**到转轴的距离，就是该刻度的真实半径。
+     */
+    const needle = needlePivot(html)!
+    const pivot = { x: needle.pivot.x, y: needle.pivot.y }
+    const radiusOf = (tag: string) => {
       const x1 = Number(tag.match(/x1="([\d.-]+)"/)?.[1])
       const y1 = Number(tag.match(/y1="([\d.-]+)"/)?.[1])
       const x2 = Number(tag.match(/x2="([\d.-]+)"/)?.[1])
       const y2 = Number(tag.match(/y2="([\d.-]+)"/)?.[1])
-      return Math.hypot(x2 - x1, y2 - y1)
+      const d1 = Math.hypot(x1 - pivot.x, y1 - pivot.y)
+      const d2 = Math.hypot(x2 - pivot.x, y2 - pivot.y)
+      // 靠转轴的一端 = 这条刻度的内端半径
+      return Math.min(d1, d2)
     }
-    const lengths = lines.map(lengthOf).filter((value) => Number.isFinite(value))
-    const longs = lengths.filter((value) => value > 6)
-    const shorts = lengths.filter((value) => value <= 6)
-    expect(longs.length, '缺少外圈长刻度').toBeGreaterThan(0)
-    expect(shorts.length, '缺少内圈短刻度').toBeGreaterThan(0)
-    // 两排刻度弧各一条
-    const arcs = [...html.matchAll(/<path[^>]*A [\d.]+ [\d.]+ 0 0 1/g)]
+    const collect = (part: string) =>
+      [...html.matchAll(new RegExp(`<line\\b[^>]*data-part="${part}"[^>]*>`, 'g'))].map((m) => radiusOf(m[0]))
+
+    const outer = collect('ammeter-scale-outer')
+    const inner = collect('ammeter-scale-inner')
+    expect(outer.length, '缺少外圈刻度').toBeGreaterThan(0)
+    expect(inner.length, '缺少内圈刻度').toBeGreaterThan(0)
+
+    const mean = (values: number[]) => values.reduce((sum, v) => sum + v, 0) / values.length
+    const outerRadius = mean(outer)
+    const innerRadius = mean(inner)
+    // 内圈必须明显更靠内 —— 把两排画成一样、或删掉内圈，这条立刻红
+    expect(innerRadius, `内外两排刻度画成了同一圈（内 ${innerRadius.toFixed(1)} vs 外 ${outerRadius.toFixed(1)}）`)
+      .toBeLessThan(outerRadius - 5)
+
+    /**
+     * 每一排自己的「刻度长度」也必须成立。
+     *
+     * 这条守的是一个真实踩过的坑：内圈刻度曾经被写成一个独立循环却复用了外圈的半径区间，
+     * 结果两排刻度画在同一圈上（外面看着像只有一排刻度）。
+     * 只比较「两排的均值」抓不到它 —— 因为两排会一起漂。
+     * 所以这里分别固定每排的**内侧端半径**与**外侧端半径**。
+     */
+    const spans = (part: string) => {
+      const list = [...html.matchAll(new RegExp(`<line\\b[^>]*data-part="${part}"[^>]*>`, 'g'))].map((m) => {
+        const tag = m[0]
+        const x1 = Number(tag.match(/x1="([\d.-]+)"/)?.[1])
+        const y1 = Number(tag.match(/y1="([\d.-]+)"/)?.[1])
+        const x2 = Number(tag.match(/x2="([\d.-]+)"/)?.[1])
+        const y2 = Number(tag.match(/y2="([\d.-]+)"/)?.[1])
+        const d1 = Math.hypot(x1 - pivot.x, y1 - pivot.y)
+        const d2 = Math.hypot(x2 - pivot.x, y2 - pivot.y)
+        return { innerEnd: Math.min(d1, d2), outerEnd: Math.max(d1, d2) }
+      })
+      return { innerEnd: mean(list.map((x) => x.innerEnd)), outerEnd: mean(list.map((x) => x.outerEnd)) }
+    }
+    const outerSpan = spans('ammeter-scale-outer')
+    const innerSpan = spans('ammeter-scale-inner')
+    // 每排都要有实际的刻度长度（不是退化成一点）
+    expect(outerSpan.outerEnd - outerSpan.innerEnd, '外圈刻度退化成没有长度').toBeGreaterThan(3)
+    expect(innerSpan.outerEnd - innerSpan.innerEnd, '内圈刻度退化成没有长度').toBeGreaterThan(1)
+    // 两排必须落在**不同的半径带**上（这条能抓住"内圈刻度误用外圈半径区间"）
+    expect(
+      outerSpan.innerEnd,
+      `内圈刻度外端(${innerSpan.outerEnd.toFixed(1)})与外圈刻度内端(${outerSpan.innerEnd.toFixed(1)})重叠，两排画在同一圈`,
+    ).toBeGreaterThan(innerSpan.outerEnd)
+
+    // 每排都是 31 根（0～30 格）
+    expect(outer.length, '外圈刻度根数不对').toBe(31)
+    expect(inner.length, '内圈刻度根数不对').toBe(31)
+    // 刻度总根数是两排之和
+    const allTicks = [...html.matchAll(/<line\b[^>]*data-part="ammeter-scale-(outer|inner)"[^>]*>/g)]
+    expect(allTicks.length).toBe(62)
+
+    // 两排刻度弧各一条、且半径不同
+    const arcs = [...html.matchAll(/A ([\d.]+) \1 0 0 1/g)].map((m) => Number(m[1]))
     expect(arcs.length, '缺少刻度弧线').toBeGreaterThanOrEqual(2)
+    expect(new Set(arcs).size, '两条刻度弧半径相同，看着就是一圈').toBeGreaterThanOrEqual(2)
   })
 
   it('指针是红色细针并带尾部配重（真实动圈表头特征）', () => {
@@ -243,10 +409,11 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
       expect(html, `reading=${String(bad)} 时渲染出了 NaN`).not.toContain('NaN')
       expect(html).not.toContain('Infinity')
       expect(html).toContain('0.00 A')
-      // 指针仍落在合法角度上（0°），且转轴参数是有限值
-      const needle = html.match(/rotate\(([\d.-]+) ([\d.-]+) ([\d.-]+)\)/)
+      // 指针仍落在合法角度上（0°），且**转轴必须仍在表盘内**（不能飘到 999/999 那种地方）
+      const needle = needlePivot(html)
       expect(needle, '没有渲染出指针的 rotate').not.toBeNull()
-      expect(Number(needle![1])).toBe(0)
+      expect(needle!.angle).toBe(0)
+      assertPivotInsideDial(html, needle!.pivot)
     }
   })
 
@@ -255,9 +422,11 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
     const huge = render(<AmmeterA1 x={0} y={0} reading={999} range="0.6A" overRange={false} label="A1" />)
     for (const html of [negative, huge]) {
       expect(html).not.toContain('NaN')
-      const angles = [...html.matchAll(/rotate\((-?[\d.]+) (-?[\d.]+) (-?[\d.]+)\)/g)].map((m) => Number(m[1]))
-      expect(angles).toHaveLength(1)
-      expect(Math.abs(angles[0])).toBeLessThanOrEqual(NEEDLE_LIMIT_ANGLE)
+      const needle = needlePivot(html)
+      expect(needle).not.toBeNull()
+      expect(Math.abs(needle!.angle)).toBeLessThanOrEqual(NEEDLE_LIMIT_ANGLE)
+      // 转轴必须落在表盘内 —— 这条能抓住「指针画到表盘外面」的改动
+      assertPivotInsideDial(html, needle!.pivot)
     }
   })
 
@@ -297,27 +466,18 @@ describe('接线柱写实化：香蕉插座结构', () => {
 })
 
 /**
- * 几何回归：把「画出来的器材外形」和「layout.ts 推导的接线柱坐标」对上。
+ * 几何回归：把「**实际渲染出的**器材外形」和「layout.ts 推导的接线柱坐标」对上。
  *
- * 这是需求里点名要防的那类 BUG —— 器材画得再像，
- * 只要接线柱不在器材壳体上（例如飘在表体外、或者被壳体盖住），
- * 学生就会接不上线。所以必须按**真实几何**判定，而不是只看源码字符串。
+ * 关键点（第二轮复审点名）：包围盒**必须从渲染结果里解析出来**，
+ * 不能在测试里手抄一份 CompetitorParts.tsx 的副本 —— 手抄副本等于
+ * 「一个常量 vs 另一个常量」，画面怎么挪都不会红，等于没守。
+ *
+ * 这里渲染每件器材的**真实 SVG**，解析它的实际包围盒；
+ * 再把接线柱的布局坐标换算成相对器材原点的局部坐标，判定它落在壳体里。
+ * 于是：壳体改了、器材挪了、接线柱飘了，只要两者不再自洽，测试立刻红。
  */
 describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱脱节）', () => {
-  /** 每件器材的壳体包围盒（相对器材参考点，与 CompetitorParts 的绘制一致） */
-  const BODY_BOX: Readonly<Record<string, { x0: number; y0: number; x1: number; y1: number }>> = {
-    // 电源：底座 122 半宽 + 电池 78 半长，纵向 底座顶 -3.5 ~ 底座底 26
-    E1: { x0: -124, y0: -46, x1: 124, y1: 30 },
-    // 开关：胶木底板 88 半宽，纵向 底板顶 -3 ~ 底板底 22
-    S1: { x0: -90, y0: -22, x1: 120, y1: 26 },
-    S2: { x0: -90, y0: -22, x1: 120, y1: 26 },
-    // 灯泡：底座 84 半宽，纵向 灯泡顶 -110 ~ 底座底 26
-    L1: { x0: -86, y0: -112, x1: 86, y1: 30 },
-    // 电流表：壳体 84 半宽、顶 -64；接线台肩 x[-70,70] y[-41,4]（接线柱就装在台肩上）
-    A1: { x0: -86, y0: -74, x1: 86, y1: 12 },
-  }
-
-  const OWNER: Readonly<Record<string, 'E1' | 'S1' | 'S2' | 'L1' | 'A1'>> = {
+  const OWNER: Readonly<Record<AmmeterTerminalId, 'E1' | 'S1' | 'S2' | 'L1' | 'A1'>> = {
     'battery-': 'E1',
     'battery+': 'E1',
     'switch-a': 'S1',
@@ -331,75 +491,148 @@ describe('器材外形与接线柱坐标几何自洽（防止画面与接线柱�
     'ammeter-3': 'A1',
   }
 
-  it('每只接线柱都落在所属器材的壳体范围内（不会飘在器材外面）', () => {
+  /** 渲染单件器材，解析它在「器材局部坐标系」里的真实包围盒 */
+  function bodyBoundsOf(id: 'E1' | 'S1' | 'L1' | 'A1') {
+    const html = render(
+      id === 'E1' ? <BatteryHolderE1 x={0} y={0} />
+      : id === 'S1' ? <KnifeSwitch x={0} y={0} closed={false} label="S1" />
+      : id === 'L1' ? <LampHolderL1 x={0} y={0} lit={false} />
+      : <AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />,
+    )
+    const bounds = renderedBounds(html)
+    expect(bounds, `${id} 没渲染出任何几何`).not.toBeNull()
+    return bounds!
+  }
+
+  const COMPONENTS = ['E1', 'S1', 'L1', 'A1'] as const
+
+  it('每件器材都渲染出了真实的几何包围盒（不是空壳）', () => {
+    for (const id of COMPONENTS) {
+      const box = bodyBoundsOf(id)
+      expect(box.maxX - box.minX, `${id} 宽度异常`).toBeGreaterThan(60)
+      expect(box.maxY - box.minY, `${id} 高度异常`).toBeGreaterThan(30)
+    }
+  })
+
+  it('每只接线柱都落在**其所属器材渲染出的**包围盒内（飘出器材立刻红）', () => {
     const layout = createDefaultLayout()
+    // S2 与 S1 共用同一套外形，直接用 S1 的包围盒
+    const bounds: Record<'E1' | 'S1' | 'S2' | 'L1' | 'A1', { minX: number; maxX: number; minY: number; maxY: number }> = {
+      E1: bodyBoundsOf('E1'),
+      S1: bodyBoundsOf('S1'),
+      S2: bodyBoundsOf('S1'),
+      L1: bodyBoundsOf('L1'),
+      A1: bodyBoundsOf('A1'),
+    }
     for (const [terminalId, componentId] of Object.entries(OWNER) as Array<[AmmeterTerminalId, 'E1' | 'S1' | 'S2' | 'L1' | 'A1']>) {
       const center = layout.components[componentId]
       const point = terminalPosition(layout, terminalId)
       const local = { x: point.x - center.x, y: point.y - center.y }
-      const box = BODY_BOX[componentId]
-      expect(local.x, `${terminalId} 的 x 跑出了 ${componentId} 壳体`).toBeGreaterThanOrEqual(box.x0)
-      expect(local.x, `${terminalId} 的 x 跑出了 ${componentId} 壳体`).toBeLessThanOrEqual(box.x1)
-      expect(local.y, `${terminalId} 的 y 跑出了 ${componentId} 壳体`).toBeGreaterThanOrEqual(box.y0)
-      expect(local.y, `${terminalId} 的 y 跑出了 ${componentId} 壳体`).toBeLessThanOrEqual(box.y1)
+      const box = bounds[componentId]
+      expect(local.x, `${terminalId} 的 x 跑出了 ${componentId} 的渲染包围盒`).toBeGreaterThanOrEqual(box.minX)
+      expect(local.x, `${terminalId} 的 x 跑出了 ${componentId} 的渲染包围盒`).toBeLessThanOrEqual(box.maxX)
+      expect(local.y, `${terminalId} 的 y 跑出了 ${componentId} 的渲染包围盒`).toBeGreaterThanOrEqual(box.minY)
+      expect(local.y, `${terminalId} 的 y 跑出了 ${componentId} 的渲染包围盒`).toBeLessThanOrEqual(box.maxY)
     }
   })
 
-  it('电流表的三个接线柱落在壳体下沿的接线台肩上，而不是压在表盘上', () => {
+  it('写实化把接线柱按 6 倍挪出去时，上一条断言必须变红（反向验证）', () => {
+    // 直接模拟「接线柱飘出器材」：把布局里的器材中心挪到远处，
+    // 而器材外形仍画在原点 —— 等价于接线柱相对器材偏了很远。
     const layout = createDefaultLayout()
+    const box = bodyBoundsOf('A1')
     const center = layout.components.A1
-    const shoulder = { x0: -70, x1: 70, y0: -41, y1: 4 }
-    for (const id of ['ammeter-neg', 'ammeter-0.6', 'ammeter-3'] as AmmeterTerminalId[]) {
-      const point = terminalPosition(layout, id)
-      const local = { x: point.x - center.x, y: point.y - center.y }
-      expect(local.x, `${id} 不在台肩内`).toBeGreaterThan(shoulder.x0)
-      expect(local.x, `${id} 不在台肩内`).toBeLessThan(shoulder.x1)
-      // 台肩带 y[-41,4]：接线柱必须落在台肩里，不能跑到表盘区域（y < -41 即表盘）
-      expect(local.y, `${id} 跑进表盘区域，会压住刻度`).toBeGreaterThanOrEqual(shoulder.y0)
-      expect(local.y, `${id} 低于台肩底端`).toBeLessThanOrEqual(shoulder.y1)
-    }
+    const point = terminalPosition(layout, 'ammeter-3')
+    const local = { x: (point.x - center.x) * 6, y: (point.y - center.y) * 6 }
+    const inside = local.x >= box.minX && local.x <= box.maxX && local.y >= box.minY && local.y <= box.maxY
+    expect(inside, '接线柱偏了 6 倍却仍被判为在器材内，说明这条几何回归是无效的').toBe(false)
   })
 
-  it('表盘与接线台肩不重叠（接线柱不会画在刻度盘上）', () => {
-    // 表盘矩形 y[-56,32]，台肩 y[-41,4]。真实电流表的接线柱长在壳体下沿，
-    // 绝不允许落在玻璃表盘范围内 —— 这正是本次复审发现的观感 BUG 的判据。
-    const dial = { x0: -72, x1: 72, y0: -56, y1: 32 }
-    const shoulder = { x0: -70, x1: 70, y0: -41, y1: 4 }
-    const overlapX = Math.max(dial.x0, shoulder.x0) < Math.min(dial.x1, shoulder.x1)
-    const overlapY = Math.max(dial.y0, shoulder.y0) < Math.min(dial.y1, shoulder.y1)
-    // x 方向必然重叠（都在壳体正面），y 方向**允许**重叠，因为台肩本来就是压在表盘下沿的深色槽。
-    // 真正要守住的是：接线柱落在台肩带内，而不是落在表盘的刻度弧上。
-    expect(overlapX).toBe(true)
-    expect(overlapY).toBe(true)
-    // 刻度弧两端的最低点在 y≈-23（弧心 y=4、半径 54、±60°），落在台肩带内；
-    // 但刻度弧只画成细线，且接线柱 x 与刻度数字 x 不同，因此不会互相遮挡。
-    const arcLowestY = 4 - 54 * Math.cos((60 * Math.PI) / 180)
-    expect(arcLowestY).toBeGreaterThan(shoulder.y0)
-    expect(arcLowestY).toBeLessThan(shoulder.y1)
-  })
-
-  it('拖动器材后，接线柱仍与器材外形保持同样的相对位置', () => {
+  it('拖动器材后，接线柱仍与其渲染包围盒保持自洽', () => {
     let layout = createDefaultLayout()
     layout = moveComponent(layout, 'A1', { x: 1400, y: 900 })
     layout = moveComponent(layout, 'E1', { x: -600, y: 200 })
+    const bounds: Record<'E1' | 'L1' | 'A1', { minX: number; maxX: number; minY: number; maxY: number }> = {
+      E1: bodyBoundsOf('E1'),
+      L1: bodyBoundsOf('L1'),
+      A1: bodyBoundsOf('A1'),
+    }
     for (const [terminalId, componentId] of Object.entries(OWNER) as Array<[AmmeterTerminalId, 'E1' | 'S1' | 'S2' | 'L1' | 'A1']>) {
+      if (componentId !== 'E1' && componentId !== 'L1' && componentId !== 'A1') continue
       const center = layout.components[componentId]
       const point = terminalPosition(layout, terminalId)
-      const box = BODY_BOX[componentId]
-      expect(point.x - center.x).toBeGreaterThanOrEqual(box.x0)
-      expect(point.x - center.x).toBeLessThanOrEqual(box.x1)
-      expect(point.y - center.y).toBeGreaterThanOrEqual(box.y0)
-      expect(point.y - center.y).toBeLessThanOrEqual(box.y1)
+      const box = bounds[componentId]
+      expect(point.x - center.x).toBeGreaterThanOrEqual(box.minX)
+      expect(point.x - center.x).toBeLessThanOrEqual(box.maxX)
+      expect(point.y - center.y).toBeGreaterThanOrEqual(box.minY)
+      expect(point.y - center.y).toBeLessThanOrEqual(box.maxY)
+    }
+  })
+
+  it('电流表的接线柱真的坐在**渲染出的**接线台肩里（挪动台肩立刻红）', () => {
+    // 台肩矩形从渲染结果按 data-part 读出，保证"接线柱坐标 vs 画面几何"是真的对上，
+    // 而不是拿测试里手抄的常量自证。
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const flange = renderedPart(html, 'ammeter-terminal-flange')
+    expect(flange, '电流表没有渲染出接线台肩').not.toBeNull()
+
+    const layout = createDefaultLayout()
+    const center = layout.components.A1
+    for (const id of ['ammeter-neg', 'ammeter-0.6', 'ammeter-3'] as AmmeterTerminalId[]) {
+      const point = terminalPosition(layout, id)
+      const local = { x: point.x - center.x, y: point.y - center.y }
+      // 接线柱的柱脚与旋帽顶端（约在本体上方 15px）都必须落在台肩内
+      expect(local.x, `${id} 的 x 不在台肩内`).toBeGreaterThanOrEqual(flange!.x)
+      expect(local.x, `${id} 的 x 不在台肩内`).toBeLessThanOrEqual(flange!.x + flange!.width)
+      expect(local.y - 15, `${id} 的旋帽顶端从台肩上沿冒出去了`).toBeGreaterThanOrEqual(flange!.y)
+      expect(local.y, `${id} 的柱脚低于台肩下沿`).toBeLessThanOrEqual(flange!.y + flange!.height)
+    }
+  })
+
+  it('接线台肩必须落在电流表**渲染出的**表壳范围内（窄壳宽台肩会红）', () => {
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const flange = renderedPart(html, 'ammeter-terminal-flange')!
+    const shell = renderedPart(html, 'ammeter-shell')!
+    expect(flange.x, '台肩左沿超出表壳').toBeGreaterThanOrEqual(shell.x - 1)
+    expect(flange.x + flange.width, '台肩右沿超出表壳').toBeLessThanOrEqual(shell.x + shell.width + 1)
+    expect(flange.y, '台肩上沿高于表壳顶端').toBeGreaterThanOrEqual(shell.y)
+    expect(flange.y + flange.height, '台肩下沿低于表壳底端').toBeLessThanOrEqual(shell.y + shell.height + 1)
+  })
+
+  it('接线柱刻字必须落在**渲染出的**台肩范围内（把刻字挪回表体下方会红）', () => {
+    const html = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+    const flange = renderedPart(html, 'ammeter-terminal-flange')!
+    // 三处刻字分别带 data-part，读出它们的真实 y
+    for (const [part, label] of [['ammeter-label-neg', '－'], ['ammeter-label-06', '0.6A'], ['ammeter-label-3', '3A']] as const) {
+      const match = html.match(new RegExp(`<text\\b[^>]*data-part="${part}"[^>]*>${label}</text>`))
+      expect(match, `${part} 刻字没有渲染出来`).not.toBeNull()
+      const y = Number(match![0].match(/\by="(-?[\d.]+)"/)?.[1])
+      expect(y, `${label} 刻字跑到了台肩外面（会飘在表体下方）`).toBeGreaterThanOrEqual(flange.y)
+      expect(y, `${label} 刻字跑到了台肩外面`).toBeLessThanOrEqual(flange.y + flange.height)
     }
   })
 
   it('画出的器材自身不会被几何红线判成"背景方框"/"横跨视图的线"', () => {
     // CompetitorScene.test.tsx 按几何判定：覆盖整个视图的矩形、横跨整个视图的线都算背景。
-    // 器材最宽的零件是电池底座（244px），因此不会命中 960×540 这条线。
-    const widest = 122 * 2
-    expect(widest).toBeLessThan(960)
-    const tallest = 114 + 30
-    expect(tallest).toBeLessThan(540)
+    // 这里用**真实渲染出的**包围盒验证：器材最宽也不到视图宽度。
+    const view = { width: 960, height: 540 }
+    for (const id of COMPONENTS) {
+      const box = bodyBoundsOf(id)
+      // 器材以原点居中，宽度/高度都远小于视图
+      expect(box.maxX - box.minX, `${id} 宽到会触碰"背景方框"红线`).toBeLessThan(view.width)
+      // 也不存在横跨整个视图的线：最长的零件长度远小于 960
+      const html = render(id === 'E1' ? <BatteryHolderE1 x={0} y={0} /> : <AmmeterA1 x={0} y={0} reading={0} range="3A" overRange={false} label="A1" />)
+      for (const line of html.matchAll(/<line\b[^>]*>/g)) {
+        const tag = line[0]
+        const x1 = Number(tag.match(/x1="(-?[\d.]+)"/)?.[1])
+        const x2 = Number(tag.match(/x2="(-?[\d.]+)"/)?.[1])
+        const y1 = Number(tag.match(/y1="(-?[\d.]+)"/)?.[1])
+        const y2 = Number(tag.match(/y2="(-?[\d.]+)"/)?.[1])
+        if (![x1, x2, y1, y2].every(Number.isFinite)) continue
+        expect(Math.abs(x2 - x1), `${id} 里有横跨视图的线`).toBeLessThan(view.width)
+        expect(Math.abs(y2 - y1), `${id} 里有竖跨视图的线`).toBeLessThan(view.height)
+      }
+    }
   })
 })
 
