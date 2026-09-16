@@ -315,8 +315,14 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   const batteryPoint = layout.components.E1
 
   return (
+    /*
+      画布底色：整块纯色，**不再是"中间一块方框"**。
+      背景由根容器铺满整个视口（与 SVG 场景不再有尺寸关系），
+      所以器材/导线可以被拖到任意位置，看上去永远都还在同一张无限画布上。
+    */
     <div className="relative h-full w-full min-h-0" style={{ background: canvasBackground }}>
       {/* 无限画布 + 3D 透视舞台：器材铺满整块屏幕 */}
+      {/* SVG 只负责画器材与导线，本身不再绘制任何背景（无桌面矩形、无网格、无暗角） */}
       <InfiniteCanvas
         stageRef={stageRef}
         content={initialBounds}
@@ -332,31 +338,13 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
           className="block"
           role="img"
           aria-label="练习使用电流表实验台"
-          style={{ filter: 'drop-shadow(0 26px 34px rgba(0,0,0,0.45))' }}
         >
-          <defs>
-            <linearGradient id="ammeter-desk" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3f4650" />
-              <stop offset="100%" stopColor="#2b3038" />
-            </linearGradient>
-            {/* 3D 立体感：接线柱/器材底部的高光与阴影 */}
-            <radialGradient id="ammeter-vignette" cx="50%" cy="46%" r="72%">
-              <stop offset="60%" stopColor="#ffffff" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#000000" stopOpacity="0.35" />
-            </radialGradient>
-          </defs>
-
-          {/* 桌面：给 3D 倾斜一个"地面"，让器材看起来立在实验台上 */}
-          <rect width={workbenchWidth} height={workbenchHeight} fill={canvasBackground} />
-          <rect x="0" y="0" width={workbenchWidth} height={workbenchHeight} fill="url(#ammeter-desk)" opacity="0.55" />
-          <g opacity="0.28" stroke="#7aa2ff" strokeWidth="1">
-            {Array.from({ length: 25 }).map((_, index) => (
-              <line key={`v-${index}`} x1={index * 40} y1={0} x2={index * 40} y2={workbenchHeight} />
-            ))}
-            {Array.from({ length: 15 }).map((_, index) => (
-              <line key={`h-${index}`} x1={0} y1={index * 40} x2={workbenchWidth} y2={index * 40} />
-            ))}
-          </g>
+          {/*
+            无限画布上**不再有任何背景方框**：
+            原先的桌面矩形 + 桌面渐变 + 40px 网格 + 边缘暗角都会把画布框成一个
+            "方框"，与"无限"的语义冲突，已全部移除。
+            画布底色统一由外层容器的纯色背景提供（见下方根节点 background）。
+          */}
 
           {!showSchematic && (
             <>
@@ -442,7 +430,6 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
 
           {showSchematic && <AmmeterSchematic state={state} reading={reading} />}
 
-          <rect width={workbenchWidth} height={workbenchHeight} fill="url(#ammeter-vignette)" pointerEvents="none" />
         </svg>
       </InfiniteCanvas>
 

@@ -63,6 +63,30 @@ describe('竞品复原实验页面', () => {
     expect(html).toContain('铺满画布')
   })
 
+  it('无限画布不再有背景方框：无桌面矩形、无网格、无暗角', () => {
+    const html = render()
+    // 原先的「方框」由这四样东西画出来，现在必须一个都不剩
+    expect(html).not.toContain('ammeter-desk')
+    expect(html).not.toContain('ammeter-vignette')
+    expect(html).not.toContain('桌面：给 3D 倾斜')
+    // 网格：40px 间距的 25 条竖线 + 15 条横线
+    expect(html).not.toContain('v-24')
+    expect(html).not.toContain('h-14')
+  })
+
+  it('画布中间不再有背底：SVG 不超出器材/导线的包围盒，也不带投影', () => {
+    const html = render()
+    // 不再有铺满 960×540 的整块背景矩形
+    expect(html).not.toContain('width="960" height="540" fill="#343941"')
+    // 原先的 drop-shadow 会让画布显示出「一块方框」的边界
+    expect(html).not.toContain('drop-shadow(0 26px 34px')
+  })
+
+  it('画布底色由铺满视口的根容器提供（背景不再依赖 SVG 尺寸）', () => {
+    const html = render()
+    expect(html).toContain(`background:${COMPETITOR_BACKGROUND}`)
+  })
+
   it('沉浸式页面不再出现主标题之外的排版元素（标题只剩画布浮条）', () => {
     const html = render()
     // 副标题（教学页的说明文案）不应出现在实验详情页
