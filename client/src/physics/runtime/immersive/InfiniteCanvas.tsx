@@ -28,6 +28,12 @@ export interface InfiniteCanvasProps {
   tilt?: number
   /** 是否显示右上角画布工具条 */
   showToolbar?: boolean
+  /**
+   * 聚焦内容时预留的边距（屏幕像素）。
+   * 沉浸式实验台上方有实验名胶囊、下方有读数条等悬浮控件，
+   * 留白不足会让器材被这些控件压住、点不到（表现为「拖不动 / 接不上」）。
+   */
+  padding?: number
   className?: string
   /** 相机变化回调（供场景把指针坐标反算回场景坐标） */
   onCameraChange?(camera: { scale: number; x: number; y: number }): void
@@ -41,10 +47,12 @@ export default function InfiniteCanvas({
   viewHeight = 540,
   tilt = 13,
   showToolbar = true,
+  padding,
   className = '',
   onCameraChange,
 }: InfiniteCanvasProps) {
-  const canvas = useInfiniteCanvas({ stageRef, content })
+  // 默认留白 120px：给上/下悬浮控件（实验名胶囊、底部读数条）让出空间
+  const canvas = useInfiniteCanvas({ stageRef, content, padding: padding ?? 120 })
   const [entered, setEntered] = useState(false)
   const innerRef = useRef<HTMLDivElement>(null)
 
