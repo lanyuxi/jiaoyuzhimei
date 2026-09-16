@@ -83,6 +83,18 @@ describe('无限画布组件', () => {
     expect(html).toContain('transform-origin:0 0')
   })
 
+  it('画布不绘制地平线网格（否则会形成一块背景方框）', () => {
+    const html = renderToString(
+      <InfiniteCanvas stageRef={{ current: null }} content={{ minX: 0, minY: 0, maxX: 960, maxY: 540 }}>
+        <div />
+      </InfiniteCanvas>,
+    )
+    // 原先的 72px 网格用 linear-gradient + mask 画出来，现在必须一个都不剩
+    expect(html).not.toContain('background-size:72px 72px')
+    expect(html).not.toContain('perspective:900px')
+    expect(html).not.toContain('[perspective:900px]')
+  })
+
   it('进入实验时按内容包围盒聚焦（器材铺满整屏）', () => {
     const camera = fitContent({ minX: 0, minY: 0, maxX: 960, maxY: 540 }, { width: 1920, height: 1080 }, 48)
     // 1920×1080 视口下，960×540 的场景至少铺满视口宽或高

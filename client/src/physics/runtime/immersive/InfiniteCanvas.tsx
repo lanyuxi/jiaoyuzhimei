@@ -3,8 +3,10 @@
  *
  * 语义（对应「沉浸式实验详情页」的要求）：
  *   · 无限画布：滚轮/双指缩放，拖拽或空格+拖拽平移，器材可放到任意位置不丢失
- *   · 3D 效果：整个画布以 perspective 做倾斜，配合地平线网格/阴影/高光，
- *     进入时做一次入景动画，让学生有"走进实验台"的感觉
+ *   · 3D 效果：整个画布以 perspective 做倾斜，进入时做一次入景动画，
+ *     让学生有"走进实验台"的感觉。
+ *     注意：画布本身**不画任何背景方框/地平线网格**——无限画布要看起来
+ *     是"无限"的，背景只是一整块纯色，不再有桌面矩形、网格或暗角。
  *   · 进入即铺满整屏：相机初始按内容包围盒聚焦（fitContent）
  *
  * 组件只负责渲染与手势，相机数学在 canvas.ts（纯函数、已单测）。
@@ -88,23 +90,6 @@ export default function InfiniteCanvas({
       className={`relative h-full w-full overflow-hidden ${className}`}
       style={stageStyle}
     >
-      {/* 3D 地平线网格：给无限画布提供空间参照 */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 [perspective:900px]">
-        <div
-          className="absolute left-1/2 top-[58%] h-[220%] w-[220%] -translate-x-1/2"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(122,162,255,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(122,162,255,0.16) 1px, transparent 1px)',
-            backgroundSize: '72px 72px',
-            transform: `rotateX(${entered ? 68 : 20}deg)`,
-            transformOrigin: '50% 0',
-            transition: 'transform 700ms cubic-bezier(0.22, 1, 0.36, 1)',
-            maskImage: 'radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.95), transparent 72%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.95), transparent 72%)',
-          }}
-        />
-      </div>
-
       <div
         {...canvas.handlers}
         className={`absolute inset-0 touch-none ${canvas.panReady ? 'cursor-grab' : 'cursor-default'}`}
