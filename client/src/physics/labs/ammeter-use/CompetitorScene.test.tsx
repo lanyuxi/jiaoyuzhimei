@@ -65,13 +65,31 @@ describe('竞品复原实验页面', () => {
 
   it('无限画布不再有背景方框：无桌面矩形、无网格、无暗角', () => {
     const html = render()
-    // 原先的「方框」由这四样东西画出来，现在必须一个都不剩
+    // 原先的「方框」由这几样东西画出来，现在必须一个都不剩
     expect(html).not.toContain('ammeter-desk')
     expect(html).not.toContain('ammeter-vignette')
     expect(html).not.toContain('桌面：给 3D 倾斜')
-    // 网格：40px 间距的 25 条竖线 + 15 条横线
-    expect(html).not.toContain('v-24')
-    expect(html).not.toContain('h-14')
+    // 网格按**几何**判定，而不是按 key 名：
+    // 桌面网格的每条线都横跨整个 960×540 视图（x2="960" 或 y2="540"），
+    // 而器材自身的零件都是小尺寸线，绝不会跨越整个视图。
+    // 因此即使有人改写了 key 名（把 v-N / h-N 换掉），这条断言依然会失败。
+    const lines = html.match(/<line\b[^>]*>/g) ?? []
+    expect(lines.length).toBeGreaterThan(0)
+    const fullSpanLines = lines.filter((line) => /x2="960"|y2="540"/.test(line))
+    expect(fullSpanLines).toEqual([])
+  })
+
+  it('画布上没有任何铺满整个视图的背景矩形（桌面 / 暗角 / 网格底都不许残留）', () => {
+    const html = render()
+    // 同样按几何判定：覆盖整个 960×540 视图的矩形就是「背底 / 方框」，一律不允许。
+    // 器材自身最宽的零件也只有 ~240px，不会命中这条。
+    const rects = html.match(/<rect\b[^>]*>/g) ?? []
+    const viewSizedRects = rects.filter((rect) => {
+      const w = rect.match(/width="([\d.]+)"/)
+      const h = rect.match(/height="([\d.]+)"/)
+      return w !== null && h !== null && Number(w[1]) >= 960 && Number(h[1]) >= 540
+    })
+    expect(viewSizedRects).toEqual([])
   })
 
   it('画布中间不再有背底：SVG 不超出器材/导线的包围盒，也不带投影', () => {
