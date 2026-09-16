@@ -54,6 +54,15 @@ describe('沉浸式实验详情页外壳', () => {
     const html = renderStage()
     expect(html).toContain('min-h-0 flex-1')
   })
+
+  it('实验台禁止文字被选中：外壳自带 select-none', () => {
+    const html = renderStage()
+    // 外壳根节点必须自带禁选（不依赖样式表加载顺序）
+    const rootTag = html.slice(0, html.indexOf('>') + 1)
+    expect(rootTag).toContain('data-immersive-lab')
+    expect(rootTag).toContain('select-none')
+    expect(rootTag).not.toContain('select-text')
+  })
 })
 
 describe('无限画布组件', () => {
@@ -93,6 +102,19 @@ describe('无限画布组件', () => {
     expect(html).not.toContain('background-size:72px 72px')
     expect(html).not.toContain('perspective:900px')
     expect(html).not.toContain('[perspective:900px]')
+  })
+
+  it('画布世界层禁止文字被选中（器材名/数字不产生选区）', () => {
+    const html = renderToString(
+      <InfiniteCanvas stageRef={{ current: null }} content={{ minX: 0, minY: 0, maxX: 960, maxY: 540 }}>
+        <div data-testid="content" />
+      </InfiniteCanvas>,
+    )
+    // 世界层是承载 SVG 场景的那一层，必须自带禁选
+    const worldTag = html.slice(html.indexOf('translate3d('))
+    const worldClass = worldTag.slice(worldTag.indexOf('class="'), worldTag.indexOf('>'))
+    expect(worldClass).toContain('select-none')
+    expect(worldClass).not.toContain('select-text')
   })
 
   it('进入实验时按内容包围盒聚焦（器材铺满整屏）', () => {

@@ -94,7 +94,7 @@ export default function InfiniteCanvas({
         {...canvas.handlers}
         className={`absolute inset-0 touch-none ${canvas.panReady ? 'cursor-grab' : 'cursor-default'}`}
       >
-        <div ref={innerRef} style={worldStyle} className="absolute left-0 top-0">
+        <div ref={innerRef} style={worldStyle} className="absolute left-0 top-0 select-none">
           {children}
         </div>
       </div>

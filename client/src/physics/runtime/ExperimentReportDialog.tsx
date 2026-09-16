@@ -13,7 +13,7 @@ export default function ExperimentReportDialog({ open, onClose, session }: Exper
 
   return (
     <div className="fixed inset-0 z-50 flex items-end bg-black/35 p-4 sm:items-center sm:justify-center" role="presentation">
-      <section aria-modal="true" aria-labelledby="physics-report-dialog-title" role="dialog" className="w-full max-w-md rounded-[8px] bg-white p-5 shadow-2xl">
+      <section data-selectable-content aria-modal="true" aria-labelledby="physics-report-dialog-title" role="dialog" className="w-full max-w-md rounded-[8px] bg-white p-5 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div>
             <FileText className="size-5 text-[#165DFF]" aria-hidden="true" />

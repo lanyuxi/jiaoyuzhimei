@@ -6,6 +6,7 @@
  *   · 每根已接好的导线都有可弯折的折点手柄
  *   · 器材与导线可拖时，接线柱拉线能力不退化
  */
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { AmmeterScene } from './CompetitorScene'
@@ -59,6 +60,75 @@ describe('器材可任意拖动', () => {
     expect(html).toContain('拖器材任意摆放')
     expect(html).toContain('拖导线中点可弯折')
     expect(html).toContain('拖接线柱接导线')
+  })
+})
+
+describe('器材名称与数字不可被选中', () => {
+  /**
+   * 这条需求真正要守的是「CSS 里必须存在一条能覆盖到画布的禁选规则」。
+   * 只断言 DOM 上有没有 select-none 类名是脆的（改个类名就失效），
+   * 所以这里直接断言**样式表源码**这条契约：
+   *   index.css 必须声明 [data-immersive-lab] 整棵子树 user-select: none。
+   */
+  it('样式表声明了实验台整棵子树的 user-select: none', () => {
+    const css = readFileSync(new URL('../../../index.css', import.meta.url), 'utf8')
+    // 取出所有含 user-select 的规则块
+    const blocks = css.match(/[^{}]*\{[^{}]*user-select[^{}]*\}/g) ?? []
+    const noneBlocks = blocks.filter((block) => /user-select:\s*none/.test(block))
+    expect(noneBlocks.length, 'index.css 未声明任何 user-select: none 规则').toBeGreaterThan(0)
+    // 必须有一条同时覆盖 [data-immersive-lab] 本身与其所有后代
+    const coversLabAndDescendants = noneBlocks.some(
+      (block) =>
+        block.includes('[data-immersive-lab]') &&
+        block.includes('[data-immersive-lab] *') &&
+        /-webkit-user-select:\s*none/.test(block),
+    )
+    expect(coversLabAndDescendants, '禁选规则未同时覆盖实验台根节点与全部后代（含 SVG 文字）').toBe(true)
+  })
+
+  it('场景根容器自带 select-none（不依赖样式表加载顺序的双保险）', () => {
+    const html = render()
+    const rootClass = html.slice(0, html.indexOf('>') + 1)
+    expect(rootClass).toContain('select-none')
+    expect(rootClass).not.toContain('select-text')
+  })
+
+  it('器材名与刻度数字仍然渲染，只是不可选中（不能为了禁选而删掉文字）', () => {
+    const html = render(stateWithWires())
+    // 器材名（E1 / L1 / S1 / S2 / A1）与刻度数字必须都还在
+    expect(html).toContain('E1</text>')
+    expect(html).toContain('L1</text>')
+    expect(html).toContain('S1</text>')
+    expect(html).toContain('0.6A</text>')
+    expect(html).toContain('3A</text>')
+    // 场景内任何位置都不得显式放开选中（例如给 <text> 加 select-text 反悔）
+    expect(html).not.toContain('select-text')
+  })
+
+  it('器材名/读数所在的每个 <text> 都落在禁选子树内', () => {
+    const html = render()
+    // 所有 <text> 都必须出现在禁选容器之后（即被它包含），不能游离在外
+    const rootClassEnd = html.indexOf('>') + 1
+    const firstText = html.indexOf('<text')
+    const lastText = html.lastIndexOf('</text>')
+    expect(firstText).toBeGreaterThan(rootClassEnd)
+    expect(lastText).toBeGreaterThan(firstText)
+    // 禁选容器之后的 DOM 里不能再出现「结束容器又开新容器」的旁路
+    expect(html.slice(rootClassEnd, firstText)).not.toContain('</svg>')
+  })
+
+  it('实验室里的表单控件不会被禁选误伤（输入/复制仍然可用）', () => {
+    const css = readFileSync(new URL('../../../index.css', import.meta.url), 'utf8')
+    const controlRule = css.match(/\[data-immersive-lab\] (input|textarea)[^{]*\{[^}]*\}/g) ?? []
+    expect(controlRule.join('')).toContain('user-select: text')
+  })
+
+  it('内容型浮层的文字仍可选中复制（避免一刀切误伤读数复制）', () => {
+    const css = readFileSync(new URL('../../../index.css', import.meta.url), 'utf8')
+    // 数据表格 / 实验报告 / 报告对话框用 [data-selectable-content] 显式放开选中
+    expect(css).toContain('data-selectable-content')
+    const exempt = css.match(/\[data-immersive-lab\] \[data-selectable-content\][^{]*\{[^}]*\}/g) ?? []
+    expect(exempt.join('')).toContain('user-select: text')
   })
 })
 

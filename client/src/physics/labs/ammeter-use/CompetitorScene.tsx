@@ -320,7 +320,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
       背景由根容器铺满整个视口（与 SVG 场景不再有尺寸关系），
       所以器材/导线可以被拖到任意位置，看上去永远都还在同一张无限画布上。
     */
-    <div className="relative h-full w-full min-h-0" style={{ background: canvasBackground }}>
+    <div className="relative h-full w-full min-h-0 select-none" style={{ background: canvasBackground }}>
       {/* 无限画布 + 3D 透视舞台：器材铺满整块屏幕 */}
       {/* SVG 只负责画器材与导线，本身不再绘制任何背景（无桌面矩形、无网格、无暗角） */}
       <InfiniteCanvas
@@ -548,7 +548,7 @@ function CanvasPill({ label, onClick, active = false, children }: { label: strin
 function ReportDrawer({ open, onClose }: { open: boolean; onClose(): void }) {
   if (!open) return null
   return (
-    <aside className="absolute right-0 top-12 z-20 flex h-[calc(100%-3rem)] w-[min(420px,92%)] flex-col border-l shadow-2xl" style={{ background: '#fbfaf7', borderColor: chromeBorder }} aria-label="实验报告">
+    <aside data-selectable-content className="absolute right-0 top-12 z-20 flex h-[calc(100%-3rem)] w-[min(420px,92%)] flex-col border-l shadow-2xl" style={{ background: '#fbfaf7', borderColor: chromeBorder }} aria-label="实验报告">
       <header className="flex items-center justify-between border-b border-[#e2ddd3] px-5 py-3">
         <h2 className="text-base font-bold text-[#242424]">实验报告</h2>
         <button type="button" onClick={onClose} className="rounded-[6px] border border-[#d8d2c8] px-3 py-1 text-sm text-[#4b4742]">收起</button>
@@ -595,7 +595,7 @@ export function AmmeterScene(props: PhysicsLabSceneProps<AmmeterLabState>) {
   const [panelOpen, setPanelOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
   return (
-    <div className="relative h-full w-full min-h-0">
+    <div className="relative h-full w-full min-h-0 select-none">
       <CompetitorSceneCanvas
         {...props}
         panelOpen={panelOpen}

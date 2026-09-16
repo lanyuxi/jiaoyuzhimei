@@ -133,7 +133,7 @@ export default function ImmersiveLabStage({
   return (
     <div
       data-immersive-lab
-      className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-[#181b20] text-[#e6ebf1]"
+      className="fixed inset-0 z-[60] flex select-none flex-col overflow-hidden bg-[#181b20] text-[#e6ebf1]"
       style={{ height: '100dvh' }}
     >
       {/* 沉浸式画布：占据整个屏幕 */}
@@ -187,6 +187,7 @@ export default function ImmersiveLabStage({
         {activePanel !== null && (
           <aside
             data-canvas-pan-block
+            data-selectable-content
             aria-label={activePanel.label}
             className="absolute bottom-20 right-3 top-16 z-30 flex w-[min(420px,92vw)] flex-col overflow-hidden rounded-[12px] border border-white/10 bg-[#fbfaf7] text-[#242424] shadow-2xl"
           >

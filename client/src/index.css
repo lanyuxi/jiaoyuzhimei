@@ -41,6 +41,51 @@ select {
   letter-spacing: 0;
 }
 
+/*
+ * 沉浸式实验台（无限画布）禁止文字被选中。
+ *
+ * 现象：在画布上拖动器材 / 平移画布时，鼠标划过会像选中网页文字那样
+ * 把器材名称（电源 E1、灯泡 L1、A1…）和刻度数字（0.6A、3A、读数）
+ * 拉成一条蓝色高亮，既影响观感，也会干扰拖拽。
+ *
+ * 原因：SVG <text> 默认参与文本选择，而画布本身是「可拖拽操作区」，
+ * 语义上不应产生可复制的文本选区。
+ *
+ * 处理：实验室默认整棵子树禁止选中 + 禁止长按弹出系统菜单（移动端）。
+ * 只作用于实验室，页面其它区域的文字仍可正常选中/复制。
+ */
+[data-immersive-lab],
+[data-immersive-lab] * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/*
+ * 例外：内容型浮层（数据表格 / 实验报告 / 报告对话框）里的文字要能选中复制。
+ *
+ * 它们不是「可拖拽画布」，而是给人读、给人抄读数用的文本面板；
+ * 一刀切禁选会让人没法把读数复制进实验报告，属于误伤。
+ * 用 [data-selectable-content] 显式标出这些面板，并让规则比上面的通用禁选更具体。
+ */
+[data-immersive-lab] [data-selectable-content],
+[data-immersive-lab] [data-selectable-content] * {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+/*
+ * 表单控件同理：user-select: none 在部分浏览器会连输入框内部的文本选择一起禁掉，
+ * 所以实验室里的 input / textarea 显式恢复可选，避免影响输入与复制。
+ */
+[data-immersive-lab] input,
+[data-immersive-lab] textarea {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
