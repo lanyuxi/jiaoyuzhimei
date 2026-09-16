@@ -39,6 +39,16 @@ function terminalColor(polarity: '+' | '-') {
   return polarity === '+' ? TERMINAL_RED : TERMINAL_BLACK
 }
 
+/**
+ * 读数兜底：`reading` 一旦是 NaN / Infinity（上游算错、被同步成脏数据等），
+ * 直接写进 JSX 会留下 `rotate(NaN ...)` 这种**非法 SVG 属性**，
+ * 浏览器会整段忽略该 transform，表现为「指针凭空消失」且 console 静默报错。
+ * 所以在绘制边界统一兜底成 0，保证画出来的东西永远合法。
+ */
+function safeReading(reading: number): number {
+  return Number.isFinite(reading) ? reading : 0
+}
+
 /** 接触阴影：贴地的椭圆软阴影，让器材"落"在台面上而不是飘着 */
 function GroundShadow({ cx = 0, cy = 0, rx, ry, opacity = 0.32 }: { cx?: number; cy?: number; rx: number; ry: number; opacity?: number }) {
   return <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="#05070a" opacity={opacity} />
@@ -494,7 +504,8 @@ export function AmmeterA1({
 }) {
   const activeRange = range ?? '3A'
   const spec = RANGE_SPEC[activeRange]
-  const readingText = `${reading.toFixed(2)} A`
+  const displayReading = safeReading(reading)
+  const readingText = `${displayReading.toFixed(2)} A`
   return (
     <g transform={`translate(${x} ${y})`}>
       <GroundShadow cy={62} rx={88} ry={9} />
@@ -514,7 +525,7 @@ export function AmmeterA1({
       {/* 表盘上的量程铭牌（贴近表盘上沿，不压刻度弧） */}
       <text x="0" y="-40" fill="#5c554a" fontSize="8.4" letterSpacing="0.3" textAnchor="middle">直流电流表  {spec.label}</text>
       <line x1="-38" y1="-36.5" x2="38" y2="-36.5" stroke="#b3aa99" strokeWidth="0.7" />
-      <DialFace activeRange={activeRange} reading={reading} overRange={overRange} />
+      <DialFace activeRange={activeRange} reading={displayReading} overRange={overRange} />
       {/* 玻璃面反光斜条 */}
       <path d="M -66 36 L 22 -44 L 40 -44 L -48 36 Z" fill="#ffffff" opacity="0.13" />
       {/* 外壳下沿三只接线柱的刻字 */}

@@ -215,6 +215,29 @@ describe('电流表 A1 写实化：表盘/刻度/指针', () => {
     expect(over).toMatch(/fill="#e02b1a"/)
   })
 
+  it('读数非有限值时兜底为 0，绝不把 NaN 写进 SVG 属性', () => {
+    // NaN 一旦进了 rotate()/text，浏览器会整段忽略该 transform（指针凭空消失）
+    for (const bad of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+      const html = render(<AmmeterA1 x={0} y={0} reading={bad} range="3A" overRange={false} label="A1" />)
+      expect(html, `reading=${String(bad)} 时渲染出了 NaN`).not.toContain('NaN')
+      expect(html).not.toContain('Infinity')
+      expect(html).toContain('0.00 A')
+      // 指针仍落在合法角度上
+      expect(html).toMatch(/rotate\(0 0 16\)/)
+    }
+  })
+
+  it('读数取负或超量程时指针仍被夹在合法角度内', () => {
+    const negative = render(<AmmeterA1 x={0} y={0} reading={-9} range="0.6A" overRange={false} label="A1" />)
+    const huge = render(<AmmeterA1 x={0} y={0} reading={999} range="0.6A" overRange={false} label="A1" />)
+    for (const html of [negative, huge]) {
+      expect(html).not.toContain('NaN')
+      const angles = [...html.matchAll(/rotate\((-?[\d.]+) 0 16\)/g)].map((m) => Number(m[1]))
+      expect(angles).toHaveLength(1)
+      expect(Math.abs(angles[0])).toBeLessThanOrEqual(NEEDLE_LIMIT_ANGLE)
+    }
+  })
+
   it('未接入量程时也有表盘（不会画成空白盒）', () => {
     const none = render(<AmmeterA1 x={0} y={0} reading={0} range={null} overRange={false} label="A1" />)
     expect(none).toMatch(/#efe9dc/)
