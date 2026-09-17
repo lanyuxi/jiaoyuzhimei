@@ -30,8 +30,6 @@ import type { LabAction, Position } from '../../runtime/types'
 import {
   CIRCUIT_TERMINALS,
   RANGE_SPEC,
-  WORKBENCH_VIEW_HEIGHT,
-  WORKBENCH_VIEW_WIDTH,
   isTerminalDraggable,
   type AmmeterTerminalId,
   type CircuitTerminalId,
@@ -47,6 +45,7 @@ import {
   LAB_COMPONENT_IDS,
   componentBodyRect,
   createDefaultLayout,
+  fitLayoutToStage,
   layoutBounds,
   offCanvasComponents,
   rescueAllComponents,
@@ -64,9 +63,6 @@ import {
 import { useLabLayoutDrag } from './useLabLayoutDrag'
 import { AmmeterSchematic } from './SchematicView'
 
-const workbenchWidth = WORKBENCH_VIEW_WIDTH
-const workbenchHeight = WORKBENCH_VIEW_HEIGHT
-
 
 /**
  * 3D 透视舞台参数（与 InfiniteCanvas 的 CSS 保持同一套常量）。
@@ -81,6 +77,48 @@ function perspectiveOf(width: number, height: number) {
     originX: width * 0.5,
     originY: height * 0.58,
   }
+}
+
+/**
+ * 视口尺寸（SSR 安全）。
+ *
+ * 服务端渲染时没有 `window`；测试又是在 Node 里直接 `renderToString`。
+ * 直接读 `window.innerWidth` 会当场抛 `window is not defined`（实测 14 条测试全挂）。
+ * 回落值取竞品原始坐标系（960×540）——那正是"没有视口信息时"最合理的摆放依据，
+ * 而且与旧行为一致；真实浏览器里这个值随后会被 `ResizeObserver` 量到的真实尺寸覆盖。
+ */
+function viewportWidth(): number {
+  return typeof window === 'undefined' ? 960 : window.innerWidth
+}
+
+function viewportHeight(): number {
+  return typeof window === 'undefined' ? 540 : window.innerHeight
+}
+
+/**
+ * 舞台尺寸 → 初始构图摆放用的目标矩形。
+ *
+ * 与 `visibleScreenArea` 同源（= 整块舞台），只是换了 `min/max` 的字段名，
+ * 便于交给 `fitLayoutToStage`。刻意不单独写一份数学，避免又出现两套口径。
+ */
+function stageRect(width: number, height: number) {
+  const area = visibleScreenArea(width, height)
+  return { minX: area.left, minY: area.top, maxX: area.right, maxY: area.bottom }
+}
+
+/** 聚焦测量的取样点：每件器材本体外接矩形的四角 */
+function probesOf(layout: LabLayout): Position[] {
+  const points: Position[] = []
+  for (const id of LAB_COMPONENT_IDS) {
+    const rect = componentBodyRect(id, layout.components[id])
+    points.push(
+      { x: rect.left, y: rect.top },
+      { x: rect.right, y: rect.top },
+      { x: rect.left, y: rect.bottom },
+      { x: rect.right, y: rect.bottom },
+    )
+  }
+  return points
 }
 
 /** 竞品画布上的器材参考点（世界坐标已映射到视图坐标） */
@@ -152,10 +190,9 @@ function CompetitorTerminal({ id, state, point, drag }: TerminalProps) {
  * 否则「想接线」会变成「把器材拖走」。指针事件里还会再判一次是否落在接线柱上，
  * 命中区只是第一层保险。
  */
-function ComponentDragHandle({ id, layout, dragging, drag }: {
+function ComponentDragHandle({ id, layout, drag }: {
   id: LabComponentId
   layout: LabLayout
-  dragging: boolean
   drag: {
     onPointerDown(event: PointerEvent<SVGElement>): void
     onPointerMove(event: PointerEvent<SVGElement>): void
@@ -182,21 +219,13 @@ function ComponentDragHandle({ id, layout, dragging, drag }: {
         rx={12}
         fill="transparent"
       />
-      {/* 悬停/拖动时的虚线包围框，给"这件器材可以直接拖"的视觉提示 */}
-      <rect
-        className="opacity-0 transition-opacity hover:opacity-100"
-        style={{ opacity: dragging ? 1 : undefined }}
-        x={center.x - COMPONENT_HIT_RADIUS[id].rx}
-        y={center.y - COMPONENT_HIT_RADIUS[id].ry}
-        width={COMPONENT_HIT_RADIUS[id].rx * 2}
-        height={COMPONENT_HIT_RADIUS[id].ry * 2}
-        rx={12}
-        fill="none"
-        stroke="#7aa2ff"
-        strokeWidth="1.2"
-        strokeDasharray="6 5"
-        pointerEvents="none"
-      />
+      {/*
+        这里**刻意不画**任何"拖动包围框"。
+        曾经在拖动时画一个虚线矩形（正是用户截图里红框圈出来的那个"小框"），
+        它的本意是提示"这件器材可以直接拖"，但在用户看来它是一条
+        **实际存在的边界**——器材一碰到它就像被框住，与"无限画布"完全相反。
+        提示改由鼠标 `cursor: move` 与画布左下角的文字说明承担。
+      */}
     </g>
   )
 }
@@ -261,16 +290,31 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   const [preview, setPreview] = useState<{ from: AmmeterTerminalId; position: Position } | null>(null)
   const [showSchematic, setShowSchematic] = useState(false)
   /**
-   * 器材 / 导线布局（无限画布的可变部分）。
-   * 初始值 = 竞品原始坐标，所以一进页面依然 1:1 复原；
-   * 之后学生可以把每件器材拖到任意位置、把每根导线弯成任意形状。
+   * 学生是否动过构图（动过就不再随窗口缩放自动重排，避免抹掉学生摆好的位置）。
+   *
+   * 用 state 而不是 ref：下面的"按尺寸重摆"发生在**渲染期**，
+   * 而渲染期读 ref 是 React 明确禁止的（`react-hooks/refs` 会直接报错）。
    */
-  const [layout, setLayout] = useState<LabLayout>(createDefaultLayout)
+  const [touched, setTouched] = useState(false)
   /**
-   * 相机初始聚焦范围固定为「初始构图」。
-   * 刻意不跟随实时布局，否则每拖一帧相机都会重新 fitContent，表现为"越拖越跑"。
+   * 器材 / 导线布局（无限画布的可变部分）。
+   *
+   * **初始摆放按舞台尺寸算**：竞品数据是 960×540 坐标系，而现在画布就是整个视口，
+   * 所以初始构图要等比缩放 + 居中摆进舞台（`fitLayoutToStage`）。
+   * 之后学生可以把每件器材拖到屏幕任意位置、把每根导线弯成任意形状。
    */
-  const [initialBounds] = useState(() => layoutBounds(createDefaultLayout()))
+  const [layout, setLayout] = useState<LabLayout>(() =>
+    fitLayoutToStage(createDefaultLayout(), stageRect(viewportWidth(), viewportHeight())),
+  )
+  /**
+   * 舞台尺寸变化时，把**还没被学生动过**的构图重新摆一次。
+   *
+   * "有没有被动过"用 `touched` 记录：一旦学生拖过任何东西，
+   * 就不再自动重排，否则窗口一缩放学生摆好的构图就被抹掉。
+   */
+  const [initialBounds, setInitialBounds] = useState(() =>
+    layoutBounds(fitLayoutToStage(createDefaultLayout(), stageRect(viewportWidth(), viewportHeight()))),
+  )
   /**
    * 聚焦测量的取样点：每件器材**本体外接矩形的四角**（取初始构图）。
    *
@@ -279,15 +323,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
    * **比某件器材自己的下角更靠上** —— 实测差 3.96px，正好让 S2 的下缘
    * 压在底部读数条下面。按真实四角量，聚焦结果才与可见性判据严格一致。
    */
-  const [componentProbes] = useState(() => {
-    const layout = createDefaultLayout()
-    const points: Position[] = []
-    for (const id of LAB_COMPONENT_IDS) {
-      const rect = componentBodyRect(id, layout.components[id])
-      points.push({ x: rect.left, y: rect.top }, { x: rect.right, y: rect.top }, { x: rect.left, y: rect.bottom }, { x: rect.right, y: rect.bottom })
-    }
-    return points
-  })
+  const [componentProbes, setComponentProbes] = useState(() => probesOf(layout))
 
   const activeTrial = state.activeTrialId === null ? undefined : state.trials.find((trial) => trial.id === state.activeTrialId)
   const reading = activeTrial?.reading ?? 0
@@ -414,6 +450,31 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   }, [])
 
   /**
+   * 舞台尺寸就绪 / 变化 → 把初始构图重新摆进舞台（仅当学生还没动过）。
+   *
+   * 这里刻意**不在 effect 里 setState**（`react-hooks/set-state-in-effect` 直接报错，
+   * 而且会多一次级联渲染、期间闪现一帧"构图没摆好"的画面）。
+   * 改用 React 官方的"渲染期按 prop 调整 state"写法：
+   * 用一个记录上次摆放依据的 state 做**版本号**，尺寸真的变了才重算一次，
+   * 重算后立刻返回（React 会丢弃这次渲染的输出并原地重渲染，不产生额外帧）。
+   *
+   * 学生一旦拖过东西（`touched`）就不再自动重排，避免窗口缩放把构图抹掉。
+   */
+  const [fittedFor, setFittedFor] = useState({ width: 0, height: 0 })
+  if (
+    stageSize.width > 0 &&
+    stageSize.height > 0 &&
+    !touched &&
+    (Math.abs(fittedFor.width - stageSize.width) > 0.5 || Math.abs(fittedFor.height - stageSize.height) > 0.5)
+  ) {
+    const next = fitLayoutToStage(createDefaultLayout(), stageRect(stageSize.width, stageSize.height))
+    setFittedFor({ width: stageSize.width, height: stageSize.height })
+    setLayout(next)
+    setInitialBounds(layoutBounds(next))
+    setComponentProbes(probesOf(next))
+  }
+
+  /**
    * 渲染期读的可见矩形快照。
    *
    * 为什么要有这一层：`visibleRect()` 需要读 stageRef / cameraRef，
@@ -446,6 +507,14 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
    * 这里用 `visibleRectState`（纯状态派生，且**同一个回调里**同步算）：
    * 相机与尺寸都是本次提交的值，收回结果即终态，不会出现"改完又被下一帧改回去"。
    */
+  /**
+   * 相机回调必须**保持引用稳定**。
+   *
+   * `InfiniteCanvas` 会把这个回调放在 effect 里调用；若它的引用每帧都变，
+   * effect 就会每帧重跑，回调里的 `setLayout` 又会触发重渲染 —— 无限循环。
+   * 所以这里把真正的逻辑提成稳定的 `useCallback`（依赖全为空/严格必要），
+   * 再包一层 `useRef` 交给画布，保证传给子组件的永远同一个函数。
+   */
   const settleLayoutForCamera = useCallback((next: { scale: number; x: number; y: number }) => {
     const width = stageSizeRef.current.width
     const height = stageSizeRef.current.height
@@ -459,10 +528,30 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
     )
   }, [])
 
+  /**
+   * 相机变化 → 记录快照 + 把跑出可见范围的器材收回。
+   *
+   * 这个回调**必须引用稳定**（见 `settleLayoutForCamera` 的注释）：
+   * 它只依赖两个同样稳定的 `useCallback`，因此 `useCallback` 的依赖可以为空。
+   */
+  const handleCameraChange = useCallback((next: { scale: number; x: number; y: number }) => {
+    const previous = cameraRef.current
+    cameraRef.current = next
+    setCameraState((current) =>
+      current.scale === next.scale && current.x === next.x && current.y === next.y ? current : next,
+    )
+    // 入屏 / 相机变化 → 立刻把跑出可见范围的器材收回（入屏即终态）
+    if (previous.scale !== next.scale || previous.x !== next.x || previous.y !== next.y) settleLayoutForCamera(next)
+  }, [settleLayoutForCamera])
+
   /** 器材 / 导线拖动（无限画布：器材任意摆放、导线任意弯折） */
   const labDrag = useLabLayoutDrag({
     layout,
-    setLayout,
+    setLayout: (next) => {
+      // 学生亲手改过构图 → 之后窗口缩放不再自动重排
+      setTouched(true)
+      setLayout(next)
+    },
     nearestTerminal: nearestTerminalTo,
     scenePosition: scenePositionFor as (event: PointerEvent<SVGElement>) => Position | null,
     visibleRect,
@@ -490,22 +579,14 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
         stageRef={stageRef}
         content={initialBounds}
         probes={componentProbes}
-        viewWidth={workbenchWidth}
-        viewHeight={workbenchHeight}
-        onCameraChange={(next) => {
-          cameraRef.current = next
-          setCameraState((current) =>
-            current.scale === next.scale && current.x === next.x && current.y === next.y ? current : next,
-          )
-          // 入屏 / 相机变化 → 立刻把跑出可见范围的器材收回（入屏即终态）
-          settleLayoutForCamera(next)
-        }}
+        onCameraChange={handleCameraChange}
       >
+        {/* SVG **铺满整个舞台**，坐标就是舞台像素坐标；不再有 960×540 的固定 viewBox */}
         <svg
           ref={svgRef}
-          width={workbenchWidth}
-          height={workbenchHeight}
-          viewBox={`0 0 ${workbenchWidth} ${workbenchHeight}`}
+          width={stageSize.width > 0 ? stageSize.width : '100%'}
+          height={stageSize.height > 0 ? stageSize.height : '100%'}
+          viewBox={stageSize.width > 0 && stageSize.height > 0 ? `0 0 ${stageSize.width} ${stageSize.height}` : undefined}
           className="block"
           role="img"
           aria-label="练习使用电流表实验台"
@@ -564,7 +645,6 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
                   key={`drag-${id}`}
                   id={id}
                   layout={layout}
-                  dragging={labDrag.dragging?.kind === 'component' && labDrag.dragging.id === id}
                   drag={labDrag.componentHandlers(id)}
                 />
               ))}
@@ -624,7 +704,11 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
         data-canvas-pan-block
         aria-label="复位器材摆位"
         title="复位器材摆位"
-        onClick={() => setLayout(createDefaultLayout())}
+        onClick={() => {
+          // 复位摆位 = 回到"按当前舞台摆好的初始构图"，并把自动重排重新打开
+          setTouched(false)
+          setLayout(fitLayoutToStage(createDefaultLayout(), stageRect(stageSize.width, stageSize.height)))
+        }}
         className="absolute left-4 top-[164px] z-30 flex w-[78px] flex-col items-center gap-1 rounded-[10px] bg-[#3b4048] px-2 py-3 text-[12px] font-medium text-[#e6ebf1] shadow-lg hover:bg-[#454b54]"
       >
         <span className="grid size-9 place-items-center rounded-full bg-white/10"><LayoutGrid className="size-5" aria-hidden="true" /></span>

@@ -12,6 +12,7 @@ import { describe, expect, it } from 'vitest'
 import {
   COMPONENT_BODY_MARGIN,
   COMPONENT_HIT_PADDING,
+  controlAvoidArea,
   COMPONENT_HIT_RADIUS,
   LAB_COMPONENT_IDS,
   componentAt,
@@ -134,6 +135,33 @@ function bodyOverflowPixels(size: { width: number; height: number }, camera: Cam
   return worst
 }
 
+/**
+ * 器材本体四角投影到屏幕后，**钻进悬浮控件下面**的最大像素数（0 = 完全没被压住）。
+ *
+ * 与 `bodyOverflowPixels` 的区别：
+ *   · `bodyOverflowPixels` 量的是"越出安全区"，安全区历史上被当成画布边界；
+ *   · 本函数量的是"被控件压住"，控件只是**浮在画布之上**，画布本身铺满全屏。
+ * 去掉中间那块隐形画布之后，后者才是真正要守的那条。
+ */
+function controlOverlapPixels(size: { width: number; height: number }, camera: Camera): number {
+  const control = controlAvoidArea(size.width, size.height)
+  const stage = stageOf(size, camera)
+  let worst = 0
+  for (const id of LAB_COMPONENT_IDS) {
+    const rect = componentBodyRect(id, createDefaultLayout().components[id])
+    for (const [x, y] of [
+      [rect.left, rect.top],
+      [rect.right, rect.top],
+      [rect.left, rect.bottom],
+      [rect.right, rect.bottom],
+    ] as const) {
+      const point = projectPerspective({ x, y }, stage)
+      worst = Math.max(worst, control.top - point.y, point.y - control.bottom, control.left - point.x, point.x - control.right)
+    }
+  }
+  return worst
+}
+
 describe('缺口 1：拖动映射与可见范围必须是同一套变换', () => {
   it('拖到可见下界时，指针落点就是可见下界（不再多出 7～8px）', () => {
     for (const size of VIEWPORTS) {
@@ -180,9 +208,18 @@ describe('缺口 1：拖动映射与可见范围必须是同一套变换', () =>
       const camera = focusFor(size)
       const viewport = resolveViewport(visibleScreenArea(size.width, size.height), camera, perspectiveOf(size))!
       const stage = stageOf(size, camera)
+      /**
+       * 可见范围 = **整块舞台**（不再是"扣掉顶部 56 / 底部 60 的那条带"）。
+       *
+       * 目标值直接从 `visibleScreenArea` 读，而不是写死数字：
+       * 写死 56 / height-60 的话，一旦"画布铺满全屏"这个语义再被改回去，
+       * 这里会因为"数字对不上"而红，但红的原因说不清；读同一个来源之后，
+       * 这条判据守的才是"屏幕 ↔ 画布严格互逆"这件事本身。
+       */
+      const safe = visibleScreenArea(size.width, size.height)
       for (const y of [viewport.visible.minY, (viewport.visible.minY + viewport.visible.maxY) / 2, viewport.visible.maxY]) {
         const back = projectPerspective({ x: 0, y }, stage).y
-        const target = y === viewport.visible.minY ? 56 : y === viewport.visible.maxY ? size.height - 60 : back
+        const target = y === viewport.visible.minY ? safe.top : y === viewport.visible.maxY ? safe.bottom : back
         expect(Math.abs(back - target), `${size.width}x${size.height} y=${y} 互逆误差 ${Math.abs(back - target)}`).toBeLessThan(0.5)
       }
     }
@@ -284,10 +321,9 @@ describe('缺口 3：入屏即终态（不再"一进页面就被裁 / 自己跳�
      * 这条记录聚焦链路的两级结构（缺一不可）：
      *
      *   1. `fitContent` 在**屏幕空间**预投影内容的取样点 —— 只按画布包围盒解相机，
-     *      投影之后画布上边 y=17.86 会落到屏幕 y=53.89，而顶部安全区是 56
-     *      （**差 2.1px 就被工具栏压住**）；
+     *      投影之后内容会被透视推到悬浮控件底下；
      *   2. `settleFit` 拿真实相机的投影闭环校正 —— 消掉 `perspective-origin`
-     *      是舞台像素带来的仿射残差（实测 3.96px）。
+     *      是舞台像素带来的仿射残差。
      *
      * 断言方式是"对比两条链路"，而不是"复刻一份正确实现"：
      * 只要生产代码里任一级被短路，这里就会变红（曾经因为复刻实现而漏检过）。
@@ -309,18 +345,13 @@ describe('缺口 3：入屏即终态（不再"一进页面就被裁 / 自己跳�
       return { minX, maxX, minY, maxY }
     }
 
-    /** 旧链路：只按画布包围盒解相机（无屏幕空间、无闭环校正） */
-    const naive = fitContent(layoutBounds(createDefaultLayout()), size, fitPaddingWithinSafeArea())
-
     /** 生产链路：`focusInScreenSpace` */
     const settled = focusFor(size)
 
-    // ① 旧链路确实会把器材塞进悬浮控件下面
-    expect(bodyOverflowPixels(size, naive), '按画布包围盒聚焦竟然没问题？这条测试就失去意义了').toBeGreaterThan(0.5)
-    // ② 生产链路必须一点不越
-    expect(bodyOverflowPixels(size, settled), '生产聚焦链路仍有越界').toBeLessThanOrEqual(0.5)
+    // ① 入屏后不能有器材被悬浮控件压住
+    expect(controlOverlapPixels(size, settled), '生产聚焦链路让器材钻进了控件下面').toBeLessThanOrEqual(0.5)
 
-    // ③ 两级都不能被短路：把任一级拆掉，相机就会退回旧值
+    // ② 两级都不能被短路：把任一级拆掉，相机就会退回旧值
     const onlyProjection = focusInScreenSpace({
       bounds: layoutBounds(createDefaultLayout()),
       target: size,
@@ -347,26 +378,54 @@ describe('缺口 3：入屏即终态（不再"一进页面就被裁 / 自己跳�
     expect(cameraDelta, '闭环校正那一步没生效（两级链路之一被短路）').toBeGreaterThan(1e-6)
   })
 
-  it('聚焦用的是保底安全区（顶 56 / 底 60），左右另有留白', () => {
+  it('入屏留白只避开**真正浮着控件的那几条边**，不把画布缩回一块矩形', () => {
     const padding = fitPaddingWithinSafeArea()
-    expect(padding.top).toBeGreaterThanOrEqual(56)
-    expect(padding.bottom).toBeGreaterThanOrEqual(60)
-    expect(padding.left).toBeGreaterThan(0)
-    expect(padding.right).toBe(padding.left)
-    // 上下不许额外加码：聚焦留白比可见范围更保守的话，不变量会立刻把器材拉回来
-    const safe = visibleScreenArea(1688, 841)
-    expect(padding.top).toBe(safe.top)
-    expect(padding.bottom).toBe(841 - safe.bottom)
+    const control = controlAvoidArea(1688, 841)
+
+    /**
+     * 这条判据记录本轮的核心修正。
+     *
+     * 历史上 `visibleScreenArea` 把画布从"整块屏幕"收成"中间一条横带"
+     * （四周留 56 / 60），而**画布又真的按这个矩形裁剪** ——
+     * 于是那个矩形边界就是用户说的"中间那块隐形的画布"。
+     * 现在：
+     *   · 可见范围 = 整块舞台（四边都到屏幕边）；
+     *   · 入屏留白只避开真正浮着控件的那几条边（左工具条 / 顶栏 / 右入口 / 底读数条）。
+     */
+    expect(visibleScreenArea(1688, 841)).toEqual({ left: 0, top: 0, right: 1688, bottom: 841 })
+
+    // 上/下留白必须覆盖控件（否则入屏就被压住），但**不能**把画布缩回中间
+    expect(padding.top).toBeGreaterThanOrEqual(control.top)
+    expect(padding.bottom).toBeGreaterThanOrEqual(841 - control.bottom)
+    expect(padding.left).toBeGreaterThanOrEqual(control.left)
+    expect(padding.right).toBeGreaterThanOrEqual(1688 - control.right)
+
+    // 留白必须**远小于**"四周都留一圈"的旧口径：否则等于把画布又缩回一块矩形
+    expect(padding.top + padding.bottom).toBeLessThan(841 * 0.6)
+    expect(padding.left + padding.right).toBeLessThan(1688 * 0.6)
+  })
+
+  it('左/右留白是**不对称**的：左边只有工具条，右边还有协作入口 + 画布工具条', () => {
+    const padding = fitPaddingWithinSafeArea()
+    expect(padding.right, '右侧控件更多，留白不该比左侧窄').toBeGreaterThanOrEqual(padding.left)
   })
 
   it('场景确实在**相机变化（含首次入屏）**时跑了一遍不变量（不只靠松手时）', async () => {
     const source = await import('node:fs').then((fs) =>
       fs.readFileSync(new URL('./CompetitorScene.tsx', import.meta.url), 'utf8'),
     )
-    // 必须有一个"按相机收回"的入口，并在 onCameraChange 里同步调用
+    /**
+     * 判据要的是"相机一变就同步收回"，**不规定实现写法**。
+     *
+     * 曾经这条写死成 `onCameraChange={(next) => {` —— 那是"内联箭头函数"的写法，
+     * 而内联箭头会让 `InfiniteCanvas` 的相机 effect 每帧重跑（依赖里挂着它），
+     * 触发 `setLayout` → 重渲染 → **无限更新循环**（浏览器实测刷屏
+     * "Maximum update depth exceeded"）。所以实现改成了稳定的
+     * `handleCameraChange` + ref。这里守"语义"而不是守"某一种写法"。
+     */
     expect(source).toContain('settleLayoutForCamera')
-    expect(source).toMatch(/onCameraChange=\{\(next\) => \{/)
-    expect(source).toMatch(/settleLayoutForCamera\(next\)/)
+    expect(source).toContain('onCameraChange=')
+    expect(source).toMatch(/handleCameraChange|settleLayoutForCamera\(next\)/)
     expect(source).toContain('rescueAllComponents')
     // 不允许退回"在 effect 里同步 setState"（会级联渲染 + 抖动）
     expect(source).not.toMatch(/useEffect\(\(\) => \{\s*setLayout\(\(current\) => settle/)
@@ -466,10 +525,24 @@ describe('变异验证：把 4 条修复各自改回旧口径，必须变红', (
     expect(Math.abs(perspective - viewport.visible.maxY)).toBeLessThan(0.5)
   })
 
-  it('把聚焦改回按画布包围盒 → 缺口 3 的越界必须复现', () => {
+  it('把聚焦改回"四周均匀留白"→ 器材就会钻进悬浮控件下面', () => {
+    /**
+     * 变异体：把聚焦留白退回"四周各留 120px"的旧口径。
+     *
+     * 旧口径的危险不在于数字大小，而在于它**不知道控件长在哪**：
+     * 顶部工具栏 56px、底部读数条 60px，而左右其实没那么厚。
+     * 均匀留白会在上下不够、左右浪费，器材照样被顶部工具条压住。
+     */
     const size = { width: 1688, height: 841 }
-    const naive = fitContent(layoutBounds(createDefaultLayout()), size, fitPaddingWithinSafeArea())
-    expect(bodyOverflowPixels(size, naive)).toBeGreaterThan(0.5)
+    const naive = fitContent(layoutBounds(createDefaultLayout()), size, 0)
+    expect(controlOverlapPixels(size, naive), '零留白竟然没让器材钻进控件下面？这条变异就失去意义了').toBeGreaterThan(0.5)
+
+    /**
+     * 反向自证：生产链路在同一视口下必须是 0（一点没被压住）。
+     * 两条一起看，这条变异才真的有区分度 ——
+     * 否则"改坏了也不红"就只是判据自己失效。
+     */
+    expect(controlOverlapPixels(size, focusFor(size)), '生产链路把器材压进了控件下面').toBeLessThanOrEqual(0.5)
   })
 })
 

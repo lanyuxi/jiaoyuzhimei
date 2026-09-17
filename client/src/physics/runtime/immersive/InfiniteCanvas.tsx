@@ -61,7 +61,17 @@ export interface InfiniteCanvasProps {
   probes?: readonly Position[]
   /** 舞台外层引用（用于把指针事件换算成屏幕坐标） */
   stageRef: RefObject<HTMLDivElement | null>
-  /** 画布基准尺寸 */
+  /**
+   * 画布基准尺寸。
+   *
+   * **默认「跟随舞台」**（不传 = 内层世界铺满整个视口）。
+   *
+   * 为什么必须能跟随：历史上这里写死 960×540，于是内层世界永远只是屏幕上
+   * 1086×610 的一小块矩形 —— 它没有背景、看起来"不存在"，
+   * 但它**会裁剪**：器材往上一拖就被这条看不见的边切掉，
+   * 也就是用户说的「中间有一个隐形的画布」。传尺寸只保留给单测与特殊场景；
+   * 真实页面必须让世界 = 视口，这样"看不见的边界"就根本不存在。
+   */
   viewWidth?: number
   viewHeight?: number
   /** 3D 倾斜角度（度） */
@@ -83,8 +93,8 @@ export default function InfiniteCanvas({
   content,
   children,
   stageRef,
-  viewWidth = 960,
-  viewHeight = 540,
+  viewWidth,
+  viewHeight,
   tilt = STAGE_TILT_DEG,
   showToolbar = true,
   padding,
@@ -122,16 +132,44 @@ export default function InfiniteCanvas({
     [padding],
   )
 
+  /**
+   * 世界尺寸（= 内层画布的坐标系尺寸）。
+   *
+   * 不传 `viewWidth / viewHeight` 时**跟随舞台**：`width = 100%`、`height = 100%`。
+   * 这一条是"去掉中间那块隐形画布"的关键：
+   *   · 内层世界与视口**同尺寸** → 它的边界正好压在屏幕边上，
+   *     不存在"屏幕里还有一条看不见的裁剪线"；
+   *   · 器材拖到屏幕任意角落都不会被切（以前 960×540 世界在 1375 宽的屏幕上
+   *     只覆盖中间 1086px，往右一拖就被切掉）。
+   *
+   * 传了尺寸就按像素写死（只给单测/固定画布场景用）。
+   */
+  const followsStage = viewWidth === undefined && viewHeight === undefined
+
 
   /**
    * 透视原点的换算只做一次：`PERSPECTIVE_ORIGIN = '50% 58%'` 是**相对舞台**的百分比，
    * 必须按舞台实际尺寸换算成像素。聚焦（投影）与可见范围（反投影）读的是同一对数值。
    */
+  /**
+   * 透视参数必须**记忆化**，不能写成内联对象字面量。
+   *
+   * 内联对象每次渲染都是新引用，会让 `useInfiniteCanvas` 里的
+   * `fitProjection` / `measureProjection` / `measureBounds` / `focus`
+   * 四个 `useCallback` 全部失效；而聚焦 effect 依赖 `focus` ——
+   * 于是"渲染 → focus 变新 → effect 重跑 → setCamera → 再渲染"形成闭环，
+   * 浏览器控制台刷屏 "Maximum update depth exceeded"（实测每屏 54～74 条）。
+   */
+  const perspectiveConfig = useMemo(
+    () => ({ tilt, depth: PERSPECTIVE_DEPTH, origin: PERSPECTIVE_ORIGIN }),
+    [tilt],
+  )
+
   const canvas = useInfiniteCanvas({
     stageRef,
     content,
     padding: stagePadding,
-    perspective: { tilt, depth: PERSPECTIVE_DEPTH, origin: PERSPECTIVE_ORIGIN },
+    perspective: perspectiveConfig,
     probes,
   })
   const [entered, setEntered] = useState(false)
@@ -144,17 +182,36 @@ export default function InfiniteCanvas({
 
   const { camera } = canvas
 
+  /**
+   * 相机变化 → 通知场景。
+   *
+   * `onCameraChange` 必须走 ref，不能进依赖数组：
+   * 场景侧的回调会 `setLayout`，而 `setLayout` 会让场景重渲染、
+   * 生成**新的内联箭头函数**；依赖里只要挂着它，effect 就会被这个
+   * "每帧都变的函数"重新触发 → `setLayout` → 再渲染 → **无限更新循环**
+   * （浏览器实测 "Maximum update depth exceeded" 刷屏）。
+   * 只依赖三个数值之后，effect 只在相机**真的**动了才跑一次。
+   */
+  const cameraChangeRef = useRef(onCameraChange)
   useEffect(() => {
-    onCameraChange?.(camera)
-  }, [camera.scale, camera.x, camera.y, onCameraChange])
+    // 在 effect 里写 ref（渲染期写 ref 被 react-hooks 规则明确禁止）
+    cameraChangeRef.current = onCameraChange
+  }, [onCameraChange])
+
+  const cameraScale = camera.scale
+  const cameraX = camera.x
+  const cameraY = camera.y
+  useEffect(() => {
+    cameraChangeRef.current?.({ scale: cameraScale, x: cameraX, y: cameraY })
+  }, [cameraScale, cameraX, cameraY])
 
   const stageStyle: CSSProperties = {
     perspective: `${PERSPECTIVE_DEPTH}px`,
     perspectiveOrigin: PERSPECTIVE_ORIGIN,
   }
   const worldStyle: CSSProperties = {
-    width: `${viewWidth}px`,
-    height: `${viewHeight}px`,
+    width: followsStage ? '100%' : `${viewWidth}px`,
+    height: followsStage ? '100%' : `${viewHeight}px`,
     transform: `translate3d(${camera.x}px, ${camera.y}px, 0) scale(${camera.scale}) rotateX(${entered ? tilt : 0}deg)`,
     transformOrigin: '0 0',
     transition: entered ? 'transform 120ms linear' : 'transform 620ms cubic-bezier(0.22, 1, 0.36, 1)',

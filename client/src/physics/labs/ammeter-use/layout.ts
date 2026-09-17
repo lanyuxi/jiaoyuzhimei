@@ -463,6 +463,57 @@ export function resetLayout(): LabLayout {
 }
 
 /* ------------------------------------------------------------------ *
+ * 初始构图 → 舞台坐标
+ * ------------------------------------------------------------------ */
+
+/**
+ * 把「竞品原始构图」整体摆放进**当前视口**。
+ *
+ * 为什么必须做这一步：竞品数据是 960×540 的固定坐标系，而现在的画布
+ * 就是整个视口。「原样搬到视口原点」会让构图缩在左上角一小块里；
+ * 「原样居中不缩放」在窄屏上又会溢出去。所以按**等比缩放 + 居中**摆放，
+ * 与相机聚焦（`fitContent`）用的是同一套目标区域 —— 入屏即终态，不会二次位移。
+ *
+ * 缩放上限 1：**只缩小、不放大**。竞品构图在 960×540 里是"排满"的，
+ * 放大只会让器材糊掉；而窄屏缩小时必须缩，否则器材会跑到屏幕外。
+ *
+ * 只处理**平移 + 等比缩放**，因此：
+ *   · 器材之间的相对构图（接线柱偏移、导线弧度）完全不变，
+ *     电学拓扑与几何的自洽关系原样保留；
+ *   · 接线柱坐标仍由 `terminalPosition` 推导，导线端点仍跟着器材走。
+ */
+export function fitLayoutToStage(
+  layout: LabLayout,
+  view: { minX: number; minY: number; maxX: number; maxY: number },
+): LabLayout {
+  const bounds = layoutBounds(layout)
+  const sourceWidth = Math.max(1e-6, bounds.maxX - bounds.minX)
+  const sourceHeight = Math.max(1e-6, bounds.maxY - bounds.minY)
+  const targetWidth = Math.max(1e-6, view.maxX - view.minX)
+  const targetHeight = Math.max(1e-6, view.maxY - view.minY)
+  const scale = Math.min(1, targetWidth / sourceWidth, targetHeight / sourceHeight)
+  const sourceCenter = { x: (bounds.minX + bounds.maxX) / 2, y: (bounds.minY + bounds.maxY) / 2 }
+  const targetCenter = { x: (view.minX + view.maxX) / 2, y: (view.minY + view.maxY) / 2 }
+  const project = (point: Position): Position => ({
+    x: (point.x - sourceCenter.x) * scale + targetCenter.x,
+    y: (point.y - sourceCenter.y) * scale + targetCenter.y,
+  })
+
+  const components: Partial<Record<LabComponentId, Position>> = {}
+  for (const id of LAB_COMPONENT_IDS) components[id] = project(layout.components[id])
+
+  /**
+   * 导线弧度：折点是"相对端点连线的法向偏移"，整体等比缩放时
+   * 偏移量也必须按同一比例缩放，否则缩放后导线弧度会与器材尺寸对不上。
+   */
+  const wires: Record<WireKey, WireShape> = {}
+  for (const [key, shape] of Object.entries(layout.wires)) {
+    wires[key] = { bend: shape.bend * scale, direction: { ...shape.direction } }
+  }
+  return { components: components as Record<LabComponentId, Position>, wires }
+}
+
+/* ------------------------------------------------------------------ *
  * 布局不变量：全屏可见性（对应需求「整个屏幕的无限画布 / 拖动不被遮挡」）
  * ------------------------------------------------------------------ */
 
@@ -493,6 +544,24 @@ export const SAFE_TOP = 56
 export const SAFE_BOTTOM = 60
 
 /**
+ * 悬浮控件**实际**占用的高度（用于浮动层自动避让）。
+ *
+ * 上面那两个 `SAFE_*` 是「无限画布上永远保留的可用带」，是从**每一条边**都保留的
+ * 净空；下面这对是「控件真的画到了哪」，只影响控件所在的那条边。
+ * 两者刻意分开：
+ *   · 若把 `SAFE_*` 直接放大成控件高度，画布四边都会凭空多出空档，
+ *     "整个屏幕都是无限画布"就又被缩回成一块中间的矩形；
+ *   · 若不留 `SAFE_*`，悬浮控件会把器材压住。
+ * 现在：画布铺满全屏（无边），器材的收拢目标只是"别钻到控件底下"。
+ */
+export const CONTROL_TOP = 56
+export const CONTROL_BOTTOM = 60
+/** 左侧竖排工具条（转电路图 / 复位摆位 / 操作提示）占用的宽度 */
+export const CONTROL_LEFT = 96
+/** 右侧协作入口 + 画布工具条占用的宽度 */
+export const CONTROL_RIGHT = 168
+
+/**
  * 舞台尺寸 → **真正能放器材的屏幕矩形**（相对舞台左上角）。
  *
  * 这是"可见范围"的唯一入口：以前 `CompetitorScene` 自己拼这个矩形、
@@ -503,11 +572,41 @@ export const SAFE_BOTTOM = 60
  * 实测症状是**一进页面器材自己往上跳一下**（先把内容居中，再被不变量拉回来）。
  */
 export function visibleScreenArea(width: number, height: number): { left: number; top: number; right: number; bottom: number } {
+  /**
+   * 可见范围 = **整个舞台**，四周都不再留安全边。
+   *
+   * 这是本轮的核心修正。历史上这里收进 `SAFE_TOP` / `SAFE_BOTTOM`，
+   * 把"看得见的画布"从整块屏幕缩成中间一条横带；而**画布又真的是按这个矩形
+   * 渲染并裁剪的**（SVG 只有 960×540 那么大），于是学生把器材往上一拖，
+   * 器材就被那条看不见的边界**切掉**——正是「中间有一个隐形的画布」。
+   *
+   * 现在：可见范围就是屏幕本身。悬浮控件不再"吃掉"画布，只是浮在它上面，
+   * 由 `controlAvoidArea` 负责让器材别钻到控件底下。
+   */
   return {
     left: 0,
-    top: SAFE_TOP,
+    top: 0,
     right: Math.max(width, 0),
-    bottom: Math.max(SAFE_TOP + 1, height - SAFE_BOTTOM),
+    bottom: Math.max(1, height),
+  }
+}
+
+/**
+ * 悬浮控件**实际压住的**那块区域（相对舞台左上角）。
+ *
+ * 与 `visibleScreenArea`（= 整块屏幕）是两个不同的东西：
+ *   · `visibleScreenArea` 回答"画布铺到哪" —— 答案是"整块屏幕"；
+ *   · 本函数回答"哪块屏幕上不许停机器材" —— 只有真正浮着控件的那几条边。
+ *
+ * 器材被拖到边缘时按这里做**软避让**：能挪开就挪开，挪不开也不裁剪、不吞掉，
+ * 因为画布本身已经铺满全屏了。
+ */
+export function controlAvoidArea(width: number, height: number): { left: number; top: number; right: number; bottom: number } {
+  return {
+    left: Math.max(0, CONTROL_LEFT),
+    top: Math.max(0, CONTROL_TOP),
+    right: Math.max(0, Math.max(width, 0) - CONTROL_RIGHT),
+    bottom: Math.max(CONTROL_TOP + 1, Math.max(height, 0) - CONTROL_BOTTOM),
   }
 }
 
@@ -524,14 +623,21 @@ export const FIT_SIDE_INSET = 28
 
 export function fitPaddingWithinSafeArea(): { top: number; bottom: number; left: number; right: number } {
   /**
-   * 上下 = 安全区本身（不额外加余量），左右给一份对称留白。
+   * 入屏留白 = **只避开真正浮着控件的那几条边**，其余全给画布。
    *
-   * 左右留白不是"审美"，而是**画布语义**：一开始就贴着屏幕左右边的话，
-   * 学生第一眼看到的就是"内容卡在一条 960 宽的带子里"，
-   * 与"整个屏幕是无限画布"的预期相反。留出 `FIT_SIDE_INSET` 之后，
-   * 屏幕四周都还有画布，往任意方向拖都还有空间。
+   * 与 `controlAvoidArea` 严格同源：器材入屏后正好落在"没被控件压住"的那块里，
+   * 于是"入屏即终态"仍然成立（不会入屏后被避让逻辑再推一下）。
+   *
+   * `FIT_SIDE_INSET` 仍保留一份额外留白 —— 不是审美，而是**画布语义**：
+   * 内容一开始就贴着屏幕边，学生第一眼看到的就是"东西卡在边上"，
+   * 与"整个屏幕是无限画布"的预期相反。留一点之后四周都还有可拖的空间。
    */
-  return { top: SAFE_TOP, bottom: SAFE_BOTTOM, left: FIT_SIDE_INSET, right: FIT_SIDE_INSET }
+  return {
+    top: CONTROL_TOP + FIT_SIDE_INSET,
+    bottom: CONTROL_BOTTOM + FIT_SIDE_INSET,
+    left: CONTROL_LEFT + FIT_SIDE_INSET,
+    right: CONTROL_RIGHT + FIT_SIDE_INSET,
+  }
 }
 
 /**
