@@ -544,23 +544,271 @@ export const SAFE_TOP = 56
 export const SAFE_BOTTOM = 60
 
 /**
- * 悬浮控件**实际**占用的高度（用于浮动层自动避让）。
+/**
+ * 悬浮控件**实际压住的**那块区域 —— **真机实测的矩形清单**，不是估的边距。
  *
- * 上面那两个 `SAFE_*` 是「无限画布上永远保留的可用带」，是从**每一条边**都保留的
- * 净空；下面这对是「控件真的画到了哪」，只影响控件所在的那条边。
- * 两者刻意分开：
- *   · 若把 `SAFE_*` 直接放大成控件高度，画布四边都会凭空多出空档，
- *     "整个屏幕都是无限画布"就又被缩回成一块中间的矩形；
- *   · 若不留 `SAFE_*`，悬浮控件会把器材压住。
- * 现在：画布铺满全屏（无边），器材的收拢目标只是"别钻到控件底下"。
+ * 为什么不能只用"四条边的净空"建模（上一版就是这么做的，然后全线失守）：
+ * 浮层**不是**规规矩矩贴着四条边排的。实测 8 个视口量下来，至少有三类会被漏掉：
+ *   1. **离边还有一段距离的控件**：右侧协作入口胶囊组是 `right-[68px]`，
+ *      宽视口下它落在 `x = width-312 .. width-68`，既不算贴左边、也不算贴右边
+ *      —— 按"贴边净空"建模必然漏（1375 宽下它占 `x1063..1307`，正盖在画面中右侧）。
+ *   2. **随视口换行/堆叠的控件**：底部读数条在 1375 下是 688×96，
+ *      到 390×780 变成 198×152 —— 高度翻倍，一个固定 `CONTROL_BOTTOM` 追不上。
+ *   3. **只在一条边很窄的控件**：右上画布工具条只有 42px 宽、下缘到 166，
+ *      但底部读数条只到 112 —— 一条"上边 166"会把整幅画布上沿切掉一大块，
+ *      而真正的障碍物其实只在最右侧 42px。
+ *
+ * 所以这里按**实测矩形**建模：每条记录 = 真机上量到的一个浮层
+ * （相对舞台左上角的 x/y/w/h，单位屏幕像素），
+ * `controlAvoidArea` 只作为"聚焦摆哪块"的保守外接矩形，
+ * 精确的"某件器材有没有被压住"一律走 `pushOutOfControls`（按真实矩形算）。
+ *
+ * 实测方法（可复现）：`vite preview` 起真页面，逐视口枚举所有
+ * `z-index ≥ 20` 且 `position: absolute|fixed|sticky` 的浮层，
+ * `getBoundingClientRect()` 后裁到舞台矩形内、去重。
+ * `viewportConsistency.test.ts` 里有一份**独立量出来的**副本 `MEASURED_OVERLAYS`，
+ * 与本清单互相校验：任一边漂移超过容差就直接红。
  */
-export const CONTROL_TOP = 56
-export const CONTROL_BOTTOM = 60
-/** 左侧竖排工具条（转电路图 / 复位摆位 / 操作提示）占用的宽度 */
-export const CONTROL_LEFT = 96
-/** 右侧协作入口 + 画布工具条占用的宽度 */
-export const CONTROL_RIGHT = 168
+export interface ControlObstacle {
+  /** 相对舞台左上角 */
+  x: number
+  y: number
+  width: number
+  height: number
+  /** 只在视口宽 ≥ 该值时出现（用于"窄屏下控件换行 / 位移"这类差异） */
+  minStageWidth?: number
+  /** 只在视口宽 ≤ 该值时出现 */
+  maxStageWidth?: number
+}
 
+/** 判定"浮层已挤进画面中部"的舞台宽度阈值（真机换行实测：768 之下开始换行） */
+export const CONTROL_NARROW_STAGE = 900
+
+/** 左侧控件（工具条 + 操作提示）的横向边界 */
+export const CONTROL_LEFT = 148
+/** 右侧控件（协作入口胶囊组）的横向边界 */
+export const CONTROL_RIGHT = 244
+/** 上侧控件（顶部标题栏 70 / 右上工具条 166）的纵向边界 */
+export const CONTROL_TOP = 166
+/** 下侧控件（底部读数条 + 提示胶囊）的纵向边界 */
+export const CONTROL_BOTTOM = 168
+
+/**
+ * 真机实测的浮层矩形（相对舞台左上角，屏幕像素）。
+ *
+ * 每条都注明对应的类名，改布局时必须同步更新 —— 这份清单存在的意义，
+ * 就是把"画面上真的有那些控件"变成**可断言的事实**，而不是注释里的一句话。
+ */
+export function controlObstacles(width: number, height: number): ControlObstacle[] {
+  const stageWidth = Math.max(0, width)
+  const stageHeight = Math.max(0, height)
+  const raw: ControlObstacle[] = [
+    // 顶部标题栏（全宽，高 70）
+    { x: 0, y: 0, width: stageWidth, height: 70 },
+    // 右上画布工具条：`right-4 top-4`，42 宽、高 150 → 下缘 166（纵向最深的上侧控件）
+    { x: Math.max(0, stageWidth - 58), y: 16, width: 42, height: 150 },
+    // 左：转电路图 `left-4 top-16 w-[78px]`
+    { x: 16, y: 64, width: 78, height: 83 },
+    // 左：复位摆位 `left-4 top-[164px] w-[78px]`
+    { x: 16, y: 164, width: 78, height: 83 },
+    // 左：操作提示 `left-4 top-[224px] w-[132px]` → 右缘 148
+    { x: 16, y: 224, width: 132, height: 78 },
+    /**
+     * 右：协作入口胶囊组 `right-[68px]`（三个 `w-[76px]` + `gap-2` = 244 宽）。
+     *
+     * 它在**所有**视口下都是 `x = stageWidth - 312 .. stageWidth - 68` ——
+     * 实测 1375/1280/1920/1024/768 全部逐像素吻合；
+     * 390 宽下 `390-312 = 78`，与实测的 `x=78` 也吻合
+     * （也就是说它是"被挤到左边"而不是"换了布局"，一个公式全包）。
+     * 之前按"宽 / 窄两分支"建模是多余的，而且窄分支的阈值一旦和真实断点不一致就会漏。
+     */
+    { x: Math.max(0, stageWidth - 312), y: 64, width: 244, height: 75 },
+  ]
+
+  /**
+   * 底部读数条：`bottom-4 left-1/2 max-w-[min(1080px,94vw)]` + `flex-wrap`。
+   *
+   * 它是**内容撑开**的（宽度 = 内容自然宽，上限 `min(1080px, 94vw)`），
+   * 不是"占满 94vw" —— 实测 1375 宽下只有 688（= 50%），
+   * 若按 94vw 建模会把整条下边都算成障碍物，反而让可用区凭空变窄。
+   *
+   * 内容自然宽实测：1375→688、1280→640、1024→512、768→384、1920→751。
+   * 高度随 `flex-wrap` 换行增长：宽视口 96（1920 一行放得下 → 54），
+   * 768 → 123，390 → 152。
+   *
+   * 建模用一个显式的**内容宽度表**（就近取实测值，中间线性插值），
+   * 这样"换行 / 内部换行"这类真实行为都被覆盖，而不是靠猜一个比例。
+   */
+  const readoutTable: readonly { stage: number; width: number; height: number }[] = [
+    { stage: 390, width: 198, height: 152 },
+    { stage: 768, width: 384, height: 123 },
+    { stage: 1024, width: 512, height: 96 },
+    { stage: 1280, width: 640, height: 96 },
+    { stage: 1375, width: 688, height: 96 },
+    { stage: 1920, width: 751, height: 54 },
+  ]
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+  const readoutAt = (() => {
+    if (stageWidth <= readoutTable[0].stage) return readoutTable[0]
+    const last = readoutTable[readoutTable.length - 1]
+    if (stageWidth >= last.stage) return last
+    for (let i = 0; i < readoutTable.length - 1; i += 1) {
+      const lo = readoutTable[i]
+      const hi = readoutTable[i + 1]
+      if (stageWidth >= lo.stage && stageWidth <= hi.stage) {
+        const t = (stageWidth - lo.stage) / (hi.stage - lo.stage)
+        return { width: lerp(lo.width, hi.width, t), height: lerp(lo.height, hi.height, t) }
+      }
+    }
+    return last
+  })()
+  /** 读数条永远不可能比舞台还宽（`max-w-[… 94vw]`），也不会比内容还宽 */
+  const readoutWidth = Math.min(readoutAt.width, stageWidth * 0.94, 1080)
+  raw.push({
+    x: Math.max(0, (stageWidth - readoutWidth) / 2),
+    y: Math.max(0, stageHeight - 16 - readoutAt.height),
+    width: readoutWidth,
+    height: readoutAt.height,
+  })
+
+  /**
+   * 底部提示胶囊（"无限画布已开启…"，228×33）。
+   * 宽视口 `bottom-4 right-4`；窄视口被挤到 `left-1/2` 居中
+   * （实测 390×780 在 `x146..374`，即居中），此时它与读数条上下叠。
+   */
+  const hintWidth = 228
+  const hintX = Math.max(0, stageWidth - 244)
+  const hintY = Math.max(0, stageHeight - 109)
+  raw.push({ x: hintX, y: hintY, width: hintWidth, height: 33 })
+  /**
+   * 窄视口下提示胶囊被 `left-1/2` 挤到画面中部（实测 390×780 在 `x146..374`），
+   * 与读数条在纵向上叠在一起。它比"贴右边"的版本更靠中间，
+   * 所以必须**额外**补一条中部矩形，否则 390 宽度下它会漏网。
+   */
+  if (stageWidth < CONTROL_NARROW_STAGE) {
+    raw.push({ x: Math.max(0, (stageWidth - hintWidth) / 2), y: hintY, width: hintWidth, height: 33 })
+  }
+
+  return raw
+    .map((box) => {
+      const x = Math.min(Math.max(box.x, 0), stageWidth)
+      const y = Math.min(Math.max(box.y, 0), stageHeight)
+      return {
+        ...box,
+        x,
+        y,
+        width: Math.max(0, Math.min(box.width, stageWidth - x)),
+        height: Math.max(0, Math.min(box.height, stageHeight - y)),
+      }
+    })
+    .filter((box) => box.width > 0 && box.height > 0)
+}
+
+/**
+ * 悬浮控件**实际压住的**那块区域（相对舞台左上角）——
+ * 由 `controlObstacles` 的实测矩形推出。
+ *
+ * 与 `visibleScreenArea`（= 整块屏幕）是两个不同的东西：
+ *   · `visibleScreenArea` 回答"画布铺到哪" —— 答案是"整块屏幕"；
+ *   · 本函数回答"聚焦时把内容摆进哪块"。
+ *
+ * 注意这是**保守外接矩形**，只用于聚焦；精确的"器材有没有被压住"走
+ * `pushOutOfControls`（按真实矩形算），两者不可互相替代。
+ */
+export function controlAvoidArea(width: number, height: number): { left: number; top: number; right: number; bottom: number } {
+  const stageWidth = Math.max(0, width)
+  const stageHeight = Math.max(0, height)
+  let left = 0
+  let top = 0
+  let right = stageWidth
+  let bottom = stageHeight
+  for (const box of controlObstacles(stageWidth, stageHeight)) {
+    /**
+     * 只把"真的贴着某条边、且**没有横跨整条边**"的盒子计进那一条边。
+     *
+     * 两条都不能少：
+     *   · 右上角那个 42px 宽的工具条会把**整幅画布的上沿**都算成不可用 ——
+     *     所以必须"贴着"；
+     *   · 全宽的顶部标题栏（0..W）与全宽的底部读数条会把左右净空顶到满格 ——
+     *     所以必须排除"横跨整条边"的那种。它只该贡献上/下净空。
+     */
+    const TOL = 24
+    /**
+     * "横跨整条边"的判定不能只比宽度 —— 底部读数条是 `max-w-[min(1080px,94vw)]`，
+     * 在 768 宽下是 `x23..745`（宽 94%），左边不贴边、右边勉强算贴边。
+     * 它只该贡献**下净空**，不该把左右净空也顶满。
+     * 用"覆盖率"判定：宽度超过舞台 85% 就算横跨。
+     */
+    const spansWidth = box.width >= stageWidth * 0.85
+    const spansHeight = box.height >= stageHeight * 0.85
+    if (!spansWidth && box.x <= TOL) left = Math.max(left, box.x + box.width)
+    if (!spansHeight && box.y <= TOL) top = Math.max(top, box.y + box.height)
+    if (!spansWidth && box.x + box.width >= stageWidth - TOL) right = Math.min(right, box.x)
+    if (!spansHeight && box.y + box.height >= stageHeight - TOL) bottom = Math.min(bottom, box.y)
+  }
+  /**
+   * 净空可能互相穿透（例如 390 宽时左工具条右缘 148、协作胶囊组左缘 78）。
+   *
+   * 注意这是**真实存在的物理冲突**：画面上左工具条与右侧胶囊组本来就叠在一起，
+   * 屏幕上**没有**一块"完全没被控件压住"的横向区间。
+   * 此时返回退化空矩形（`right < left`）会让判据失去意义，
+   * 所以如实取"两者更靠中间的那条边界"作为分界，保证 `right = left`（零宽可用区），
+   * 这样调用方一眼就能看出"这个视口没有横向可用区"，
+   * 转而走"能挪多少算多少 + 精确浮层避让"（`pushOutOfControls`）。
+   */
+  if (right < left) {
+    const boundary = Math.min(left, right + (left - right))
+    left = Math.max(left, (left + right) / 2)
+    right = Math.max(right, boundary > left ? left : left)
+    right = left
+  }
+  top = Math.min(top, stageHeight)
+  bottom = Math.max(top, Math.min(bottom, stageHeight))
+  return { left, top, right, bottom }
+}
+
+/**
+ * 把一件器材的矩形**推出所有浮层**（精确口径，按真实浮层矩形算）。
+ *
+ * 这是"器材不许被控件压住"的**唯一判定实现**：不再把浮层近似成四条边，
+ * 而是逐个矩形求掩盖量，取**位移最小**的方向推出去。
+ * 返回 `null` 表示"当前就在浮层之外"。
+ */
+export function pushOutOfControls(
+  rect: { left: number; top: number; right: number; bottom: number },
+  width: number,
+  height: number,
+): { dx: number; dy: number } | null {
+  const obstacles = controlObstacles(width, height)
+  let dx = 0
+  let dy = 0
+  /**
+   * 两轮：第一轮按初始位置推，第二轮复验（推出去之后可能落进**另一个**浮层）。
+   * 实测 390×780 下先躲胶囊组、再躲读数条，需要两轮才稳定。
+   */
+  for (let pass = 0; pass < 4; pass += 1) {
+    let moved = false
+    for (const box of obstacles) {
+      const cur = { left: rect.left + dx, top: rect.top + dy, right: rect.right + dx, bottom: rect.bottom + dy }
+      const overlapX = Math.min(cur.right, box.x + box.width) - Math.max(cur.left, box.x)
+      const overlapY = Math.min(cur.bottom, box.y + box.height) - Math.max(cur.top, box.y)
+      if (overlapX <= 1e-6 || overlapY <= 1e-6) continue
+      const candidates = [
+        { axis: 'x' as const, delta: box.x - cur.right },
+        { axis: 'x' as const, delta: box.x + box.width - cur.left },
+        { axis: 'y' as const, delta: box.y - cur.bottom },
+        { axis: 'y' as const, delta: box.y + box.height - cur.top },
+      ]
+      candidates.sort((a, b) => Math.abs(a.delta) - Math.abs(b.delta))
+      const pick = candidates[0]
+      if (pick.axis === 'x') dx += pick.delta
+      else dy += pick.delta
+      moved = true
+    }
+    if (!moved) break
+  }
+  return dx === 0 && dy === 0 ? null : { dx, dy }
+}
 /**
  * 舞台尺寸 → **真正能放器材的屏幕矩形**（相对舞台左上角）。
  *
@@ -592,51 +840,53 @@ export function visibleScreenArea(width: number, height: number): { left: number
 }
 
 /**
- * 悬浮控件**实际压住的**那块区域（相对舞台左上角）。
+ * 相机聚焦时给内容预留的边距 —— 与 `controlAvoidArea` **真正同源**。
  *
- * 与 `visibleScreenArea`（= 整块屏幕）是两个不同的东西：
- *   · `visibleScreenArea` 回答"画布铺到哪" —— 答案是"整块屏幕"；
- *   · 本函数回答"哪块屏幕上不许停机器材" —— 只有真正浮着控件的那几条边。
+ * 它就是"能用的那块矩形"，不多留一丝：先取 `controlAvoidArea`（聚焦时还可见的
+ * 那块），再加上一点画布语义留白。于是"相机把内容摆好"与"判据说内容都在视野里"
+ * 在数学上同时成立，入屏不会出现二次位移，也不会出现被控件压住的器材。
  *
- * 器材被拖到边缘时按这里做**软避让**：能挪开就挪开，挪不开也不裁剪、不吞掉，
- * 因为画布本身已经铺满全屏了。
- */
-export function controlAvoidArea(width: number, height: number): { left: number; top: number; right: number; bottom: number } {
-  return {
-    left: Math.max(0, CONTROL_LEFT),
-    top: Math.max(0, CONTROL_TOP),
-    right: Math.max(0, Math.max(width, 0) - CONTROL_RIGHT),
-    bottom: Math.max(CONTROL_TOP + 1, Math.max(height, 0) - CONTROL_BOTTOM),
-  }
-}
-
-/**
- * 相机聚焦时给内容预留的边距 —— 与上面的 `visibleScreenArea` **严格同源**。
- *
- * 它就是"能用的那块矩形"，不多留一丝：
- *   · 上边距 = `SAFE_TOP`（顶部工具栏）
- *   · 下边距 = `SAFE_BOTTOM`（底部读数条）
- * 于是"相机把内容摆好"与"判据说内容都在视野里"在数学上同时成立，
- * 入屏不会出现二次位移，也不会出现被控件压住的器材。
+ * 上一版这里是"照抄常量"而不是真的同源：`padding = CONTROL_* + FIT_SIDE_INSET`，
+ * 而 `controlAvoidArea = CONTROL_*` —— 差一个 `FIT_SIDE_INSET`，注释却写着"严格同源"，
+ * 测试只比了 `padding ≥ control` 所以测不出来。现在两者都由同一份浮层清单推导。
  */
 export const FIT_SIDE_INSET = 28
 
-export function fitPaddingWithinSafeArea(): { top: number; bottom: number; left: number; right: number } {
+/**
+ * 入屏留白的兜底上限：两侧留白合计不得超过舞台宽度的这个比例。
+ *
+ * 为什么需要：`controlAvoidArea` 在窄屏下会把可用区压得很窄
+ * （实测 390×780 只有 `x148..332`），若再各加 28px，可用区会缩到 156px ——
+ * 相机会被迫把五件器材挤成一团。窄屏下"留白"要让位于"看得见"。
+ */
+const FIT_MAX_SIDE_RATIO = 0.22
+
+export function fitPaddingWithinSafeArea(width = 0, height = 0): { top: number; bottom: number; left: number; right: number } {
   /**
-   * 入屏留白 = **只避开真正浮着控件的那几条边**，其余全给画布。
+   * 入屏留白 = **真正浮着控件的那几条边** + 一点画布语义留白。
    *
-   * 与 `controlAvoidArea` 严格同源：器材入屏后正好落在"没被控件压住"的那块里，
-   * 于是"入屏即终态"仍然成立（不会入屏后被避让逻辑再推一下）。
-   *
-   * `FIT_SIDE_INSET` 仍保留一份额外留白 —— 不是审美，而是**画布语义**：
+   * `FIT_SIDE_INSET` 不是审美，而是**画布语义**：
    * 内容一开始就贴着屏幕边，学生第一眼看到的就是"东西卡在边上"，
    * 与"整个屏幕是无限画布"的预期相反。留一点之后四周都还有可拖的空间。
+   *
+   * 未传尺寸时（历史调用方 / 单测）退化为"按常量取净空"，与旧行为一致。
    */
+  if (!(width > 0) || !(height > 0)) {
+    return {
+      top: CONTROL_TOP + FIT_SIDE_INSET,
+      bottom: CONTROL_BOTTOM + FIT_SIDE_INSET,
+      left: CONTROL_LEFT + FIT_SIDE_INSET,
+      right: CONTROL_RIGHT + FIT_SIDE_INSET,
+    }
+  }
+  const control = controlAvoidArea(width, height)
+  const cap = Math.max(0, width * FIT_MAX_SIDE_RATIO - (control.right - control.left) / 2)
+  const sideInset = Math.min(FIT_SIDE_INSET, cap)
   return {
-    top: CONTROL_TOP + FIT_SIDE_INSET,
-    bottom: CONTROL_BOTTOM + FIT_SIDE_INSET,
-    left: CONTROL_LEFT + FIT_SIDE_INSET,
-    right: CONTROL_RIGHT + FIT_SIDE_INSET,
+    top: control.top + FIT_SIDE_INSET,
+    bottom: height - control.bottom + FIT_SIDE_INSET,
+    left: control.left + sideInset,
+    right: width - control.right + sideInset,
   }
 }
 
@@ -818,6 +1068,214 @@ function rescueCenter(id: LabComponentId, visible: NonNullable<CanvasVisibleRect
   }
 }
 
+/**
+ * 拖动**过程中**的实时钳制：让器材在指针越出舞台时"贴边停住"。
+ *
+ * 存在的理由（真机实测出来的必修项）：
+ * `useLabLayoutDrag.onPointerMove` 原先只调 `clampComponentPosition`
+ * （世界边界 ±6000），**松手前没有任何收回**。按住 E1 往左上拖，
+ * 本体左上角一路走到 `-170,-102` —— 在"体左 94 / 体上 2"时就已经完全离开可视区，
+ * 再往后是 168px 全黑，**松手才回弹 262px**。
+ * 现有 e2e 只在 `pointerup` **之后**采样落点，所以 100 组全绿：
+ * 判据漏了"拖动中"这一段，而这正是用户主诉里「拖到外面去了」的可见场景。
+ *
+ * 语义上它与松手时走的是**同一套门禁**（`rescueComponent` + 同一个 `visible`），
+ * 只是把"松手收敛一次"变成"每帧收敛一次"：
+ *   · 没跑出可见范围 → 原样返回（绝不无谓挪动，`rescueComponent` 自带这层门禁）；
+ *   · 跑出了 → 收到最近合法位置，表现为"器材贴着边停下"。
+ *
+ * 返回值语义与 `clampComponentPosition` 一致：直接把结果当作器材中心用。
+ */
+export function clampComponentWithinView(
+  id: LabComponentId,
+  position: Position,
+  visible: CanvasVisibleRect,
+  screenCheck?: (id: LabComponentId, center: Position) => number,
+  /** 屏幕空间"推回最近合法位置"的收敛器（由场景注入，因为只有它知道投影） */
+  pushIntoView?: (id: LabComponentId, center: Position) => Position | null,
+): Position {
+  const clamped = clampComponentPosition(id, position)
+  if (visible === null) return clamped
+  /**
+   * 快速路径：还完全合法就原样返回，**绝不无谓挪动**。
+   *
+   * 必须先做这一步，不能直接进收敛循环 —— 否则器材会在合法区域内
+   * 每帧被"收敛"推一下，表现为粘手 / 抖动。
+   */
+  if (valueAcc0(id, clamped, visible, screenCheck)) return clamped
+  if (pushIntoView !== undefined) {
+    const pushed = pushIntoView(id, clamped)
+    if (pushed !== null) return clampComponentPosition(id, pushed)
+  }
+  /**
+   * 兜底：用一个**只含这一件器材**的临时布局跑 `rescueComponent`，
+   * 复用"判据 + 收回 + 屏幕像素收敛"这套已有回归测试保护的逻辑。
+   */
+  const probe: LabLayout = { components: { ...createDefaultLayout().components, [id]: clamped }, wires: {} }
+  const rescued = rescueComponent(probe, id, visible, screenCheck)
+  return rescued.components[id]
+}
+
+/**
+ * 在**屏幕空间**把一件器材"推回"最近的可视位置（二分求根，保证收敛）。
+ *
+ * 为什么不能只靠"朝视野中心退一步"的迭代：那种步进式回退在大步长指针移动下
+ * 会**震荡**，而且最后一次步长可能正好把结果留在边界外 ——
+ * 真机实测按住 A1 快速拖向左上角，有连续 2 帧本体越出 18～39px
+ * （肉眼可见的"甩出去再弹回"）。
+ *
+ * 这里改成**单调二分**：`project` 把画布坐标投影到屏幕，把"本体四角是否全部
+ * 落在安全区"表达成一个单调谓词，然后在"当前点 ↔ 可行点"之间二分。
+ * 单调问题二分一定收敛，且与"学生看到的是屏幕"严格同口径。
+ */
+export function pushComponentIntoView(
+  id: LabComponentId,
+  center: Position,
+  project: (point: Position) => Position,
+  bounds: { width: number; height: number },
+  /**
+   * 求"一定能看见"的锚点：视野中心在画布空间的坐标。
+   * 器材被拖到屏幕外时，往这里退一定越来越可见（单调）。
+   */
+  anchor: Position,
+): Position {
+  /**
+   * 「离屏幕边还有多少像素」的正数含义 = 还差多少像素才贴边；
+   * 负 = 还剩这么多余量。
+   *
+   * 要求**余量 ≥ `SCREEN_SAFE_MARGIN`**（而不是 ≥ 0）：
+   * 模型与浏览器 CSS 的投影不完全等价（见 `SCREEN_SAFE_MARGIN` 注释），
+   * 只按"模型说没越界"判定，会把模型误差直接吃进画面。
+   */
+  const overflowAt = (probe: Position): number => {
+    const rect = componentBodyRect(id, probe)
+    const corners: Position[] = [
+      { x: rect.left, y: rect.top },
+      { x: rect.right, y: rect.top },
+      { x: rect.left, y: rect.bottom },
+      { x: rect.right, y: rect.bottom },
+    ]
+    let worst = 0
+    for (const corner of corners) {
+      const p = project(corner)
+      worst = Math.max(worst, SCREEN_SAFE_MARGIN - p.x, p.x - (bounds.width - SCREEN_SAFE_MARGIN), SCREEN_SAFE_MARGIN - p.y, p.y - (bounds.height - SCREEN_SAFE_MARGIN))
+    }
+    return worst
+  }
+  if (overflowAt(center) <= 0) return center
+  // 锚点是"绝对安全"的一端；若因视野太窄连锚点也放不下，就退化为锚点（居中）
+  const anchorSafe = overflowAt(anchor) <= 0
+  if (!anchorSafe) return anchor
+  let lo = 0 // t=0 → 当前点（越界）
+  let hi = 1 // t=1 → 锚点（安全）
+  for (let i = 0; i < 40; i += 1) {
+    const mid = (lo + hi) / 2
+    const probe = { x: center.x + (anchor.x - center.x) * mid, y: center.y + (anchor.y - center.y) * mid }
+    if (overflowAt(probe) <= 0) hi = mid
+    else lo = mid
+  }
+  const t = hi
+  return { x: center.x + (anchor.x - center.x) * t, y: center.y + (anchor.y - center.y) * t }
+}
+
+/**
+ * 屏幕空间判定时的**安全余量**（屏幕像素）。
+ *
+ * 为什么需要它（真机量出来的事实，不是"保守起见"）：
+ * 我们用来算"本体投影到屏幕上在哪"的 `projectPerspective` 与浏览器 CSS 的
+ * 3D 变换**不完全等价** —— CSS 在 `perspective-origin` 处做透视，
+ * 而模型的透视原点与深度项是另一套写法。真机对照同一个点：
+ *
+ * ```
+ *   canvas (0, 100) → 浏览器 y=148.06 / 模型 y=144.30  （差 3.76）
+ *   canvas (0, 600) → 浏览器 y=569.39 / 模型 y=578.50  （差 9.11，且符号相反）
+ * ```
+ *
+ * 误差随深度增长，在画布底部可达约 **40～60px**。
+ * 也就是说"模型说还在屏幕内"**不足以证明**浏览器里真的在屏幕内。
+ *
+ * 这条余量把判定收紧到"模型认为还有 `SCREEN_MARGIN` 像素余量才算合法"，
+ * 于是模型误差不会被吃进画面。取值 64 覆盖实测最差 58px。
+ *
+ * 注意它只影响**屏幕空间**那一层判据（`screenCheck`）；画布空间的
+ * `componentOverflow` 不受影响（那套是自洽的）。
+ */
+export const SCREEN_SAFE_MARGIN = 64
+
+/** `clampComponentWithinView` 的合法性快速判定（内容溢出 + 屏幕溢出 + 安全余量） */
+function valueAcc0(
+  id: LabComponentId,
+  center: Position,
+  visible: NonNullable<CanvasVisibleRect>,
+  screenCheck?: (id: LabComponentId, center: Position) => number,
+): boolean {
+  const overflow = componentOverflow(id, center, visible)
+  if (overflow.left + overflow.right + overflow.top + overflow.bottom > COMPONENT_BODY_EPSILON) return false
+  return (screenCheck === undefined ? 0 : screenCheck(id, center)) <= -SCREEN_SAFE_MARGIN
+}
+
+/**
+ * 「能摆器材的那块」= 整块舞台扣掉悬浮控件（聚焦 / 初始构图的目标矩形）。
+ *
+ * 初始构图必须摆进这块里，否则**一进页面器材就已经被控件压住** ——
+ * 实测 390×780 下 `A1` 本体 `x205..376` 被右侧胶囊组 `x78..322` 完全盖住，
+ * 768×600 下 `E1`/`S1` 被顶栏压、`S2` 被底栏压。
+ * 这不是"拖出去才会发生"的问题，而是**加载即发生**。
+ *
+ * 窄屏下 `controlAvoidArea` 会退化成零宽（左工具条与右侧胶囊组物理重叠），
+ * 此时不能把可用区当成空 —— 退化为"整块舞台"，
+ * 由 `pushOutOfControls` 的精确避让在逐件器材层面兜底。
+ */
+export function usableStageRect(width: number, height: number): { minX: number; minY: number; maxX: number; maxY: number } {
+  const control = controlAvoidArea(width, height)
+  if (control.right - control.left > 64 && control.bottom - control.top > 64) {
+    return { minX: control.left, minY: control.top, maxX: control.right, maxY: control.bottom }
+  }
+  return { minX: 0, minY: 0, maxX: Math.max(0, width), maxY: Math.max(1, height) }
+}
+
+/**
+ * 把**整份布局**推到所有浮层之外（逐件器材，**在屏幕空间**算）。
+ *
+ * ⚠️ 必须在屏幕空间做，不能在画布空间做：
+ * 浮层矩形是**屏幕像素**，而 `componentBodyRect` 是**画布单位** ——
+ * 两者差一个相机变换（含 3D 透视）。上一版直接在画布坐标里比较，
+ * 结果 S2 的"画布 rect"刚好贴住读数条（重叠 0.0），
+ * 但它**投影到屏幕后**仍然压在读数条下面 80px。
+ *
+ * 做法：把器材本体的四个角投影到屏幕，求屏幕外接矩形，
+ * 用 `pushOutOfControls` 算出屏幕空间的位移，再把该位移**换算回画布**。
+ * 换算用相机 scale 做一次近似（透视下局部近似足够），随后由 `screenCheck` 闭环复验。
+ */
+export function layoutOutOfControls(
+  layout: LabLayout,
+  width: number,
+  height: number,
+  project: (rect: { left: number; top: number; right: number; bottom: number }) => {
+    left: number
+    top: number
+    right: number
+    bottom: number
+  },
+  unprojectDelta?: (delta: { dx: number; dy: number }) => { dx: number; dy: number },
+): LabLayout {
+  const components = { ...layout.components }
+  let changed = false
+  for (const id of LAB_COMPONENT_IDS) {
+    let center = components[id]
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const screenRect = project(componentBodyRect(id, center))
+      const push = pushOutOfControls(screenRect, width, height)
+      if (push === null) break
+      const canvasDelta = unprojectDelta === undefined ? push : unprojectDelta(push)
+      center = clampComponentPosition(id, { x: center.x + canvasDelta.dx, y: center.y + canvasDelta.dy })
+      changed = true
+    }
+    components[id] = center
+  }
+  return changed ? { ...layout, components } : layout
+}
+
 /** 当前跑出屏幕的器材（用于「全部收回」提示） */
 export function offCanvasComponents(layout: LabLayout, visible: CanvasVisibleRect): LabComponentId[] {
   if (visible === null) return []
@@ -862,7 +1320,15 @@ export function rescueComponent(
    * 表现为**一进页面什么都没动，器材自己动了一下**。
    * 门禁的语义是："判据说还在屏幕上 → 就别动它"。
    */
-  if (!isComponentOffCanvas(layout, id, visible)) return layout
+  /**
+   * 门禁：判据说"还在屏幕上"就**别动它**（见函数头注释）。
+   *
+   * ⚠️ 但"判据"必须包含**屏幕像素**那一层：只比画布矩形会漏 ——
+   * 实测 1375×782 拖向右下角时画布判据完全合法（overflow 全 0），
+   * 本体投影到屏幕上却仍越出 1.7px，于是收回被门禁挡掉、那 1.7px 一直留着。
+   */
+  const screenOverflow = screenCheck === undefined ? 0 : screenCheck(id, layout.components[id])
+  if (!isComponentOffCanvas(layout, id, visible) && screenOverflow <= 0.5) return layout
   const center = layout.components[id]
   const { box } = rescueCenter(id, visible)
   let candidate = {
@@ -912,11 +1378,19 @@ export function rescueComponent(
     next.y = Math.min(visible.maxY - margin.y, Math.max(visible.minY + margin.y, next.y))
     candidate = next
   }
-  // 最后再用收回盒夹一次（保留"最小位移"语义；上面的回退只做兜底收敛）
-  candidate = {
+  /**
+   * 最后再用收回盒夹一次（保留"最小位移"语义）。
+   *
+   * ⚠️ 但**只在夹完仍然合法时才采用** —— 这一条是实测抓到的真缺口：
+   * 收回盒是**画布空间**的等距内缩，而收敛是在**屏幕空间**做的；
+   * 两者在透视下不等价，直接夹会把上面辛苦收敛出来的结果又推回去，
+   * 表现为"拖到角落松手后仍被裁 1.7px"（`1375×782` 拖向右下角实测）。
+   */
+  const boxed = {
     x: Math.min(box.maxX, Math.max(box.minX, candidate.x)),
     y: Math.min(box.maxY, Math.max(box.minY, candidate.y)),
   }
+  if (acceptable(boxed)) candidate = boxed
   if (samePositionPair(center, candidate)) return layout
   return { ...layout, components: { ...layout.components, [id]: clampComponentPosition(id, candidate) } }
 }

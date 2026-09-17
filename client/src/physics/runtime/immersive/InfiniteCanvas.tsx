@@ -14,7 +14,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react'
 import { Maximize2, Minus, Move, Plus, RotateCcw } from 'lucide-react'
 import { useInfiniteCanvas } from './useInfiniteCanvas'
-import { isIdentityCamera, type ContentBounds } from './canvas'
+import { isIdentityCamera, type ContentBounds, type FitPadding } from './canvas'
 import type { Position } from '../types'
 
 /**
@@ -82,8 +82,12 @@ export interface InfiniteCanvasProps {
    * 聚焦内容时预留的边距（屏幕像素）。
    * 沉浸式实验台上方有实验名胶囊、下方有读数条等悬浮控件，
    * 留白不足会让器材被这些控件压住、点不到（表现为「拖不动 / 接不上」）。
+   *
+   * 传数字 = 四周同值；传对象 = 四边各自指定。
+   * 四边不对称是必需的：本实验台左边只有一条 148px 的工具条，
+   * 右边却有 244px 的协作入口胶囊组 —— 用同一个值必然有一边留白不足。
    */
-  padding?: number
+  padding?: FitPadding
   className?: string
   /** 相机变化回调（供场景把指针坐标反算回场景坐标） */
   onCameraChange?(camera: { scale: number; x: number; y: number }): void

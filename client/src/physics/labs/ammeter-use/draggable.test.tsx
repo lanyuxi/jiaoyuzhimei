@@ -11,15 +11,20 @@ import { describe, expect, it } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { AmmeterScene } from './CompetitorScene'
 import { createAmmeterState, type AmmeterLabState } from './controller'
-import { LAB_COMPONENT_IDS, createDefaultLayout, fitLayoutToStage, terminalPosition, visibleScreenArea } from './layout'
+import { LAB_COMPONENT_IDS, createDefaultLayout, fitLayoutToStage, terminalPosition, usableStageRect } from './layout'
 import type { AmmeterTerminalId } from './definition'
 
 const noop = () => {}
 
-/** 与场景内部一致的"舞台矩形"：SSR 下舞台就是 960×540 的竞品原始坐标系 */
+/**
+ * 与场景内部一致的"能摆器材的那块"矩形。
+ *
+ * 场景现在用的是 `usableStageRect`（舞台扣掉悬浮控件）而不是整块舞台 ——
+ * 断言若还按整块舞台算，就会与真实摆放**错开**（实测差 80px）。
+ * 这里直接调生产实现，保证判据跟的是真实链路。
+ */
 function stageRectForTest(width: number, height: number) {
-  const area = visibleScreenArea(width, height)
-  return { minX: area.left, minY: area.top, maxX: area.right, maxY: area.bottom }
+  return usableStageRect(width, height)
 }
 
 function render(state: AmmeterLabState = createAmmeterState()): string {

@@ -114,17 +114,24 @@ describe('可见范围 = 整块舞台，四周都不再留"安全边"', () => {
   })
 
   it('悬浮控件区是**独立**的一块：它只覆盖控件所在的那几条边，不是整块画布', () => {
-    const control = controlAvoidArea(1688, 841)
-    // 四条边都真的避到了控件
-    expect(control.left).toBe(CONTROL_LEFT)
-    expect(control.top).toBe(CONTROL_TOP)
-    expect(control.right).toBe(1688 - CONTROL_RIGHT)
-    expect(control.bottom).toBe(841 - CONTROL_BOTTOM)
+    const size = { width: 1688, height: 782 }
+    const control = controlAvoidArea(size.width, size.height)
+    /**
+     * 四条边都真的避到了控件 —— 判据是「净空 ≥ 控件伸出量」而不是「等于常量」。
+     * 下净空会随底部读数条**换行高度**变化（宽视口 54 / 窄视口 152），
+     * 硬写等于会把"读数条一行放得下"的视口冤枉成不合格。
+     */
+    expect(control.left).toBeGreaterThanOrEqual(CONTROL_LEFT)
+    expect(control.top).toBeGreaterThanOrEqual(CONTROL_TOP)
+    expect(size.width - control.right).toBeGreaterThanOrEqual(CONTROL_RIGHT)
+    expect(size.height - control.bottom).toBeGreaterThanOrEqual(70)
+    // 下净空不会超过"底部控件最远伸到哪"（CONTROL_BOTTOM 是上界）
+    expect(size.height - control.bottom).toBeLessThanOrEqual(CONTROL_BOTTOM + 1)
     // 控件区必须**明显小于**整块舞台，否则又等于把画布缩回一块矩形
     const controlWidth = control.right - control.left
     const controlHeight = control.bottom - control.top
-    expect(controlWidth / 1688, '控件区横向占满了整块屏幕，等于没有无限画布').toBeLessThan(0.95)
-    expect(controlHeight / 841, '控件区纵向占满了整块屏幕，等于没有无限画布').toBeLessThan(0.95)
+    expect(controlWidth / size.width, '控件区横向占满了整块屏幕，等于没有无限画布').toBeLessThan(0.95)
+    expect(controlHeight / size.height, '控件区纵向占满了整块屏幕，等于没有无限画布').toBeLessThan(0.95)
   })
 })
 

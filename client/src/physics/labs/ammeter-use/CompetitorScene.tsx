@@ -25,6 +25,7 @@ import InfiniteCanvas, {
   PERSPECTIVE_DEPTH,
   STAGE_TILT_DEG,
 } from '../../runtime/immersive/InfiniteCanvas'
+import { projectPerspective } from '../../runtime/immersive/canvas'
 import { usePointerDrag } from '../../runtime/usePointerDrag'
 import type { LabAction, Position } from '../../runtime/types'
 import {
@@ -46,12 +47,17 @@ import {
   componentBodyRect,
   createDefaultLayout,
   fitLayoutToStage,
+  fitPaddingWithinSafeArea,
   layoutBounds,
+  layoutOutOfControls,
   offCanvasComponents,
+  perspectiveStageWithin,
+  pushComponentIntoView,
   rescueAllComponents,
   resolveViewport,
   screenToCanvasWithinViewport,
   terminalPosition,
+  usableStageRect,
   visibleScreenArea,
   wireHandlePosition,
   wirePathD,
@@ -96,14 +102,48 @@ function viewportHeight(): number {
 }
 
 /**
- * 舞台尺寸 → 初始构图摆放用的目标矩形。
+ * 初始构图：**先按"能摆器材的那块"等比摆放，再把每一件推到浮层之外**。
  *
- * 与 `visibleScreenArea` 同源（= 整块舞台），只是换了 `min/max` 的字段名，
- * 便于交给 `fitLayoutToStage`。刻意不单独写一份数学，避免又出现两套口径。
+ * 两步都不可少：
+ *   1. `fitLayoutToStage(..., usableStageRect(...))` 保证整体尺度合适；
+ *   2. `layoutOutOfControls(...)` 保证**没有一件器材被控件压住**。
+ *      只做第 1 步是不够的 —— 实测 1375×782 下 `S2` 的下缘仍会压在
+ *      底部读数条下面 80px（画布坐标看着贴边，投影到屏幕就压住了）。
+ *
+ * 投影与反投影都用与场景**同一套**相机 / 透视参数（`resolveViewport` + `projectPerspective`），
+ * 因此"摆到哪"与"判据说在哪"永远一致。
  */
-function stageRect(width: number, height: number) {
-  const area = visibleScreenArea(width, height)
-  return { minX: area.left, minY: area.top, maxX: area.right, maxY: area.bottom }
+function initialLayoutFor(width: number, height: number): LabLayout {
+  const fitted = fitLayoutToStage(createDefaultLayout(), usableStageRect(width, height))
+  const viewport = resolveViewport(visibleScreenArea(width, height), { scale: 1, x: 0, y: 0 }, perspectiveOf(width, height))
+  if (viewport === null) return fitted
+  const stage = perspectiveStageWithin(viewport.camera, viewport.perspective ?? {
+    tilt: 0,
+    perspective: 0,
+    originX: 0,
+    originY: 0,
+    stage: { width, height },
+  })
+  return layoutOutOfControls(
+    fitted,
+    width,
+    height,
+    (rect) => {
+      const points = [
+        projectPerspective({ x: rect.left, y: rect.top }, stage),
+        projectPerspective({ x: rect.right, y: rect.top }, stage),
+        projectPerspective({ x: rect.left, y: rect.bottom }, stage),
+        projectPerspective({ x: rect.right, y: rect.bottom }, stage),
+      ]
+      return {
+        left: Math.min(...points.map((p) => p.x)),
+        right: Math.max(...points.map((p) => p.x)),
+        top: Math.min(...points.map((p) => p.y)),
+        bottom: Math.max(...points.map((p) => p.y)),
+      }
+    },
+    (delta) => ({ dx: delta.dx / (viewport.camera.scale || 1), dy: delta.dy / (viewport.camera.scale || 1) }),
+  )
 }
 
 /** 聚焦测量的取样点：每件器材本体外接矩形的四角 */
@@ -304,7 +344,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
    * 之后学生可以把每件器材拖到屏幕任意位置、把每根导线弯成任意形状。
    */
   const [layout, setLayout] = useState<LabLayout>(() =>
-    fitLayoutToStage(createDefaultLayout(), stageRect(viewportWidth(), viewportHeight())),
+    initialLayoutFor(viewportWidth(), viewportHeight()),
   )
   /**
    * 舞台尺寸变化时，把**还没被学生动过**的构图重新摆一次。
@@ -313,7 +353,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
    * 就不再自动重排，否则窗口一缩放学生摆好的构图就被抹掉。
    */
   const [initialBounds, setInitialBounds] = useState(() =>
-    layoutBounds(fitLayoutToStage(createDefaultLayout(), stageRect(viewportWidth(), viewportHeight()))),
+    layoutBounds(initialLayoutFor(viewportWidth(), viewportHeight())),
   )
   /**
    * 聚焦测量的取样点：每件器材**本体外接矩形的四角**（取初始构图）。
@@ -467,7 +507,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
     !touched &&
     (Math.abs(fittedFor.width - stageSize.width) > 0.5 || Math.abs(fittedFor.height - stageSize.height) > 0.5)
   ) {
-    const next = fitLayoutToStage(createDefaultLayout(), stageRect(stageSize.width, stageSize.height))
+    const next = initialLayoutFor(stageSize.width, stageSize.height)
     setFittedFor({ width: stageSize.width, height: stageSize.height })
     setLayout(next)
     setInitialBounds(layoutBounds(next))
@@ -545,6 +585,52 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   }, [settleLayoutForCamera])
 
   /** 器材 / 导线拖动（无限画布：器材任意摆放、导线任意弯折） */
+  /**
+   * 拖动中 / 松手时的**屏幕像素**校验（与相机回调里收回用的是同一个函数）。
+   *
+   * 可见区域是梯形，画布矩形在某些角落会失真（实测 1920×1080 下差 22.4px），
+   * 所以"器材有没有被裁"必须以屏幕像素为准。
+   */
+  const screenOverflowCheck = useCallback((id: LabComponentId, center: Position): number => {
+    const width = stageSizeRef.current.width
+    const height = stageSizeRef.current.height
+    if (width <= 0 || height <= 0) return 0
+    const viewport = resolveViewport(visibleScreenArea(width, height), cameraRef.current, perspectiveOf(width, height))
+    if (viewport === null) return 0
+    return componentOverflowScreen(id, center, viewport, visibleScreenArea(width, height))
+  }, [])
+
+  /**
+   * 屏幕空间的"推回"收敛器：把被拖出屏幕的器材沿"当前位置 → 视野中心"拉回来。
+   *
+   * 用**单调二分**而不是步进回退：真机实测按住 A1 快速拖向左上角时，
+   * 步进回退有连续 2 帧本体越出 18～39px（"甩出去再弹回"）。
+   */
+  const pushIntoView = useCallback((id: LabComponentId, center: Position): Position | null => {
+    const width = stageSizeRef.current.width
+    const height = stageSizeRef.current.height
+    if (width <= 0 || height <= 0) return null
+    const perspective = perspectiveOf(width, height)
+    const viewport = resolveViewport(visibleScreenArea(width, height), cameraRef.current, perspective)
+    if (viewport === null) return null
+    const stage = perspectiveStageWithin(viewport.camera, viewport.perspective ?? {
+      tilt: 0,
+      perspective: 0,
+      originX: 0,
+      originY: 0,
+      stage: { width, height },
+    })
+    const canvasCenter = screenToCanvasWithinViewport({ x: width / 2, y: height / 2 }, viewport, viewport.camera)
+    if (canvasCenter === null) return null
+    return pushComponentIntoView(
+      id,
+      center,
+      (point) => projectPerspective(point, stage),
+      { width: visibleScreenArea(width, height).right, height: visibleScreenArea(width, height).bottom },
+      canvasCenter,
+    )
+  }, [])
+
   const labDrag = useLabLayoutDrag({
     layout,
     setLayout: (next) => {
@@ -555,6 +641,8 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
     nearestTerminal: nearestTerminalTo,
     scenePosition: scenePositionFor as (event: PointerEvent<SVGElement>) => Position | null,
     visibleRect,
+    screenCheck: screenOverflowCheck,
+    pushIntoView,
   })
 
   /** 拖出屏幕的器材（实时给出「全部收回」入口，避免学生以为器材丢了） */
@@ -579,6 +667,14 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
         stageRef={stageRef}
         content={initialBounds}
         probes={componentProbes}
+        /**
+         * 聚焦留白必须**按当前舞台尺寸**算，并且与 `controlAvoidArea` 同源。
+         *
+         * 上一版这里不传 `padding`，画布用的是写死的一对 `SAFE_TOP/SAFE_BOTTOM`，
+         * 与器材的可见性判据各说各话 —— 于是 390×780 下器材入屏后
+         * 还是被右侧胶囊组整个盖住（实测 `A1` 本体 `x205..376` 落在胶囊组 `x78..322` 里）。
+         */
+        padding={fitPaddingWithinSafeArea(stageSize.width, stageSize.height)}
         onCameraChange={handleCameraChange}
       >
         {/* SVG **铺满整个舞台**，坐标就是舞台像素坐标；不再有 960×540 的固定 viewBox */}
@@ -707,7 +803,7 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
         onClick={() => {
           // 复位摆位 = 回到"按当前舞台摆好的初始构图"，并把自动重排重新打开
           setTouched(false)
-          setLayout(fitLayoutToStage(createDefaultLayout(), stageRect(stageSize.width, stageSize.height)))
+          setLayout(initialLayoutFor(stageSize.width, stageSize.height))
         }}
         className="absolute left-4 top-[164px] z-30 flex w-[78px] flex-col items-center gap-1 rounded-[10px] bg-[#3b4048] px-2 py-3 text-[12px] font-medium text-[#e6ebf1] shadow-lg hover:bg-[#454b54]"
       >
