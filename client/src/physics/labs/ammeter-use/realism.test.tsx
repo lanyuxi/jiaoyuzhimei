@@ -1432,16 +1432,39 @@ const ELLIPSE_INSCRIBE = Math.SQRT1_2
 function coverLayersOf(html: string): CoverLayer[] {
   const layers: CoverLayer[] = []
   for (const part of allDataParts(html)) {
-    if (!isOpaqueGeometry(html, part)) continue
     const pattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
     for (const match of html.matchAll(pattern)) {
       const index = match.index ?? 0
+      /**
+       * **逐实例**判不透明，不能"整组都透明才算透明"。
+       *
+       * 老写法 `isOpaqueGeometry(html, part)` 要求该名字的**所有**实例都不透明，
+       * 于是 `baseplate-face` 因为其中一层是 `opacity="0.8"` 而被**整组**排除在覆盖层
+       * 之外 —— "用 `baseplate-face` 的名字插一块完全不透明的矩形盖住同族零件"
+       * 这套动作里，盖层根本进不了覆盖集合，判据恒返回 1。
+       * 任何"按组判定"的出口，在零件同名多实例的场景下都会这样漏。
+       */
+      if (!isOpaqueInstance(html, index)) continue
       const box = shapeBoundsAt(html, index)
       if (box === null) continue
       layers.push({ ...box, order: index })
     }
   }
   return layers
+}
+
+/** **单个**图元实例是否能当覆盖层用（有效不透明度 ≥ 0.99 且填色不透明） */
+function isOpaqueInstance(html: string, index: number): boolean {
+  const end = html.indexOf('>', index)
+  if (end === -1) return false
+  const tag = html.slice(index, end + 1)
+  if (!/<(rect|circle|ellipse|line|path|polygon|polyline)\b/.test(tag)) return false
+  const own = Number(tag.match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
+  if (!Number.isFinite(own) || own < 0.99) return false
+  if (inheritedOpacity(html, index) < 0.99) return false
+  const fill = tag.match(/\bfill="([^"]+)"/)?.[1]
+  if (fill === undefined || fill === 'none') return false
+  return isOpaquePaint(fill, html)
 }
 
 /** 单个图元（按渲染下标定位）的包围盒 —— 世界坐标；解析不了返回 null */
@@ -1506,18 +1529,108 @@ function shapeBoundsAt(html: string, index: number): { x: number; y: number; wid
       height: Math.abs(y2 - y1) + half * 2,
     }
   }
-  if (/<text\b/.test(tag)) {
-    // 文本按声明尺寸做保守估计（宁可高估可见性，不漏判）
-    const tx = num(/\bx="(-?[\d.]+)"/)
-    const ty = num(/\by="(-?[\d.]+)"/)
-    const fs = num(/\bfontSize="([\d.]+)"/)
-    const content = tag.replace(/^<text[^>]*>/, '').replace(/<\/text>$/, '')
-    const chars = content.replace(/<[^>]+>/g, '').length || 1
-    if (tx === null || ty === null) return null
-    const size = fs ?? 10
-    return { x: o.x + tx - (chars * size) / 2, y: o.y + ty - size, width: chars * size, height: size * 1.25 }
-  }
+  if (/<text\b/.test(tag)) return textBoundsAt(html, index, o)
   return null
+}
+
+/**
+ * 文本的**真实字宽**（近似比例字体度量）。
+ *
+ * 第八轮复审必修 1：文本整族挂在豁免清单里，理由是"文本包围盒没有声明宽度" ——
+ * 这在渲染结果上是假的。而"按字符数 × 字号"粗估同样是假的：那个估计会把包围盒
+ * 撑大 2～4 倍，于是"在读数大字后面插一块精确盖住它的矩形"只会把可见占比从 1
+ * 打到 0.8，判据照样全绿（实测复现）。按真实字宽算，"盖住"才会真的算成"盖住"。
+ *
+ * 方向纪律：宁可**略微低估**字宽 —— 低估只会让"盖住"更难成立，即只会漏判、
+ * 不会误杀，与本出口"保守近似"的整体取向一致。
+ */
+function charAdvance(char: string, fontSize: number): number {
+  if (char === '\u00a0') return fontSize * 0.3
+  if ("mwMW%@—".includes(char)) return fontSize * 0.9
+  if (" \tijlI!.,:;'|()[]－-".includes(char)) return fontSize * 0.32
+  const code = char.codePointAt(0) ?? 0
+  if (code >= 0x2e80) return fontSize
+  if (char >= 'A' && char <= 'Z') return fontSize * 0.68
+  if (char >= '0' && char <= '9') return fontSize * 0.56
+  return fontSize * 0.55
+}
+
+/**
+ * 从标签里读字号。
+ *
+ * ⚠️ 必须**同时认 `font-size` 与 `fontSize`**：React 的 `renderToString` 输出的就是
+ * `font-size`（连字符形式）。只认 `fontSize` 会让字号一律退回默认值，
+ * 按真实字宽算出的包围盒整体偏错 —— 实测"读数大字被整块涂掉"照样返回 fraction=1。
+ * （这是"判据自己空转"的又一例：属性名认错，判据静默失效。）
+ */
+function attrFontSize(tag: string): number | null {
+  const raw = tag.match(/\bfont-size="([\d.]+)"/)?.[1] ?? tag.match(/\bfontSize="([\d.]+)"/)?.[1]
+  if (raw === undefined) return null
+  const value = Number(raw)
+  return Number.isFinite(value) ? value : null
+}
+
+/** 文本对齐方式（同样认 `text-anchor` 与 `textAnchor` 两种写法） */
+function textAnchorOf(tag: string): string {
+  return tag.match(/\btext-anchor="([^"]+)"/)?.[1] ?? tag.match(/\btextAnchor="([^"]+)"/)?.[1] ?? 'start'
+}
+
+/**
+ * 某个 `<text>` **实例**的包围盒（世界坐标）。逐段解析 `<tspan>`：
+ * 每段有自己的字号、依次排布 —— 例如读数大字外层 15、内层铭牌 11，
+ * 按外层字号整体估会再次把包围盒撑大。
+ */
+function textBoundsAt(
+  html: string,
+  index: number,
+  offset: { x: number; y: number },
+): { x: number; y: number; width: number; height: number } | null {
+  const gt = html.indexOf('>', index)
+  if (gt === -1) return null
+  const openTag = html.slice(index, gt + 1)
+  const close = html.indexOf('</text>', gt)
+  if (close === -1) return null
+  const inner = html.slice(gt + 1, close)
+
+  const x = Number(openTag.match(/\bx="(-?[\d.]+)"/)?.[1])
+  const y = Number(openTag.match(/\by="(-?[\d.]+)"/)?.[1])
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return null
+  const baseFont = attrFontSize(openTag) ?? 10
+  const anchor = textAnchorOf(openTag)
+
+  const segments: Array<{ text: string; size: number }> = []
+  let cursor = 0
+  let currentSize = baseFont
+  while (cursor < inner.length) {
+    const lt = inner.indexOf('<', cursor)
+    if (lt === -1) {
+      segments.push({ text: inner.slice(cursor), size: currentSize })
+      break
+    }
+    segments.push({ text: inner.slice(cursor, lt), size: currentSize })
+    const end = inner.indexOf('>', lt)
+    if (end === -1) break
+    const rawTag = inner.slice(lt + 1, end)
+    if (rawTag.startsWith('tspan')) {
+      const fs = attrFontSize(rawTag)
+      if (fs !== null) currentSize = fs
+    } else if (rawTag.startsWith('/tspan')) {
+      currentSize = baseFont
+    }
+    cursor = end + 1
+  }
+
+  const plain = segments.map((segment) => ({ text: segment.text.replace(/<[^>]*>/g, ''), size: segment.size }))
+  const total = plain.reduce(
+    (sum, segment) => sum + [...segment.text].reduce((w, char) => w + charAdvance(char, segment.size), 0),
+    0,
+  )
+  if (total <= 0) return null
+  const maxSize = Math.max(...plain.map((segment) => segment.size))
+  const ascent = maxSize * 0.78
+  const descent = maxSize * 0.22
+  const startX = anchor === 'middle' ? x - total / 2 : anchor === 'end' ? x - total : x
+  return { x: offset.x + startX, y: offset.y + y - ascent, width: total, height: ascent + descent }
 }
 
 /**
@@ -1528,11 +1641,67 @@ function shapeBoundsAt(html: string, index: number): { x: number; y: number; wid
  * 那些挂在 `<g>` 上的零件会静默拿到空集合 —— 可见性出口对它们整类失效。
  */
 function partTargets(html: string, part: string): string[] {
-  const pattern = new RegExp(`<([a-z]+)\\b[^>]*data-part="${part}"[^>]*>`, 'g')
-  const tags = [...html.matchAll(pattern)]
+  const tags = partTagMatches(html, part)
   if (tags.length === 0) return [part]
   const isPaintable = tags.some((match) => (PAINTABLE_TAGS as readonly string[]).includes(match[1]))
-  return isPaintable ? [part] : [part, `${part}-face`]
+  if (isPaintable) return [part]
+  /**
+   * `data-part` 挂在**包装 `<g>`** 上（如 `baseplate`）：这时它的几何 = 该 `<g>` 子树里
+   * **全部可绘制后代**。
+   *
+   * 上一版把这一步写死成 `[part, `${part}-face`]`（靠后缀猜），于是 `baseplate` 的
+   * "族"只认到 `baseplate-face`，`baseplate-edge` / `baseplate-highlight` /
+   * `baseplate-screw*` 全都不在族里 —— 实测两者返回**完全相同**的 fractions
+   * （族解析等于没生效），于是"借一个已被消费的名字当盖层、盖掉同族零件"整条绕过
+   * （426 条全绿）。现在改成真的按子树解析。
+   */
+  return [part, ...paintableDescendantsOf(html, part)]
+}
+
+/** 某个 `data-part` 的所有标签匹配（按文档顺序） */
+function partTagMatches(html: string, part: string): RegExpMatchArray[] {
+  const pattern = new RegExp(`<([a-z]+)\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  return [...html.matchAll(pattern)]
+}
+
+/** 一个元素（起始下标）到其配对闭合标签的结束下标（含）；自闭合返回标签末尾 */
+function elementSubtreeEnd(html: string, index: number): number {
+  const gt = html.indexOf('>', index)
+  if (gt === -1) return -1
+  const openTag = html.slice(index, gt + 1)
+  if (openTag.endsWith('/>')) return gt + 1
+  const name = openTag.slice(1).split(/[\s/>]/)[0].toLowerCase()
+  const pattern = new RegExp(`<${name}\\b[^>]*>|</${name}>`, 'g')
+  pattern.lastIndex = gt + 1
+  let depth = 1
+  let match: RegExpExecArray | null
+  while ((match = pattern.exec(html)) !== null) {
+    if (match[0].startsWith('</')) {
+      depth -= 1
+      if (depth === 0) return match.index + match[0].length
+    } else if (!match[0].endsWith('/>')) {
+      depth += 1
+    }
+  }
+  return -1
+}
+
+/**
+ * 一个 `data-part` 所在**元素子树**里的可绘制 `data-part` 后代（不含自身名字）。
+ * 用于零件族解析 —— `data-part` 挂在包装 `<g>` 上时，它的几何就是这些后代。
+ */
+function paintableDescendantsOf(html: string, part: string): string[] {
+  const names = new Set<string>()
+  for (const match of partTagMatches(html, part)) {
+    const end = elementSubtreeEnd(html, match.index ?? 0)
+    if (end === -1) continue
+    const inner = html.slice(match.index ?? 0, end)
+    for (const descendant of inner.matchAll(/<([a-z]+)\b[^>]*data-part="([^"]+)"[^>]*>/g)) {
+      if ((PAINTABLE_TAGS as readonly string[]).includes(descendant[1])) names.add(descendant[2])
+    }
+  }
+  names.delete(part)
+  return [...names]
 }
 
 /**
@@ -1570,17 +1739,98 @@ function visibilityOfPart(html: string, part: string): { fractions: number[]; mi
    */
   const others = coverLayersOf(html).filter((layer) => !ownOrders.includes(layer.order))
 
+  /**
+   * 「哪些覆盖层算遮挡」的最终口径 —— **只用绘制顺序 + 整片包住，不看分组、不看名字**。
+   *
+   * 这条判据来回改了很多版，把每次都失败的原因写清楚，避免下一个人重走：
+   *   · 版 1「名字不同就算外来」→ ❌ 误杀。筒身正常压在黑环标 / 橙色印刷带之下，
+   *     这是作者写下的层次，却被算成"被盖住"（筒身判成只剩 46% 可见）。
+   *   · 版 2「不在被检零件自己的子树里」→ ❌ 同样误杀（父子不是"被遮挡"）。
+   *   · 版 3「不在器材实例子树里」→ ❌ 漏判：借名盖层插在同一个实例子树内部。
+   *   · 版 4「必须来自别的 `<g>` 分组」→ ❌ 仍然误杀：作者把一个零件的分层
+   *     写在不同 `<g>` 里（螺钉的 `<g>`、卡箍的 `<g>`）是完全正常的。
+   *   · 版 5（现在）**只保留两条几何纪律**：
+   *       1. **绘制顺序**：只有画在被检零件**之后**的层才可能盖住它（SVG 的硬语义）；
+   *       2. **整片包住 + 面积明显大于被检零件**：真实器材的零件都是细长小尺寸的
+   *          （环标 13px 宽、卡箍 10px 宽、尾针 5.2×7），而"把某个零件整片盖掉"的
+   *          遮挡物必然是**又大又方的一块**。
+   *
+   * 这样"名字 / 分组 / 是不是测试注入的"全都不参与判定 —— 判据只依赖**画面上的
+   * 几何事实**，因此借名盖层、外来名字盖层、以及未来任何形态的"整片盖住"都会红。
+   *
+   * ⚠️ 已知边界（本出口的能力边界，属定义域，不是藏在注释里的君子协定）：
+   *   · **部分遮挡**（盖住 60%）漏判 —— 保守近似的代价；
+   *   · 作者自己在同一位置画的"又大又方"的装饰层会误报；
+   *   · 因此判据只在"零件被**整片**盖掉"这一档下结论，中间档不下结论。
+   */
+  const BLANKET_AREA_RATIO = 1
+  const isFullCover = (layer: CoverLayer, item: { x: number; y: number; width: number; height: number }) => {
+    const EPS = 0.5
+    return (
+      layer.x <= item.x + EPS &&
+      layer.y <= item.y + EPS &&
+      layer.x + layer.width >= item.x + item.width - EPS &&
+      layer.y + layer.height >= item.y + item.height - EPS
+    )
+  }
+  /** 把一份实例整片盖掉的"毯子"：整片包住，且面积明显更大 */
+  const blanketsFor = (item: { x: number; y: number; width: number; height: number }) =>
+    others.filter(
+      (layer) => isFullCover(layer, item) && layer.width * layer.height >= item.width * item.height * BLANKET_AREA_RATIO,
+    )
+
   const fractions: number[] = []
   for (const [index, item] of ownBoxes.entries()) {
     const ownOrder = ownOrders[index]
     const area = item.width * item.height
+    /**
+     * 只统计"把这一份实例**整片盖掉**"的毯子（口径见 `blanketsFor` 的定义域说明）。
+     *
+     * 为什么不再把"部分重叠"按面积累加：真实器材的零件本来就层层相叠
+     * （筒身压在环标之下、刀片压在夹口之上……），按面积累加会把**正常画面**
+     * 判成"只剩 46% 可见" —— 这正是复审反复强调的"宁可漏判、不要误杀"的反面。
+     * 整片盖住才是**确定无疑的画面 BUG**，所以判据只在这一档上下结论。
+     */
     let covered = 0
-    for (const layer of others) {
+    const stacked: Array<{ x: number; y: number; width: number; height: number }> = []
+    for (const layer of blanketsFor(item)) {
       if (layer.order <= ownOrder) continue
-      const overlap =
-        Math.max(0, Math.min(item.x + item.width, layer.x + layer.width) - Math.max(item.x, layer.x)) *
-        Math.max(0, Math.min(item.y + item.height, layer.y + layer.height) - Math.max(item.y, layer.y))
-      covered += overlap
+      let remaining: Array<{ x: number; y: number; width: number; height: number }> = [
+        {
+          x: Math.max(item.x, layer.x),
+          y: Math.max(item.y, layer.y),
+          width: Math.max(0, Math.min(item.x + item.width, layer.x + layer.width) - Math.max(item.x, layer.x)),
+          height: Math.max(0, Math.min(item.y + item.height, layer.y + layer.height) - Math.max(item.y, layer.y)),
+        },
+      ]
+      // 与"已计入的毯子"求差，避免多条互相重叠的毯子把同一块面积重复计数
+      for (const prev of stacked) {
+        const next: typeof remaining = []
+        for (const rect of remaining) {
+          const ix = Math.max(rect.x, prev.x)
+          const iy = Math.max(rect.y, prev.y)
+          const iw = Math.max(0, Math.min(rect.x + rect.width, prev.x + prev.width) - ix)
+          const ih = Math.max(0, Math.min(rect.y + rect.height, prev.y + prev.height) - iy)
+          if (iw === 0 || ih === 0) {
+            next.push(rect)
+            continue
+          }
+          // 十字切分：上 / 下 / 左 / 右四条剩余带，互不重叠
+          if (rect.y < iy) next.push({ x: rect.x, y: rect.y, width: rect.width, height: iy - rect.y })
+          if (iy + ih < rect.y + rect.height) {
+            next.push({ x: rect.x, y: iy + ih, width: rect.width, height: rect.y + rect.height - (iy + ih) })
+          }
+          if (rect.x < ix) next.push({ x: rect.x, y: iy, width: ix - rect.x, height: ih })
+          if (ix + iw < rect.x + rect.width) {
+            next.push({ x: ix + iw, y: iy, width: rect.x + rect.width - (ix + iw), height: ih })
+          }
+        }
+        remaining = next
+      }
+      for (const rect of remaining) {
+        stacked.push(rect)
+        covered += rect.width * rect.height
+      }
     }
     fractions.push(area === 0 ? 1 : Math.max(0, area - covered) / area)
   }
@@ -1668,10 +1918,46 @@ function visibleInkOfPart(
     const ownLums = fills.map(lumOf).filter((v): v is number => v !== null)
     const baseLums = substrateFills.map(lumOf).filter((v): v is number => v !== null)
     if (ownLums.length > 0 && baseLums.length > 0) {
-      if (direction !== undefined) {
+      if (direction !== undefined && mode === 'any-layer') {
         /**
-         * 方向性判据：深底上的深描边，绝对差本来就只有 0.015 量级，用绝对差判会误杀。
-         * 判的是"它是否仍比底衬更暗 / 更亮" —— 改成同色或反向都会立刻红。
+         * **方向 + 逐层**（第九轮补上的组合口径）。
+         *
+         * 上一版的缺陷是**两个选项互相短路**：给了 `direction` 就永远走"只跟
+         * 最亮/最暗那一层比"这一支，`mode: 'any-layer'` 里那段"逐层比"的代码
+         * **根本不会被执行** —— 判据看上去写了两档，实际只有一档。
+         * 结果就是复审必修 3 那条：立边改成与它**压住的那一层**同色，
+         * 因为别的层把参照拉起来了，照样通过。
+         *
+         * 现在两者可以叠加：`direction` 定"往哪边比"，`any-layer` 定"跟几层比"。
+         */
+        for (const base of baseLums) {
+          /**
+           * 口径：与**每一层**都必须在**指定的那个方向**上拉开差。
+           *
+           * 为什么是"每一层"：立边只要与它压住的**那一层**糊在一起，
+           * 画面上就少了一条边 —— 而"别的层把参照拉起来"不该成为放行的理由。
+           * 为什么保留方向：底座面明暗跨了 0.45 量级，只判绝对差会把"正常的立边"
+           * 误判成"不够亮"（复审上一版就在这点上翻过车）。
+           */
+          /**
+           * 每一层都必须拉开**可辨的明度差**（按绝对差判）。
+           *
+           * 不能用纯方向判据（"必须比每一层都亮"）：底座的明暗跨了 0.45 量级
+           * （`#8d949c` 0.450 / `#c9ced4` 0.637 / `#5a6067` 0.212），而一条正常的
+           * **侧边亮边**（`#9aa1a9` 0.486）本来就只能比中间那层暗、比两端那层亮 ——
+           * 硬要"逐层同向"会把正常画面误杀（实测踩过）。
+           * 而"与被压住的那层**同色**"（复审的变异体）在绝对差下必然归零，照样红。
+           */
+          const nearest = Math.min(...ownLums.map((own) => Math.abs(own - base)))
+          expect(
+            nearest,
+            `${part} 与底衬 ${against} 的某一层（明度 ${base.toFixed(3)}）糊在一起了（最近只差 ${nearest.toFixed(3)}）`,
+          ).toBeGreaterThan(0.05)
+        }
+      } else if (direction !== undefined) {
+        /**
+         * 方向性判据（只跟最亮/最暗那一层比）：深底上的深描边，绝对差本来就只有
+         * 0.015 量级，用绝对差判会误杀。判的是"它是否仍比底衬更暗 / 更亮"。
          */
         const own = Math.min(...ownLums)
         const base = Math.max(...baseLums)
@@ -1776,19 +2062,6 @@ function isOpaquePaint(colour: string, html?: string): boolean {
   const rgba = raw.match(/^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)$/)
   if (rgba !== null) return Number(rgba[1]) >= 0.99
   return hexToRgb(raw) !== null
-}
-
-/** 某个 data-part 的图元是否都是"不透明几何"（能当覆盖层用） */
-function isOpaqueGeometry(html: string, part: string): boolean {
-  const fills = paintFillsOfPart(html, part)
-  if (fills.length === 0) return false
-  if (!fills.every((colour) => isOpaquePaint(colour, html))) return false
-  // 带透明度的元素（例如 cel-highlight 的 opacity="0.26"）挡不住东西
-  const tags = [...html.matchAll(new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g'))]
-  return tags.every((match) => {
-    const opacity = Number(match[0].match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
-    return Number.isFinite(opacity) && opacity >= 0.99
-  })
 }
 
 /** 只有"看得见颜色"的颜色写法才纳入色板断言（url(#…) 需要先解析到色标） */
@@ -3528,6 +3801,16 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
        */
       const faces = renderedParts(html, 'baseplate-face')
       expect(faces.length, '底座本体没了').toBeGreaterThan(0)
+      /**
+       * ⚠️ 这条**只判底座本体（`baseplate-face` 那几层）**，不是"整个底座零件族"。
+       * 第八轮复审实测过：`baseplate` / `baseplate-face` 的可见性返回值**完全相同**，
+       * 而那只是因为族解析靠后缀猜，`baseplate-edge` / `baseplate-highlight` /
+       * `baseplate-screw*` 从来不在族里 —— 于是"借 `baseplate-face` 的名字当盖层、
+       * 把两端立边整条盖掉"这套动作 426 条全绿。
+       * 现在族解析已改为真解析子树（见 `partTargets`），并由
+       * `it('零件族解析必须覆盖 <g> 包装零件的全部可绘制后代')` 钉住；
+       * 族成员各自的可见性由它们**自己的台账条目**判定。
+       */
       expect(visibleFractionOf(html, 'baseplate').fraction, '底座本体被完全盖住了').toBeGreaterThan(0.6)
     },
     'baseplate-face': (html) => {
@@ -3553,14 +3836,20 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
       expect(edges.length, '底座两端立边没了（应当是两条）').toBe(2)
       // 立边是"亮边"：改暗/改同色都会失去边缘
       /**
-       * 立边是**侧边亮边**，压在底座侧面上（`baseplate-face` 的深色那层）。
-       * 判"与底座面拉开明度差"：改暗、改同色都会红。
-       * 注意不能用 `direction: 'lighter'` —— 底座面有明暗两层，
-       * 拿最亮那层比会把正常的立边误判成"不够亮"（实测踩过）。
+       * 第八轮复审必修 3：`best-layer`（与最亮那层比）的口径不够。
+       * 立边只要**与被它压住的那一层**同色就会消失，而"另外几层把 max 拉起来了"，
+       * 判据照样通过。实测把立边从 `#9aa1a9` 改成 `#c9ced4`
+       * （**正是底座面中间那层**）—— 立边与被压面层逐字节同色、一整条边没了，426 条全绿。
+       *
+       * 改成 `any-layer` + `darker`/`lighter` 方向判据：立边必须与它压住的
+       * **每一层**都拉开可辨差异。`any-layer` 早就实现好了，只是没人调用 ——
+       * 这正是"定义域没写全"的典型形态。
        */
       visibleInkOfPart(html, 'baseplate-edge', {
         against: 'baseplate-face',
-        minContrast: 0.2,
+        direction: 'lighter',
+        mode: 'any-layer',
+        minContrast: 0.05,
         minLuminance: 0.6,
       })
       expect(visibleFractionOf(html, 'baseplate-edge').fraction, '底座立边在画面上不见了').toBeGreaterThan(0.6)
@@ -3620,9 +3909,12 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
       expect(countParts(html, 'E1-polarity'), '正负极刻字份数不对（应当两份）').toBe(2)
       expect(html, '负极刻字没了').toContain('－')
       expect(html, '正极刻字没了').toContain('>+<')
+      // 文本也要走遮挡出口（第九轮：文本不再豁免）
+      expect(visibleFractionOf(html, 'E1-polarity').fraction, '正负极刻字被整片盖住了').toBeGreaterThan(0.9)
     },
     'E1-name': (html) => {
       expect(renderedText(html, 'E1-name', 'E1'), '器材名 E1 没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'E1-name').fraction, '器材名 E1 被整片盖住了').toBeGreaterThan(0.9)
     },
     // —— 开关 S1 ——
     'switch-plate': (html) => {
@@ -3678,6 +3970,7 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
     },
     'switch-name': (html) => {
       expect(renderedText(html, 'switch-name', 'S1'), '器材名 S1 没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'switch-name').fraction, '器材名 S1 被整片盖住了').toBeGreaterThan(0.9)
     },
     // —— 灯泡 L1 ——
     'lamp-glass': (html) => {
@@ -3774,6 +4067,7 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
 
     'lamp-name': (html) => {
       expect(renderedText(html, 'lamp-name', 'L1'), '器材名 L1 没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'lamp-name').fraction, '器材名 L1 被整片盖住了').toBeGreaterThan(0.9)
     },
     // —— 电流表 A1 ——
     'ammeter-shell': (html) => {
@@ -3987,6 +4281,7 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
 
     'ammeter-glyph': (html) => {
       expect(renderedText(html, 'ammeter-glyph', 'A'), '中央 A 字符没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-glyph').fraction, '中央 A 字符被整片盖住了').toBeGreaterThan(0.9)
     },
     'ammeter-glass-reflection': (html) => {
       expect(renderedPathBounds(html, 'ammeter-glass-reflection').length, '玻璃反光斜条没了').toBe(1)
@@ -3998,19 +4293,24 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
 
     'ammeter-label-neg': (html) => {
       expect(renderedText(html, 'ammeter-label-neg', '－'), '－ 刻字没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-label-neg').fraction, '－ 刻字被整片盖住了').toBeGreaterThan(0.9)
     },
     'ammeter-label-06': (html) => {
       expect(renderedText(html, 'ammeter-label-06', '0.6A'), '0.6A 刻字没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-label-06').fraction, '0.6A 刻字被整片盖住了').toBeGreaterThan(0.9)
     },
     'ammeter-label-3': (html) => {
       expect(renderedText(html, 'ammeter-label-3', '3A'), '3A 刻字没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-label-3').fraction, '3A 刻字被整片盖住了').toBeGreaterThan(0.9)
     },
     'ammeter-reading': (html) => {
       expect(countParts(html, 'ammeter-reading'), '读数大字没了').toBe(1)
-      expect(visibleFractionOf(html, 'ammeter-reading').fraction, '读数大字被完全盖住了').toBeGreaterThan(0.9)
+      // 文本走**真实字宽**算出的包围盒，因此"读数被整块涂掉"现在真的能红
+      expect(visibleFractionOf(html, 'ammeter-reading').fraction, '读数大字被整块盖住了').toBeGreaterThan(0.9)
     },
     'ammeter-name': (html) => {
       expect(countParts(html, 'ammeter-name'), '电流表器材名没了').toBe(1)
+      expect(visibleFractionOf(html, 'ammeter-name').fraction, '电流表器材名被整片盖住了').toBeGreaterThan(0.6)
     },
   }
 
@@ -4025,19 +4325,19 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
    *   · 清单里的每个 part 都要在 `LEDGER` 里真的调用 `visibleFractionOf`；
    *   · 渲染出的每个可绘制 part 都要落在清单里（少一个 → 红）。
    */
-  const VISIBILITY_EXEMPT: Readonly<Record<string, string>> = {
-    // 文本类：几何出口用 `renderedText` / `count` 定位，可见性近似对文本无意义
-    'E1-polarity': '刻字：按文本定位判存在，不做遮挡近似（文本包围盒没有声明宽度）',
-    'E1-name': '器材名：同上',
-    'switch-name': '器材名：同上',
-    'lamp-name': '器材名：同上',
-    'ammeter-glyph': '中央 A 字符：同上',
-    'ammeter-label-neg': '刻字：同上',
-    'ammeter-label-06': '刻字：同上',
-    'ammeter-label-3': '刻字：同上',
-    'ammeter-reading': '读数大字：同上（另有文本落位判据）',
-    'ammeter-name': '器材名：同上',
-  }
+  /**
+   * 第九轮：**文本类不再豁免**。
+   *
+   * 上一版把文本整族挂进豁免，理由写的是"文本包围盒没有声明宽度" ——
+   * 这个理由在渲染结果上是假的：`<text>` 带 `font-size` / `text-anchor` / 文字内容，
+   * `textBoundsAt` 能按**真实字宽**算出包围盒。
+   * 实测（第八轮复审必修 1）：在读数大字之后插一块完整盖住它的不透明矩形，
+   * 读数在画面上被整块涂掉，**426 条全绿**。
+   *
+   * 所以豁免清单现在**必须为空** —— 空清单本身是判据，不是"忘了写"。
+   * 将来若真有算不出几何的零件，请在这里补上并**写明可验证的理由**。
+   */
+  const VISIBILITY_EXEMPT: Readonly<Record<string, string>> = {}
 
   it('台账值必须真的被调用（"存在"这种空话不许写进台账）', () => {
     /**
@@ -4484,5 +4784,174 @@ describe('反向验证：任一零件被完全盖住都必须红（可见性出�
       () => visibleInkOfPart(greyed, 'baseplate-highlight', { against: 'baseplate-face', direction: 'lighter', minLuminance: 0.9 }),
       '底座顶面高光被压成一坨灰，可见墨迹判据却没红',
     ).toThrow()
+  })
+})
+
+
+/**
+ * 第九轮：把**第八轮复审实测出的 3 条绕过路径**固化成**反向验证用例**。
+ *
+ * 复审这一轮的判词值得原样保留：**「判据越聪明，越会在"定义域没写全"的地方漏」**。
+ * 三条都不是"理论可能"，是复审逐个真跑出来的（每条当时都是 38 文件 / 426 条全绿）：
+ *   A. 文本整族被显式排除在可见性出口之外 → 读数大字整块涂掉，全绿；
+ *   B. `partTargets` 的族解析靠后缀猜 → 借一个"已被消费的名字"当盖层盖掉同族零件，全绿；
+ *   C. `visibleInkOfPart` 默认 `best-layer`（max）→ 与被压住的**那一层**同色，全绿。
+ *
+ * 下面每条都在**渲染结果上真注入**，再确认判据变红 —— 判据被顺手放宽会当场红。
+ */
+describe('反向验证：第八轮复审的 3 条绕过路径必须变红', () => {
+  const A1 = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+
+  /** 在某个正则锚点之后插入一段标记 */
+  function insertAfter(html: string, anchor: RegExp, injected: string): string {
+    const match = new RegExp(anchor.source, anchor.flags.includes('g') ? anchor.flags : `${anchor.flags}g`).exec(html)
+    expect(match, `注入锚点在渲染结果里找不到：${anchor}`).not.toBeNull()
+    const at = match!.index + match![0].length
+    return html.slice(0, at) + injected + html.slice(at)
+  }
+
+  it('A. 读数大字被整块涂掉必须红（上一版它挂在豁免清单里，426 全绿）', () => {
+    const covered = insertAfter(
+      A1,
+      /<text\b[^>]*data-part="ammeter-reading"[^>]*>[\s\S]*?<\/text>/,
+      // 覆盖盒要**完全包含**按真实字宽算出的读数包围盒
+      '<rect data-part="cover-reading-test" x="-90" y="-152" width="180" height="30" fill="#efe9dc" />',
+    )
+    expect(covered, '覆盖层注入失败').not.toBe(A1)
+    expect(
+      visibleFractionOf(covered, 'ammeter-reading').fraction,
+      '读数大字被整块涂掉，可见性判据却没红 —— 文本绝不能再挂豁免',
+    ).toBeLessThan(0.5)
+  })
+
+  it('A2. 器材名被整块涂掉必须红', () => {
+    const covered = insertAfter(
+      A1,
+      /<text\b[^>]*data-part="ammeter-name"[^>]*>[\s\S]*?<\/text>/,
+      '<rect data-part="cover-name-test" x="40" y="-45" width="120" height="34" fill="#25292e" />',
+    )
+    expect(
+      visibleFractionOf(covered, 'ammeter-name').fraction,
+      '器材名被整块涂掉，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('A3. 刻度刻字被整块涂掉必须红（贴着表壳的文本同样受保护）', () => {
+    const covered = insertAfter(
+      A1,
+      /<text\b[^>]*data-part="ammeter-label-3"[^>]*>[\s\S]*?<\/text>/,
+      '<rect data-part="cover-label-test" x="20" y="-8" width="60" height="20" fill="#1e2126" />',
+    )
+    expect(
+      visibleFractionOf(covered, 'ammeter-label-3').fraction,
+      '3A 刻字被整块涂掉，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('B. 借"已被消费的名字"当盖层、盖掉同族零件必须红（上一版 426 全绿）', () => {
+    /**
+     * 复审的注入方式原样搬过来：在 `BasePlate` 的两条 `baseplate-edge` **之后**，
+     * 插入两块 `data-part="baseplate-face"` 的不透明矩形（复用一个已被消费的名字），
+     * 把两条端立边完整盖住。
+     * 上一版 `partTargets('baseplate-edge')` 返回 `['baseplate-edge']`，
+     * 盖层与受害者名字不同 → 按名字剔不掉 → `visibleFractionOf` 返回 1。
+     */
+    const covered = insertAfter(
+      E1,
+      /<rect\b[^>]*data-part="baseplate-edge"[^>]*fill="#9aa1a9"[^>]*><\/rect><rect\b[^>]*data-part="baseplate-edge"[^>]*fill="#9aa1a9"[^>]*><\/rect>/,
+      '<rect data-part="baseplate-face" x="-122" y="4" width="14" height="22.5" fill="#c9ced4" />' +
+        '<rect data-part="baseplate-face" x="108" y="4" width="14" height="22.5" fill="#c9ced4" />',
+    )
+    expect(covered, '借名盖层注入失败').not.toBe(E1)
+    expect(
+      visibleFractionOf(covered, 'baseplate-edge').fraction,
+      '两条端立边被"借名盖层"完全盖住，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('B2. 借名盖层换一个受害者（十字槽）同样要红——防止判据只对某一条立边巧合生效', () => {
+    const covered = insertAfter(
+      E1,
+      /<path\b[^>]*data-part="baseplate-screw-slot"[^>]*stroke="#6d747c"[^>]*><\/path><\/g><g><circle\b[^>]*data-part="baseplate-screw"[\s\S]*?<path\b[^>]*data-part="baseplate-screw-slot"[^>]*stroke="#6d747c"[^>]*><\/path>/,
+      '<rect data-part="baseplate-screw" x="-118" y="8" width="15" height="15" fill="#c9ced4" />' +
+        '<rect data-part="baseplate-screw" x="103.5" y="8" width="15" height="15" fill="#c9ced4" />',
+    )
+    expect(
+      visibleFractionOf(covered, 'baseplate-screw-slot').fraction,
+      '十字槽被"借名盖层"盖住，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('C. 立边改成"与被它压住的那一层"同色必须红（上一版 426 全绿）', () => {
+    /**
+     * 复审的注入：两条立边从 `#9aa1a9` 改成 `#c9ced4` ——
+     * `#c9ced4` **正是 `baseplate-face` 中间那层**（立边压着的那层）。
+     * 上一版口径 `best-layer` 取的是"与最亮那层"的差，另外几层把 max 拉起来了
+     * → 改到与被压层逐字节同色照样通过。
+     */
+    const sameColour = E1.replace(/fill="#9aa1a9"/g, 'fill="#c9ced4"')
+    expect(sameColour, '同色变异注入失败').not.toBe(E1)
+    expect(
+      () =>
+        visibleInkOfPart(sameColour, 'baseplate-edge', {
+          against: 'baseplate-face',
+          direction: 'lighter',
+          mode: 'any-layer',
+          minContrast: 0.05,
+          minLuminance: 0.6,
+        }),
+      '立边改成与被它压住的那层同色，可见墨迹判据却没红',
+    ).toThrow()
+  })
+
+  it('C2. 立边整体压暗同样要红（对照：不是只有"同色"才红）', () => {
+    const darker = E1.replace(/fill="#9aa1a9"/g, 'fill="#767d85"')
+    expect(darker, '压暗变异注入失败').not.toBe(E1)
+    expect(
+      () =>
+        visibleInkOfPart(darker, 'baseplate-edge', {
+          against: 'baseplate-face',
+          direction: 'lighter',
+          mode: 'any-layer',
+          minContrast: 0.05,
+          minLuminance: 0.6,
+        }),
+      '立边被压暗（边缘消失）却没红',
+    ).toThrow()
+  })
+})
+
+/**
+ * 第九轮红线：**零件族解析必须真的解析**。
+ *
+ * 上一版 `partTargets` 靠后缀猜（`[part, `${part}-face`]`），于是
+ * `visibilityOfPart('baseplate')` 与 `visibilityOfPart('baseplate-face')`
+ * 返回**完全相同**的 fractions —— 族解析等于没生效，而这件事**在断言里看不出来**
+ * （它只是"少判了几个零件"）。这条红线把"族必须覆盖 `<g>` 包装零件的全部可绘制后代"
+ * 变成判据：少一个后代就红。
+ */
+describe('零件族解析必须覆盖 <g> 包装零件的全部可绘制后代（族解析写死会静默退化）', () => {
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+
+  it('baseplate（<g> 包装零件）的族必须包含它的全部可绘制后代', () => {
+    const family = new Set(partTargets(E1, 'baseplate'))
+    const descendants = paintableDescendantsOf(E1, 'baseplate')
+    expect(descendants.length, 'baseplate 子树里可绘制后代太少，族解析已失真').toBeGreaterThanOrEqual(5)
+    const missing = descendants.filter((part) => !family.has(part))
+    expect(missing, `baseplate 的族解析漏掉了这些后代（借名盖层就钻这里）：${missing.join(', ')}`).toEqual([])
+
+    // 反向自证：族必须**不等于**"只认 -face 后缀"那种写死的答案
+    const nonFace = descendants.filter((part) => !part.endsWith('-face'))
+    expect(nonFace.length, 'baseplate 的族里除了 -face 一个都没有，说明又退回了后缀猜法').toBeGreaterThan(1)
+  })
+
+  it('族可见性分数不许与 baseplate-face 完全相同（完全相同即已退化为后缀猜）', () => {
+    const family = visibilityOfPart(E1, 'baseplate').fractions
+    const onlyFace = visibilityOfPart(E1, 'baseplate-face').fractions
+    expect(
+      family.length,
+      'baseplate 的族可见性分数与 baseplate-face 完全一样 —— 族解析又退化成后缀猜了',
+    ).not.toBe(onlyFace.length)
   })
 })
