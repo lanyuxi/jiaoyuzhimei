@@ -5,6 +5,7 @@ import { competitorComponentPoints, competitorTerminalPoints } from './competito
 import {
   CANVAS_WORLD_BOUNDS,
   COMPONENT_HIT_RADIUS,
+  componentBodyRect,
   LAB_COMPONENT_IDS,
   MAX_WIRE_BEND,
   TERMINAL_OWNER,
@@ -257,20 +258,30 @@ describe('器材拖动命中测试', () => {
 })
 
 describe('画布包围盒', () => {
-  it('初始包围盒与竞品场景尺寸吻合（场景本体按竞品比例渲染在 960×540 视图内）', () => {
+  it('包围盒按**本体真实外接矩形**取，并且必须包住每一件器材', () => {
+    /**
+     * 这里记录一次真实事故（"加载即被裁"的根因）：
+     * 旧实现是 `center ± (本体边距 − 64)` —— **故意把包围盒缩小 64px**，
+     * 指望"聚焦时反正还有 120px 留白"兜住。但留白是均分的，
+     * 而这块屏幕上下各压着一条悬浮控件，结果是 E1 / S1 / S2 的上缘
+     * 一进页面就被顶部工具栏切掉（1688×841 / 1920×1080 / 1440×800 都能复现）。
+     */
     const bounds = layoutBounds(createDefaultLayout())
     const width = bounds.maxX - bounds.minX
     const height = bounds.maxY - bounds.minY
-    // 器材 + 导线本身约占 455×390（竞品把 905×794 的世界等比缩进视图），
-    // 加上 64px 本体边距后包围盒略大，但必须完整落在视图内
     expect(width).toBeGreaterThan(400)
-    expect(width).toBeLessThanOrEqual(960)
+    // 不再有"缩 64px"的说法，因此尺寸必须与本体并集一致（略大于 960×540 的参考线）
+    expect(width).toBeLessThan(960)
     expect(height).toBeGreaterThan(350)
-    expect(height).toBeLessThanOrEqual(540)
-    expect(bounds.minX).toBeGreaterThanOrEqual(0)
-    expect(bounds.maxX).toBeLessThanOrEqual(960)
-    expect(bounds.minY).toBeGreaterThanOrEqual(0)
-    expect(bounds.maxY).toBeLessThanOrEqual(540)
+    expect(height).toBeLessThanOrEqual(600)
+    // 每一件器材的本体外接矩形都必须完整落在包围盒内
+    for (const id of LAB_COMPONENT_IDS) {
+      const rect = componentBodyRect(id, createDefaultLayout().components[id])
+      expect(rect.left, `${id} 左缘超出包围盒`).toBeGreaterThanOrEqual(bounds.minX - 1e-9)
+      expect(rect.right, `${id} 右缘超出包围盒`).toBeLessThanOrEqual(bounds.maxX + 1e-9)
+      expect(rect.top, `${id} 上缘超出包围盒`).toBeGreaterThanOrEqual(bounds.minY - 1e-9)
+      expect(rect.bottom, `${id} 下缘超出包围盒`).toBeLessThanOrEqual(bounds.maxY + 1e-9)
+    }
   })
 
   it('把器材拖远后包围盒变大（内容不会被相机裁掉）', () => {

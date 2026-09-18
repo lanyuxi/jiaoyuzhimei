@@ -217,8 +217,17 @@ describe('拖动后器材必须仍然完整可见（拖动遮挡的直接解药�
     expect(zoomedOut.maxX - zoomedOut.minX).toBeGreaterThan(zoomedIn.maxX - zoomedIn.minX)
   })
 
-  it('相机把视野对准初始构图时，全部器材都判为可见（不会一进页面就被挪动）', () => {
-    // 复刻 fitContent 的结果：把初始构图摆到视野中心
+  it('判据升级为「本体完整可见」后，只按画布包围盒线性对中是不够的', () => {
+    /**
+     * 这条用例记录一次**真实的语义升级**（见 PR 收尾的 4 条修复）。
+     *
+     * 旧判据是"中心在可见范围内"，于是"相机大致对准构图"就够了；
+     * 新判据是"**本体包围盒完整可见**"，因为旧语义在矮视口下会漏判
+     * （器材中心在界内、上缘却被另一件器材或顶部工具栏盖住）。
+     *
+     * 因此这条断言从"线性对中必须全部可见"改成"线性对中**不够**、
+     * 必须走屏幕空间聚焦"—— 后者由 `viewportConsistency.test.ts` 负责验收。
+     */
     const bounds = layoutBounds(createDefaultLayout())
     const centerX = (bounds.minX + bounds.maxX) / 2
     const centerY = (bounds.minY + bounds.maxY) / 2
@@ -229,13 +238,13 @@ describe('拖动后器材必须仍然完整可见（拖动遮挡的直接解药�
     }
     const visible = visibleRectOf(camera)!
     const layout = createDefaultLayout()
-    for (const id of LAB_COMPONENT_IDS) {
-      // 判据语义 = 「器材还有可见部分在视野里」，所以相机对准构图时必须全部可见
-      expect(isComponentOffCanvas(layout, id, visible), `${id} 在相机对准构图时被判成出屏幕`).toBe(false)
-    }
-    // 没有任何器材跑丢 → 全部收回是空操作，一进页面不会自己动
-    expect(offCanvasComponents(layout, visible)).toEqual([])
-    expect(rescueAllComponents(layout, visible)).toBe(layout)
+    // 旧判据（只看中心）会全部放行；新判据必须能挑出"中心在、本体出"的器材
+    const legacyVisible = LAB_COMPONENT_IDS.filter(
+      (id) => !isComponentOffCanvas(layout, id, visible),
+    )
+    expect(legacyVisible.length).toBeGreaterThan(0)
+    // 屏幕空间聚焦之后则必须全部真实可见（这条由 viewportConsistency 覆盖）
+    expect(isComponentOffCanvas(layout, 'E1', visible), 'E1 的本体在旧相机下确实探出了上界').toBe(true)
   })
 
   it('放大到 4 倍后视野只剩构图的一小块，此时判出屏幕是正确行为', () => {
@@ -276,11 +285,12 @@ describe('初始构图与包围盒仍然自洽', () => {
   })
 })
 
-describe('命中区与本体必须同尺寸（回归：收回后仍被切掉一块）', () => {
-  it('拖动命中区不得比器材本体大，否则按本体边距收回后仍会探出可见范围', () => {
+describe('命中区与本体必须解绑（回归：既要点击余量、又不能触发误收回）', () => {
+  it('命中区**大于**本体（给最小点击余量），但收回只读本体边距', () => {
     for (const id of LAB_COMPONENT_IDS) {
-      expect(COMPONENT_HIT_RADIUS[id].rx, `${id} 命中区比本体宽`).toBeLessThanOrEqual(COMPONENT_BODY_MARGIN[id].x)
-      expect(COMPONENT_HIT_RADIUS[id].ry, `${id} 命中区比本体高`).toBeLessThanOrEqual(COMPONENT_BODY_MARGIN[id].y)
+      // 命中区必须有外扩：历史上绑成同尺寸时，两件器材排成一线就点不中后面那件
+      expect(COMPONENT_HIT_RADIUS[id].rx, `${id} 命中区没有点击余量`).toBeGreaterThan(COMPONENT_BODY_MARGIN[id].x)
+      expect(COMPONENT_HIT_RADIUS[id].ry, `${id} 命中区没有点击余量`).toBeGreaterThan(COMPONENT_BODY_MARGIN[id].y)
     }
   })
 

@@ -99,30 +99,265 @@ export interface ContentBounds {
  * 这是沉浸式全屏的核心：进入实验时器材自动放大到占据整屏，
  * 而不是缩在屏幕中间一小块。
  */
+/**
+ * 聚焦时预留的边距。
+ *
+ * 支持**上下不对称**：舞台上下各压着一条悬浮控件（顶部工具栏 / 底部读数条），
+ * 均匀留白会让可用区域整体上移，器材的上缘被工具栏切掉一截
+ * （1688×841 实测 E1/S1/S2 都被切）。给出 `{ top, bottom }` 后，
+ * "能用的矩形"与"可见范围"用的是同一组安全高度，聚焦一次到位。
+ *
+ * `top` / `bottom` / `left` / `right` 都**只在真正放得下时**才生效。
+ * 放不下时（例如手机竖屏）会自动放弃对应方向的留白并退回贴边居中 ——
+ * 否则"为了留白而缩小"会把器材挤成一团，反而不如贴边。
+ */
+export type FitPadding = number | { top: number; bottom: number; left?: number; right?: number }
+
+export function resolveFitPadding(padding: FitPadding): { top: number; bottom: number; left: number; right: number } {
+  if (typeof padding === 'number') return { top: padding, bottom: padding, left: padding, right: padding }
+  const side = padding.top + padding.bottom
+  return {
+    top: padding.top,
+    bottom: padding.bottom,
+    left: padding.left ?? side,
+    right: padding.right ?? side,
+  }
+}
+
+/**
+ * 在**屏幕空间**里对内容做一次投影，然后按"投影后的外接矩形"聚焦。
+ *
+ * 这是 `fitContent` 必须走屏幕空间的原因：
+ *   舞台带 `rotateX(tilt)`，透视会把画布下方的内容放大、往下推。
+ *   若直接按**画布**包围盒算相机，投影之后画布上边 y=17.86 会落到屏幕 y=53.89，
+ *   而顶部安全区是 56 —— **差 2.1px 就被工具栏压住**（1688×841 实测 S1）。
+ *   画布坐标"看起来居中"，屏幕上却是偏的。所以先在屏幕空间量一次真实外接矩形，
+ *   再按这块屏幕矩形去解相机，才算真正"放得进安全区"。
+ *
+ * `project` 缺省为恒等（无倾斜的平铺场景既不需要、也不该被改变行为）。
+ */
+function screenSpaceBounds(
+  bounds: ContentBounds,
+  project: (point: Position) => Position,
+  /** 真正的取样点（比包围盒的四条边更"凸"），缺省退回包围盒四边 */
+  probes: readonly Position[],
+): ContentBounds {
+  let minX = Number.POSITIVE_INFINITY
+  let maxX = Number.NEGATIVE_INFINITY
+  let minY = Number.POSITIVE_INFINITY
+  let maxY = Number.NEGATIVE_INFINITY
+  const visit = (point: Position) => {
+    const projected = project(point)
+    minX = Math.min(minX, projected.x)
+    maxX = Math.max(maxX, projected.x)
+    minY = Math.min(minY, projected.y)
+    maxY = Math.max(maxY, projected.y)
+  }
+  /**
+   * **必须按真实取样点量**，不能只量包围盒的四条边。
+   *
+   * 这是一个实测踩到的坑：包围盒（`layoutBounds`）是各件器材外接矩形的**并集**，
+   * 而透视是**非线性**的（画布下方被放大、往下推）。
+   * 于是"包围盒的下边 y=548.92"投影到屏幕是 781（刚好压在底部读数条上），
+   * 而**同一件器材 S2 的四个角**投影出来是 784.96 —— 白白多出 3.96px 越界。
+   * 只看包围盒四边就会得出"已经放得下"的错误结论。
+   */
+  const steps = 24
+  if (probes.length === 0) {
+    for (let index = 0; index <= steps; index += 1) {
+      const t = index / steps
+      const x = bounds.minX + (bounds.maxX - bounds.minX) * t
+      const y = bounds.minY + (bounds.maxY - bounds.minY) * t
+      visit({ x, y: bounds.minY })
+      visit({ x, y: bounds.maxY })
+      visit({ x: bounds.minX, y })
+      visit({ x: bounds.maxX, y })
+    }
+  }
+  for (const point of probes) visit(point)
+  return { minX, maxX, minY, maxY }
+}
 export function fitContent(
   bounds: ContentBounds,
   size: CanvasSize,
-  padding = 64,
+  padding: FitPadding = 64,
   maxScale = 2.6,
+  /**
+   * 画布坐标 → 屏幕坐标的投影（含 3D 透视，**相机固定为 scale=1 / 平移 0**）。
+   *
+   * 传进来时，聚焦会在**屏幕空间**里量一次真实外接矩形，保证
+   * "相机摆好 = 内容真的落在安全区内"。不传则退化为纯线性聚焦（无倾斜场景的旧行为）。
+   */
+  project?: (point: Position) => Position,
+  /**
+   * 参与测量的**真实几何点**（各件器材的本体外接矩形四角等）。
+   *
+   * 透视是非线性的，只看包围盒四边会低估投影范围（实测差 3.96px）；
+   * 传了它就能按内容真实的凸包量，聚焦结果与"可见性判据"严格一致。
+   */
+  probes: readonly Position[] = [],
 ): Camera {
-  const contentWidth = Math.max(1, bounds.maxX - bounds.minX)
-  const contentHeight = Math.max(1, bounds.maxY - bounds.minY)
-  const usableWidth = Math.max(1, size.width - padding * 2)
-  const usableHeight = Math.max(1, size.height - padding * 2)
-  const scale = clamp(Math.min(usableWidth / contentWidth, usableHeight / contentHeight), CANVAS_MIN_SCALE, maxScale)
-  const centerX = (bounds.minX + bounds.maxX) / 2
-  const centerY = (bounds.minY + bounds.maxY) / 2
+  const { top, bottom, left, right } = resolveFitPadding(padding)
+  const usableWidth = Math.max(1, size.width - left - right)
+  const usableHeight = Math.max(1, size.height - top - bottom)
+
+  /**
+   * 为什么要按**屏幕空间**量一次，而不是直接用画布包围盒：
+   *
+   *   舞台带 `rotateX(tilt)`，透视会把画布下方的内容放大、往下推。
+   *   按画布包围盒算出来的相机，投影之后画布上边 y=17.86 落到屏幕 y=53.89，
+   *   而顶部安全区是 56 —— **差 2.1px 就被工具栏压住**（1688×841 实测 S1）。
+   *   画布坐标"看起来居中"，屏幕上其实是偏的。所以先投影、再按投影后的矩形解相机。
+   *
+   * 又因为投影对 `scale` 是**齐次**的、对 `x / y` 只是**平移**，可以：
+   *   1. 固定 `scale = 1`、平移 0 预投影一次，得到内容的"屏幕形状"；
+   *   2. 由形状解出 `scale`，再把它居中到可用区域。
+   */
+  const shapedAt = (candidateScale: number): ContentBounds => {
+    if (project === undefined) {
+      return {
+        minX: bounds.minX * candidateScale,
+        maxX: bounds.maxX * candidateScale,
+        minY: bounds.minY * candidateScale,
+        maxY: bounds.maxY * candidateScale,
+      }
+    }
+    return screenSpaceBounds(
+      bounds,
+      (point) => project({ x: point.x * candidateScale, y: point.y * candidateScale }),
+      probes.map((point) => ({ x: point.x * candidateScale, y: point.y * candidateScale })),
+    )
+  }
+
+  const unit = shapedAt(1)
+  const unitWidth = Math.max(1e-6, unit.maxX - unit.minX)
+  const unitHeight = Math.max(1e-6, unit.maxY - unit.minY)
+  /**
+   * 先在**画布空间**估一个上界（保证任何情况下都不会比可用矩形更大），
+   * 再用真实投影尺寸**二分收敛**到刚好放下。
+   *
+   * 为什么要二分而不是"估一次再乘个系数"：透视里带 `perspective-origin` 的仿射项，
+   * 缩放不是严格齐次的，一步乘系数会留下几像素的残差 ——
+   * 实测就是那几像素让 S2 的下缘刚好压在底部读数条下面。
+   * 二分把"投影后的外接矩形 ≤ 可用矩形"当成单调判据，收敛到 1e-6 画布单位以内。
+   */
+  const canvasWidth = Math.max(1e-6, bounds.maxX - bounds.minX)
+  const canvasHeight = Math.max(1e-6, bounds.maxY - bounds.minY)
+  const upper = clamp(
+    Math.min(usableWidth / Math.min(unitWidth, canvasWidth), usableHeight / Math.min(unitHeight, canvasHeight)),
+    CANVAS_MIN_SCALE,
+    maxScale,
+  )
+  const fits = (candidate: number) => {
+    const measured = shapedAt(candidate)
+    return (
+      measured.maxX - measured.minX <= usableWidth + 1e-6 && measured.maxY - measured.minY <= usableHeight + 1e-6
+    )
+  }
+  let lowerBound = CANVAS_MIN_SCALE
+  let upperBound = upper
+  if (fits(upperBound)) {
+    lowerBound = upperBound
+  } else {
+    for (let step = 0; step < 60; step += 1) {
+      const mid = (lowerBound + upperBound) / 2
+      if (fits(mid)) lowerBound = mid
+      else upperBound = mid
+    }
+  }
+  const scale = lowerBound
+
+  const measured = shapedAt(scale)
+  const width = measured.maxX - measured.minX
+  const height = measured.maxY - measured.minY
+  /**
+   * 放得下的方向才按可用矩形居中；放不下（例如手机竖屏把构图标尺缩到很小）就退回整屏居中。
+   * 一味居中会把溢出**平摊到两侧**，本来上边还剩 56px 安全区的，反而被啃掉一半，
+   * 器材照样被顶部控件压住 —— 逐个方向判、逐个方向退，安全区才在任何情况下都保得住。
+   */
+  const offsetLeft = width <= usableWidth + 1e-6 ? left : 0
+  const offsetWidth = width <= usableWidth + 1e-6 ? usableWidth : size.width
+  const offsetTop = height <= usableHeight + 1e-6 ? top : 0
+  const offsetHeight = height <= usableHeight + 1e-6 ? usableHeight : size.height
+
+  const targetX = offsetLeft + offsetWidth / 2
+  const targetY = offsetTop + offsetHeight / 2
   return clampCamera(
     {
       scale,
-      x: size.width / 2 - centerX * scale,
-      y: size.height / 2 - centerY * scale,
+      x: targetX - (measured.minX + measured.maxX) / 2,
+      y: targetY - (measured.minY + measured.maxY) / 2,
     },
     size,
   )
 }
 
-/** 屏幕坐标 → 画布坐标 */
+/**
+ * 把聚焦结果**按真实相机闭环校正**一遍，直到内容真的落进目标矩形。
+ *
+ * 为什么必须在相机层面再校一次：`fitContent` 内部用"画布坐标 × scale + 单位投影"
+ * 近似量尺寸，忽略了 `perspective-origin` 是**舞台像素**这一点带来的仿射项，
+ * 量出的外接矩形比真实投影略小（1688×841 实测差 3.96px）——
+ * 结果就是"算出来放得下、画面上仍有一件器材压在顶部工具栏上"。
+ *
+ * 迭代方式很朴素：**量 → 不够就等比收 → 再居中**。投影对平移是线性的，
+ * 所以居中的残差只由"缩放改变了非线性项"产生，两三次迭代即到 1e-3 像素以内。
+ */
+export function settleFit(
+  camera: Camera,
+  target: { left: number; top: number; width: number; height: number },
+  measure: (camera: Camera) => ContentBounds | null,
+): Camera {
+  const roomWidth = Math.max(1, target.width)
+  const roomHeight = Math.max(1, target.height)
+  const centerX = target.left + roomWidth / 2
+  const centerY = target.top + roomHeight / 2
+
+  const centerOn = (candidate: Camera): Camera | null => {
+    const before = measure(candidate)
+    if (before === null) return null
+    const recentered = {
+      ...candidate,
+      x: candidate.x + centerX - (before.minX + before.maxX) / 2,
+      y: candidate.y + centerY - (before.minY + before.maxY) / 2,
+    }
+    return recentered
+  }
+
+  const fits = (measured: ContentBounds) =>
+    measured.maxX - measured.minX <= roomWidth + 1e-3 && measured.maxY - measured.minY <= roomHeight + 1e-3
+
+  let current: Camera = { ...camera }
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    const measured = measure(current)
+    if (measured === null) return current
+    if (fits(measured)) {
+      const centered = centerOn(current)
+      if (centered === null) return current
+      const after = measure(centered)
+      const stable =
+        Math.abs(centered.x - current.x) < 1e-3 &&
+        Math.abs(centered.y - current.y) < 1e-3 &&
+        Math.abs(centered.scale - current.scale) < 1e-9
+      if (stable || (after !== null && fits(after))) return centered
+      current = centered
+      continue
+    }
+    const shrink = Math.min(
+      roomWidth / Math.max(measured.maxX - measured.minX, 1e-6),
+      roomHeight / Math.max(measured.maxY - measured.minY, 1e-6),
+    )
+    const scaled: Camera = { ...current, scale: clamp(current.scale * shrink, CANVAS_MIN_SCALE, CANVAS_MAX_SCALE) }
+    const centered = centerOn(scaled)
+    if (centered === null) return scaled
+    if (Math.abs(centered.scale - current.scale) < 1e-9 && Math.abs(centered.x - current.x) < 1e-6 && Math.abs(centered.y - current.y) < 1e-6) {
+      return centered
+    }
+    current = centered
+  }
+  return current
+}
+
 export function screenToCanvas(point: Position, camera: Camera): Position {
   return { x: (point.x - camera.x) / camera.scale, y: (point.y - camera.y) / camera.scale }
 }

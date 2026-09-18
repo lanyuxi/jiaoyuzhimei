@@ -11,10 +11,21 @@ import { describe, expect, it } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { AmmeterScene } from './CompetitorScene'
 import { createAmmeterState, type AmmeterLabState } from './controller'
-import { LAB_COMPONENT_IDS, createDefaultLayout, terminalPosition } from './layout'
+import { LAB_COMPONENT_IDS, createDefaultLayout, fitLayoutToStage, terminalPosition, usableStageRect } from './layout'
 import type { AmmeterTerminalId } from './definition'
 
 const noop = () => {}
+
+/**
+ * 与场景内部一致的"能摆器材的那块"矩形。
+ *
+ * 场景现在用的是 `usableStageRect`（舞台扣掉悬浮控件）而不是整块舞台 ——
+ * 断言若还按整块舞台算，就会与真实摆放**错开**（实测差 80px）。
+ * 这里直接调生产实现，保证判据跟的是真实链路。
+ */
+function stageRectForTest(width: number, height: number) {
+  return usableStageRect(width, height)
+}
 
 function render(state: AmmeterLabState = createAmmeterState()): string {
   return renderToString(<AmmeterScene state={state} dispatch={noop} />)
@@ -173,7 +184,12 @@ describe('接线柱拉线能力不退化', () => {
 
   it('接线柱坐标由布局推导，与 layout.terminalPosition 完全一致', () => {
     const html = render()
-    const layout = createDefaultLayout()
+    /**
+     * 构图会被 `fitLayoutToStage` 等比缩放 + 居中摆进舞台（SSR 下舞台 = 960×540），
+     * 所以断言必须与**同一个变换**对齐，不能假定"布局坐标 = 渲染坐标"。
+     * 这里直接用场景导出的摆放函数算出期望坐标，保证判据跟的是真实实现。
+     */
+    const layout = fitLayoutToStage(createDefaultLayout(), stageRectForTest(960, 540))
     for (const id of ['battery+', 'battery-', 'ammeter-3'] as AmmeterTerminalId[]) {
       const point = terminalPosition(layout, id)
       // 立柱绘制半径为 19 的命中圆，其 cx 由接线柱 x 推导
