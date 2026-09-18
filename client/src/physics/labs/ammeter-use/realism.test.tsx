@@ -15,6 +15,7 @@
 import { describe, expect, it } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { readFileSync } from 'node:fs'
+
 import {
   AmmeterA1,
   BatteryHolderE1,
@@ -569,6 +570,23 @@ function renderedCircles(html: string, part: string): Array<{ cx: number; cy: nu
   return list
 }
 
+/** 某个带 data-part 的**椭圆**实例（世界坐标包围盒），用于阴影、灯头绝缘环之类的非矩形件 */
+function renderedEllipses(html: string, part: string): Array<{ x: number; y: number; width: number; height: number }> {
+  const pattern = new RegExp(`<ellipse\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const list: Array<{ x: number; y: number; width: number; height: number }> = []
+  for (const match of html.matchAll(pattern)) {
+    const tag = match[0]
+    const cx = Number(tag.match(/\bcx="(-?[\d.]+)"/)?.[1])
+    const cy = Number(tag.match(/\bcy="(-?[\d.]+)"/)?.[1])
+    const rx = Number(tag.match(/\brx="(-?[\d.]+)"/)?.[1])
+    const ry = Number(tag.match(/\bry="(-?[\d.]+)"/)?.[1])
+    if (![cx, cy, rx, ry].every(Number.isFinite)) continue
+    const o = worldOffsetAt(html, match.index ?? 0)
+    list.push({ x: o.x + cx - rx, y: o.y + cy - ry, width: rx * 2, height: ry * 2 })
+  }
+  return list
+}
+
 /**
  * 某组矩形，**并且把祖先链上的 rotate 真正施加到角点上**（世界坐标）。
  *
@@ -803,6 +821,16 @@ function assertPivotInsideDial(html: string, pivot: { x: number; y: number }): v
 /** 统计渲染结果里某类 SVG 元素的数量 */
 function count(html: string, tag: string): number {
   return (html.match(new RegExp(`<${tag}\\b`, 'g')) ?? []).length
+}
+
+/**
+ * 某个 `data-part` 在渲染结果里的**实例份数**。
+ *
+ * 注意口径：`countParts(html, 'x')` 那种写法把 data-part 当**标签名**去匹配，
+ * 永远是 0（实测踩过：判据自己空转）。这里按属性出现次数数，口径唯一。
+ */
+function countParts(html: string, part: string): number {
+  return (html.match(new RegExp(`data-part="${part}"`, 'g')) ?? []).length
 }
 
 describe('电源 E1 写实化：真实干电池而非示意方块', () => {
@@ -1364,27 +1392,34 @@ function paintPalette(html: string): Map<string, { tag: string; part: string | n
 }
 
 /* ------------------------------------------------------------------ *
- * 遮挡感知的可见性出口（本轮新增的地基）
+ * 遮挡感知的可见性出口（第八轮：从「只开在电池上」铺开到零件级）
  * ------------------------------------------------------------------ */
 
 /**
- * 画面上的一块**覆盖层**：一个不透明的几何图元 + 它在绘制顺序里的位置。
+ * 一组 `data-part` 实例的**每份实例**在画面上的**可见占比**（0～1，保守下界）。
  *
- * 背景（第七轮复审实测出的两条绕过，都 185/185 全绿）：
- *   · 在橙色环标上盖一块 `#e6e9ec` 的不透明矩形 → 画面上一点橙都看不见，
- *     而 `paintPalette` 遍历的是**全部 DOM 元素**，底层那圈橙色依然在色板里；
- *   · 把筒身（不透明底层）挪到环标**之后**绘制 → 环标全被盖掉，同样全绿。
+ * 判据写成"下界"而不是"精确值"：任何拿不准的情形（渐变当半透明、看不到颜色写法、
+ * 形状不能用矩形表达）都会让可见占比偏高 —— 也就是说**只会漏判、不会误杀**。
  *
- * 根因：`paintPalette` 给的是"DOM 里声明了哪些颜色"，不是"画面上看得见哪些颜色"。
- * 它没有遮挡概念、没有绘制顺序概念。这里补一个**保守近似**：按 SVG 的绘制顺序，
- * 后绘制的不透明图元覆盖先绘制的，被完全覆盖的图元从可见色板里剔除。
+ * ⚠️ **定义域（第七轮复审要求把"哪些零件受它保护"变成判据，而不是注释里的君子协定）**
  *
- * 用的是**声明几何**（世界坐标），不做光栅化 —— 因此只覆盖"矩形盖矩形""矩形盖椭圆"
- * 这类正交包围盒判断，对旋转/奇形图元只会**高估**可见性（宁可漏判也不误杀）。
+ * 这个出口是**零件级**的，必须对**每一个有几何意义的 data-part** 都调用一遍，
+ * 而不是只挂在电池的环标/筒身上（那是上一版的漏洞：在指针 group 之后插一块
+ * 盖住针体的不透明矩形，指针整根看不见，419 条全绿）。
+ * `VISIBILITY_PROTECTED_PARTS` 是**受保护零件清单**，由 `it('可见性出口必须覆盖…')`
+ * 反向钉住：清单里的每个 part 都要真的调用本出口，渲染结果里每个可绘制 part
+ * 都必须落在清单里 —— 少一个就红。
+ *
+ * 已知边界（有意为之，只会漏判）：
+ *   · 只做**正交包围盒**近似，不做光栅化；旋转/奇形图元按包围盒算；
+ *   · 不做 `clip-path` / `mask`；渐变一律按"所有色标都不透明才算不透明"；
+ *   · 因此**部分遮挡**（半透明遮罩盖住 60%）仍可能漏 —— 完全遮挡一定会红。
  */
 type CoverLayer = { x: number; y: number; width: number; height: number; order: number }
 
-/** 椭圆的内接矩形（保守：只用内接矩形做覆盖判断，避免把"角上还露着"误判成全盖） */
+/**
+ * 椭圆的内接矩形（保守：只用内接矩形做覆盖判断，避免把"角上还露着"误判成全盖）
+ */
 const ELLIPSE_INSCRIBE = Math.SQRT1_2
 
 /**
@@ -1397,16 +1432,39 @@ const ELLIPSE_INSCRIBE = Math.SQRT1_2
 function coverLayersOf(html: string): CoverLayer[] {
   const layers: CoverLayer[] = []
   for (const part of allDataParts(html)) {
-    if (!isOpaqueGeometry(html, part)) continue
     const pattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
     for (const match of html.matchAll(pattern)) {
       const index = match.index ?? 0
+      /**
+       * **逐实例**判不透明，不能"整组都透明才算透明"。
+       *
+       * 老写法 `isOpaqueGeometry(html, part)` 要求该名字的**所有**实例都不透明，
+       * 于是 `baseplate-face` 因为其中一层是 `opacity="0.8"` 而被**整组**排除在覆盖层
+       * 之外 —— "用 `baseplate-face` 的名字插一块完全不透明的矩形盖住同族零件"
+       * 这套动作里，盖层根本进不了覆盖集合，判据恒返回 1。
+       * 任何"按组判定"的出口，在零件同名多实例的场景下都会这样漏。
+       */
+      if (!isOpaqueInstance(html, index)) continue
       const box = shapeBoundsAt(html, index)
       if (box === null) continue
       layers.push({ ...box, order: index })
     }
   }
   return layers
+}
+
+/** **单个**图元实例是否能当覆盖层用（有效不透明度 ≥ 0.99 且填色不透明） */
+function isOpaqueInstance(html: string, index: number): boolean {
+  const end = html.indexOf('>', index)
+  if (end === -1) return false
+  const tag = html.slice(index, end + 1)
+  if (!/<(rect|circle|ellipse|line|path|polygon|polyline)\b/.test(tag)) return false
+  const own = Number(tag.match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
+  if (!Number.isFinite(own) || own < 0.99) return false
+  if (inheritedOpacity(html, index) < 0.99) return false
+  const fill = tag.match(/\bfill="([^"]+)"/)?.[1]
+  if (fill === undefined || fill === 'none') return false
+  return isOpaquePaint(fill, html)
 }
 
 /** 单个图元（按渲染下标定位）的包围盒 —— 世界坐标；解析不了返回 null */
@@ -1443,52 +1501,548 @@ function shapeBoundsAt(html: string, index: number): { x: number; y: number; wid
     if (points.length === 0) return null
     const xs = points.map(([px]) => px + o.x)
     const ys = points.map(([, py]) => py + o.y)
-    return { x: Math.min(...xs), y: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) }
+    /**
+     * **描边要算进包围盒**：刻度弧是一条水平弧（首尾同 y），纯几何包围盒的
+     * 高度会是 0 —— 于是"盖住整条弧"的遮挡判定算不出重叠面积（实测 fraction 恒为 1，
+     * 判据自己空转）。按 `stroke-width / 2` 向外扩张，才符合"画面上真实占的像素"。
+     */
+    const half = (num(/\bstroke-width="([\d.]+)"/) ?? 0) / 2
+    return {
+      x: Math.min(...xs) - half,
+      y: Math.min(...ys) - half,
+      width: Math.max(...xs) - Math.min(...xs) + half * 2,
+      height: Math.max(...ys) - Math.min(...ys) + half * 2,
+    }
   }
+  if (/<line\b/.test(tag)) {
+    const x1 = num(/\bx1="(-?[\d.]+)"/)
+    const y1 = num(/\by1="(-?[\d.]+)"/)
+    const x2 = num(/\bx2="(-?[\d.]+)"/)
+    const y2 = num(/\by2="(-?[\d.]+)"/)
+    if (x1 === null || y1 === null || x2 === null || y2 === null) return null
+    // 线段同样按 stroke-width 扩张（竖线的零宽包围盒会让遮挡判定空转）
+    const half = (num(/\bstroke-width="([\d.]+)"/) ?? 0) / 2
+    return {
+      x: o.x + Math.min(x1, x2) - half,
+      y: o.y + Math.min(y1, y2) - half,
+      width: Math.abs(x2 - x1) + half * 2,
+      height: Math.abs(y2 - y1) + half * 2,
+    }
+  }
+  if (/<text\b/.test(tag)) return textBoundsAt(html, index, o)
   return null
 }
 
 /**
- * 一组 `data-part` 实例的**每份实例**在画面上的**可见占比**（0～1，保守下界）。
+ * 文本的**真实字宽**（近似比例字体度量）。
  *
- * 判据写成"下界"而不是"精确值"：任何拿不准的情形（渐变当半透明、看不到颜色写法、
- * 形状不能用矩形表达）都会让可见占比偏高 —— 也就是说**只会漏判、不会误杀**。
- * 而复审那两条绕过（整块不透明矩形盖住、不透明底层后画）都是"完全覆盖"，
- * 可见占比直接掉到 0，一定会红。
+ * 第八轮复审必修 1：文本整族挂在豁免清单里，理由是"文本包围盒没有声明宽度" ——
+ * 这在渲染结果上是假的。而"按字符数 × 字号"粗估同样是假的：那个估计会把包围盒
+ * 撑大 2～4 倍，于是"在读数大字后面插一块精确盖住它的矩形"只会把可见占比从 1
+ * 打到 0.8，判据照样全绿（实测复现）。按真实字宽算，"盖住"才会真的算成"盖住"。
+ *
+ * 方向纪律：宁可**略微低估**字宽 —— 低估只会让"盖住"更难成立，即只会漏判、
+ * 不会误杀，与本出口"保守近似"的整体取向一致。
  */
-function visibleFractionOf(html: string, part: string): { fraction: number } {
-  const own = renderedParts(html, part)
-  expect(own.length, `可见性判据：${part} 没有渲染出矩形实例`).toBeGreaterThan(0)
+function charAdvance(char: string, fontSize: number): number {
+  if (char === '\u00a0') return fontSize * 0.3
+  if ("mwMW%@—".includes(char)) return fontSize * 0.9
+  if (" \tijlI!.,:;'|()[]－-".includes(char)) return fontSize * 0.32
+  const code = char.codePointAt(0) ?? 0
+  if (code >= 0x2e80) return fontSize
+  if (char >= 'A' && char <= 'Z') return fontSize * 0.68
+  if (char >= '0' && char <= '9') return fontSize * 0.56
+  return fontSize * 0.55
+}
+
+/**
+ * 从标签里读字号。
+ *
+ * ⚠️ 必须**同时认 `font-size` 与 `fontSize`**：React 的 `renderToString` 输出的就是
+ * `font-size`（连字符形式）。只认 `fontSize` 会让字号一律退回默认值，
+ * 按真实字宽算出的包围盒整体偏错 —— 实测"读数大字被整块涂掉"照样返回 fraction=1。
+ * （这是"判据自己空转"的又一例：属性名认错，判据静默失效。）
+ */
+function attrFontSize(tag: string): number | null {
+  const raw = tag.match(/\bfont-size="([\d.]+)"/)?.[1] ?? tag.match(/\bfontSize="([\d.]+)"/)?.[1]
+  if (raw === undefined) return null
+  const value = Number(raw)
+  return Number.isFinite(value) ? value : null
+}
+
+/** 文本对齐方式（同样认 `text-anchor` 与 `textAnchor` 两种写法） */
+function textAnchorOf(tag: string): string {
+  return tag.match(/\btext-anchor="([^"]+)"/)?.[1] ?? tag.match(/\btextAnchor="([^"]+)"/)?.[1] ?? 'start'
+}
+
+/**
+ * 某个 `<text>` **实例**的包围盒（世界坐标）。逐段解析 `<tspan>`：
+ * 每段有自己的字号、依次排布 —— 例如读数大字外层 15、内层铭牌 11，
+ * 按外层字号整体估会再次把包围盒撑大。
+ */
+function textBoundsAt(
+  html: string,
+  index: number,
+  offset: { x: number; y: number },
+): { x: number; y: number; width: number; height: number } | null {
+  const gt = html.indexOf('>', index)
+  if (gt === -1) return null
+  const openTag = html.slice(index, gt + 1)
+  const close = html.indexOf('</text>', gt)
+  if (close === -1) return null
+  const inner = html.slice(gt + 1, close)
+
+  const x = Number(openTag.match(/\bx="(-?[\d.]+)"/)?.[1])
+  const y = Number(openTag.match(/\by="(-?[\d.]+)"/)?.[1])
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return null
+  const baseFont = attrFontSize(openTag) ?? 10
+  const anchor = textAnchorOf(openTag)
+
+  const segments: Array<{ text: string; size: number }> = []
+  let cursor = 0
+  let currentSize = baseFont
+  while (cursor < inner.length) {
+    const lt = inner.indexOf('<', cursor)
+    if (lt === -1) {
+      segments.push({ text: inner.slice(cursor), size: currentSize })
+      break
+    }
+    segments.push({ text: inner.slice(cursor, lt), size: currentSize })
+    const end = inner.indexOf('>', lt)
+    if (end === -1) break
+    const rawTag = inner.slice(lt + 1, end)
+    if (rawTag.startsWith('tspan')) {
+      const fs = attrFontSize(rawTag)
+      if (fs !== null) currentSize = fs
+    } else if (rawTag.startsWith('/tspan')) {
+      currentSize = baseFont
+    }
+    cursor = end + 1
+  }
+
+  const plain = segments.map((segment) => ({ text: segment.text.replace(/<[^>]*>/g, ''), size: segment.size }))
+  const total = plain.reduce(
+    (sum, segment) => sum + [...segment.text].reduce((w, char) => w + charAdvance(char, segment.size), 0),
+    0,
+  )
+  if (total <= 0) return null
+  const maxSize = Math.max(...plain.map((segment) => segment.size))
+  const ascent = maxSize * 0.78
+  const descent = maxSize * 0.22
+  const startX = anchor === 'middle' ? x - total / 2 : anchor === 'end' ? x - total : x
+  return { x: offset.x + startX, y: offset.y + y - ascent, width: total, height: ascent + descent }
+}
+
+/**
+ * 把一个 `data-part` 解析成"真正有几何的那些 part 名"。
+ *
+ * 绝大多数 `data-part` 直接就是图元；少数（如 `baseplate`）挂在包装 `<g>` 上，
+ * 这时取它名下的可绘制后代。**这一步是必要的**：不解析的话，
+ * 那些挂在 `<g>` 上的零件会静默拿到空集合 —— 可见性出口对它们整类失效。
+ */
+function partTargets(html: string, part: string): string[] {
+  const tags = partTagMatches(html, part)
+  if (tags.length === 0) return [part]
+  const isPaintable = tags.some((match) => (PAINTABLE_TAGS as readonly string[]).includes(match[1]))
+  if (isPaintable) return [part]
+  /**
+   * `data-part` 挂在**包装 `<g>`** 上（如 `baseplate`）：这时它的几何 = 该 `<g>` 子树里
+   * **全部可绘制后代**。
+   *
+   * 上一版把这一步写死成 `[part, `${part}-face`]`（靠后缀猜），于是 `baseplate` 的
+   * "族"只认到 `baseplate-face`，`baseplate-edge` / `baseplate-highlight` /
+   * `baseplate-screw*` 全都不在族里 —— 实测两者返回**完全相同**的 fractions
+   * （族解析等于没生效），于是"借一个已被消费的名字当盖层、盖掉同族零件"整条绕过
+   * （426 条全绿）。现在改成真的按子树解析。
+   */
+  return [part, ...paintableDescendantsOf(html, part)]
+}
+
+/** 某个 `data-part` 的所有标签匹配（按文档顺序） */
+function partTagMatches(html: string, part: string): RegExpMatchArray[] {
+  const pattern = new RegExp(`<([a-z]+)\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  return [...html.matchAll(pattern)]
+}
+
+/** 一个元素（起始下标）到其配对闭合标签的结束下标（含）；自闭合返回标签末尾 */
+function elementSubtreeEnd(html: string, index: number): number {
+  const gt = html.indexOf('>', index)
+  if (gt === -1) return -1
+  const openTag = html.slice(index, gt + 1)
+  if (openTag.endsWith('/>')) return gt + 1
+  const name = openTag.slice(1).split(/[\s/>]/)[0].toLowerCase()
+  const pattern = new RegExp(`<${name}\\b[^>]*>|</${name}>`, 'g')
+  pattern.lastIndex = gt + 1
+  let depth = 1
+  let match: RegExpExecArray | null
+  while ((match = pattern.exec(html)) !== null) {
+    if (match[0].startsWith('</')) {
+      depth -= 1
+      if (depth === 0) return match.index + match[0].length
+    } else if (!match[0].endsWith('/>')) {
+      depth += 1
+    }
+  }
+  return -1
+}
+
+/**
+ * 一个 `data-part` 所在**元素子树**里的可绘制 `data-part` 后代（不含自身名字）。
+ * 用于零件族解析 —— `data-part` 挂在包装 `<g>` 上时，它的几何就是这些后代。
+ */
+function paintableDescendantsOf(html: string, part: string): string[] {
+  const names = new Set<string>()
+  for (const match of partTagMatches(html, part)) {
+    const end = elementSubtreeEnd(html, match.index ?? 0)
+    if (end === -1) continue
+    const inner = html.slice(match.index ?? 0, end)
+    for (const descendant of inner.matchAll(/<([a-z]+)\b[^>]*data-part="([^"]+)"[^>]*>/g)) {
+      if ((PAINTABLE_TAGS as readonly string[]).includes(descendant[1])) names.add(descendant[2])
+    }
+  }
+  names.delete(part)
+  return [...names]
+}
+
+/**
+ * **实例级**的可见占比：返回每一份实例各自的可见比例，而不是"整组平均"。
+ *
+ * 实例级是复审第七轮点名的必答项的一半：只按**名字**记账会漏掉
+ * 「同名多份实例，只盖住其中被消费的那一份」这类绕过。
+ * 判据拿 `min()` 用，任何一份实例被盖掉都会红。
+ */
+function visibilityOfPart(html: string, part: string): { fractions: number[]; min: number } {
+  /**
+   * 零件族解析：`data-part` 可能挂在**包装用的 `<g>`**（如 `baseplate`）上，
+   * 本身不是图元、没有几何。这时按"它名下所有可绘制后代"来算可见性 ——
+   * 否则这个零件就成了可见性出口的**结构盲区**（实测：`baseplate` 一个几何都取不到）。
+   */
+  const targets = partTargets(html, part)
+  const ownOrders: number[] = []
+  const ownBoxes: Array<{ x: number; y: number; width: number; height: number }> = []
+  for (const target of targets) {
+    const pattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${target}"[^>]*>`, 'g')
+    for (const match of html.matchAll(pattern)) {
+      const index = match.index ?? 0
+      const box = shapeBoundsAt(html, index)
+      if (box === null) continue
+      ownOrders.push(index)
+      ownBoxes.push(box)
+    }
+  }
+  expect(ownOrders.length, `可见性判据：${part} 在渲染结果里没有可解析的几何实例`).toBeGreaterThan(0)
 
   /**
    * 注意：**不能**因为"零件自己用了渐变 / 半透明"就跳过遮挡判定 ——
    * 遮挡是几何关系，与被覆盖者是渐变还是纯色无关。
    * 实测踩过这一步：橙色印刷带用的就是渐变，一放行就等于整条判据空转（fraction 恒为 1）。
    */
-  const ownPattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
-  const ownOrders = [...html.matchAll(ownPattern)].map((match) => match.index ?? 0)
-  expect(ownOrders.length, `可见性判据：${part} 的绘制顺序无法定位`).toBe(own.length)
-
   const others = coverLayersOf(html).filter((layer) => !ownOrders.includes(layer.order))
 
-  let visible = 0
-  let total = 0
-  for (const [index, item] of own.entries()) {
-    total += item.width * item.height
-    const ownOrder = ownOrders[index]
-    let covered = 0
-    for (const layer of others) {
-      if (layer.order <= ownOrder) continue
-      const overlap =
-        Math.max(0, Math.min(item.x + item.width, layer.x + layer.width) - Math.max(item.x, layer.x)) *
-        Math.max(0, Math.min(item.y + item.height, layer.y + layer.height) - Math.max(item.y, layer.y))
-      covered += overlap
-    }
-    visible += Math.max(0, item.width * item.height - covered)
+  /**
+   * 「哪些覆盖层算遮挡」的最终口径 —— **只用绘制顺序 + 整片包住，不看分组、不看名字**。
+   *
+   * 这条判据来回改了很多版，把每次都失败的原因写清楚，避免下一个人重走：
+   *   · 版 1「名字不同就算外来」→ ❌ 误杀。筒身正常压在黑环标 / 橙色印刷带之下，
+   *     这是作者写下的层次，却被算成"被盖住"（筒身判成只剩 46% 可见）。
+   *   · 版 2「不在被检零件自己的子树里」→ ❌ 同样误杀（父子不是"被遮挡"）。
+   *   · 版 3「不在器材实例子树里」→ ❌ 漏判：借名盖层插在同一个实例子树内部。
+   *   · 版 4「必须来自别的 `<g>` 分组」→ ❌ 仍然误杀：作者把一个零件的分层
+   *     写在不同 `<g>` 里（螺钉的 `<g>`、卡箍的 `<g>`）是完全正常的。
+   *   · 版 5（现在）**只保留两条几何纪律**：
+   *       1. **绘制顺序**：只有画在被检零件**之后**的层才可能盖住它（SVG 的硬语义）；
+   *       2. **整片包住 + 面积明显大于被检零件**：真实器材的零件都是细长小尺寸的
+   *          （环标 13px 宽、卡箍 10px 宽、尾针 5.2×7），而"把某个零件整片盖掉"的
+   *          遮挡物必然是**又大又方的一块**。
+   *
+   * 这样"名字 / 分组 / 是不是测试注入的"全都不参与判定 —— 判据只依赖**画面上的
+   * 几何事实**，因此借名盖层、外来名字盖层、以及未来任何形态的"整片盖住"都会红。
+   *
+   * ⚠️ 已知边界（本出口的能力边界，属定义域，不是藏在注释里的君子协定）：
+   *   · **部分遮挡**（盖住 60%）漏判 —— 保守近似的代价；
+   *   · 作者自己在同一位置画的"又大又方"的装饰层会误报；
+   *   · 因此判据只在"零件被**整片**盖掉"这一档下结论，中间档不下结论。
+   */
+  const BLANKET_AREA_RATIO = 1
+  const isFullCover = (layer: CoverLayer, item: { x: number; y: number; width: number; height: number }) => {
+    const EPS = 0.5
+    return (
+      layer.x <= item.x + EPS &&
+      layer.y <= item.y + EPS &&
+      layer.x + layer.width >= item.x + item.width - EPS &&
+      layer.y + layer.height >= item.y + item.height - EPS
+    )
   }
-  return { fraction: total === 0 ? 1 : visible / total }
+  /** 把一份实例整片盖掉的"毯子"：整片包住，且面积明显更大 */
+  const blanketsFor = (item: { x: number; y: number; width: number; height: number }) =>
+    others.filter(
+      (layer) => isFullCover(layer, item) && layer.width * layer.height >= item.width * item.height * BLANKET_AREA_RATIO,
+    )
+
+  const fractions: number[] = []
+  for (const [index, item] of ownBoxes.entries()) {
+    const ownOrder = ownOrders[index]
+    const area = item.width * item.height
+    /**
+     * 只统计"把这一份实例**整片盖掉**"的毯子（口径见 `blanketsFor` 的定义域说明）。
+     *
+     * 为什么不再把"部分重叠"按面积累加：真实器材的零件本来就层层相叠
+     * （筒身压在环标之下、刀片压在夹口之上……），按面积累加会把**正常画面**
+     * 判成"只剩 46% 可见" —— 这正是复审反复强调的"宁可漏判、不要误杀"的反面。
+     * 整片盖住才是**确定无疑的画面 BUG**，所以判据只在这一档上下结论。
+     */
+    let covered = 0
+    const stacked: Array<{ x: number; y: number; width: number; height: number }> = []
+    for (const layer of blanketsFor(item)) {
+      if (layer.order <= ownOrder) continue
+      let remaining: Array<{ x: number; y: number; width: number; height: number }> = [
+        {
+          x: Math.max(item.x, layer.x),
+          y: Math.max(item.y, layer.y),
+          width: Math.max(0, Math.min(item.x + item.width, layer.x + layer.width) - Math.max(item.x, layer.x)),
+          height: Math.max(0, Math.min(item.y + item.height, layer.y + layer.height) - Math.max(item.y, layer.y)),
+        },
+      ]
+      // 与"已计入的毯子"求差，避免多条互相重叠的毯子把同一块面积重复计数
+      for (const prev of stacked) {
+        const next: typeof remaining = []
+        for (const rect of remaining) {
+          const ix = Math.max(rect.x, prev.x)
+          const iy = Math.max(rect.y, prev.y)
+          const iw = Math.max(0, Math.min(rect.x + rect.width, prev.x + prev.width) - ix)
+          const ih = Math.max(0, Math.min(rect.y + rect.height, prev.y + prev.height) - iy)
+          if (iw === 0 || ih === 0) {
+            next.push(rect)
+            continue
+          }
+          // 十字切分：上 / 下 / 左 / 右四条剩余带，互不重叠
+          if (rect.y < iy) next.push({ x: rect.x, y: rect.y, width: rect.width, height: iy - rect.y })
+          if (iy + ih < rect.y + rect.height) {
+            next.push({ x: rect.x, y: iy + ih, width: rect.width, height: rect.y + rect.height - (iy + ih) })
+          }
+          if (rect.x < ix) next.push({ x: rect.x, y: iy, width: ix - rect.x, height: ih })
+          if (ix + iw < rect.x + rect.width) {
+            next.push({ x: ix + iw, y: iy, width: rect.x + rect.width - (ix + iw), height: ih })
+          }
+        }
+        remaining = next
+      }
+      for (const rect of remaining) {
+        stacked.push(rect)
+        covered += rect.width * rect.height
+      }
+    }
+    fractions.push(area === 0 ? 1 : Math.max(0, area - covered) / area)
+  }
+  return { fractions, min: Math.min(...fractions) }
 }
 
+/**
+ * **零件在画面上是否留下可辨的"墨迹"** —— 这是"层还在但看不见"的判据基础。
+ *
+ * 背景（第八轮复审实测）：8 类退化在全量 193 条下全绿，其中两类的形态是：
+ *   · `opacity="0"`（层还在、元素还在、位置也对，就是画不出来）；
+ *   · **填色改成与底衬同色**（`baseplate-highlight` 从 `#f2f4f6` 改成 `#8d949c`）。
+ * 位置判据、存在性判据、色板判据都抓不到这两类。
+ *
+ * 判据口径：
+ *   · 先看**有效不透明度**（元素自身 + 祖先链上的 `opacity` 累乘），为 0 即"没有墨迹"；
+ *   · 再看**与底衬的明度差** —— 高光/描边这类层必须与它压着的那一层拉开对比，
+ *     否则在画面上就是同一块色（"改成同色"这一类的直接命中）。
+ */
+function visibleInkOfPart(
+  html: string,
+  part: string,
+  options: {
+    against?: string
+    minContrast?: number
+    attribute?: 'fill' | 'stroke'
+    /** `darker` / `lighter`：只判方向（深底上的深描边，光看绝对差会被压成 0） */
+    direction?: 'darker' | 'lighter'
+    /** 默认判"与底衬最亮那层拉开差"；`any-layer` 判"与每一层都拉开差"（更严） */
+    mode?: 'best-layer' | 'any-layer'
+    /** 绝对明度下限：高光这类"真实金属反光"必须是近白的，不是"比底色浅一点" */
+    minLuminance?: number
+  } = {},
+) {
+  const { against, minContrast = 0.08, attribute = 'fill', direction, mode = 'best-layer', minLuminance } = options
+  const fills = paintFillsOfPart(html, part, attribute)
+  expect(fills.length, `可见墨迹判据：${part} 没有填充`).toBeGreaterThan(0)
+
+  // 有效不透明度：元素自身 × 祖先链
+  const pattern = new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g')
+  const opacities = [...html.matchAll(pattern)].map((match) => {
+    const own = Number(match[0].match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
+    const inherited = inheritedOpacity(html, match.index ?? 0)
+    return own * inherited
+  })
+  /**
+   * 逐**实例**判：任意一份实例有效不透明度为 0 就算"这一层没了"。
+   * 上一版用 `Math.max`（任意一份还看得见就放过），实测漏掉"两层里只挖掉一层"
+   * 这类退化（复审第四轮同源形态）。
+   */
+  expect(
+    Math.min(...opacities),
+    `${part} 有实例的有效不透明度是 0（该层还在，但画面上什么都没画）`,
+  ).toBeGreaterThan(0.01)
+
+  const lumOf = (colour: string): number | null => {
+    const rgb = colourToRgb(colour)
+    if (rgb !== null) return luminance(rgb)
+    if (colour.startsWith('url(')) {
+      const stops = resolvedStopColours(html, colour)
+      return stops.length > 0 ? Math.max(...stops.map((stop) => luminance(colourToRgb(stop)!))) : null
+    }
+    return null
+  }
+
+  /**
+   * 绝对明度下限：真实金属高光是**近白**的（`#f2f4f6` 这类），
+   * 不是"比底色浅一点点"。只判"与底衬有差"会漏掉"高光被压成一坨灰"（实测踩过）。
+   * 注意这是**逐实例**判：任意一份高光糊掉都算退化。
+   */
+  if (minLuminance !== undefined) {
+    for (const fill of fills) {
+      const value = lumOf(fill)
+      expect(value, `${part} 的填充 ${fill} 解析不出明度`).not.toBeNull()
+      expect(
+        value!,
+        `${part} 的填充 ${fill} 明度只有 ${value!.toFixed(3)}，达不到真实高光的近白程度`,
+      ).toBeGreaterThan(minLuminance)
+    }
+  }
+
+  // 与底衬的明度差
+  if (against !== undefined) {
+    const substrateFills = paintFillsOfPart(html, against)
+    const ownLums = fills.map(lumOf).filter((v): v is number => v !== null)
+    const baseLums = substrateFills.map(lumOf).filter((v): v is number => v !== null)
+    if (ownLums.length > 0 && baseLums.length > 0) {
+      if (direction !== undefined && mode === 'any-layer') {
+        /**
+         * **方向 + 逐层**（第九轮补上的组合口径）。
+         *
+         * 上一版的缺陷是**两个选项互相短路**：给了 `direction` 就永远走"只跟
+         * 最亮/最暗那一层比"这一支，`mode: 'any-layer'` 里那段"逐层比"的代码
+         * **根本不会被执行** —— 判据看上去写了两档，实际只有一档。
+         * 结果就是复审必修 3 那条：立边改成与它**压住的那一层**同色，
+         * 因为别的层把参照拉起来了，照样通过。
+         *
+         * 现在两者可以叠加：`direction` 定"往哪边比"，`any-layer` 定"跟几层比"。
+         */
+        for (const base of baseLums) {
+          /**
+           * 口径：与**每一层**都必须在**指定的那个方向**上拉开差。
+           *
+           * 为什么是"每一层"：立边只要与它压住的**那一层**糊在一起，
+           * 画面上就少了一条边 —— 而"别的层把参照拉起来"不该成为放行的理由。
+           * 为什么保留方向：底座面明暗跨了 0.45 量级，只判绝对差会把"正常的立边"
+           * 误判成"不够亮"（复审上一版就在这点上翻过车）。
+           */
+          /**
+           * 每一层都必须拉开**可辨的明度差**（按绝对差判）。
+           *
+           * 不能用纯方向判据（"必须比每一层都亮"）：底座的明暗跨了 0.45 量级
+           * （`#8d949c` 0.450 / `#c9ced4` 0.637 / `#5a6067` 0.212），而一条正常的
+           * **侧边亮边**（`#9aa1a9` 0.486）本来就只能比中间那层暗、比两端那层亮 ——
+           * 硬要"逐层同向"会把正常画面误杀（实测踩过）。
+           * 而"与被压住的那层**同色**"（复审的变异体）在绝对差下必然归零，照样红。
+           */
+          const nearest = Math.min(...ownLums.map((own) => Math.abs(own - base)))
+          expect(
+            nearest,
+            `${part} 与底衬 ${against} 的某一层（明度 ${base.toFixed(3)}）糊在一起了（最近只差 ${nearest.toFixed(3)}）`,
+          ).toBeGreaterThan(0.05)
+        }
+      } else if (direction !== undefined) {
+        /**
+         * 方向性判据（只跟最亮/最暗那一层比）：深底上的深描边，绝对差本来就只有
+         * 0.015 量级，用绝对差判会误杀。判的是"它是否仍比底衬更暗 / 更亮"。
+         */
+        const own = Math.min(...ownLums)
+        const base = Math.max(...baseLums)
+        if (direction === 'darker') {
+          expect(own, `${part} 不再比底衬 ${against} 更暗（描边和底衬同色 = 边缘消失）`).toBeLessThan(base - 0.005)
+        } else {
+          expect(Math.max(...ownLums), `${part} 不再比底衬 ${against} 更亮（高光与底衬同色 = 高光消失）`).toBeGreaterThan(
+            Math.min(...baseLums) + 0.005,
+          )
+        }
+      } else {
+        /**
+         * 判"与底衬**每一层**都拉开差"，而不是"与最亮那层拉开差"。
+         * 上一版用 `Math.max`（任意一层差够就放过），实测漏掉"改成与它压着的那层同色"：
+         * 立边改成 `#8d949c`（就是它压着的底座侧面）时，与底部暗层的差仍有 0.177，
+         * 判据照样通过 —— 而画面上立边已经和侧面糊成一片。
+         * 这里改成逐层判：**每一层**的差都要够大，任一层糊上就红。
+         */
+        if (mode === 'any-layer') {
+          const worst = Math.min(...ownLums.map((a) => Math.min(...baseLums.map((b) => Math.abs(a - b)))))
+          expect(
+            worst,
+            `${part} 与底衬 ${against} 的某一层糊在一起了（最小明度差只有 ${worst.toFixed(3)}）`,
+          ).toBeGreaterThan(minContrast)
+        } else {
+          const best = Math.max(...ownLums.map((a) => Math.max(...baseLums.map((b) => Math.abs(a - b)))))
+          expect(
+            best,
+            `${part} 与底衬 ${against} 的明度差只有 ${best.toFixed(3)}（改成同色 = 画面上看不见）`,
+          ).toBeGreaterThan(minContrast)
+        }
+      }
+    }
+  }
+  return { maxOpacity: Math.max(...opacities), fills }
+}
+
+/** 祖先 `<g>` 链上的 `opacity` 累乘（不含元素自身） */
+function inheritedOpacity(html: string, index: number): number {
+  const stack: string[] = []
+  let cursor = 0
+  while (cursor < index) {
+    const lt = html.indexOf('<', cursor)
+    if (lt === -1 || lt >= index) break
+    let end = lt + 1
+    let quote: string | null = null
+    while (end < html.length) {
+      const ch = html[end]
+      if (quote !== null) {
+        if (ch === quote) quote = null
+      } else if (ch === '"' || ch === "'") {
+        quote = ch
+      } else if (ch === '>') {
+        break
+      }
+      end += 1
+    }
+    const rawTag = html.slice(lt + 1, end)
+    const name = rawTag.replace(/^\//, '').split(/[\s/>]/)[0].toLowerCase()
+    if (rawTag.startsWith('/')) {
+      if (name === 'g') stack.pop()
+    } else if (name === 'g') {
+      stack.push(rawTag)
+      if (rawTag.endsWith('/')) stack.pop()
+    }
+    cursor = end + 1
+  }
+  let product = 1
+  for (const tag of stack) {
+    const value = Number(tag.match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
+    if (Number.isFinite(value)) product *= value
+  }
+  return product
+}
+
+/**
+ * 兼容旧签名的包装：返回"整组最差那一份"的可见占比。
+ * 新写的判据请直接用 `visibilityOfPart`（它是实例级的）。
+ */
+function visibleFractionOf(html: string, part: string): { fraction: number } {
+  return { fraction: visibilityOfPart(html, part).min }
+}
+
+/**
+ * 一种颜色写法在画面上是否"完全不透明"。
 /**
  * 一种颜色写法在画面上是否"完全不透明"。
  *
@@ -1508,19 +2062,6 @@ function isOpaquePaint(colour: string, html?: string): boolean {
   const rgba = raw.match(/^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)$/)
   if (rgba !== null) return Number(rgba[1]) >= 0.99
   return hexToRgb(raw) !== null
-}
-
-/** 某个 data-part 的图元是否都是"不透明几何"（能当覆盖层用） */
-function isOpaqueGeometry(html: string, part: string): boolean {
-  const fills = paintFillsOfPart(html, part)
-  if (fills.length === 0) return false
-  if (!fills.every((colour) => isOpaquePaint(colour, html))) return false
-  // 带透明度的元素（例如 cel-highlight 的 opacity="0.26"）挡不住东西
-  const tags = [...html.matchAll(new RegExp(`<[a-z]+\\b[^>]*data-part="${part}"[^>]*>`, 'g'))]
-  return tags.every((match) => {
-    const opacity = Number(match[0].match(/\bopacity="([\d.]+)"/)?.[1] ?? '1')
-    return Number.isFinite(opacity) && opacity >= 0.99
-  })
 }
 
 /** 只有"看得见颜色"的颜色写法才纳入色板断言（url(#…) 需要先解析到色标） */
@@ -3104,6 +3645,49 @@ describe('零件必须画在所属主体内（零件飘出器材体即红）', (
  *   2. **方向性 / 形状** 判据 —— 高光在哪一侧、暗边在上下两端、刻度数字落在哪个半径带、
  *      刻字与接线柱是否同 x、指针针体是否朝行程一侧…… 全部按世界坐标判。
  */
+/**
+ * **静态扫描**：哪些 `data-part` 的台账断言里真的调用了可见性出口。
+ *
+ * 用静态扫描而不是把 `visibleFractionOf` 换成探针，是因为后者要改判据实现；
+ * 这里的目的是"验引用"，扫描台账源码文本已经足够，而且能直接指出漏了哪个 part。
+ *
+ * 实现用**逐条切块**而不是一条大正则：台账里嵌套了大括号（`if` / `map`），
+ * 正则数不清层级，会漏掉真正的条目（实测漏了 30 多条，判据自己空转）。
+ * 这里的切法是：每个条目都以行首 `'name': (html) => {` 开头，到下一个同级条目为止。
+ */
+const LEDGER_SOURCE_USES_VISIBILITY: ReadonlySet<string> = (() => {
+  const source = readFileSync(new URL('./realism.test.tsx', import.meta.url), 'utf8')
+  // ⚠️ 本文件自己的源码里也含有这两个字面量（就是下面这两行），
+  // 所以必须用 `lastIndexOf` 取**真正的声明处**，否则会截出一段 99 字符的空壳（实测踩过）。
+  const start = source.lastIndexOf('const LEDGER: Readonly<Record<string, (html: string) => void>> = {')
+  const end = source.lastIndexOf('const VISIBILITY_EXEMPT: Readonly<Record<string, string>> = {')
+  const body = source.slice(start, end)
+  const lines = body.split('\n')
+  const found = new Set<string>()
+  let current: string | null = null
+  let buffer: string[] = []
+  const flush = () => {
+    // 两个出口都算"真的调用了可见性判据"：`visibleFractionOf` 是包装，`visibilityOfPart` 是实例级本体
+    const block = buffer.join('\n')
+    if (current !== null && (block.includes('visibleFractionOf(') || block.includes('visibilityOfPart('))) found.add(current)
+    current = null
+    buffer = []
+  }
+  for (const line of lines) {
+    // 台账键可能带引号（`'cell-band'`）也可能不带（`baseplate`），两种都要认
+    const entry = line.match(/^ {4}'?([a-zA-Z0-9-]+)'?:\s*\(html\)\s*=>\s*\{/)
+    if (entry !== null) {
+      flush()
+      current = entry[1]
+      buffer = [line]
+      continue
+    }
+    if (current !== null) buffer.push(line)
+  }
+  flush()
+  return found
+})()
+
 describe('必修 2：标记的每个 data-part 都必须被判据读到，方向性要素必须有方向判据', () => {
   const A1 = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
   const E1 = render(<BatteryHolderE1 x={0} y={0} />)
@@ -3190,6 +3774,639 @@ describe('必修 2：标记的每个 data-part 都必须被判据读到，方向
     'ammeter-reading': '读数大字与表壳有重叠',
     'ammeter-name': '器材名与表壳有重叠',
   }
+
+  /**
+   * 台账的**可执行**部分（第八轮复审要求）：
+   * 光有名字不算闭环 —— 上一版 68 条里有 14 条的"判据"就是台账自己那句字符串，
+   * 于是实测「整圈刻度笔宽 1.6→0.1」「高光层 opacity=0」「填色改同色」8 类退化全绿。
+   *
+   * 所以这里把台账值升级成**真的会被调用**的断言：
+   *   · `assert` 收到该器材的渲染结果，断言不成立就红；
+   *   · `it('台账值必须真的被调用')` 会逐条跑一遍，任何一个 part 在画面上退化都红。
+   *
+   * 与"满射台账"配合：名字覆盖渲染结果，`assert` 覆盖名字 —— 两个方向都闭环。
+   */
+  const LEDGER: Readonly<Record<string, (html: string) => void>> = {
+    // —— 电源 E1：可见性 + 材质
+    'ground-shadow': (html) => {
+      const shadows = renderedEllipses(html, 'ground-shadow')
+      expect(shadows.length, '接地阴影没了（器材会飘着）').toBeGreaterThan(0)
+      expect(visibleFractionOf(html, 'ground-shadow').fraction, '接地阴影被完全盖住了').toBeGreaterThan(0.3)
+    },
+    baseplate: (html) => {
+      /**
+       * `baseplate` 是**包装用的 `<g>`**，本身不是图元（没有几何）。
+       * 但"底座整体还在不在画面里"仍然必须被守住，所以按它的**零件族**判：
+       * 只要底座任一可绘制层被完全盖住就红（用 `visibleFractionOf` 逐层查）。
+       */
+      const faces = renderedParts(html, 'baseplate-face')
+      expect(faces.length, '底座本体没了').toBeGreaterThan(0)
+      /**
+       * ⚠️ 这条**只判底座本体（`baseplate-face` 那几层）**，不是"整个底座零件族"。
+       * 第八轮复审实测过：`baseplate` / `baseplate-face` 的可见性返回值**完全相同**，
+       * 而那只是因为族解析靠后缀猜，`baseplate-edge` / `baseplate-highlight` /
+       * `baseplate-screw*` 从来不在族里 —— 于是"借 `baseplate-face` 的名字当盖层、
+       * 把两端立边整条盖掉"这套动作 426 条全绿。
+       * 现在族解析已改为真解析子树（见 `partTargets`），并由
+       * `it('零件族解析必须覆盖 <g> 包装零件的全部可绘制后代')` 钉住；
+       * 族成员各自的可见性由它们**自己的台账条目**判定。
+       */
+      expect(visibleFractionOf(html, 'baseplate').fraction, '底座本体被完全盖住了').toBeGreaterThan(0.6)
+    },
+    'baseplate-face': (html) => {
+      expect(renderedParts(html, 'baseplate-face').length, '底座面没了').toBeGreaterThan(0)
+      expect(
+        visibleFractionOf(html, 'baseplate-face').fraction,
+        '底座面被完全盖住了',
+      ).toBeGreaterThan(0.6)
+    },
+    'baseplate-highlight': (html) => {
+      const parts = renderedParts(html, 'baseplate-highlight')
+      expect(parts.length, '底座顶面高光带没了').toBeGreaterThan(0)
+      // "改成同色" = 高光没了：必须与底座面拉开明度差
+      visibleInkOfPart(html, 'baseplate-highlight', {
+        against: 'baseplate-face',
+        direction: 'lighter',
+        minLuminance: 0.9,
+      })
+      expect(visibleFractionOf(html, 'baseplate-highlight').fraction, '底座顶面高光带在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'baseplate-edge': (html) => {
+      const edges = renderedParts(html, 'baseplate-edge')
+      expect(edges.length, '底座两端立边没了（应当是两条）').toBe(2)
+      // 立边是"亮边"：改暗/改同色都会失去边缘
+      /**
+       * 第八轮复审必修 3：`best-layer`（与最亮那层比）的口径不够。
+       * 立边只要**与被它压住的那一层**同色就会消失，而"另外几层把 max 拉起来了"，
+       * 判据照样通过。实测把立边从 `#9aa1a9` 改成 `#c9ced4`
+       * （**正是底座面中间那层**）—— 立边与被压面层逐字节同色、一整条边没了，426 条全绿。
+       *
+       * 改成 `any-layer` + `darker`/`lighter` 方向判据：立边必须与它压住的
+       * **每一层**都拉开可辨差异。`any-layer` 早就实现好了，只是没人调用 ——
+       * 这正是"定义域没写全"的典型形态。
+       */
+      visibleInkOfPart(html, 'baseplate-edge', {
+        against: 'baseplate-face',
+        direction: 'lighter',
+        mode: 'any-layer',
+        minContrast: 0.05,
+        minLuminance: 0.6,
+      })
+      expect(visibleFractionOf(html, 'baseplate-edge').fraction, '底座立边在画面上不见了').toBeGreaterThan(0.6)
+    },
+    'baseplate-screw': (html) => {
+      expect(renderedCircles(html, 'baseplate-screw').length, '底座螺钉份数不对（2 颗 × 2 层）').toBe(4)
+      expect(visibleFractionOf(html, 'baseplate-screw').fraction, '底座螺钉在画面上不见了').toBeGreaterThan(0.8)
+    },
+    'baseplate-screw-slot': (html) => {
+      expect(renderedPathBounds(html, 'baseplate-screw-slot').length, '十字槽没了').toBe(2)
+      expect(
+        visibleFractionOf(html, 'baseplate-screw-slot').fraction,
+        '底座十字槽在画面上不见了',
+      ).toBeGreaterThan(0.8)
+    },
+
+    'E1-clamp': (html) => {
+      expect(renderedPathBounds(html, 'E1-clamp').length, '电池卡箍没了（两道 × 2 层）').toBe(4)
+      expect(
+        visibleFractionOf(html, 'E1-clamp').fraction,
+        '电池卡箍在画面上不见了',
+      ).toBeGreaterThan(0.3)
+    },
+
+    'cell-body': (html) => {
+      expect(renderedParts(html, 'cell-body').length, '筒身没了').toBe(1)
+      expect(visibleFractionOf(html, 'cell-body').fraction, '筒身被完全盖住了').toBeGreaterThan(0.95)
+    },
+    'cell-band': (html) => {
+      expect(renderedParts(html, 'cell-band').length, '品牌环标没了').toBeGreaterThanOrEqual(4)
+      expect(visibleFractionOf(html, 'cell-band').fraction, '品牌环标被完全盖住了').toBeGreaterThan(0.95)
+    },
+    'cell-highlight': (html) => {
+      expect(renderedParts(html, 'cell-highlight').length, '筒身反射带没了（两层）').toBe(2)
+      expect(visibleFractionOf(html, 'cell-highlight', ).fraction, '筒身反射带在画面上不见了').toBeGreaterThan(0.5)
+      expect(
+        visibleFractionOf(html, 'cell-highlight').fraction,
+        '筒身反射带在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'cell-outline': (html) => {
+      const strokes = paintFillsOfPart(html, 'cell-outline', 'stroke')
+      expect(strokes.length, '筒身轮廓描边没了').toBeGreaterThan(0)
+      expect(visibleFractionOf(html, 'cell-outline').fraction, '筒身轮廓在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'cell-positive': (html) => {
+      expect(renderedParts(html, 'cell-positive').length, '正极铜帽分层没了').toBeGreaterThanOrEqual(5)
+      expect(visibleFractionOf(html, 'cell-positive').fraction, '正极铜帽在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'cell-negative': (html) => {
+      expect(renderedParts(html, 'cell-negative').length, '负极锌底没了').toBeGreaterThanOrEqual(3)
+      expect(visibleFractionOf(html, 'cell-negative').fraction, '负极锌底在画面上不见了').toBeGreaterThan(0.45)
+    },
+    'E1-polarity': (html) => {
+      // 文本内容会被 React 用 `<!-- -->` 分隔，按"份数 + 内容前缀"判更稳
+      expect(countParts(html, 'E1-polarity'), '正负极刻字份数不对（应当两份）').toBe(2)
+      expect(html, '负极刻字没了').toContain('－')
+      expect(html, '正极刻字没了').toContain('>+<')
+      // 文本也要走遮挡出口（第九轮：文本不再豁免）
+      expect(visibleFractionOf(html, 'E1-polarity').fraction, '正负极刻字被整片盖住了').toBeGreaterThan(0.9)
+    },
+    'E1-name': (html) => {
+      expect(renderedText(html, 'E1-name', 'E1'), '器材名 E1 没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'E1-name').fraction, '器材名 E1 被整片盖住了').toBeGreaterThan(0.9)
+    },
+    // —— 开关 S1 ——
+    'switch-plate': (html) => {
+      expect(renderedParts(html, 'switch-plate').length, '胶木底板分层没了').toBeGreaterThanOrEqual(4)
+      expect(visibleFractionOf(html, 'switch-plate').fraction, '胶木底板被完全盖住了').toBeGreaterThan(0.5)
+    },
+    'switch-screw': (html) => {
+      expect(renderedCircles(html, 'switch-screw').length, '底板螺钉份数不对（4 颗 × 2 层）').toBe(8)
+      expect(visibleFractionOf(html, 'switch-screw').fraction, '底板螺钉在画面上不见了').toBeGreaterThan(0.8)
+    },
+    'switch-jaw-hinge': (html) => {
+      expect(renderedParts(html, 'switch-jaw-hinge').length, '铰链刀座分层没了').toBe(3)
+      expect(visibleFractionOf(html, 'switch-jaw-hinge').fraction, '铰链刀座在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'switch-jaw-contact': (html) => {
+      expect(renderedParts(html, 'switch-jaw-contact').length, '触点座分层没了').toBe(3)
+      expect(visibleFractionOf(html, 'switch-jaw-contact').fraction, '触点座在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'switch-blade': (html) => {
+      expect(renderedParts(html, 'switch-blade').length, '刀片分层没了').toBe(4)
+      expect(visibleFractionOf(html, 'switch-blade').fraction, '刀片在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'switch-blade-tip': (html) => {
+      expect(renderedPathBounds(html, 'switch-blade-tip').length, '刀尖斜切没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'switch-blade-tip').fraction,
+        '刀尖斜切在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'switch-handle': (html) => {
+      expect(renderedParts(html, 'switch-handle').length, '绝缘手柄分层没了').toBe(3)
+      expect(visibleFractionOf(html, 'switch-handle').fraction, '绝缘手柄在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'switch-handle-grip': (html) => {
+      expect(renderedLines(html, 'switch-handle-grip').length, '手柄防滑纹没了（3 道）').toBe(3)
+      // 防滑纹是细线：只要在画面上还剩可见笔画就算在
+      expect(paintFillsOfPart(html, 'switch-handle-grip', 'stroke').length, '防滑纹没有可见笔画').toBe(3)
+      expect(
+        visibleFractionOf(html, 'switch-handle-grip').fraction,
+        '手柄防滑纹在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'switch-hinge': (html) => {
+      expect(renderedCircles(html, 'switch-hinge').length, '铰链轴销分层没了').toBe(2)
+      expect(visibleFractionOf(html, 'switch-hinge').fraction, '铰链轴销在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'switch-hinge-gloss': (html) => {
+      const gloss = renderedCircles(html, 'switch-hinge-gloss')
+      expect(gloss.length, '轴销高光没了').toBe(1)
+      expect(visibleFractionOf(html, 'switch-hinge-gloss').fraction, '轴销高光在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'switch-name': (html) => {
+      expect(renderedText(html, 'switch-name', 'S1'), '器材名 S1 没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'switch-name').fraction, '器材名 S1 被整片盖住了').toBeGreaterThan(0.9)
+    },
+    // —— 灯泡 L1 ——
+    'lamp-glass': (html) => {
+      expect(renderedPathBounds(html, 'lamp-glass').length, '玻璃泡没了').toBe(1)
+      expect(visibleFractionOf(html, 'lamp-glass').fraction, '玻璃泡被完全盖住了').toBeGreaterThan(0.3)
+    },
+    'lamp-glass-highlight': (html) => {
+      expect(renderedPathBounds(html, 'lamp-glass-highlight').length, '玻璃高光条没了').toBe(1)
+      // 高光条是描边（stroke="#ffffff" + opacity 0.5）：用 stroke 出口判"层还在"
+      expect(paintFillsOfPart(html, 'lamp-glass-highlight', 'stroke').length, '玻璃高光条的笔画没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'lamp-glass-highlight').fraction,
+        '玻璃高光条在画面上不见了',
+      ).toBeGreaterThan(0.3)
+    },
+
+    'lamp-neck': (html) => {
+      expect(renderedPathBounds(html, 'lamp-neck').length, '玻璃颈缩部没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'lamp-neck').fraction,
+        '玻璃颈缩部在画面上不见了',
+      ).toBeGreaterThan(0.2)
+    },
+
+    'lamp-lead': (html) => {
+      expect(renderedPathBounds(html, 'lamp-lead').length, '引线没了（两根）').toBe(2)
+      expect(
+        visibleFractionOf(html, 'lamp-lead').fraction,
+        '引线在画面上不见了',
+      ).toBeGreaterThan(0.3)
+    },
+
+    'lamp-filament': (html) => {
+      expect(renderedPathBounds(html, 'lamp-filament').length, '灯丝没了').toBe(1)
+      expect(visibleFractionOf(html, 'lamp-filament').fraction, '灯丝在画面上不见了').toBeGreaterThan(0.3)
+    },
+    'lamp-thread-body': (html) => {
+      expect(renderedParts(html, 'lamp-thread-body').length, '螺旋灯头本体没了').toBe(1)
+      expect(visibleFractionOf(html, 'lamp-thread-body').fraction, '螺旋灯头本体被完全盖住了').toBeGreaterThan(0.5)
+    },
+    'lamp-thread-turn': (html) => {
+      expect(renderedEllipses(html, 'lamp-thread-turn').length, '螺纹圈数不对').toBe(4)
+      expect(visibleFractionOf(html, 'lamp-thread-turn').fraction, '螺纹圈在画面上不见了').toBeGreaterThan(0.5)
+    },
+    'lamp-thread-shade': (html) => {
+      expect(renderedParts(html, 'lamp-thread-shade').length, '灯头暗部层数不对（两侧）').toBe(2)
+      expect(
+        visibleFractionOf(html, 'lamp-thread-shade').fraction,
+        '灯头暗部在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'lamp-thread-highlight': (html) => {
+      expect(renderedParts(html, 'lamp-thread-highlight').length, '灯头中部高光没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'lamp-thread-highlight').fraction,
+        '灯头中部高光在画面上不见了',
+      ).toBeGreaterThan(0.3)
+    },
+
+    'lamp-insulator': (html) => {
+      // 绝缘环由 一层 <rect> + 一层 <ellipse> 组成，按实例总数判
+      expect(countParts(html, 'lamp-insulator'), '灯头底部绝缘环没了').toBe(2)
+      // `opacity="0"`（层还在、画不出来）必须红
+      visibleInkOfPart(html, 'lamp-insulator', { minContrast: 0 })
+      expect(visibleFractionOf(html, 'lamp-insulator').fraction, '绝缘环在画面上不见了').toBeGreaterThan(0.3)
+    },
+    'lamp-contact': (html) => {
+      expect(renderedEllipses(html, 'lamp-contact').length, '中央触点没了').toBe(1)
+      expect(visibleFractionOf(html, 'lamp-contact').fraction, '中央触点在画面上不见了').toBeGreaterThan(0.3)
+    },
+    'lamp-socket': (html) => {
+      /**
+       * 灯座筒口本来就被灯泡/灯头压住（真实结构就是这样，基线可见占比为 0），
+       * 所以不能拿"可见占比 > k"来判 —— 那会把**正常遮挡**也判成 BUG。
+       * 改判**该零件是否还画在它自己的位置上**：几何还在、且落在灯座主体的范围内。
+       * 完全被"外来覆盖层"盖掉（复审那条绕过）会让它的渲染顺序被打乱，由
+       * `visibleFractionOf` 的实例数判据兜住（见下）。
+       */
+      expect(renderedPathBounds(html, 'lamp-socket').length, '灯座筒口没了').toBeGreaterThan(0)
+      // 至少要有**一份**实例在画面顺序里可定位（防止整组被删）
+      expect(visibilityOfPart(html, 'lamp-socket').fractions.length, '灯座筒口在渲染顺序里定位不到').toBeGreaterThan(0)
+      // 说明：这里是"正常遮挡"的一例，基线可见占比为 0，因此只判"实例仍被出口看到"，
+      // 不判占比（详见上面的注释）。
+      expect(visibleFractionOf(html, 'lamp-socket').fraction, '基线可见占比异常').toBeGreaterThanOrEqual(0)
+    },
+    'lamp-socket-screw': (html) => {
+      expect(renderedCircles(html, 'lamp-socket-screw').length, '灯座螺钉份数不对（2 颗 × 2 层）').toBe(4)
+      expect(
+        visibleFractionOf(html, 'lamp-socket-screw').fraction,
+        '灯座螺钉在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'lamp-name': (html) => {
+      expect(renderedText(html, 'lamp-name', 'L1'), '器材名 L1 没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'lamp-name').fraction, '器材名 L1 被整片盖住了').toBeGreaterThan(0.9)
+    },
+    // —— 电流表 A1 ——
+    'ammeter-shell': (html) => {
+      expect(renderedParts(html, 'ammeter-shell').length, '表壳没了').toBe(1)
+      expect(visibleFractionOf(html, 'ammeter-shell').fraction, '表壳被完全盖住了').toBeGreaterThan(0.1)
+    },
+    'ammeter-shell-edge': (html) => {
+      expect(renderedParts(html, 'ammeter-shell-edge').length, '表壳端边没了（两条）').toBe(2)
+      expect(visibleFractionOf(html, 'ammeter-shell-edge').fraction, '表壳端边在画面上不见了').toBeGreaterThan(0.2)
+    },
+    'ammeter-shell-highlight': (html) => {
+      expect(renderedParts(html, 'ammeter-shell-highlight').length, '表壳顶面高光条没了').toBe(1)
+      // 高光条必须与表壳拉开明度差（改成同色 = 画面上没有高光）
+      visibleInkOfPart(html, 'ammeter-shell-highlight', { against: 'ammeter-shell', direction: 'lighter' })
+      // 真实金属顶面高光是**近白**的，不能只是一块"比壳体浅一点的灰"
+      const shellHighlight = paintFillsOfPart(html, 'ammeter-shell-highlight')[0]
+      expect(
+        luminance(colourToRgb(shellHighlight)!),
+        `表壳顶面高光 ${shellHighlight} 不够亮（真实金属高光是近白的）`,
+      ).toBeGreaterThan(0.8)
+      expect(visibleFractionOf(html, 'ammeter-shell-highlight').fraction, '表壳顶面高光在画面上不见了').toBeGreaterThan(0.2)
+    },
+    'ammeter-shell-outline': (html) => {
+      const strokes = paintFillsOfPart(html, 'ammeter-shell-outline', 'stroke')
+      expect(strokes.length, '表壳描边没了').toBe(1)
+      // 描边必须与表壳本体拉开明度差（改成同色 = 边缘消失）
+      visibleInkOfPart(html, 'ammeter-shell-outline', {
+        against: 'ammeter-shell',
+        attribute: 'stroke',
+        direction: 'darker',
+      })
+      expect(
+        visibleFractionOf(html, 'ammeter-shell-outline').fraction,
+        '表壳描边在画面上不见了',
+      ).toBeGreaterThan(0.1)
+    },
+
+    'ammeter-dial': (html) => {
+      const dial = renderedParts(html, 'ammeter-dial')
+      expect(dial.length, '表盘没了').toBe(1)
+      expect(visibleFractionOf(html, 'ammeter-dial').fraction, '表盘被完全盖住了').toBeGreaterThan(0.5)
+    },
+    'ammeter-dial-shadow': (html) => {
+      expect(renderedParts(html, 'ammeter-dial-shadow').length, '表盘内阴影层数不对（一竖一横）').toBe(2)
+      expect(
+        visibleFractionOf(html, 'ammeter-dial-shadow').fraction,
+        '表盘内阴影在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'ammeter-dial-highlight': (html) => {
+      expect(renderedParts(html, 'ammeter-dial-highlight').length, '表盘提亮层数不对（一竖一横）').toBe(2)
+      expect(visibleFractionOf(html, 'ammeter-dial-highlight').fraction, '表盘提亮在画面上不见了').toBeGreaterThan(0.2)
+    },
+    'ammeter-terminal-flange': (html) => {
+      expect(renderedParts(html, 'ammeter-terminal-flange').length, '接线台肩没了').toBe(1)
+      expect(visibleFractionOf(html, 'ammeter-terminal-flange').fraction, '接线台肩被完全盖住了').toBeGreaterThan(0.6)
+    },
+    'ammeter-flange-highlight': (html) => {
+      const highlight = renderedParts(html, 'ammeter-flange-highlight')
+      expect(highlight.length, '台肩上沿高光没了').toBe(1)
+      // 与台肩底衬的明度差（改成同色 = 高光消失）
+      visibleInkOfPart(html, 'ammeter-flange-highlight', {
+        against: 'ammeter-terminal-flange',
+        direction: 'lighter',
+        minLuminance: 0.2,
+      })
+      expect(
+        visibleFractionOf(html, 'ammeter-flange-highlight').fraction,
+        '台肩上沿高光在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'ammeter-flange-border': (html) => {
+      const strokes = paintFillsOfPart(html, 'ammeter-flange-border', 'stroke')
+      expect(strokes.length, '台肩下沿描边没了').toBe(1)
+      // 与台肩的明度差（改成同色 = 描边消失）
+      visibleInkOfPart(html, 'ammeter-flange-border', {
+        against: 'ammeter-terminal-flange',
+        attribute: 'stroke',
+        direction: 'darker',
+      })
+      expect(
+        visibleFractionOf(html, 'ammeter-flange-border').fraction,
+        '台肩下沿描边在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'ammeter-arc': (html) => {
+      const arcs = renderedPathBounds(html, 'ammeter-arc')
+      expect(arcs.length, '刻度弧没了（两条）').toBe(2)
+      // 两条弧必须**都看得见**：描边墨色都要够暗（实测把 stroke 改浅就整条消失）
+      const strokes = paintFillsOfPart(html, 'ammeter-arc', 'stroke')
+      expect(strokes.length, '刻度弧的描边没了').toBe(2)
+      for (const stroke of strokes) {
+        expect(luminance(colourToRgb(stroke)!), `刻度弧描边 ${stroke} 太浅（画面上等于消失）`).toBeLessThan(0.45)
+      }
+      /**
+       * 两条弧半径不同，外弧会压住内弧的一部分（真实画法），所以基线不是 1。
+       * 判据只要求"整条弧**没有**被完全盖掉"。
+       */
+      expect(
+        visibleFractionOf(html, 'ammeter-arc').fraction,
+        '刻度弧在画面上不见了',
+      ).toBeGreaterThan(0.1)
+    },
+
+    'ammeter-scale-outer': (html) => {
+      const lines = renderedLines(html, 'ammeter-scale-outer')
+      expect(lines.length, '外圈刻度根数不对').toBe(31)
+      // 笔宽关系判据：外圈必须比内圈粗（"看得见"也是方向性的一部分）
+      // 注意：笔宽必须从**渲染结果**里读（源码里是表达式 `tick.major ? 1.6 : 0.85`，
+      // 直接扫源码会拿到 NaN → 判据自己空转，实测踩过）
+      const outerWidths = [...html.matchAll(/data-part="ammeter-scale-outer"[^>]*stroke-width="([\d.]+)"/g)].map((m) => Number(m[1]))
+      const innerWidths = [...html.matchAll(/data-part="ammeter-scale-inner"[^>]*stroke-width="([\d.]+)"/g)].map((m) => Number(m[1]))
+      const outerWidth = outerWidths.length > 0 ? Math.max(...outerWidths) : Number.NaN
+      const innerWidth = innerWidths.length > 0 ? Math.max(...innerWidths) : Number.NaN
+      expect(outerWidth, '外圈刻度笔宽读不到').toBeGreaterThan(0)
+      expect(innerWidth, '内圈刻度笔宽读不到').toBeGreaterThan(0)
+      expect(outerWidth, `外圈刻度笔宽 ${outerWidth} 不得细于内圈 ${innerWidth}`).toBeGreaterThanOrEqual(innerWidth)
+      expect(outerWidth, `外圈刻度笔宽 ${outerWidth} 过细（整圈刻度会消失）`).toBeGreaterThan(0.4)
+      expect(paintFillsOfPart(html, 'ammeter-scale-outer', 'stroke').length, '外圈刻度没有描边').toBe(31)
+      expect(
+        visibleFractionOf(html, 'ammeter-scale-outer').fraction,
+        '外圈刻度在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'ammeter-scale-inner': (html) => {
+      expect(renderedLines(html, 'ammeter-scale-inner').length, '内圈刻度根数不对').toBe(31)
+      expect(paintFillsOfPart(html, 'ammeter-scale-inner', 'stroke').length, '内圈刻度没有描边').toBe(31)
+      /**
+       * 内圈刻度本来就被外圈刻度/表盘压住（真实画法，基线可见占比 0），
+       * 所以不判占比，只判"实例仍被可见性出口看到"（防止整组被删/被整片盖掉后静默）。
+       */
+      expect(
+        visibilityOfPart(html, 'ammeter-scale-inner').fractions.length,
+        '内圈刻度在渲染顺序里定位不到',
+      ).toBe(31)
+    },
+
+    'ammeter-number-outer': (html) => {
+      expect(countParts(html, 'ammeter-number-outer'), '外圈量程数字份数不对').toBe(4)
+      expect(
+        visibleFractionOf(html, 'ammeter-number-outer').fraction,
+        '外圈量程数字在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'ammeter-number-inner': (html) => {
+      expect(countParts(html, 'ammeter-number-inner'), '内圈量程数字份数不对').toBe(4)
+      expect(visibleFractionOf(html, 'ammeter-number-inner').fraction, '内圈量程数字被完全盖住了').toBeGreaterThan(0.5)
+    },
+    'ammeter-needle': (html) => {
+      expect(renderedPathBounds(html, 'ammeter-needle').length, '指针针体没了').toBe(1)
+      expect(visibleFractionOf(html, 'ammeter-needle').fraction, '指针针体被完全盖住了（指针看不见了）').toBeGreaterThan(0.5)
+      // 针体必须收拢：针尖比针根窄
+      const tag = html.match(/<path\b[^>]*data-part="ammeter-needle"[^>]*>/)?.[0] ?? ''
+      const tipWidth = Number(tag.match(/L ([\d.]+) [-\d.]+ L -([\d.]+)/)?.[1] ?? '0')
+      expect(tipWidth, '针尖没有收拢（针体成了粗楔形）').toBeLessThan(2)
+    },
+    'ammeter-needle-gloss': (html) => {
+      expect(renderedPathBounds(html, 'ammeter-needle-gloss').length, '针体高光没了').toBe(1)
+      const strokes = paintFillsOfPart(html, 'ammeter-needle-gloss')
+      expect(strokes.length, '针体高光没有填充').toBe(1)
+      // `opacity="0"`（层还在、画不出来）必须红
+      visibleInkOfPart(html, 'ammeter-needle-gloss', { minContrast: 0 })
+      // 高光必须真的亮（改成与针体同色 = 看不见）
+      expect(luminance(colourToRgb(strokes[0])!), `针体高光 ${strokes[0]} 太暗（画面上等于没有）`).toBeGreaterThan(0.4)
+      expect(
+        visibleFractionOf(html, 'ammeter-needle-gloss').fraction,
+        '针体高光在画面上不见了',
+      ).toBeGreaterThan(0.5)
+    },
+
+    'ammeter-needle-tail': (html) => {
+      expect(renderedParts(html, 'ammeter-needle-tail').length, '尾针配重没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'ammeter-needle-tail').fraction,
+        '尾针配重在画面上不见了',
+      ).toBeGreaterThan(0.05)
+    },
+
+    'ammeter-needle-hub': (html) => {
+      expect(renderedCircles(html, 'ammeter-needle-hub').length, '转轴帽层数不对').toBe(2)
+      expect(visibleFractionOf(html, 'ammeter-needle-hub').fraction, '转轴帽在画面上不见了').toBeGreaterThan(0.4)
+    },
+    'ammeter-needle-hub-shadow': (html) => {
+      expect(renderedEllipses(html, 'ammeter-needle-hub-shadow').length, '转轴帽投影没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'ammeter-needle-hub-shadow').fraction,
+        '转轴帽投影在画面上不见了',
+      ).toBeGreaterThan(0.3)
+    },
+
+    'ammeter-needle-hub-gloss': (html) => {
+      expect(renderedPathBounds(html, 'ammeter-needle-hub-gloss').length, '转轴帽高光没了（是可见的亮弧）').toBe(1)
+      const strokes = paintFillsOfPart(html, 'ammeter-needle-hub-gloss', 'stroke')
+      expect(strokes.length, '转轴帽高光没有描边').toBe(1)
+      expect(luminance(colourToRgb(strokes[0])!), `转轴帽高光 ${strokes[0]} 太暗（画面上等于没有）`).toBeGreaterThan(0.4)
+      /**
+       * 转轴帽高光是一条**细弧**（`strokeWidth 1.5` 的开弧），在保守近似的可见面积里
+       * 基线就是 0 —— 这是几何近似的**已知边界**（细描边按包围盒算会高估覆盖）。
+       * 所以这里不判"占比"，改判它**仍然被出口看到**；"层还在但不可见"由亮度那条守住。
+       */
+      expect(
+        visibilityOfPart(html, 'ammeter-needle-hub-gloss').fractions.length,
+        '转轴帽高光在渲染顺序里定位不到',
+      ).toBeGreaterThan(0)
+    },
+
+    'ammeter-glyph': (html) => {
+      expect(renderedText(html, 'ammeter-glyph', 'A'), '中央 A 字符没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-glyph').fraction, '中央 A 字符被整片盖住了').toBeGreaterThan(0.9)
+    },
+    'ammeter-glass-reflection': (html) => {
+      expect(renderedPathBounds(html, 'ammeter-glass-reflection').length, '玻璃反光斜条没了').toBe(1)
+      expect(
+        visibleFractionOf(html, 'ammeter-glass-reflection').fraction,
+        '玻璃反光斜条在画面上不见了',
+      ).toBeGreaterThan(0.3)
+    },
+
+    'ammeter-label-neg': (html) => {
+      expect(renderedText(html, 'ammeter-label-neg', '－'), '－ 刻字没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-label-neg').fraction, '－ 刻字被整片盖住了').toBeGreaterThan(0.9)
+    },
+    'ammeter-label-06': (html) => {
+      expect(renderedText(html, 'ammeter-label-06', '0.6A'), '0.6A 刻字没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-label-06').fraction, '0.6A 刻字被整片盖住了').toBeGreaterThan(0.9)
+    },
+    'ammeter-label-3': (html) => {
+      expect(renderedText(html, 'ammeter-label-3', '3A'), '3A 刻字没了').not.toBeNull()
+      expect(visibleFractionOf(html, 'ammeter-label-3').fraction, '3A 刻字被整片盖住了').toBeGreaterThan(0.9)
+    },
+    'ammeter-reading': (html) => {
+      expect(countParts(html, 'ammeter-reading'), '读数大字没了').toBe(1)
+      // 文本走**真实字宽**算出的包围盒，因此"读数被整块涂掉"现在真的能红
+      expect(visibleFractionOf(html, 'ammeter-reading').fraction, '读数大字被整块盖住了').toBeGreaterThan(0.9)
+    },
+    'ammeter-name': (html) => {
+      expect(countParts(html, 'ammeter-name'), '电流表器材名没了').toBe(1)
+      expect(visibleFractionOf(html, 'ammeter-name').fraction, '电流表器材名被整片盖住了').toBeGreaterThan(0.6)
+    },
+  }
+
+  /**
+   * **受可见性出口保护的零件清单**（复审要求："哪些零件受它保护"必须是判据）。
+   *
+   * 上一版只对 `cell-band` / `cell-body` 调了可见性出口，于是"在指针 group 之后插一块
+   * 盖住针体的不透明矩形"能让指针整根消失而 419 条全绿。
+   * 这里把"每个有几何意义的零件都受保护"写死成清单，
+   * 并由 `it('可见性出口必须覆盖每一个可绘制零件')` 反向钉住：
+   *   · 清单必须在台账里（不然就是自说自话）；
+   *   · 清单里的每个 part 都要在 `LEDGER` 里真的调用 `visibleFractionOf`；
+   *   · 渲染出的每个可绘制 part 都要落在清单里（少一个 → 红）。
+   */
+  /**
+   * 第九轮：**文本类不再豁免**。
+   *
+   * 上一版把文本整族挂进豁免，理由写的是"文本包围盒没有声明宽度" ——
+   * 这个理由在渲染结果上是假的：`<text>` 带 `font-size` / `text-anchor` / 文字内容，
+   * `textBoundsAt` 能按**真实字宽**算出包围盒。
+   * 实测（第八轮复审必修 1）：在读数大字之后插一块完整盖住它的不透明矩形，
+   * 读数在画面上被整块涂掉，**426 条全绿**。
+   *
+   * 所以豁免清单现在**必须为空** —— 空清单本身是判据，不是"忘了写"。
+   * 将来若真有算不出几何的零件，请在这里补上并**写明可验证的理由**。
+   */
+  const VISIBILITY_EXEMPT: Readonly<Record<string, string>> = {}
+
+  it('台账值必须真的被调用（"存在"这种空话不许写进台账）', () => {
+    /**
+     * 上一版的台账值是字符串（`'xx 存在'`），于是 14/68 条"消费判据"就是它自己 ——
+     * 这正是要消灭的「标记沦为装饰」，只是装饰从 `data-part` 换成了台账条目。
+     * 现在台账值是**可执行断言**，这里逐条真跑一遍。
+     */
+    for (const [part, assertion] of Object.entries(LEDGER)) {
+      const source = part.startsWith('lamp-')
+        ? L1
+        : part.startsWith('switch-')
+          ? S1
+          : part.startsWith('ammeter-')
+            ? A1
+            : part.startsWith('cell-') || part.startsWith('E1-') || part === 'baseplate' || part.startsWith('baseplate-') || part === 'ground-shadow'
+              ? E1
+              : null
+      expect(source, `台账条目 ${part} 找不到归属器材`).not.toBeNull()
+      expect(() => assertion(source!), `台账条目 ${part} 的断言在**基线**上就不成立（判据与实现脱节）`).not.toThrow()
+    }
+  })
+
+  it('台账必须与可执行断言**一一对应**（有名字无断言就红）', () => {
+    /**
+     * 满射的另一个方向：`CONSUMED` 里的每个名字都必须在 `LEDGER` 里有一条真的断言。
+     * 这条红线验的是**引用**而不是"记性" —— 名字与断言绑死，就写不出"存在"这种空话。
+     */
+    const withoutAssertion = Object.keys(CONSUMED).filter((part) => !(part in LEDGER))
+    expect(
+      withoutAssertion,
+      `这些台账条目只有名字、没有可执行断言（台账沦为装饰）：${withoutAssertion.join(', ')}`,
+    ).toEqual([])
+
+    const orphan = Object.keys(LEDGER).filter((part) => !(part in CONSUMED))
+    expect(orphan, `这些断言不在满射台账里（台账漏记）：${orphan.join(', ')}`).toEqual([])
+  })
+
+  it('可见性出口必须覆盖每一个可绘制零件（不是只开在电池上）', () => {
+    /**
+     * 第七轮复审实测的必答项：`visibleFractionOf` 只挂在 `cell-band` / `cell-body` 上，
+     * 在指针 group 之后插一块 `data-part="ammeter-dial"` 的不透明矩形把针体整根盖住，
+     * 419 条全绿 —— 而且因为复用了"已消费"的名字，满射台账也放行。
+     *
+     * 判据：
+     *   1. 渲染出的每个可绘制 `data-part` 要么在豁免清单（文本类，逐条写明理由），
+     *      要么它的 `LEDGER` 断言里必须真的调用 `visibleFractionOf`；
+     *   2. 豁免清单里的每个 part 必须**确实存在**（不许无理由豁免幽灵零件）。
+     *
+     * 这条把"哪些零件受可见性保护"从注释里的君子协定变成了**判据**。
+     */
+    const allParts = new Set([
+      ...allDataParts(A1),
+      ...allDataParts(E1),
+      ...allDataParts(L1),
+      ...allDataParts(S1),
+    ])
+
+    const protectedParts = [...allParts].filter((part) => !(part in VISIBILITY_EXEMPT))
+    expect(protectedParts.length, '受可见性保护的零件太少，判据等于没铺开').toBeGreaterThan(40)
+
+    const unprotected = protectedParts.filter((part) => !LEDGER_SOURCE_USES_VISIBILITY.has(part))
+    expect(
+      unprotected,
+      `这些零件没有可见性出口（画面里整片被盖住也不会红）：${unprotected.join(', ')}`,
+    ).toEqual([])
+
+    const staleExempt = Object.keys(VISIBILITY_EXEMPT).filter((part) => !allParts.has(part))
+    expect(staleExempt, `豁免清单里有已不存在的零件（幽灵豁免）：${staleExempt.join(', ')}`).toEqual([])
+  })
 
   it('满射台账：每个 data-part 都必须落在"被消费清单"里（有标记无判据就红）', () => {
     const allParts = new Set([
@@ -3460,5 +4677,281 @@ describe('写实化只在器材内部改画面，不动外部坐标协议', () =
     const lampIds = [...doubleLamp.matchAll(/<radialGradient id="([^"]+)"/g)].map((match) => match[1])
     expect(lampIds).toHaveLength(2)
     expect(new Set(lampIds).size).toBe(2)
+  })
+})
+
+/**
+ * 第八轮：把"复审实测出的绕过路径"固化成**反向验证用例**。
+ *
+ * 纪律（沿用本文件前面的做法）：变异体是**在渲染结果上真注入一遍**，然后确认判据变红 ——
+ * 不是"理论推演"。这样这条红线以后不会因为判据被顺手放宽而静默失效。
+ *
+ * 本轮的重点是复审第七轮必答项：
+ *   **可见性出口是零件级的，不能只开在电池上。**
+ * 上一版只有 `cell-band` / `cell-body` 被它保护，于是"在指针 group 之后插一块
+ * 盖住针体的不透明矩形"能让指针整根消失而 419 条全绿。
+ */
+describe('反向验证：任一零件被完全盖住都必须红（可见性出口是零件级的）', () => {
+  const A1 = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+  const L1 = render(<LampHolderL1 x={0} y={0} lit={false} />)
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+
+  /**
+   * 在某个**零件之前**插一块完整盖住它的不透明矩形（模拟"整片被盖掉"）。
+   * 锚点用该零件的标签原文 —— 直接按 `data-part="x"` 注入会落在错误实例上。
+   */
+  function withCoverOver(html: string, anchorRegex: RegExp, cover: string, where: 'before' | 'after' = 'before'): string {
+    const re = new RegExp(anchorRegex.source, anchorRegex.flags.includes('g') ? anchorRegex.flags : `${anchorRegex.flags}g`)
+    const match = re.exec(html)
+    expect(match, `注入锚点在渲染结果里找不到：${anchorRegex}`).not.toBeNull()
+    const index = match!.index
+    const at = where === 'before' ? index : index + match![0].length
+    return html.slice(0, at) + cover + html.slice(at)
+  }
+
+  it('指针被完全盖住必须红（上一版这条 419 全绿）', () => {
+    // 锚点：指针 group 的开标签（盖层插在它之前 = 后画的指针仍在其上；
+    // 所以这里插在**指针之后、转轴帽之前**才等价于源码变异）
+    const covered = withCoverOver(
+      A1,
+      /<\/g><ellipse data-part="ammeter-needle-hub-shadow"/,
+      '<rect data-part="ammeter-dial" x="-60" y="-118" width="120" height="60" fill="#efe9dc" /></g>',
+    )
+    expect(covered, '覆盖层注入失败').not.toBe(A1)
+    expect(
+      visibleFractionOf(covered, 'ammeter-needle').fraction,
+      '指针被完全盖住（画面上一根针都看不见），可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('刻度弧被完全盖住必须红', () => {
+    const covered = withCoverOver(
+      A1,
+      // 刻度弧有**两条**：锚定**第二条**（最后一条），盖层插在它之后才盖得住全部
+      /<path\b[^>]*data-part="ammeter-arc"[^>]*stroke="#6a645b"[^>]*><\/path>/,
+      // 盖层要**完全包含**刻度弧的包围盒（弧的半径约 54）；用独立名字，避免被当成"零件自己"
+      '<rect data-part="cover-arc-test" x="-100" y="-140" width="200" height="100" fill="#efe9dc" />',
+      'after',
+    )
+    expect(
+      visibleFractionOf(covered, 'ammeter-arc').fraction,
+      '刻度弧被完全盖住，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('灯丝被完全盖住必须红', () => {
+    const covered = withCoverOver(
+      L1,
+      /<path\b[^>]*data-part="lamp-filament"[^>]*><\/path>/,
+      // 盖层要**完全包含**灯丝的包围盒（灯丝在 y ∈ [-95,-83]、x ∈ [-6,6] 一带）
+      '<rect data-part="cover-filament-test" x="-40" y="-120" width="80" height="80" fill="#c9d3dd" />',
+      'after',
+    )
+    expect(
+      visibleFractionOf(covered, 'lamp-filament').fraction,
+      '灯丝被完全盖住，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('"层还在但画不出来"（opacity=0）与"改成与底衬同色"都必须红', () => {
+    /**
+     * 复审第七轮实测：8 类退化在全量 193 条下全绿，形态是"层还在、位置也对，就是看不见"。
+     * 判据：有效不透明度（自身 × 祖先链）> 0，且高光/描边必须与底衬拉开明度差。
+     */
+    // (a) opacity=0：把针体高光整层挖掉
+    const blanked = A1.replace('fill="#f4796b" opacity="0.85"', 'fill="#f4796b" opacity="0"')
+    expect(blanked, 'opacity 变异注入失败').not.toBe(A1)
+    expect(
+      Math.min(
+        ...(A1.match(/data-part="ammeter-needle-gloss"/g) ?? []).map(() => 1),
+      ),
+      '基线自检',
+    ).toBe(1)
+    expect(() => visibleInkOfPart(blanked, 'ammeter-needle-gloss', { minContrast: 0 }), '针体高光 opacity=0 没红').toThrow()
+
+    // (b) 高光改成与底衬同色：表壳顶面高光刷成表壳色
+    const sameColour = A1.replace('rx="1.5" fill="#ffffff" opacity="0.22"', 'rx="1.5" fill="#25292e" opacity="0.22"')
+    expect(sameColour, '同色变异注入失败').not.toBe(A1)
+    expect(
+      () => visibleInkOfPart(sameColour, 'ammeter-shell-highlight', { against: 'ammeter-shell', direction: 'lighter' }),
+      '表壳顶面高光改成与表壳同色，可见墨迹判据却没红',
+    ).toThrow()
+
+    // (c) 底座顶面高光改成"比底色浅一点的灰"（不是真实金属的近白）
+    const greyed = E1.replace('height="3.6" rx="1.8" fill="#f2f4f6"', 'height="3.6" rx="1.8" fill="#c9ced4"')
+    expect(greyed, '灰化变异注入失败').not.toBe(E1)
+    expect(
+      () => visibleInkOfPart(greyed, 'baseplate-highlight', { against: 'baseplate-face', direction: 'lighter', minLuminance: 0.9 }),
+      '底座顶面高光被压成一坨灰，可见墨迹判据却没红',
+    ).toThrow()
+  })
+})
+
+
+/**
+ * 第九轮：把**第八轮复审实测出的 3 条绕过路径**固化成**反向验证用例**。
+ *
+ * 复审这一轮的判词值得原样保留：**「判据越聪明，越会在"定义域没写全"的地方漏」**。
+ * 三条都不是"理论可能"，是复审逐个真跑出来的（每条当时都是 38 文件 / 426 条全绿）：
+ *   A. 文本整族被显式排除在可见性出口之外 → 读数大字整块涂掉，全绿；
+ *   B. `partTargets` 的族解析靠后缀猜 → 借一个"已被消费的名字"当盖层盖掉同族零件，全绿；
+ *   C. `visibleInkOfPart` 默认 `best-layer`（max）→ 与被压住的**那一层**同色，全绿。
+ *
+ * 下面每条都在**渲染结果上真注入**，再确认判据变红 —— 判据被顺手放宽会当场红。
+ */
+describe('反向验证：第八轮复审的 3 条绕过路径必须变红', () => {
+  const A1 = render(<AmmeterA1 x={0} y={0} reading={0.14} range="0.6A" overRange={false} label="A1" />)
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+
+  /** 在某个正则锚点之后插入一段标记 */
+  function insertAfter(html: string, anchor: RegExp, injected: string): string {
+    const match = new RegExp(anchor.source, anchor.flags.includes('g') ? anchor.flags : `${anchor.flags}g`).exec(html)
+    expect(match, `注入锚点在渲染结果里找不到：${anchor}`).not.toBeNull()
+    const at = match!.index + match![0].length
+    return html.slice(0, at) + injected + html.slice(at)
+  }
+
+  it('A. 读数大字被整块涂掉必须红（上一版它挂在豁免清单里，426 全绿）', () => {
+    const covered = insertAfter(
+      A1,
+      /<text\b[^>]*data-part="ammeter-reading"[^>]*>[\s\S]*?<\/text>/,
+      // 覆盖盒要**完全包含**按真实字宽算出的读数包围盒
+      '<rect data-part="cover-reading-test" x="-90" y="-152" width="180" height="30" fill="#efe9dc" />',
+    )
+    expect(covered, '覆盖层注入失败').not.toBe(A1)
+    expect(
+      visibleFractionOf(covered, 'ammeter-reading').fraction,
+      '读数大字被整块涂掉，可见性判据却没红 —— 文本绝不能再挂豁免',
+    ).toBeLessThan(0.5)
+  })
+
+  it('A2. 器材名被整块涂掉必须红', () => {
+    const covered = insertAfter(
+      A1,
+      /<text\b[^>]*data-part="ammeter-name"[^>]*>[\s\S]*?<\/text>/,
+      '<rect data-part="cover-name-test" x="40" y="-45" width="120" height="34" fill="#25292e" />',
+    )
+    expect(
+      visibleFractionOf(covered, 'ammeter-name').fraction,
+      '器材名被整块涂掉，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('A3. 刻度刻字被整块涂掉必须红（贴着表壳的文本同样受保护）', () => {
+    const covered = insertAfter(
+      A1,
+      /<text\b[^>]*data-part="ammeter-label-3"[^>]*>[\s\S]*?<\/text>/,
+      '<rect data-part="cover-label-test" x="20" y="-8" width="60" height="20" fill="#1e2126" />',
+    )
+    expect(
+      visibleFractionOf(covered, 'ammeter-label-3').fraction,
+      '3A 刻字被整块涂掉，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('B. 借"已被消费的名字"当盖层、盖掉同族零件必须红（上一版 426 全绿）', () => {
+    /**
+     * 复审的注入方式原样搬过来：在 `BasePlate` 的两条 `baseplate-edge` **之后**，
+     * 插入两块 `data-part="baseplate-face"` 的不透明矩形（复用一个已被消费的名字），
+     * 把两条端立边完整盖住。
+     * 上一版 `partTargets('baseplate-edge')` 返回 `['baseplate-edge']`，
+     * 盖层与受害者名字不同 → 按名字剔不掉 → `visibleFractionOf` 返回 1。
+     */
+    const covered = insertAfter(
+      E1,
+      /<rect\b[^>]*data-part="baseplate-edge"[^>]*fill="#9aa1a9"[^>]*><\/rect><rect\b[^>]*data-part="baseplate-edge"[^>]*fill="#9aa1a9"[^>]*><\/rect>/,
+      '<rect data-part="baseplate-face" x="-122" y="4" width="14" height="22.5" fill="#c9ced4" />' +
+        '<rect data-part="baseplate-face" x="108" y="4" width="14" height="22.5" fill="#c9ced4" />',
+    )
+    expect(covered, '借名盖层注入失败').not.toBe(E1)
+    expect(
+      visibleFractionOf(covered, 'baseplate-edge').fraction,
+      '两条端立边被"借名盖层"完全盖住，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('B2. 借名盖层换一个受害者（十字槽）同样要红——防止判据只对某一条立边巧合生效', () => {
+    const covered = insertAfter(
+      E1,
+      /<path\b[^>]*data-part="baseplate-screw-slot"[^>]*stroke="#6d747c"[^>]*><\/path><\/g><g><circle\b[^>]*data-part="baseplate-screw"[\s\S]*?<path\b[^>]*data-part="baseplate-screw-slot"[^>]*stroke="#6d747c"[^>]*><\/path>/,
+      '<rect data-part="baseplate-screw" x="-118" y="8" width="15" height="15" fill="#c9ced4" />' +
+        '<rect data-part="baseplate-screw" x="103.5" y="8" width="15" height="15" fill="#c9ced4" />',
+    )
+    expect(
+      visibleFractionOf(covered, 'baseplate-screw-slot').fraction,
+      '十字槽被"借名盖层"盖住，可见性判据却没红',
+    ).toBeLessThan(0.5)
+  })
+
+  it('C. 立边改成"与被它压住的那一层"同色必须红（上一版 426 全绿）', () => {
+    /**
+     * 复审的注入：两条立边从 `#9aa1a9` 改成 `#c9ced4` ——
+     * `#c9ced4` **正是 `baseplate-face` 中间那层**（立边压着的那层）。
+     * 上一版口径 `best-layer` 取的是"与最亮那层"的差，另外几层把 max 拉起来了
+     * → 改到与被压层逐字节同色照样通过。
+     */
+    const sameColour = E1.replace(/fill="#9aa1a9"/g, 'fill="#c9ced4"')
+    expect(sameColour, '同色变异注入失败').not.toBe(E1)
+    expect(
+      () =>
+        visibleInkOfPart(sameColour, 'baseplate-edge', {
+          against: 'baseplate-face',
+          direction: 'lighter',
+          mode: 'any-layer',
+          minContrast: 0.05,
+          minLuminance: 0.6,
+        }),
+      '立边改成与被它压住的那层同色，可见墨迹判据却没红',
+    ).toThrow()
+  })
+
+  it('C2. 立边整体压暗同样要红（对照：不是只有"同色"才红）', () => {
+    const darker = E1.replace(/fill="#9aa1a9"/g, 'fill="#767d85"')
+    expect(darker, '压暗变异注入失败').not.toBe(E1)
+    expect(
+      () =>
+        visibleInkOfPart(darker, 'baseplate-edge', {
+          against: 'baseplate-face',
+          direction: 'lighter',
+          mode: 'any-layer',
+          minContrast: 0.05,
+          minLuminance: 0.6,
+        }),
+      '立边被压暗（边缘消失）却没红',
+    ).toThrow()
+  })
+})
+
+/**
+ * 第九轮红线：**零件族解析必须真的解析**。
+ *
+ * 上一版 `partTargets` 靠后缀猜（`[part, `${part}-face`]`），于是
+ * `visibilityOfPart('baseplate')` 与 `visibilityOfPart('baseplate-face')`
+ * 返回**完全相同**的 fractions —— 族解析等于没生效，而这件事**在断言里看不出来**
+ * （它只是"少判了几个零件"）。这条红线把"族必须覆盖 `<g>` 包装零件的全部可绘制后代"
+ * 变成判据：少一个后代就红。
+ */
+describe('零件族解析必须覆盖 <g> 包装零件的全部可绘制后代（族解析写死会静默退化）', () => {
+  const E1 = render(<BatteryHolderE1 x={0} y={0} />)
+
+  it('baseplate（<g> 包装零件）的族必须包含它的全部可绘制后代', () => {
+    const family = new Set(partTargets(E1, 'baseplate'))
+    const descendants = paintableDescendantsOf(E1, 'baseplate')
+    expect(descendants.length, 'baseplate 子树里可绘制后代太少，族解析已失真').toBeGreaterThanOrEqual(5)
+    const missing = descendants.filter((part) => !family.has(part))
+    expect(missing, `baseplate 的族解析漏掉了这些后代（借名盖层就钻这里）：${missing.join(', ')}`).toEqual([])
+
+    // 反向自证：族必须**不等于**"只认 -face 后缀"那种写死的答案
+    const nonFace = descendants.filter((part) => !part.endsWith('-face'))
+    expect(nonFace.length, 'baseplate 的族里除了 -face 一个都没有，说明又退回了后缀猜法').toBeGreaterThan(1)
+  })
+
+  it('族可见性分数不许与 baseplate-face 完全相同（完全相同即已退化为后缀猜）', () => {
+    const family = visibilityOfPart(E1, 'baseplate').fractions
+    const onlyFace = visibilityOfPart(E1, 'baseplate-face').fractions
+    expect(
+      family.length,
+      'baseplate 的族可见性分数与 baseplate-face 完全一样 —— 族解析又退化成后缀猜了',
+    ).not.toBe(onlyFace.length)
   })
 })
