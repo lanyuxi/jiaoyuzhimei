@@ -60,17 +60,41 @@ describe('无限画布相机', () => {
     expect(camera.scale).toBeCloseTo(CANVAS_MIN_SCALE, 6)
   })
 
-  it('平移是自由的（无限画布），但不会把内容整体拖出屏幕', () => {
-    const far = panBy({ scale: 1, x: 0, y: 0 }, 100000, 100000, stage)
-    expect(far.x).toBeLessThan(100000)
-    expect(far.x).toBeGreaterThan(0)
-    const back = panBy(far, -100000, -100000, stage)
-    expect(back.x).toBe(-7680)
-    expect(back.y).toBe(-4320)
-    // 反向平移回到原点附近时相机可还原
-    const home = panBy({ scale: 1, x: 320, y: -240 }, 0, 0, stage)
-    expect(home.x).toBe(320)
-    expect(home.y).toBe(-240)
+  it('平移是**无限**的：没有任何屏幕/画布边界会把它挡住', () => {
+    /**
+     * 需求原话：「现在我的实验器材无法自由的拖动到任意位置，
+     * 比如拖动靠近边沿就无法拖动了，并不是无限画布」。
+     *
+     * 旧实现在这里会命中 `CANVAS_OFFSET_MARGIN`（1375 宽视口下 8250px），
+     * 也就是"往一个方向最多推 6 屏"—— 手感就是"拖到边沿拖不动了"。
+     * 现在平移量不许被任何常数夹住（只有远在人类操作之外的浮点护栏）。
+     */
+    let camera: Camera = { scale: 1, x: 0, y: 0 }
+    for (let i = 0; i < 50; i += 1) camera = panBy(camera, 5000, -5000, stage)
+    expect(camera.x).toBe(250000)
+    expect(camera.y).toBe(-250000)
+    // 再往里推 100 万像素仍然照走不误
+    const further = panBy(camera, 1_000_000, 1_000_000, stage)
+    expect(further.x).toBe(1_250_000)
+    expect(further.y).toBe(750_000)
+    // 而且可以精确还原回原点（往返不丢位移）
+    const home = panBy(camera, -250000, 250000, stage)
+    expect(home.x).toBe(0)
+    expect(home.y).toBe(0)
+  })
+
+  it('平移量只受浮点护栏保护：非有限值归零，超精度上限停在护栏上', () => {
+    // `camera.x + dx === camera.x` 会让平移在数值上卡死；护栏远在任何人类操作之外
+    expect(panBy({ scale: 1, x: 0, y: 0 }, Number.POSITIVE_INFINITY, 10, stage).x).toBe(0)
+    expect(panBy({ scale: 1, x: 0, y: 0 }, 10, Number.NaN, stage).y).toBe(0)
+    expect(panBy({ scale: 1, x: 0, y: 0 }, 1e12, 0, stage).x).toBe(1e9)
+  })
+
+  it('缩放后仍然可以无限平移（缩放不会重新把平移夹住）', () => {
+    const zoomed = zoomAt({ scale: 1, x: 0, y: 0 }, 6, { x: 100, y: 100 }, stage)
+    const moved = panBy(zoomed, 400000, -400000, stage)
+    expect(moved.x).toBeCloseTo(zoomed.x + 400000, 6)
+    expect(moved.y).toBeCloseTo(zoomed.y - 400000, 6)
   })
 
   it('画布坐标与屏幕坐标可互相还原', () => {

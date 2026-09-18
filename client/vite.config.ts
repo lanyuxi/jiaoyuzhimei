@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { compression } from 'vite-plugin-compression2'
@@ -40,5 +40,11 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['buffer'],
+  },
+  test: {
+    // 交互类回归（空格+拖动平移、滚轮缩放）需要真实 DOM 事件与 getBoundingClientRect，
+    // 因此给这些文件开 happy-dom；其余测试仍是默认的 node 环境。
+    // 具体哪个文件用哪个环境由文件头的 `@vitest-environment` 注释决定。
+    setupFiles: ['./src/test/setup.ts'],
   },
 })

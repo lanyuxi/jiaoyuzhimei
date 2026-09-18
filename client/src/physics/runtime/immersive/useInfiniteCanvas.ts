@@ -94,8 +94,14 @@ function localPoint(stage: HTMLElement | null, clientX: number, clientY: number)
 /**
  * 无限画布交互：滚轮缩放、拖动平移、双指捏合、聚焦内容。
  *
- * 平移手势只在「空白处 / 空格或中键按下」时生效，
- * 这样接线柱等元件的拖拽不会被画布平移抢走。
+ * 平移手势的触发条件（用户明确要求的两条）：
+ *   1. **按住空格 + 按住鼠标左键拖动** —— 无论指针停在画布哪一层
+ *      （SVG 上、器材上、导线上都算），一律平移画布；
+ *   2. 中键 / 右键拖动 —— 鼠标用户的快捷方式，同样不看指针在哪一层。
+ *
+ * ⚠️ 「指针落在 `svg` 上就不算平移」这条旧判据在本实验台里**等于"无法平移"**：
+ * 场景的 `<svg>` 是铺满整个舞台的（见 `CompetitorScene`），
+ * 屏幕上根本没有"svg 之外"的空白区域。
  */
 export function useInfiniteCanvas({
   stageRef,
@@ -109,6 +115,14 @@ export function useInfiniteCanvas({
   const [camera, setCamera] = useState<Camera>(IDENTITY_CAMERA)
   const [panReady, setPanReady] = useState(false)
   const panRef = useRef<{ pointerId: number; x: number; y: number; moved: boolean } | null>(null)
+  /**
+   * `panReady` 的**事件回调可读镜像**。
+   *
+   * 捕获阶段的 `pointerdown` 挂在原生 DOM 上，闭包与 React 状态更新的时序不保证；
+   * 直接读 state 可能读到过期的 `false`，表现为"按了空格第一次拖动没反应"。
+   */
+  const panReadyRef = useRef(panReady)
+  panReadyRef.current = panReady
   const pinchRef = useRef<Map<number, Position>>(new Map())
   const pinchDistanceRef = useRef<number | null>(null)
   const cameraRef = useRef(camera)
@@ -233,15 +247,23 @@ export function useInfiniteCanvas({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentKey, size.width, size.height, padding, focus])
 
-  // 空格键进入平移模式
+  /**
+   * 空格键进入平移模式（= 按住鼠标左键即可任意拖动无限画布）。
+   *
+   * 三个细节都不能少：
+   *   1. **不排除 `event.repeat`**：按住空格浏览器会连发 keydown，统一"按下即置位"，
+   *      靠 keyup / blur / pointerup 复位；
+   *   2. **`preventDefault`**：空格默认会滚动页面、激活聚焦的按钮，
+   *      在沉浸式实验台里会让画布"跳"一下；
+   *   3. **失焦 / 松手都复位**：否则松开空格后画布仍是"抓着"的状态。
+   */
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.code === 'Space' && !event.repeat) {
-        const target = event.target as HTMLElement | null
-        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return
-        event.preventDefault()
-        setPanReady(true)
-      }
+      if (event.code !== 'Space') return
+      const target = event.target as HTMLElement | null
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return
+      event.preventDefault()
+      setPanReady(true)
     }
     const onKeyUp = (event: KeyboardEvent) => {
       if (event.code === 'Space') setPanReady(false)
@@ -280,15 +302,71 @@ export function useInfiniteCanvas({
     )
   }, [])
 
+  /**
+   * 尝试认领一次平移手势。返回是否认领成功。
+   *
+   * 判据只看「按键 + 是否按着空格」，**不看指针落在哪一层**：
+   *   · 旧判据里的 `target.closest('svg') === null`（"只有空白处才能平移"）
+   *     在本实验台上是致命的 —— `<svg>` 铺满整个舞台，屏幕上不存在"空白处"，
+   *     空格 + 左键、甚至中键拖动都会被它挡掉，画布完全不能平移；
+   *   · 悬浮控件（工具条 / 读数条 / 胶囊组）自己带 `data-canvas-pan-block`，
+   *     点它们不该变成拖画布，否则按钮会"点不动"。
+   *
+   * 认领动作 = 记下令牌 + 在**舞台**上捕获指针。
+   */
+  const beginPan = useCallback(
+    (event: { pointerId: number; clientX: number; clientY: number; button: number; target: EventTarget | null }) => {
+      const target = event.target as (HTMLElement & { closest?: (selector: string) => Element | null }) | null
+      const onInteractive = target?.closest?.('[data-canvas-pan-block]') != null
+      const wantsPan = event.button === 1 || event.button === 2 || (event.button === 0 && panReadyRef.current)
+      if (!wantsPan || onInteractive || panRef.current !== null) return false
+      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
+      /**
+       * 在**舞台**上捕获指针（而不是 `event.target`）。
+       *
+       * 舞台是所有交互子树的祖先：在它上面捕获之后，后续 `pointermove`
+       * 一定经过舞台，画布手势层（舞台的后代）因此必然收得到；
+       * 场景侧的器材 / 接线柱 / 导线手柄都在舞台**里面**，
+       * 它们各自再捕获也改变不了"事件仍会经过舞台"这一事实。
+       */
+      const captureTarget = stageRef.current
+      if (captureTarget !== null && typeof captureTarget.setPointerCapture === 'function') {
+        try {
+          captureTarget.setPointerCapture(event.pointerId)
+        } catch {
+          // 少数环境（含无头 DOM）不支持捕获；没有它也能靠舞台上的事件继续平移
+        }
+      }
+      return true
+    },
+    [stageRef],
+  )
+
+  /**
+   * 捕获阶段的 `pointerdown`：本实验台里**真正的**平移入口。
+   *
+   * 必须走捕获阶段：舞台里的手势容器是所有交互子树的共同祖先，
+   * 冒泡阶段一定最后才轮到它；而器材手柄 / 接线柱 / 导线折点各自在
+   * `pointerdown` 里 `setPointerCapture` 并 `stopPropagation` ——
+   * 冒泡到画布层时事件早被掐断，按住空格拖器材就不会平移画布。
+   *
+   * 捕获阶段方向相反（祖先先收到）：这里认领后立刻 `stopPropagation`，
+   * 场景侧的按钮 / 器材完全收不到这次按下 —— "按住空格拖动"永远是平移画布。
+   */
+  const onPointerDownCapture = useCallback(
+    (event: globalThis.PointerEvent) => {
+      pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
+      if (!beginPan(event)) return
+      event.stopPropagation()
+    },
+    [beginPan],
+  )
+
   const handlers = {
+    /** 冒泡阶段的兜底：正常情况下已经被捕获阶段的 `onPointerDownCapture` 认领 */
     onPointerDown: (event: PointerEvent<HTMLElement>) => {
       pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
-      const target = event.target as HTMLElement
-      const onInteractive = target.closest('[data-canvas-pan-block]') !== null
-      const wantsPan = event.button === 1 || event.button === 2 || panReady || target.closest('svg') === null
-      if (!wantsPan || onInteractive || panRef.current !== null) return
-      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
-      event.currentTarget.setPointerCapture(event.pointerId)
+      beginPan(event)
     },
     onPointerMove: (event: PointerEvent<HTMLElement>) => {
       if (pinchRef.current.has(event.pointerId)) {
@@ -314,6 +392,14 @@ export function useInfiniteCanvas({
       pan.x = event.clientX
       pan.y = event.clientY
       setCamera((current) => panBy(current, dx, dy, sizeRef.current))
+      /**
+       * 本次手势已由画布认领 → **掐断冒泡**，不让场景侧"监听 `pointermove`
+       * 的手柄"（例如导线折点）在没收到 `pointerdown` 时也动起来。
+       *
+       * 位置关键：必须在**冒泡阶段这里**截断。若挪到捕获阶段（挂在舞台），
+       * 会连画布自己的这条记账路径一起掐掉，表现为"点了空格反而完全不能平移"。
+       */
+      event.stopPropagation()
     },
     onPointerUp: (event: PointerEvent<HTMLElement>) => {
       pinchRef.current.delete(event.pointerId)
@@ -322,6 +408,12 @@ export function useInfiniteCanvas({
       if (pan === null || pan.pointerId !== event.pointerId) return
       if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
       panRef.current = null
+      /**
+       * 松开指针时按下的空格可能已经先松了（keyup 先到），
+       * 这里再显式复位一次，避免"画布还抓着"的黏连状态。
+       */
+      if (event.button === 0) setPanReady(false)
+      if (pan.moved) event.stopPropagation()
     },
     onPointerCancel: (event: PointerEvent<HTMLElement>) => {
       pinchRef.current.delete(event.pointerId)
@@ -340,8 +432,20 @@ export function useInfiniteCanvas({
     const stage = stageRef.current
     if (stage === null) return
     // 手动注册非 passive 的 wheel 监听，才能 preventDefault 阻止页面缩放
+    /**
+     * **鼠标滚轮缩放**（用户明确要求："需要支持我的鼠标滚轮对页面进行放大和缩小"）。
+     *
+     * 为什么必须在原生 DOM 上手动注册、而不能只用 React 的 `onWheel`：
+     * React 19 把 `wheel` 委托成 **passive** 监听，`preventDefault()` 会被忽略，
+     * 页面（以及外层容器）会同时滚动/缩放。这里用 `{ passive: false }` 显式注册，
+     * 才能真正"只有画布缩放、页面不动"。
+     *
+     * 缩放锚点取**指针位置**：指针指着的那个画布点在缩放前后停在同一个屏幕位置，
+     * 这是鼠标滚轮与触控板双指缩放都符合直觉的行为。
+     */
     const onWheel = (event: WheelEvent) => {
       event.preventDefault()
+      event.stopPropagation()
       const anchor = localPoint(stageRef.current, event.clientX, event.clientY)
       setCamera((current) => zoomFromWheel(current, event.deltaY, anchor, sizeRef.current))
     }
@@ -350,11 +454,16 @@ export function useInfiniteCanvas({
     }
     stage.addEventListener('wheel', onWheel, { passive: false })
     stage.addEventListener('contextmenu', onContextMenu)
+    /**
+     * 空格 / 中键 / 右键拖动 —— 必须挂在**捕获阶段**（见 `onPointerDownCapture` 注释）。
+     */
+    stage.addEventListener('pointerdown', onPointerDownCapture, { capture: true })
     return () => {
       stage.removeEventListener('wheel', onWheel)
       stage.removeEventListener('contextmenu', onContextMenu)
+      stage.removeEventListener('pointerdown', onPointerDownCapture, { capture: true })
     }
-  }, [stageRef])
+  }, [stageRef, onPointerDownCapture])
 
   return { camera, size, panReady, resetView, zoomBy, fitToContent, toCanvasPoint, toScreenPoint, handlers }
 }

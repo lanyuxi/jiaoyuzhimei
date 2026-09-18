@@ -337,21 +337,33 @@ describe('界面必须给出「全屏画布」与「收回器材」的可见入�
     expect(render()).not.toContain('在屏幕外')
   })
 
-  it('场景在拖动松手时确实接上了可见性校验（而不是只定义了纯函数）', async () => {
+  it('场景保留了「全部收回」的能力（visibleRect 仍在，只是不再参与拖动）', async () => {
+    /**
+     * 语义在本轮升级过：`visibleRect` 从"拖动的每帧门禁"降级为
+     * 「全部收回」按钮与浮层提示的数据源。
+     *
+     * 拖动不读可见范围，是为了满足 Issue #20 的「器材可以自由拖动到任意位置」；
+     * 但"器材被拖到屏幕外之后能一键找回来"这条能力必须保留，
+     * 所以 `visibleRect` 与 `rescueAllComponents` 都还在。
+     */
     const source = await import('node:fs').then((fs) =>
       fs.readFileSync(new URL('./CompetitorScene.tsx', import.meta.url), 'utf8'),
     )
-    // 场景必须把 visibleRect 传给拖动逻辑，否则收回逻辑永远不会被触发
-    expect(source).toContain('visibleRect,')
-    // 拖动逻辑必须在松手时调用 rescueComponent
+    expect(source, '「全部收回」入口没了，学生把器材拖出屏幕后找不回来').toContain('rescueAllComponents')
+    expect(source).toContain('visibleRect()')
     const dragSource = await import('node:fs').then((fs) =>
       fs.readFileSync(new URL('./useLabLayoutDrag.ts', import.meta.url), 'utf8'),
     )
-    expect(dragSource).toContain('rescueComponent')
-    // 松手校验必须用 setLayout 的函数式更新拿最新布局，
+    // 拖动必须仍走 `clampComponentWithinView`（防丢失兜底那一层）
+    expect(dragSource).toContain('clampComponentWithinView')
+    // 每帧 setLayout 必须用函数式更新拿最新布局，
     // 而不是在渲染期写 ref（那是 React 明确禁止的写法）
     expect(dragSource).toContain('setLayout((current) =>')
     expect(dragSource).not.toContain('layoutRef.current = layout')
+    // 松手不得再强制收回（松手即终态）
+    const endIndex = dragSource.indexOf('const endComponent = useCallback(')
+    expect(endIndex).toBeGreaterThan(-1)
+    expect(dragSource.slice(endIndex, endIndex + 1200)).not.toContain('rescueComponent')
   })
 })
 
