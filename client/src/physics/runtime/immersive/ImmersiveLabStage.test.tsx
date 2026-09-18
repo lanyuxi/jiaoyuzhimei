@@ -15,6 +15,13 @@ import InfiniteCanvas from './InfiniteCanvas'
 import { fitContent } from './canvas'
 import { getTextbookExperimentTarget } from '../../catalogState'
 
+/** 真 class token 判定：只看 class="…" 属性值，按空白切分后精确匹配 */
+function hasClass(rawTag: string, token: string): boolean {
+  const match = rawTag.match(/class\s*=\s*"([^"]*)"/i) ?? rawTag.match(/class\s*=\s*'([^']*)'/i)
+  if (!match) return false
+  return match[1].split(/\s+/).includes(token)
+}
+
 describe('沉浸式实验详情页外壳', () => {
   function renderStage(children = <div data-testid="scene" />) {
     return renderToString(
@@ -60,8 +67,9 @@ describe('沉浸式实验详情页外壳', () => {
     // 外壳根节点必须自带禁选（不依赖样式表加载顺序）
     const rootTag = html.slice(0, html.indexOf('>') + 1)
     expect(rootTag).toContain('data-immersive-lab')
-    expect(rootTag).toContain('select-none')
-    expect(rootTag).not.toContain('select-text')
+    // 必须是真的 class token，而不是「某个属性值里恰好含 select-none 子串」
+    expect(hasClass(rootTag, 'select-none'), '外壳根节点缺少 select-none 类（真类名，不是属性值里的子串）').toBe(true)
+    expect(hasClass(rootTag, 'select-text'), '外壳根节点不得放开文字选中').toBe(false)
   })
 })
 
