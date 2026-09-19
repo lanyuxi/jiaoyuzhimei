@@ -76,6 +76,19 @@ function releaseRedirect() {
  */
 let fallbackTarget: Element | null = null
 
+/**
+ * ⚠️ 每次挂载都必须把模块级的派发落点**重置干净**。
+ *
+ * `fallbackTarget` 是模块级可变状态，如果不重置就会指向上一次（已卸载）的
+ * 手势层；那时 `dispatchPointer` 会把事件派发给一个**已脱离文档的节点**，
+ * 事件不会冒泡到任何在册监听器 —— 表现为"某些用例单独跑绿、按某种顺序跑就红"，
+ * 也就是测试顺序依赖。所有 mount 辅助函数都必须先调用它。
+ */
+function resetDispatchState() {
+  fallbackTarget = null
+  releaseRedirect()
+}
+
 function dispatchPointer(type: string, init: PointerEventInit) {
   const actual = redirectTarget ?? fallbackTarget ?? document.body
   const event = pointerEvent(type, init)
@@ -142,7 +155,7 @@ function mount(): Harness {
 
   const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
   patchPointerCapture(gestureLayer)
-  releaseRedirect()
+  resetDispatchState()
   fallbackTarget = gestureLayer
 
   const world = stage.querySelector('[style*="translate3d"]') as HTMLElement
@@ -868,7 +881,7 @@ describe('拖器材期间画布不得被"捏合"误缩放（审查必修：认�
     const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
     stubRect(stage, SIZE.width, SIZE.height)
     patchPointerCapture(stage)
-    releaseRedirect()
+    resetDispatchState()
     act(() => {
       window.dispatchEvent(new Event('resize'))
     })
@@ -980,7 +993,7 @@ describe('空格粘住状态的逃生阀（审查 info 项）', () => {
     const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
     stubRect(stage, SIZE.width, SIZE.height)
     patchPointerCapture(stage)
-    releaseRedirect()
+    resetDispatchState()
     act(() => {
       window.dispatchEvent(new Event('resize'))
     })
@@ -1077,7 +1090,7 @@ describe('空格连续性：慢速拖动也必须被识别为"拖动"（审查�
     const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
     stubRect(stage, SIZE.width, SIZE.height)
     patchPointerCapture(stage)
-    releaseRedirect()
+    resetDispatchState()
     act(() => {
       window.dispatchEvent(new Event('resize'))
     })
