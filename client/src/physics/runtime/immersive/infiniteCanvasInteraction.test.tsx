@@ -85,6 +85,16 @@ let fallbackTarget: Element | null = null
  * 也就是测试顺序依赖。所有 mount 辅助函数都必须先调用它。
  */
 function resetDispatchState() {
+  /**
+   * ⚠️ 其中 `fallbackTarget = null` 目前是**冗余**的：
+   * 每个 mount 辅助函数在调用它之后都会立刻 `fallbackTarget = gestureLayer`。
+   *
+   * 保留它的价值不在"修了什么"，而在把"不清状态"从**靠每个用例自觉**
+   * 变成**挂载时强制** —— 真正起作用的半边是 `releaseRedirect()`。
+   *
+   * 也就是说：删掉整行不会让任何判据变红（已实测），
+   * 它是**防御性**代码，不是"被测试覆盖的行为"。
+   */
   fallbackTarget = null
   releaseRedirect()
 }
@@ -1211,6 +1221,114 @@ describe('空格连续性：慢速拖动也必须被识别为"拖动"（审查�
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
     })
+    h.unmount()
+  })
+})
+
+describe('双指 pointercancel 必须真的清掉捏合状态（审查遗留建议：M12 无判据）', () => {
+  /**
+   * 审查员实测：单指的 `pointercancel` 判据**走不到捏合分支**
+   * （`pinchRef` 要 `size === 2` 才生效），所以"`onPointerCancel` 有没有清理
+   * `pinchRef`"这件事**此前无判据守着**。
+   *
+   * 这里用**双指**构造：两指按下（登记进 `pinchRef`）→ `pointercancel` 一指 →
+   * 再按新的一指 → `pinchRef` 必须仍是 1（清理生效），不能凑成两指而误缩放。
+   */
+  function mountPlain(): { gestureLayer: HTMLElement; scale(): number; unmount(): void } {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const stageRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement>()
+    const root = createRoot(host)
+    act(() => {
+      root.render(
+        <InfiniteCanvas
+          stageRef={stageRef}
+          content={{ minX: 0, minY: 0, maxX: 400, maxY: 300 }}
+          tilt={0}
+          showToolbar={false}
+        >
+          <div />
+        </InfiniteCanvas>,
+      )
+    })
+    const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
+    stubRect(stage, SIZE.width, SIZE.height)
+    patchPointerCapture(stage)
+    resetDispatchState()
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
+    patchPointerCapture(gestureLayer)
+    fallbackTarget = gestureLayer
+    return {
+      gestureLayer,
+      scale: () => {
+        const t = (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform
+        return Number(t.match(/scale\(([-\d.]+)\)/)?.[1] ?? Number.NaN)
+      },
+      unmount: () => act(() => root.unmount()),
+    }
+  }
+
+  function multiPointer2(type: string, id: number, x: number, y: number): PointerEvent {
+    const event = new Event(type, { bubbles: true, cancelable: true }) as PointerEvent
+    Object.assign(event, {
+      pointerId: id,
+      button: 0,
+      buttons: 1,
+      pointerType: 'touch',
+      isPrimary: false,
+      clientX: x,
+      clientY: y,
+    })
+    return event
+  }
+
+  it('两指按下后 cancel 掉一指：剩下单指移动**不得**再缩放（清理是否生效的直接判据）', () => {
+    const h = mountPlain()
+    const before = h.scale()
+
+    /**
+     * `pinchDistanceRef` 在两指时被建立。若 `pointercancel` 没有
+     * `pinchRef.delete` + 把 `pinchDistanceRef` 归零，
+     * 被 cancel 掉的那一指会**残留在 `pinchRef` 里**：
+     *
+     *   · 残留时：`size` 仍是 2 → 单指后来的 `pointermove` 照样进捏合分支；
+     *   · 清理后：`size` 变 1 → 单指移动走平移/忽略，不会缩放。
+     *
+     * 所以"**cancel 后单指移动不产生缩放**"就是"清理是否生效"的直接判据。
+     */
+    act(() => {
+      h.gestureLayer.dispatchEvent(multiPointer2('pointerdown', 1, 300, 400))
+      h.gestureLayer.dispatchEvent(multiPointer2('pointerdown', 2, 500, 400))
+      // 系统把第二指打断（真实设备上常见：手掌误触、来电、手势冲突）
+      h.gestureLayer.dispatchEvent(multiPointer2('pointercancel', 2, 500, 400))
+      // 只剩第 1 指，移动它
+      h.gestureLayer.dispatchEvent(multiPointer2('pointermove', 1, 100, 400))
+    })
+
+    expect(
+      h.scale(),
+      'pointercancel 没有清掉 pinchRef：被打断的那一指残留，单指移动凑出"假双指"并误缩放',
+    ).toBeCloseTo(before, 6)
+    h.unmount()
+  })
+
+  it('双指 pointercancel 之后，真正的两指捏合仍然必须有效（不许误伤）', () => {
+    const h = mountPlain()
+    const before = h.scale()
+
+    act(() => {
+      h.gestureLayer.dispatchEvent(multiPointer2('pointerdown', 1, 300, 400))
+      h.gestureLayer.dispatchEvent(multiPointer2('pointercancel', 1, 300, 400))
+      h.gestureLayer.dispatchEvent(multiPointer2('pointerdown', 2, 300, 400))
+      h.gestureLayer.dispatchEvent(multiPointer2('pointerdown', 3, 500, 400))
+      h.gestureLayer.dispatchEvent(multiPointer2('pointermove', 2, 200, 400))
+      h.gestureLayer.dispatchEvent(multiPointer2('pointermove', 3, 600, 400))
+    })
+
+    expect(h.scale(), 'pointercancel 之后捏合被误伤，完全失效').toBeGreaterThan(before)
     h.unmount()
   })
 })
