@@ -14,7 +14,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react'
 import { Maximize2, Minus, Move, Plus, RotateCcw } from 'lucide-react'
 import { useInfiniteCanvas } from './useInfiniteCanvas'
-import { isIdentityCamera, type ContentBounds, type FitPadding } from './canvas'
+import type { ContentBounds, FitPadding } from './canvas'
 import type { Position } from '../types'
 
 /**
@@ -231,6 +231,11 @@ export default function InfiniteCanvas({
     >
       <div
         {...canvas.handlers}
+        /**
+         * 手势层标记：`useInfiniteCanvas` 靠它找到这一层，把**捕获阶段的**
+         * 平移监听挂在这里、并把指针捕获在这一层上（理由见该 hook 内的长注释）。
+         */
+        data-canvas-gesture-layer
         className={`absolute inset-0 touch-none ${canvas.panReady ? 'cursor-grab' : 'cursor-default'}`}
       >
         <div ref={innerRef} style={worldStyle} className="absolute left-0 top-0 select-none">
@@ -258,8 +263,7 @@ export default function InfiniteCanvas({
       <div className="pointer-events-none absolute bottom-4 left-1/2 z-30 -translate-x-1/2">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#22262c]/80 px-3 py-1.5 text-[12px] text-[#9aa4b2] backdrop-blur">
           <Move className="size-3.5" aria-hidden="true" />
-          滚轮缩放 · 拖动平移 · 空格加拖动自由移动 · {Math.round(camera.scale * 100)}%
-          {isIdentityCamera(camera) ? '' : ''}
+          滚轮缩放 · 空格+拖动平移 · 中键/右键拖动 · {Math.round(camera.scale * 100)}%
         </span>
       </div>
     </div>

@@ -2,9 +2,11 @@
  * 无限画布（infinite canvas）相机模型。
  *
  * 纯函数实现，不依赖 DOM，便于单元测试：
- *   · 画布坐标使用与实验台一致的视图坐标系（960×540 基准视口）
- *   · 相机由「缩放 scale + 平移 offset」描述，缩放范围与位移范围都被钳制，
- *     因此无限平移/缩放不会丢失器材（不会把学生"飘"到空白宇宙里）
+ *   · 相机由「缩放 scale + 平移 offset」描述；
+ *   · **缩放**有上下限（必须收敛，否则会算出 NaN）；
+ *   · **平移不设任何边界** —— 这是"无限画布"的字面含义，
+ *     也是用户反复反馈的「拖到边沿就拖不动了」的根因，见 `CANVAS_PAN_IS_UNBOUNDED`；
+ *   · 只留一层浮点精度护栏（`CAMERA_FLOAT_GUARD`），避免平移在数值上卡死。
  *   · 提供「聚焦到内容」能力：进入实验时自动把器材铺满整屏
  */
 
@@ -26,37 +28,98 @@ export interface Camera {
 export interface CameraLimits {
   minScale: number
   maxScale: number
-  maxOffsetX: number
-  maxOffsetY: number
 }
 
 export const CANVAS_MIN_SCALE = 0.18
 export const CANVAS_MAX_SCALE = 14
-/** 平移可达范围：允许一定越界，但不允许把内容完全拖出屏幕 */
-export const CANVAS_OFFSET_MARGIN = 1600
+
+/**
+ * 平移是否存在「相机数值上限」。
+ *
+ * 结论：**没有**。这里刻意不再有 `maxOffsetX / maxOffsetY`。
+ *
+ * 历史：
+ *   · 最早是 `{ minX: -1440, maxX: 2400, … }` 这种把**画布内容**硬框住的钳制，
+ *     那正是用户说的「固定画布 / 中间那一块」；
+ *   · 后来改成 `CANVAS_OFFSET_MARGIN = 1600`（另有一处按 `size * 6` 放宽），
+ *     看似"很大"，但它仍然是**屏幕像素**上的硬上限 ——
+ *     视口 1375 宽时上限 8250px，学生按住空格平移 6 屏就再也推不动了，
+ *     手感就是"拖到边沿就拖不动了"。
+ *
+ * 无限画布的定义就是：屏幕上的任何位置都能被平移到任何一个画布坐标上，
+ * 因此相机的平移量**不允许**被任何常数夹住。器材坐标另有一层
+ * `UNREACHABLE_WORLD_MARGIN`（±6000 画布单位）作防丢失兜底，
+ * 那是"内容不会丢"，而不是"相机不能动"，两者不可混为一谈。
+ */
+export const CANVAS_PAN_IS_UNBOUNDED = true
+
+/**
+ * IEEE754 双精度下"加法不再改变数值"的量级。
+ *
+ * 无限平移会让 `camera.x / camera.y` 越滚越大；一旦大到这个量级，
+ * `camera.x + dx === camera.x` 恒成立，平移就会**在数值上卡死**
+ * （表现为"再拖也不动"）。所以这里做一个远在任何人类操作范围之外、
+ * 但仍在安全精度内的有限值兜底 —— 它不是画布边界，只是浮点护栏。
+ * 1e9 px 相当于 4K 屏横着拖 48 万屏。
+ */
+export const CAMERA_FLOAT_GUARD = 1e9
 
 export const IDENTITY_CAMERA: Camera = { scale: 1, x: 0, y: 0 }
 
 export function cameraLimits(size: CanvasSize): CameraLimits {
-  return {
-    minScale: CANVAS_MIN_SCALE,
-    maxScale: CANVAS_MAX_SCALE,
-    maxOffsetX: Math.max(CANVAS_OFFSET_MARGIN, size.width * 6),
-    maxOffsetY: Math.max(CANVAS_OFFSET_MARGIN, size.height * 6),
-  }
+  void size
+  return { minScale: CANVAS_MIN_SCALE, maxScale: CANVAS_MAX_SCALE }
 }
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
+/**
+ * 把相机夹到**合法但不受限**的范围。
+ *
+ * 只做两件事：
+ *   1. `scale` 夹在 `[CANVAS_MIN_SCALE, CANVAS_MAX_SCALE]`（缩放必须收敛，否则会 NaN）；
+ *   2. 平移量避开浮点精度护栏与非有限值 —— 不夹到任何"屏幕/世界边界"。
+ *
+ * ⚠️ 不夹平移这一条是**用户可见行为**的分界线：
+ * 夹了就会出现"拖到边沿拖不动"，这正是本次要修的缺陷。
+ */
 export function clampCamera(camera: Camera, size: CanvasSize): Camera {
   const limits = cameraLimits(size)
   return {
-    scale: clamp(camera.scale, limits.minScale, limits.maxScale),
-    x: clamp(camera.x, -limits.maxOffsetX, limits.maxOffsetX),
-    y: clamp(camera.y, -limits.maxOffsetY, limits.maxOffsetY),
+    scale: clampScale(camera.scale, limits),
+    x: clampPanOffset(camera.x),
+    y: clampPanOffset(camera.y),
   }
+}
+
+/**
+ * 缩放的兜底：非有限值先归到 1，再夹进上下限。
+ *
+ * 必须显式兜 `scale` 的 NaN —— `clamp(NaN, min, max)` **返回 NaN**
+ * （`Math.min/Math.max` 遇 NaN 会一路传染），于是 `projectPerspective`
+ * 会算出 `{ x: null, y: null }`，画布整块消失且不报错。
+ * 平移侧早就有 `clampPanOffset` 这一层，缩放侧以前是漏的。
+ */
+export function clampScale(value: number, limits: { minScale: number; maxScale: number }): number {
+  /**
+   * `NaN` 是**无方向**的坏值，归到 1（中性）最合理。
+   */
+  if (Number.isNaN(value)) return 1
+  /**
+   * `±Infinity` 是**有方向**的坏值：正无穷应当夹到**上界**、负无穷夹到**下界**。
+   * 用 `!isFinite → 1` 一刀切会丢掉方向信息 —— 用户往上滚到头，
+   * 画布反而缩回 100%（实测断言抓不到：只断言"在上下界之间"时 1 恰好也合法）。
+   */
+  if (!Number.isFinite(value)) return value > 0 ? limits.maxScale : limits.minScale
+  return clamp(value, limits.minScale, limits.maxScale)
+}
+
+/** 平移量的浮点护栏：非有限值归零，超精度上限就停在护栏上（不是画布边界） */
+export function clampPanOffset(value: number): number {
+  if (!Number.isFinite(value)) return 0
+  return clamp(value, -CAMERA_FLOAT_GUARD, CAMERA_FLOAT_GUARD)
 }
 
 export function isIdentityCamera(camera: Camera): boolean {
@@ -65,8 +128,18 @@ export function isIdentityCamera(camera: Camera): boolean {
 
 /** 以某个画布坐标点为中心缩放：该点在屏幕上的位置保持不动 */
 export function zoomAt(camera: Camera, factor: number, anchor: Position, size: CanvasSize): Camera {
-  const nextScale = clamp(camera.scale * factor, CANVAS_MIN_SCALE, CANVAS_MAX_SCALE)
-  const ratio = nextScale / camera.scale
+  /**
+   * ⚠️ 先把 `camera.scale` **归一化**再算比例。
+   *
+   * 若放任 `camera.scale === 0`（`clampScale` 兜不到 0，它是个"合法有限值"）：
+   * `nextScale = 0.18`、`ratio = 0.18 / 0 = Infinity`，
+   * 于是 `anchor.x - (anchor.x - camera.x) * Infinity` 得到 `±Infinity`，
+   * 再被 `clampPanOffset` 归成 `0` —— 相机**瞬移到原点**，
+   * 而不是"以指针为锚点缩放"。归一化之后 `ratio` 必然有限。
+   */
+  const base = clampScale(camera.scale, { minScale: CANVAS_MIN_SCALE, maxScale: CANVAS_MAX_SCALE })
+  const nextScale = clampScale(base * factor, { minScale: CANVAS_MIN_SCALE, maxScale: CANVAS_MAX_SCALE })
+  const ratio = nextScale / base
   return clampCamera(
     {
       scale: nextScale,

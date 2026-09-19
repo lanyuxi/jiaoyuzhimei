@@ -1069,51 +1069,33 @@ function rescueCenter(id: LabComponentId, visible: NonNullable<CanvasVisibleRect
 }
 
 /**
- * 拖动**过程中**的实时钳制：让器材在指针越出舞台时"贴边停住"。
+ * 拖动**过程中**的钳制 —— 「无限画布」语义下只做**防丢失**兜底。
  *
- * 存在的理由（真机实测出来的必修项）：
- * `useLabLayoutDrag.onPointerMove` 原先只调 `clampComponentPosition`
- * （世界边界 ±6000），**松手前没有任何收回**。按住 E1 往左上拖，
- * 本体左上角一路走到 `-170,-102` —— 在"体左 94 / 体上 2"时就已经完全离开可视区，
- * 再往后是 168px 全黑，**松手才回弹 262px**。
- * 现有 e2e 只在 `pointerup` **之后**采样落点，所以 100 组全绿：
- * 判据漏了"拖动中"这一段，而这正是用户主诉里「拖到外面去了」的可见场景。
+ * 需求原话：「实验器材无法自由拖动到任意位置，比如拖动靠近边沿就无法拖动了，
+ * 并不是无限画布」。这句话指向的正是这里：曾经这个函数把每一次 `pointermove`
+ * 都拿去和「当前可见矩形」比对，一旦器材本体投影后贴到屏幕边（甚至只是
+ * 逼近 `SCREEN_SAFE_MARGIN = 64px` 的余量带），就立刻把器材**拽回视野里**。
+ * 于是学生的感受就是"拖到边就拖不动了" —— 而无限画布恰恰要求
+ * 「器材可以放到任意位置（包括屏幕外面也没关系），再平移画布把它找回来」。
  *
- * 语义上它与松手时走的是**同一套门禁**（`rescueComponent` + 同一个 `visible`），
- * 只是把"松手收敛一次"变成"每帧收敛一次"：
- *   · 没跑出可见范围 → 原样返回（绝不无谓挪动，`rescueComponent` 自带这层门禁）；
- *   · 跑出了 → 收到最近合法位置，表现为"器材贴着边停下"。
+ * 所以现在的语义分两层，且**互不越界**：
+ *   · 画布坐标层（这里）：只夹 `CANVAS_WORLD_BOUNDS`（初始构图 ±6000 画布单位）
+ *     这一条防丢失兜底。它比"可见范围"大一个数量级，正常操作永远碰不到。
+ *   · 屏幕/可见范围层（`rescueComponent`、`pushComponentIntoView`）：**不再参与拖动**。
+ *     它们仍然存在，但只服务两件事：
+ *       ① 用户主动点「全部收回」；
+ *       ② 窗口尺寸变化时的构图重排。
  *
- * 返回值语义与 `clampComponentPosition` 一致：直接把结果当作器材中心用。
+ * ⚠️ 明确放弃的旧行为：不用 `visible` / `screenCheck` / `pushIntoView` 在拖动中
+ * 纠正器材位置。理由不是"偷懒"，而是它与用户诉求直接冲突 ——
+ * 用户要的是"能拖到任意位置"，而旧行为是"拖到边沿就被拉回来"。
+ *
+ * 参数 `visible` / `screenCheck` / `pushIntoView` 保留在签名里是为了兼容既有调用方
+ * 与测试，但它们**不再改变拖动结果**（`visible === null` 时行为与不传时完全一致）。
  */
-export function clampComponentWithinView(
-  id: LabComponentId,
-  position: Position,
-  visible: CanvasVisibleRect,
-  screenCheck?: (id: LabComponentId, center: Position) => number,
-  /** 屏幕空间"推回最近合法位置"的收敛器（由场景注入，因为只有它知道投影） */
-  pushIntoView?: (id: LabComponentId, center: Position) => Position | null,
-): Position {
-  const clamped = clampComponentPosition(id, position)
-  if (visible === null) return clamped
-  /**
-   * 快速路径：还完全合法就原样返回，**绝不无谓挪动**。
-   *
-   * 必须先做这一步，不能直接进收敛循环 —— 否则器材会在合法区域内
-   * 每帧被"收敛"推一下，表现为粘手 / 抖动。
-   */
-  if (valueAcc0(id, clamped, visible, screenCheck)) return clamped
-  if (pushIntoView !== undefined) {
-    const pushed = pushIntoView(id, clamped)
-    if (pushed !== null) return clampComponentPosition(id, pushed)
-  }
-  /**
-   * 兜底：用一个**只含这一件器材**的临时布局跑 `rescueComponent`，
-   * 复用"判据 + 收回 + 屏幕像素收敛"这套已有回归测试保护的逻辑。
-   */
-  const probe: LabLayout = { components: { ...createDefaultLayout().components, [id]: clamped }, wires: {} }
-  const rescued = rescueComponent(probe, id, visible, screenCheck)
-  return rescued.components[id]
+export function clampComponentWithinView(id: LabComponentId, position: Position): Position {
+  // 唯一的约束：防丢失兜底（画布坐标范围），与"屏幕边上拖不动"毫无关系
+  return clampComponentPosition(id, position)
 }
 
 /**
@@ -1202,18 +1184,6 @@ export function pushComponentIntoView(
  */
 export const SCREEN_SAFE_MARGIN = 64
 
-/** `clampComponentWithinView` 的合法性快速判定（内容溢出 + 屏幕溢出 + 安全余量） */
-function valueAcc0(
-  id: LabComponentId,
-  center: Position,
-  visible: NonNullable<CanvasVisibleRect>,
-  screenCheck?: (id: LabComponentId, center: Position) => number,
-): boolean {
-  const overflow = componentOverflow(id, center, visible)
-  if (overflow.left + overflow.right + overflow.top + overflow.bottom > COMPONENT_BODY_EPSILON) return false
-  return (screenCheck === undefined ? 0 : screenCheck(id, center)) <= -SCREEN_SAFE_MARGIN
-}
-
 /**
  * 「能摆器材的那块」= 整块舞台扣掉悬浮控件（聚焦 / 初始构图的目标矩形）。
  *
@@ -1277,9 +1247,40 @@ export function layoutOutOfControls(
 }
 
 /** 当前跑出屏幕的器材（用于「全部收回」提示） */
+/**
+ * 浮层提示的"宽限倍率"：器材要**远远**出屏才提示"点此全部收回"。
+ *
+ * 无限画布下，学生把器材放到屏幕边沿、甚至放到屏幕外一点点都是**正常工作状态**
+ * （放外面再平移画布找回来是允许的做法）。若判据沿用"出屏 1px 即提示"，
+ * 每次往边上拖都会弹出一条琥珀色胶囊，把正常操作渲染成"出错了"。
+ *
+ * 取 0.5：器材中心要跑到可见矩形之外**半个屏**以上才算"离散在外面"。
+ * 这个距离已经远超任何有意的边沿摆放，但学生在视野外丢失器材时仍然看得到提示。
+ */
+export const STRAY_NOTICE_MARGIN_RATIO = 0.5
+
 export function offCanvasComponents(layout: LabLayout, visible: CanvasVisibleRect): LabComponentId[] {
   if (visible === null) return []
-  return LAB_COMPONENT_IDS.filter((id) => isComponentOffCanvas(layout, id, visible))
+  return LAB_COMPONENT_IDS.filter((id) => isComponentStray(layout, id, visible))
+}
+
+/**
+ * 器材是否**远离**可见范围（用于浮层提示，不是用于拖动约束）。
+ *
+ * 与 `isComponentOffCanvas` 的区别只有一个：加了 `STRAY_NOTICE_MARGIN_RATIO` 宽限。
+ * ⚠️ 这个宽限**只作用于提示**。拖动路径不得读任何可见范围判据，
+ * 否则又会退回"拖到边沿就被拽回"。
+ */
+export function isComponentStray(
+  layout: LabLayout,
+  id: LabComponentId,
+  visible: CanvasVisibleRect,
+): boolean {
+  if (visible === null) return false
+  const overflow = componentOverflow(id, layout.components[id], visible)
+  const margin = Math.min(visible.maxX - visible.minX, visible.maxY - visible.minY) * STRAY_NOTICE_MARGIN_RATIO
+  return overflow.left > margin || overflow.right > margin
+    || overflow.top > margin || overflow.bottom > margin
 }
 
 /**

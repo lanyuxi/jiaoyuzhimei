@@ -42,7 +42,6 @@ import { TERMINAL_DRAW_ORDER } from './competitorGeometry'
 import {
   COMPONENT_HIT_RADIUS,
   COMPONENT_LABELS,
-  componentOverflowScreen,
   LAB_COMPONENT_IDS,
   componentBodyRect,
   createDefaultLayout,
@@ -52,7 +51,6 @@ import {
   layoutOutOfControls,
   offCanvasComponents,
   perspectiveStageWithin,
-  pushComponentIntoView,
   rescueAllComponents,
   resolveViewport,
   screenToCanvasWithinViewport,
@@ -532,105 +530,50 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
   )
 
   /**
-   * 入屏（以及相机变化）时的可见性不变量 —— 在**相机变更回调**里做，不用 effect。
+   * 相机变化 → **只记录快照，绝不动布局**。
    *
-   * 为什么要有这一层：判据升级为「本体包围盒完整可见」之后，实测发现
-   * **一进页面就**可能被裁 —— 相机留白与悬浮控件安全区一旦不同源，
-   * E1 / S1 / S2 的上缘就会被顶部工具栏压住，正是需求截图里"拖动即遮挡"的那一幕。
+   * 这里曾经在相机变化时无条件 `rescueAllComponents`（"入屏即终态"），
+   * 那是"拖到边沿就拖不动了"在**平移画布**这一侧的复现路径：
    *
-   * 为什么挂在 `onCameraChange` 而不是 `useEffect`：
-   *   · 相机每次真正变化（含首次入屏从 `{1,0,0}` 聚焦到位）都会走这里，
-   *     时机天然正确，不需要再引入一个 effect 去"追"；
-   *   · 在 effect 里同步 setState 会触发级联渲染（`react-hooks` 规则直接报错），
-   *     而且会出现"收回 → 渲染 → 再收回"的抖动。
+   *   学生把器材放到屏幕外 → 想平移画布把它找回来 → 画布一移动，
+   *   相机回调立刻把所有屏幕外的器材拽回视野 —— 器材"自己走回来"，
+   *   无限画布在体感上就消失了。
    *
-   * 这里用 `visibleRectState`（纯状态派生，且**同一个回调里**同步算）：
-   * 相机与尺寸都是本次提交的值，收回结果即终态，不会出现"改完又被下一帧改回去"。
-   */
-  /**
-   * 相机回调必须**保持引用稳定**。
+   * 现在器材坐标的变化只有三个来源，全部是**显式**的：
+   *   ① 学生拖动器材；
+   *   ② 学生点「全部收回」或「复位摆位」；
+   *   ③ 舞台尺寸真的变了（`fittedFor` 那一层，仅当 `!touched`）。
    *
-   * `InfiniteCanvas` 会把这个回调放在 effect 里调用；若它的引用每帧都变，
-   * effect 就会每帧重跑，回调里的 `setLayout` 又会触发重渲染 —— 无限循环。
-   * 所以这里把真正的逻辑提成稳定的 `useCallback`（依赖全为空/严格必要），
-   * 再包一层 `useRef` 交给画布，保证传给子组件的永远同一个函数。
-   */
-  const settleLayoutForCamera = useCallback((next: { scale: number; x: number; y: number }) => {
-    const width = stageSizeRef.current.width
-    const height = stageSizeRef.current.height
-    if (width <= 0 || height <= 0) return
-    const viewport = resolveViewport(visibleScreenArea(width, height), next, perspectiveOf(width, height))
-    if (viewport === null) return
-    // 画布矩形的判据 + **屏幕像素**的判据都要满足（可见区域是梯形，两者不完全等价）
-    const safe = visibleScreenArea(width, height)
-    setLayout((current) =>
-      rescueAllComponents(current, viewport.visible, (id, center) => componentOverflowScreen(id, center, viewport, safe)),
-    )
-  }, [])
-
-  /**
-   * 相机变化 → 记录快照 + 把跑出可见范围的器材收回。
+   * 布局的快照只需要 `cameraState`（渲染期算可见范围与浮层提示用），
+   * 相机变化本身不应该产生任何布局副作用。
    *
-   * 这个回调**必须引用稳定**（见 `settleLayoutForCamera` 的注释）：
-   * 它只依赖两个同样稳定的 `useCallback`，因此 `useCallback` 的依赖可以为空。
+   * 引用必须**保持稳定**：`InfiniteCanvas` 会把它放进 effect 调用，
+   * 引用每帧变会让 effect 每帧重跑（历史上这曾引发 "Maximum update depth exceeded"）。
    */
   const handleCameraChange = useCallback((next: { scale: number; x: number; y: number }) => {
-    const previous = cameraRef.current
     cameraRef.current = next
     setCameraState((current) =>
       current.scale === next.scale && current.x === next.x && current.y === next.y ? current : next,
     )
-    // 入屏 / 相机变化 → 立刻把跑出可见范围的器材收回（入屏即终态）
-    if (previous.scale !== next.scale || previous.x !== next.x || previous.y !== next.y) settleLayoutForCamera(next)
-  }, [settleLayoutForCamera])
-
-  /** 器材 / 导线拖动（无限画布：器材任意摆放、导线任意弯折） */
-  /**
-   * 拖动中 / 松手时的**屏幕像素**校验（与相机回调里收回用的是同一个函数）。
-   *
-   * 可见区域是梯形，画布矩形在某些角落会失真（实测 1920×1080 下差 22.4px），
-   * 所以"器材有没有被裁"必须以屏幕像素为准。
-   */
-  const screenOverflowCheck = useCallback((id: LabComponentId, center: Position): number => {
-    const width = stageSizeRef.current.width
-    const height = stageSizeRef.current.height
-    if (width <= 0 || height <= 0) return 0
-    const viewport = resolveViewport(visibleScreenArea(width, height), cameraRef.current, perspectiveOf(width, height))
-    if (viewport === null) return 0
-    return componentOverflowScreen(id, center, viewport, visibleScreenArea(width, height))
   }, [])
 
   /**
-   * 屏幕空间的"推回"收敛器：把被拖出屏幕的器材沿"当前位置 → 视野中心"拉回来。
+   * 器材 / 导线拖动（无限画布：器材任意摆放、导线任意弯折）。
    *
-   * 用**单调二分**而不是步进回退：真机实测按住 A1 快速拖向左上角时，
-   * 步进回退有连续 2 帧本体越出 18～39px（"甩出去再弹回"）。
+   * ⚠️ **刻意不把 `visibleRect` / `screenCheck` / `pushIntoView` 传进拖动逻辑**。
+   *
+   * 需求原话：「我要的无限画布功能，你给搞没了；现在我的实验器材无法自由的
+   * 拖动到任意位置，比如拖动靠近边沿就无法拖动了，并不是无限画布」。
+   *
+   * 这三个回调正是"拖不动"的来源：拖动每帧都被拿去和可见矩形比对，
+   * 器材一逼近屏幕边沿就被拽回视野中心。无限画布的语义应当相反 ——
+   * 器材可以停在屏幕外，学生再平移画布找回来（数学上必然找得到，
+   * 因为相机平移已经不再有上限）。
+   *
+   * 这三样东西仍然保留在场景里，只服务两件**不干扰拖动**的事：
+   *   ① `visibleRect` / `screenOverflowCheck` → 「全部收回」按钮与浮层提示；
+   *   ② `settleLayoutForCamera` → 窗口尺寸变化后的构图重排。
    */
-  const pushIntoView = useCallback((id: LabComponentId, center: Position): Position | null => {
-    const width = stageSizeRef.current.width
-    const height = stageSizeRef.current.height
-    if (width <= 0 || height <= 0) return null
-    const perspective = perspectiveOf(width, height)
-    const viewport = resolveViewport(visibleScreenArea(width, height), cameraRef.current, perspective)
-    if (viewport === null) return null
-    const stage = perspectiveStageWithin(viewport.camera, viewport.perspective ?? {
-      tilt: 0,
-      perspective: 0,
-      originX: 0,
-      originY: 0,
-      stage: { width, height },
-    })
-    const canvasCenter = screenToCanvasWithinViewport({ x: width / 2, y: height / 2 }, viewport, viewport.camera)
-    if (canvasCenter === null) return null
-    return pushComponentIntoView(
-      id,
-      center,
-      (point) => projectPerspective(point, stage),
-      { width: visibleScreenArea(width, height).right, height: visibleScreenArea(width, height).bottom },
-      canvasCenter,
-    )
-  }, [])
-
   const labDrag = useLabLayoutDrag({
     layout,
     setLayout: (next) => {
@@ -640,9 +583,6 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
     },
     nearestTerminal: nearestTerminalTo,
     scenePosition: scenePositionFor as (event: PointerEvent<SVGElement>) => Position | null,
-    visibleRect,
-    screenCheck: screenOverflowCheck,
-    pushIntoView,
   })
 
   /** 拖出屏幕的器材（实时给出「全部收回」入口，避免学生以为器材丢了） */
@@ -814,6 +754,8 @@ function CompetitorSceneCanvas({ state, dispatch, onTogglePanel, onOpenReport, p
       {/* 操作提示：告诉学生器材和导线都可以直接拖 */}
       <div className="pointer-events-none absolute left-4 top-[224px] z-30 w-[132px] rounded-[8px] border border-white/10 bg-[#22262c]/80 px-3 py-2 text-[11px] leading-5 text-[#9aa4b2] backdrop-blur">
         全屏画布任意摆放<br />拖导线中点可弯折<br />拖接线柱接导线
+        <br />
+        <span className="text-[#7f8a98]">滚轮缩放 · 空格+拖动平移</span>
       </div>
 
       {/*

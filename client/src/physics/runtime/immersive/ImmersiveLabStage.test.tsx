@@ -86,7 +86,8 @@ describe('无限画布组件', () => {
     expect(html).toContain('缩小')
     expect(html).toContain('复位视角')
     expect(html).toContain('铺满画布')
-    expect(html).toContain('滚轮缩放 · 拖动平移')
+    // 底部提示必须把用户明确要求的三件事都写出来：滚轮缩放、空格+拖动平移、缩放百分比
+    expect(html).toContain('滚轮缩放 · 空格+拖动平移 · 中键/右键拖动')
   })
 
   it('画布世界延伸到场景之外，支持无限平移', () => {

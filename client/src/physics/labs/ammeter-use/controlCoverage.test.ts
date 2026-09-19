@@ -18,6 +18,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import {
+  CANVAS_WORLD_BOUNDS,
   COMPONENT_BODY_MARGIN,
   CONTROL_LEFT,
   CONTROL_RIGHT,
@@ -31,7 +32,10 @@ import {
   createDefaultLayout,
   fitLayoutToStage,
   fitPaddingWithinSafeArea,
+  isComponentStray,
   layoutOutOfControls,
+  moveComponent,
+  rescueComponent,
   pushComponentIntoView,
   pushOutOfControls,
   SCREEN_SAFE_MARGIN,
@@ -40,10 +44,10 @@ import {
   screenToCanvasWithinViewport,
   visibleScreenArea,
   type LabComponentId,
+  type LabLayout,
 } from './layout'
 import { MEASURED_OVERLAYS, MEASURED_STAGES } from './controlObstacles.fixture'
 import { PERSPECTIVE_ORIGIN, PERSPECTIVE_DEPTH, STAGE_TILT_DEG } from '../../runtime/immersive/InfiniteCanvas'
-import { DRAG_SCREEN_MARGIN } from './useLabLayoutDrag'
 import { projectPerspective, type Camera } from '../../runtime/immersive/canvas'
 import { focusInScreenSpace } from '../../runtime/immersive/useInfiniteCanvas'
 
@@ -352,7 +356,17 @@ describe('必修二 · 浮层清单必须与真机实测一致（判据与实现
   })
 })
 
-describe('必修一 · 拖动**过程中**器材不许离开可视区（不能只在松手时收回）', () => {
+describe('必修一（重定义）· 拖动必须能到任意位置 —— 这是「无限画布」的定义', () => {
+  /**
+   * 需求原文（Issue #20）：
+   *   「我要的无限画布功能，你给搞没了；现在我的实验器材无法自由的拖动到任意位置，
+   *     比如拖动靠近边沿就无法拖动了，并不是无限画布；请修复」
+   *
+   * 也就是说，PR #23 引入的那套"拖动中每帧把器材收回可见范围"的**必修项本身就是缺陷**：
+   * 它把器材的落点限制成了"屏幕内的一个回收盒"，而不是无限画布。
+   * 本节据此把 `clampComponentWithinView` 的契约重新钉住 ——
+   * 它只做防丢失兜底（±6000 画布单位），不再读可见范围 / 屏幕像素。
+   */
   const VIEWPORTS = [
     { width: 1375, height: 782 },
     { width: 1280, height: 661 },
@@ -363,159 +377,84 @@ describe('必修一 · 拖动**过程中**器材不许离开可视区（不能�
     { width: 390, height: 692 },
   ] as const
 
-  it('逐帧采样：按住 E1 拖向屏幕四角，**每一帧**本体都完整在屏幕内', () => {
+  it('逐帧采样：按住 E1 拖向屏幕四角，指针指向的画布坐标就是器材落点（不再被拽回）', () => {
     for (const size of VIEWPORTS) {
       const camera = focusFor(size)
       const safe = visibleScreenArea(size.width, size.height)
       const vp = resolveViewport(safe, camera, perspectiveOf(size))!
-      const layout = fitLayoutToStage(createDefaultLayout(), { minX: 0, minY: 0, maxX: size.width, maxY: size.height })
-      const screenCheck = (id: LabComponentId, center: { x: number; y: number }) =>
-        componentOverflowScreen(id, center, vp, safe)
-
       for (const id of LAB_COMPONENT_IDS as readonly LabComponentId[]) {
-        const start = layout.components[id]
-        const startScreen = projectPerspective(start, stageOf(size, camera))
         for (const [tx, ty] of [
           [2, 2],
           [size.width - 2, 2],
           [2, size.height - 2],
           [size.width - 2, size.height - 2],
         ] as const) {
-          let current = start
-          for (let step = 0; step <= 24; step += 1) {
-            const t = step / 24
-            const sx = startScreen.x + (tx - startScreen.x) * t
-            const sy = startScreen.y + (ty - startScreen.y) * t
-            const pointer = screenToCanvasWithinViewport({ x: sx, y: sy }, vp, camera)
-            if (pointer === null) continue
-            /**
-             * 复刻 `onPointerMove` 的**唯一**约束来源：
-             * `offset = 0`（指针从器材中心按下）+ `clampComponentWithinView`，
-             * 且带 `DRAG_SCREEN_MARGIN` 的屏幕余量（与生产代码同口径）。
-             * 若实现退回"只做 `clampComponentPosition`"，这里立刻爆红。
-             */
-            current = clampComponentWithinView(id, pointer, vp.visible, (pid, c) => screenCheck(pid, c) + DRAG_SCREEN_MARGIN)
-            expect(
-              screenCheck(id, current),
-              `${size.width}×${size.height} 下 ${id} 拖向 (${tx},${ty}) 的第 ${step} 帧本体已被裁`,
-            ).toBeLessThanOrEqual(0.5)
-          }
+          const pointer = screenToCanvasWithinViewport({ x: tx, y: ty }, vp, camera)
+          if (pointer === null) continue
+          /**
+           * 复刻 `onPointerMove`：`offset = 0`（指针从器材中心按下）
+           * + `clampComponentWithinView`。判据 = **落点必须等于指针所在的画布坐标**
+           * （只要没撞到防丢失兜底），因此"贴边拽回"这类改动立刻爆红。
+           */
+          const target = clampComponentWithinView(id, pointer)
+          expect(
+            Math.hypot(target.x - pointer.x, target.y - pointer.y),
+            `${size.width}×${size.height} 下 ${id} 拖向 (${tx},${ty}) 被拽离了指针`,
+          ).toBeLessThan(1e-6)
         }
       }
     }
   })
 
-  it('反向自证：退回"松手前不收回"（世界边界 ±6000）会把器材拖到全黑', () => {
-    /**
-     * 这条是复审实测的数字：按住 E1 拖到指针 (2,2)，
-     * 旧口径下本体左上角走到 `-170,-102`，在"体左 94 / 体上 2"时已完全离开可视区。
-     * 用同一个输入跑一遍，必须复现出**显著**的越界。
-     */
+  it('反向自证：一旦把可见范围重新接进拖动，落点立刻被拽离指针（旧缺陷会复现）', () => {
     const size = { width: 1375, height: 782 }
     const camera = focusFor(size)
     const safe = visibleScreenArea(size.width, size.height)
     const vp = resolveViewport(safe, camera, perspectiveOf(size))!
-    const layout = fitLayoutToStage(createDefaultLayout(), { minX: 0, minY: 0, maxX: size.width, maxY: size.height })
-    const start = layout.components.E1
-    const startScreen = projectPerspective(start, stageOf(size, camera))
     const pointer = screenToCanvasWithinViewport({ x: 2, y: 2 }, vp, camera)!
-    // 旧口径：只夹世界边界
-    const legacy = { x: Math.max(-6000, Math.min(6000, pointer.x)), y: Math.max(-6000, Math.min(6000, pointer.y)) }
-    const legacyOverflow = componentOverflowScreen('E1', legacy, vp, safe)
-    expect(legacyOverflow, '旧口径竟然没越界？这条变异就失去意义了').toBeGreaterThan(100)
-    // 新口径：必须 0 越界
-    const fixed = clampComponentWithinView('E1', pointer, vp.visible, (id, center) => componentOverflowScreen(id, center, vp, safe))
-    expect(componentOverflowScreen('E1', fixed, vp, safe)).toBeLessThanOrEqual(0.5)
-    void startScreen
-  })
-
-  it('拖动中已合法时**不许**无谓挪动（否则器材会"粘"在边上抖）', () => {
-    const size = { width: 1375, height: 782 }
-    const camera = focusFor(size)
-    const vp = resolveViewport(visibleScreenArea(size.width, size.height), camera, perspectiveOf(size))!
-    const layout = fitLayoutToStage(createDefaultLayout(), { minX: 0, minY: 0, maxX: size.width, maxY: size.height })
-    for (const id of LAB_COMPONENT_IDS) {
-      const center = layout.components[id]
-      const clamped = clampComponentWithinView(id, center, vp.visible)
-      expect(Math.abs(clamped.x - center.x), `${id} 在合法位置上被无谓挪动`).toBeLessThan(1e-6)
-      expect(Math.abs(clamped.y - center.y), `${id} 在合法位置上被无谓挪动`).toBeLessThan(1e-6)
-    }
-  })
-
-  it('拖动中的钳制**至少和松手收回一样靠里**（松手不会再跳）', () => {
     /**
-     * 拖动中比松手更保守（多留 `DRAG_SCREEN_MARGIN`），
-     * 所以"拖动中钳制完 → 松手收回"必然是空操作，不会出现"松手又跳一下"。
-     * 判据直接比"两种口径下钳制结果的屏幕上余量"。
+     * 复现旧口径：`rescueComponent` 会把跑出可见范围的器材拖回回收盒。
+     * 用同一份 `pointer` 跑一遍"收回"，位移必须显著 —— 否则这条变异就没意义。
      */
-    const size = { width: 390, height: 692 }
+    const stray = moveComponent(createDefaultLayout(), 'E1', pointer)
+    const rescued = rescueComponent(stray, 'E1', vp.visible)
+    const moved = Math.hypot(rescued.components.E1.x - pointer.x, rescued.components.E1.y - pointer.y)
+    expect(moved, '旧口径竟然没把器材拽回来？这条反向自证失去意义').toBeGreaterThan(20)
+  })
+
+  it('器材可以停在屏幕完全看不见的位置（无限画布的必然结果）', () => {
+    const size = { width: 1375, height: 782 }
     const camera = focusFor(size)
     const safe = visibleScreenArea(size.width, size.height)
     const vp = resolveViewport(safe, camera, perspectiveOf(size))!
     for (const id of LAB_COMPONENT_IDS as readonly LabComponentId[]) {
-      for (const [tx, ty] of [[1, 1], [size.width - 1, size.height - 1]] as const) {
-        const pointer = screenToCanvasWithinViewport({ x: tx, y: ty }, vp, camera)!
-        const dragClamped = clampComponentWithinView(id, pointer, vp.visible, (pid, c) => componentOverflowScreen(pid, c, vp, safe) + DRAG_SCREEN_MARGIN)
-        const releaseClamped = clampComponentWithinView(id, pointer, vp.visible, (pid, c) => componentOverflowScreen(pid, c, vp, safe))
-        /**
-         * 拖动口径更保守 → 屏幕上留下的**最小余量更大**（更不容易贴边）。
-         * 余量 = `-componentOverflowScreen`（overflow 为负表示还有余量）。
-         */
-        const marginOf = (center: { x: number; y: number }) => -componentOverflowScreen(id, center, vp, safe)
-        expect(
-          marginOf(dragClamped),
-          `${id} 拖到 (${tx},${ty})：拖动口径没有比松手口径更保守（余量 ${marginOf(dragClamped).toFixed(1)} < ${marginOf(releaseClamped).toFixed(1)}）`,
-        ).toBeGreaterThanOrEqual(marginOf(releaseClamped) - 1e-6)
-      }
+      // 故意拖到屏幕外很远（但仍远小于防丢失兜底 ±6000）
+      const pointer = screenToCanvasWithinViewport({ x: -900, y: -700 }, vp, camera)!
+      const target = clampComponentWithinView(id, pointer)
+      expect(Math.hypot(target.x - pointer.x, target.y - pointer.y)).toBeLessThan(1e-6)
+      // 它确实在屏幕外 —— 这不是 BUG，而是"可以放在任意位置"
+      expect(componentOverflowScreen(id, target, vp, safe)).toBeGreaterThan(0)
     }
   })
 
-  it('拖动中的钳制与松手收回**同口径**：钳制后一定满足判据（不会"松手又跳一下"）', () => {
-    const size = { width: 390, height: 692 }
-    const camera = focusFor(size)
-    const safe = visibleScreenArea(size.width, size.height)
-    const vp = resolveViewport(safe, camera, perspectiveOf(size))!
-    const layout = fitLayoutToStage(createDefaultLayout(), { minX: 0, minY: 0, maxX: size.width, maxY: size.height })
+  it('防丢失兜底仍然在：拖到 ±6000 之外会被夹住（不会真的找不回）', () => {
     for (const id of LAB_COMPONENT_IDS as readonly LabComponentId[]) {
-      const start = layout.components[id]
-      for (const [tx, ty] of [[1, 1], [size.width - 1, 1], [1, size.height - 1], [size.width - 1, size.height - 1]] as const) {
-        const pointer = screenToCanvasWithinViewport({ x: tx, y: ty }, vp, camera)!
-        const dragged = clampComponentWithinView(id, pointer, vp.visible, (pid, c) => componentOverflowScreen(pid, c, vp, safe))
-        // 钳制结果的屏上越界必须已经归零 → 松手收回是空操作
-        expect(
-          componentOverflowScreen(id, dragged, vp, safe),
-          `${id} 拖到 (${tx},${ty}) 后松手还会再跳一下`,
-        ).toBeLessThanOrEqual(0.5)
+      for (const far of [{ x: -1e6, y: -1e6 }, { x: 1e6, y: 1e6 }]) {
+        const target = clampComponentWithinView(id, far)
+        expect(target.x).toBeGreaterThanOrEqual(CANVAS_WORLD_BOUNDS.minX)
+        expect(target.x).toBeLessThanOrEqual(CANVAS_WORLD_BOUNDS.maxX)
+        expect(target.y).toBeGreaterThanOrEqual(CANVAS_WORLD_BOUNDS.minY)
+        expect(target.y).toBeLessThanOrEqual(CANVAS_WORLD_BOUNDS.maxY)
       }
-      void start
     }
   })
 
-  it('屏幕空间有安全余量：模型误差不会被吃进画面（真机实测误差 ~60px）', () => {
-    /**
-     * 这条把"为什么要有 `DRAG_SCREEN_MARGIN`"钉住。
-     *
-     * 我们算投影的 `projectPerspective` 与浏览器 CSS 的 3D 变换**不完全等价**：
-     * 真机对照同一个画布点，模型与浏览器的屏幕 y 差随深度增长，
-     * 在画布底部可达约 60px（实测 `canvas(0,600)`：浏览器 569.4 / 模型 578.5）。
-     * 于是"模型说没越界"**不足以证明**画面上没被裁。
-     *
-     * 判据：拖动中允许停下的位置，必须让模型留出 `DRAG_SCREEN_MARGIN` 余量。
-     */
-    const size = { width: 1375, height: 782 }
-    const camera = { scale: 0.864819, x: 85.82928466796875, y: 63.7969970703125 }
-    const safe = visibleScreenArea(size.width, size.height)
-    const vp = resolveViewport(safe, camera, perspectiveOf(size))!
-    const withMargin = (id: LabComponentId, center: { x: number; y: number }) =>
-      componentOverflowScreen(id, center, vp, safe) + DRAG_SCREEN_MARGIN
-    const without = (id: LabComponentId, center: { x: number; y: number }) =>
-      componentOverflowScreen(id, center, vp, safe)
-    // 用带余量的判据钳制，结果必须比不带余量的**更靠里**
-    const pushedWith = clampComponentWithinView('A1', { x: -5000, y: -5000 }, vp.visible, withMargin)
-    const pushedWithout = clampComponentWithinView('A1', { x: -5000, y: -5000 }, vp.visible, without)
-    const depthWith = Math.hypot(pushedWith.x, pushedWith.y)
-    const depthWithout = Math.hypot(pushedWithout.x, pushedWithout.y)
-    expect(depthWith, '带余量的钳制没有比不带余量更靠里（余量没生效）').toBeGreaterThan(depthWithout)
+  it('浮点稳态：对同一目标连续钳制 100 次不再产生位移（不会每帧抖 1px）', () => {
+    const first = clampComponentWithinView('A1', { x: -5000, y: -5000 })
+    let current = first
+    for (let i = 0; i < 100; i += 1) current = clampComponentWithinView('A1', current)
+    expect(Math.abs(current.x - first.x)).toBeLessThan(1e-6)
+    expect(Math.abs(current.y - first.y)).toBeLessThan(1e-6)
   })
 
   it('`pushComponentIntoView` 单调二分一定收敛：推完之后余量达标', () => {
@@ -539,33 +478,50 @@ describe('必修一 · 拖动**过程中**器材不许离开可视区（不能�
   })
 
   it('浮点稳态：对同一目标连续钳制 100 次不再产生位移（不会每帧抖 1px）', () => {
-    const size = { width: 1375, height: 782 }
-    const camera = focusFor(size)
-    const vp = resolveViewport(visibleScreenArea(size.width, size.height), camera, perspectiveOf(size))!
-    const first = clampComponentWithinView('A1', { x: -5000, y: -5000 }, vp.visible)
+    const first = clampComponentWithinView('A1', { x: -5000, y: -5000 })
     let current = first
-    for (let i = 0; i < 100; i += 1) current = clampComponentWithinView('A1', current, vp.visible)
+    for (let i = 0; i < 100; i += 1) current = clampComponentWithinView('A1', current)
     expect(Math.abs(current.x - first.x)).toBeLessThan(1e-6)
     expect(Math.abs(current.y - first.y)).toBeLessThan(1e-6)
   })
 
-  it('拖动路径确实接上了 `clampComponentWithinView`（源码契约，防实现被换回旧口径）', () => {
-    const source = readFileSync(new URL('./useLabLayoutDrag.ts', import.meta.url), 'utf8')
-    /**
-     * 只断言"**器材**的 `onPointerMove` 里用的是带可见范围的钳制"，
-     * 不锁具体变量名 —— 判据要的是行为，不是写法。
-     *
-     * 注意要跳过接口声明里的 `onPointerMove(...): void` 签名（那是最先出现的一处），
-     * 直接找实现体里那一处（含 `componentRef.current`）。
-     */
+})
+
+describe('拖动路径不得再把"可见范围"当作边界（源码契约，防实现被改回旧口径）', () => {
+  function dragSource(): string {
+    return readFileSync(new URL('./useLabLayoutDrag.ts', import.meta.url), 'utf8')
+  }
+
+  it('器材的 onPointerMove 里不再传 visibleRect / screenCheck / pushIntoView', () => {
+    const source = dragSource()
     const implIndex = source.indexOf('onPointerMove: (event: PointerEvent<SVGElement>) => {')
     expect(implIndex, '找不到器材拖动的 onPointerMove 实现体').toBeGreaterThan(-1)
     const move = source.slice(implIndex, implIndex + 1600)
-    expect(move, '拖动中的钳制退回旧口径了（又只用世界边界）').toContain('clampComponentWithinView')
-    expect(move, '拖动中没把可见范围传进去').toContain('visibleRect')
-    expect(move, '拖动中没做屏幕像素校验').toContain('screenCheck')
-    // 旧口径必须已被移除：实现体里不该再出现"只夹世界边界"的那个函数
-    expect(move, '实现体里还留着只夹世界边界的旧调用').not.toContain('clampComponentPosition(')
+    // 必须仍然走 `clampComponentWithinView`（保留防丢失兜底这一层）
+    expect(move, '拖动入口不再走 clampComponentWithinView').toContain('clampComponentWithinView')
+    // 但**必须不再**读可见范围 / 屏幕像素 —— 那正是"拖到边沿拖不动"的来源
+    expect(move, '拖动中又把可见范围接回来了（会退化成"拖到边沿就被拽回"）').not.toContain('visibleRect')
+    expect(move, '拖动中又把屏幕像素校验接回来了').not.toContain('screenCheck')
+    expect(move, '拖动中又把推回收敛器接回来了').not.toContain('pushIntoView')
+  })
+
+  it('松手时不再强制把器材收回可见范围（松手即终态）', () => {
+    const source = dragSource()
+    const implIndex = source.indexOf('const endComponent = useCallback(')
+    expect(implIndex).toBeGreaterThan(-1)
+    const end = source.slice(implIndex, implIndex + 1200)
+    expect(end, '松手又把器材收回可见范围了（"放到边沿会被弹回来"）。收回只应由「全部收回」按钮触发').not.toContain('rescueComponent')
+    expect(end, '松手时把可见范围接了回来').not.toContain('visibleRect()')
+  })
+
+  it('场景侧不再把可见范围注入拖动逻辑（否则上面两条会被绕过）', () => {
+    const scene = readFileSync(new URL('./CompetitorScene.tsx', import.meta.url), 'utf8')
+    const index = scene.indexOf('useLabLayoutDrag({')
+    expect(index).toBeGreaterThan(-1)
+    const call = scene.slice(index, index + 900)
+    expect(call).not.toContain('screenCheck:')
+    expect(call).not.toContain('pushIntoView,')
+    expect(call, '场景又把 visibleRect 注回拖动逻辑了').not.toContain('visibleRect,')
   })
 })
 
@@ -576,6 +532,108 @@ describe('附带：器材本体尺寸不许再被"命中区"带偏', () => {
       const rect = componentBodyRect(id, { x: 0, y: 0 })
       expect(rect.right - rect.left).toBeCloseTo(margin.x * 2, 9)
       expect(rect.bottom - rect.top).toBeCloseTo(margin.y * 2, 9)
+    }
+  })
+})
+
+describe('相机变化不得把器材拽回视野 —— 否则"平移画布"等于"器材自己走回来"', () => {
+  /**
+   * 这是「拖到边沿就拖不动了」在**平移画布**这一侧的复现路径。
+   *
+   * `CompetitorScene` 把 `onCameraChange` 接到了 `settleLayoutForCamera`，
+   * 而后者无条件 `rescueAllComponents`：只要相机（平移/缩放）动了，
+   * 所有落在可见范围之外的器材就被拽回来。
+   *
+   * 合成起来的效果是：学生把器材放到屏幕外 → 想平移画布把它找回来 →
+   * 画布一移动，器材**自己跳回屏幕里**。无限画布在体感上就消失了。
+   *
+   * 判据：平移相机（只改 x/y）之后，器材坐标必须**一动不动**。
+   * 构图重排只允许发生在"舞台尺寸变化"时，不允许发生在"相机变化"时。
+   */
+  it('场景源码：onCameraChange 不得触发器材收回（构图只在舞台尺寸变化时重排）', () => {
+    const source = readFileSync(new URL('./CompetitorScene.tsx', import.meta.url), 'utf8')
+    const index = source.indexOf('const handleCameraChange = useCallback(')
+    expect(index, '找不到 handleCameraChange').toBeGreaterThan(-1)
+    const handler = source.slice(index, index + 1400)
+    expect(handler, '相机变化又把器材收回视野了 —— 平移画布时器材会自己跳回来').not.toContain('rescueAllComponents')
+    expect(handler).not.toContain('settleLayoutForCamera(')
+    // 相机快照仍然必须记录（渲染期要用它算可见范围 / 浮层提示）
+    expect(handler, '相机快照没有被记录，可见范围会失真').toContain('setCameraState')
+  })
+
+  it('「全部收回」仍然是显式入口（不是自动发生）', () => {
+    const source = readFileSync(new URL('./CompetitorScene.tsx', import.meta.url), 'utf8')
+    expect(source).toContain('rescueAllComponents')
+    // 它必须挂在按钮的 onClick 上，而不是挂在相机回调里
+    expect(source).toMatch(/onClick=\{\(\) => setLayout\(\(current\) => rescueAllComponents/)
+  })
+})
+
+describe('审查必修：签名说一套、实现做另一套的死参数必须删掉', () => {
+  function dragSource(): string {
+    return readFileSync(new URL('./useLabLayoutDrag.ts', import.meta.url), 'utf8')
+  }
+
+  /**
+   * 审查员原话：`void visible / void screenCheck / void pushIntoView` 是
+   * "签名说一套、实现做另一套"的典型坏味道，而且 `visible` 还是**必填**参数
+   * （调用方被迫传 `null`）。下一个人看到"参数还在"就会接回来 ——
+   * 正是这次要防的事。
+   */
+  it('`clampComponentWithinView` 只剩 (id, position)，没有可见范围 / 屏幕校验 / 推回参数', () => {
+    const source = readFileSync(new URL('./layout.ts', import.meta.url), 'utf8')
+    const index = source.indexOf('export function clampComponentWithinView')
+    expect(index).toBeGreaterThan(-1)
+    const signature = source.slice(index, index + 260)
+    expect(signature, '可见范围参数又回来了').not.toContain('visible:')
+    expect(signature, '屏幕像素校验参数又回来了').not.toContain('screenCheck')
+    expect(signature, '推回收敛器参数又回来了').not.toContain('pushIntoView')
+    expect(signature, '留在实现里 `void` 掉的死参数又回来了').not.toMatch(/void (visible|screenCheck|pushIntoView)/)
+  })
+
+  it('拖动选项里不再有 visibleRect / screenCheck / pushIntoView 三个 @deprecated 口子', () => {
+    const source = dragSource()
+    const index = source.indexOf('export interface UseLabLayoutDragOptions')
+    expect(index).toBeGreaterThan(-1)
+    const options = source.slice(index, index + 1400)
+    expect(options, '拖动选项又把 visibleRect 暴露出来了').not.toContain('visibleRect?(')
+    expect(options, '拖动选项又把 screenCheck 暴露出来了').not.toContain('screenCheck?(')
+    expect(options, '拖动选项又把 pushIntoView 暴露出来了').not.toContain('pushIntoView?(')
+  })
+
+  it('`DRAG_SCREEN_MARGIN` 这个"拖到边沿前 64px 就判越界"的常量已被删除', () => {
+    const source = dragSource()
+    // 只看"是否又被**导出**为常量"；历史注释里提到它是允许的（那是在解释为什么删掉它）
+    expect(source, 'DRAG_SCREEN_MARGIN 又被导出成常量了（会让器材离边沿 64px 就被拽回）').not.toMatch(
+      /export\s+const\s+DRAG_SCREEN_MARGIN\b/,
+    )
+  })
+})
+
+describe('审查次要项：浮层提示不得把"正常工作状态"渲染成"出错了"', () => {
+  /**
+   * 无限画布下"放边沿 / 放屏幕外一点再平移找回来"是合法操作。
+   * 若提示沿用"出屏 1px 即提示"，学生每次往边上拖都会弹琥珀色胶囊。
+   */
+  it('器材只是贴着边沿 / 稍微出屏时，不算"离散在外面"', () => {
+    const visible = { minX: 0, minY: 0, maxX: 1000, maxY: 600 }
+    const layout = LAB_COMPONENT_IDS.reduce(
+      (acc, id) => ({ ...acc, components: { ...acc.components, [id]: { x: 1000, y: 300 } } }),
+      { components: {} as LabLayout['components'] } as LabLayout,
+    )
+    for (const id of LAB_COMPONENT_IDS) {
+      expect(isComponentStray(layout, id, visible), `${id} 只是贴着右边沿就被判成"离散在外面"`).toBe(false)
+    }
+  })
+
+  it('器材真的甩到视野之外很远时，必须被提示（一键收回入口不能失灵）', () => {
+    const visible = { minX: 0, minY: 0, maxX: 1000, maxY: 600 }
+    const layout = LAB_COMPONENT_IDS.reduce(
+      (acc, id) => ({ ...acc, components: { ...acc.components, [id]: { x: 20000, y: 300 } } }),
+      { components: {} as LabLayout['components'] } as LabLayout,
+    )
+    for (const id of LAB_COMPONENT_IDS) {
+      expect(isComponentStray(layout, id, visible), `${id} 甩到 20000 之外都没有被提示`).toBe(true)
     }
   })
 })
