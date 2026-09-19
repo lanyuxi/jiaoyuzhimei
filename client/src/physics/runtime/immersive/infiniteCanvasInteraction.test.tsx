@@ -66,13 +66,18 @@ function releaseRedirect() {
  * 真实语义：一旦某元素捕获了指针，后续 `pointermove` 的 `event.target`
  * **就是那个捕获元素**，不再是鼠标下的元素。因此这里在派发前换成 `redirectTarget`。
  */
+/**
+ * 未捕获时的派发落点。
+ *
+ * ⚠️ 以前这里写的是 `document.body` —— 那是一条**假绿通道**：
+ * `body` 上的事件**不经过**手势层，于是挂在手势层上的捕获监听从来不执行，
+ * 一个真实存在的回归（`pinchRef` 与平移认领耦合）因此被完全藏住。
+ * 现在由 mount 显式登记手势层，未捕获时从它派发，保证事件链与真实浏览器同形。
+ */
+let fallbackTarget: Element | null = null
+
 function dispatchPointer(type: string, init: PointerEventInit) {
-  /**
-   * 没有捕获时按"鼠标下的元素"派发是不现实的（测试里没有真实命中测试），
-   * 因此未捕获时退化为"从 body 派发"；有捕获时严格按真实语义派发给捕获元素。
-   * 断言只依赖"捕获后必须重定向"这一条，未捕获的分支不会被用来证明任何结论。
-   */
-  const actual = redirectTarget ?? document.body
+  const actual = redirectTarget ?? fallbackTarget ?? document.body
   const event = pointerEvent(type, init)
   actual.dispatchEvent(event)
   return event
@@ -138,6 +143,7 @@ function mount(): Harness {
   const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
   patchPointerCapture(gestureLayer)
   releaseRedirect()
+  fallbackTarget = gestureLayer
 
   const world = stage.querySelector('[style*="translate3d"]') as HTMLElement
   const label = stage.textContent ?? ''
@@ -821,5 +827,217 @@ describe('源码契约：「重新聚焦」effect 不得把 padding 的对象身
     const index = source.indexOf('// 尺寸或内容变化 → 重新聚焦')
     const block = source.slice(index, index + 900)
     expect(block, '聚焦时读了闭包里的 padding（值可能过期）').toContain('paddingRef.current')
+  })
+})
+
+describe('拖器材期间画布不得被"捏合"误缩放（审查必修：认领与捏合登记必须互斥）', () => {
+  /**
+   * 真实的回归，真源码复现过：平移手势的捕获监听挂在手势层上，
+   * 而手势层是**所有**指针的共同祖先 —— 学生拖器材时手柄会
+   * `setPointerCapture` + `stopPropagation`，但**捕获阶段先跑**，
+   * 那一次按下也一定会被这条监听看到。
+   *
+   * 若在这里**无条件**登记进 `pinchRef`：被器材占走的那一指会永久留在里面
+   * （真实设备上 `pointercancel` 基本不会来），下一次任意指针按下就凑到两指，
+   * `onPointerMove` 进捏合分支按两点中点 `zoomAt` ——
+   * 表现是**拖器材时画布自己越缩越小**（实测 `scale 1 → 0.5`）。
+   */
+  function mountWithInstrument(): {
+    stage: HTMLElement
+    gestureLayer: HTMLElement
+    scale(): number
+    unmount(): void
+  } {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const stageRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement>()
+    const root = createRoot(host)
+    act(() => {
+      root.render(
+        <InfiniteCanvas
+          stageRef={stageRef}
+          content={{ minX: 0, minY: 0, maxX: 400, maxY: 300 }}
+          tilt={0}
+          showToolbar={false}
+        >
+          <div data-testid="content" />
+        </InfiniteCanvas>,
+      )
+    })
+    const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
+    stubRect(stage, SIZE.width, SIZE.height)
+    patchPointerCapture(stage)
+    releaseRedirect()
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
+    patchPointerCapture(gestureLayer)
+    fallbackTarget = gestureLayer
+    return {
+      stage,
+      gestureLayer,
+      scale: () => {
+        const t = (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform
+        return Number(t.match(/scale\(([-\d.]+)\)/)?.[1] ?? Number.NaN)
+      },
+      unmount: () => act(() => root.unmount()),
+    }
+  }
+
+  /** 带 pointerId 的指针事件（捏合场景需要区分两指） */
+  function multiPointer(type: string, id: number, x: number, y: number): PointerEvent {
+    const event = new Event(type, { bubbles: true, cancelable: true }) as PointerEvent
+    Object.assign(event, {
+      pointerId: id,
+      button: 0,
+      buttons: 1,
+      pointerType: 'touch',
+      isPrimary: false,
+      clientX: x,
+      clientY: y,
+    })
+    return event
+  }
+
+  it('器材手柄占走第一指 + 第二指落在别处 + 两指移动 → scale 必须纹丝不动', () => {
+    const h = mountWithInstrument()
+
+    // 与场景同构的器材手柄：自己捕获指针 + 截断冒泡（CompetitorScene 就是这么写的）
+    const handle = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    patchPointerCapture(handle)
+    handle.addEventListener('pointerdown', (event) => {
+      handle.setPointerCapture((event as PointerEvent).pointerId)
+      event.stopPropagation()
+    })
+    h.gestureLayer.appendChild(handle)
+
+    const before = h.scale()
+    expect(Number.isFinite(before), '起始 scale 不是有限值').toBe(true)
+
+    act(() => {
+      handle.dispatchEvent(multiPointer('pointerdown', 1, 100, 100))
+    })
+    act(() => {
+      h.gestureLayer.dispatchEvent(multiPointer('pointerdown', 2, 400, 400))
+    })
+    act(() => {
+      h.gestureLayer.dispatchEvent(multiPointer('pointermove', 1, 150, 150))
+      h.gestureLayer.dispatchEvent(multiPointer('pointermove', 2, 500, 500))
+    })
+
+    expect(
+      h.scale(),
+      '拖器材期间画布被"捏合"分支误缩放（认领的那一指被同时算成了捏合的一指）',
+    ).toBeCloseTo(before, 6)
+    h.unmount()
+  })
+
+  it('两指确实都在画布上时，捏合缩放必须仍然有效（不许把功能一刀切掉）', () => {
+    const h = mountWithInstrument()
+    const before = h.scale()
+
+    act(() => {
+      h.gestureLayer.dispatchEvent(multiPointer('pointerdown', 1, 300, 400))
+      h.gestureLayer.dispatchEvent(multiPointer('pointerdown', 2, 500, 400))
+      // 两指拉开 → 放大
+      h.gestureLayer.dispatchEvent(multiPointer('pointermove', 1, 200, 400))
+      h.gestureLayer.dispatchEvent(multiPointer('pointermove', 2, 600, 400))
+    })
+
+    expect(h.scale(), '两指捏合被误伤，缩放完全失效').toBeGreaterThan(before)
+    h.unmount()
+  })
+})
+
+describe('空格粘住状态的逃生阀（审查 info 项）', () => {
+  /**
+   * 「按住空格 + 左键点控件」与「按住空格拖动画布」是同一个手势前缀。
+   * 画布抢下它之后，若学生松开鼠标却忘了松开空格，之后任何左键拖动都在拖画布，
+   * 看起来像"鼠标坏了"。
+   *
+   * 逃生阀：`pointerup` 时若这次**根本没拖动**（`moved === false`），也清掉 `panReady`。
+   * 它不会破坏诉求「按住不松开可以任意拖动」—— 真拖动会置 `moved`。
+   */
+  it('按住空格"点一下"（没拖动）之后再拖动，不应该还是在拖画布', () => {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const stageRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement>()
+    const root = createRoot(host)
+    act(() => {
+      root.render(
+        <InfiniteCanvas
+          stageRef={stageRef}
+          content={{ minX: 0, minY: 0, maxX: 400, maxY: 300 }}
+          tilt={0}
+          showToolbar={false}
+        >
+          <div />
+        </InfiniteCanvas>,
+      )
+    })
+    const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
+    stubRect(stage, SIZE.width, SIZE.height)
+    patchPointerCapture(stage)
+    releaseRedirect()
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
+    patchPointerCapture(gestureLayer)
+    fallbackTarget = gestureLayer
+
+    const pan = () => {
+      const t = (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform
+      return panOf(t)
+    }
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    const beforeClick = pan()
+    // 按住空格"点一下"：按下 → 原地松开（没有 pointermove）
+    act(() => {
+      gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 100, clientY: 100 }))
+      gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 100, clientY: 100 }))
+    })
+    expect(pan(), '"点一下"不应该平移画布').toEqual(beforeClick)
+
+    /**
+     * 现在**空格仍然是按着的**（学生忘了松），但既然上一次是"点击"不是"拖动"，
+     * 逃生阀已经把 panReady 清掉 —— 接下来的左键拖拽**不应该**再拖画布。
+     */
+    act(() => {
+      gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 200, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 320, clientY: 260 })
+      gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 320, clientY: 260 }))
+    })
+    releaseRedirect()
+    expect(
+      pan(),
+      '"点一下"之后画布仍然被粘住（之后每次左键拖动都在拖画布，看起来像鼠标坏了）',
+    ).toEqual(beforeClick)
+
+    // 真的松开空格 = 恢复正常；再按住空格并**真的拖动**仍然必须跟手
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    // 空格状态是 React state，必须**先让它落盘**再发指针事件
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    act(() => {
+      gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 200, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 340, clientY: 200 })
+      gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 340, clientY: 200 }))
+    })
+    releaseRedirect()
+    const dragged = pan()
+    expect(dragged.x - beforeClick.x, '按住空格真正拖动时画布没有跟手').toBeCloseTo(140, 3)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    act(() => root.unmount())
   })
 })

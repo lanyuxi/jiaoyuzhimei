@@ -103,7 +103,16 @@ export function clampCamera(camera: Camera, size: CanvasSize): Camera {
  * 平移侧早就有 `clampPanOffset` 这一层，缩放侧以前是漏的。
  */
 export function clampScale(value: number, limits: { minScale: number; maxScale: number }): number {
-  if (!Number.isFinite(value)) return 1
+  /**
+   * `NaN` 是**无方向**的坏值，归到 1（中性）最合理。
+   */
+  if (Number.isNaN(value)) return 1
+  /**
+   * `±Infinity` 是**有方向**的坏值：正无穷应当夹到**上界**、负无穷夹到**下界**。
+   * 用 `!isFinite → 1` 一刀切会丢掉方向信息 —— 用户往上滚到头，
+   * 画布反而缩回 100%（实测断言抓不到：只断言"在上下界之间"时 1 恰好也合法）。
+   */
+  if (!Number.isFinite(value)) return value > 0 ? limits.maxScale : limits.minScale
   return clamp(value, limits.minScale, limits.maxScale)
 }
 
@@ -119,8 +128,18 @@ export function isIdentityCamera(camera: Camera): boolean {
 
 /** 以某个画布坐标点为中心缩放：该点在屏幕上的位置保持不动 */
 export function zoomAt(camera: Camera, factor: number, anchor: Position, size: CanvasSize): Camera {
-  const nextScale = clamp(camera.scale * factor, CANVAS_MIN_SCALE, CANVAS_MAX_SCALE)
-  const ratio = nextScale / camera.scale
+  /**
+   * ⚠️ 先把 `camera.scale` **归一化**再算比例。
+   *
+   * 若放任 `camera.scale === 0`（`clampScale` 兜不到 0，它是个"合法有限值"）：
+   * `nextScale = 0.18`、`ratio = 0.18 / 0 = Infinity`，
+   * 于是 `anchor.x - (anchor.x - camera.x) * Infinity` 得到 `±Infinity`，
+   * 再被 `clampPanOffset` 归成 `0` —— 相机**瞬移到原点**，
+   * 而不是"以指针为锚点缩放"。归一化之后 `ratio` 必然有限。
+   */
+  const base = clampScale(camera.scale, { minScale: CANVAS_MIN_SCALE, maxScale: CANVAS_MAX_SCALE })
+  const nextScale = clampScale(base * factor, { minScale: CANVAS_MIN_SCALE, maxScale: CANVAS_MAX_SCALE })
+  const ratio = nextScale / base
   return clampCamera(
     {
       scale: nextScale,

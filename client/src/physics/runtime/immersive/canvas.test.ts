@@ -126,13 +126,45 @@ describe('缩放兜底：NaN 必须被拦住（否则画布整块消失且不报
     expect(out.y).toBe(-34)
   })
 
-  it('scale 为 ±Infinity 时同样归到 1，并且仍然夹在合法区间内', () => {
-    for (const bad of [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
-      const out = clampCamera({ scale: bad, x: 0, y: 0 }, stage)
-      expect(Number.isFinite(out.scale), `scale=${bad} 没有被兜住`).toBe(true)
-      expect(out.scale).toBeGreaterThanOrEqual(CANVAS_MIN_SCALE)
-      expect(out.scale).toBeLessThanOrEqual(CANVAS_MAX_SCALE)
-    }
+  it('scale 为 ±Infinity 时保留方向：正无穷 → 上界，负无穷 → 下界', () => {
+    /**
+     * `±Infinity` 是**有方向**的坏值，不能像 `NaN` 那样一刀切归 1。
+     * 旧写法 `!isFinite → 1` 会把"往上滚到头"变成"缩回 100%"：
+     * 只断言"落在上下界之间"时 1 恰好也合法，方向错误测不出来。
+     */
+    expect(
+      clampCamera({ scale: Number.POSITIVE_INFINITY, x: 0, y: 0 }, stage).scale,
+      '正无穷没有夹到上界（会被误判成"缩回 100%"）',
+    ).toBe(CANVAS_MAX_SCALE)
+    expect(
+      clampCamera({ scale: Number.NEGATIVE_INFINITY, x: 0, y: 0 }, stage).scale,
+      '负无穷没有夹到下界',
+    ).toBe(CANVAS_MIN_SCALE)
+  })
+
+  it('scale 为 0（有限但非法）时，缩放不会把相机瞬移到原点', () => {
+    /**
+     * `scale === 0` 是**合法有限值**，`clampScale` 的 NaN/Infinity 分支兜不到它。
+     * 若直接拿它算 `ratio = nextScale / 0 = Infinity`，
+     * 锚点公式会算出 `±Infinity`，再被 `clampPanOffset` 归成 0 ——
+     * 表现是"一放大，相机就瞬移到原点"。
+     */
+    const out = zoomAt({ scale: 0, x: 10, y: 10 }, 1.2, { x: 600, y: 400 }, stage)
+    expect(Number.isFinite(out.x), 'scale=0 时 x 变成了非有限值').toBe(true)
+    expect(Number.isFinite(out.y), 'scale=0 时 y 变成了非有限值').toBe(true)
+    // 归一后 base = CANVAS_MIN_SCALE，再乘 1.2 → 0.216
+    expect(out.scale, 'scale=0 时缩放目标不对').toBeCloseTo(CANVAS_MIN_SCALE * 1.2, 6)
+    /**
+     * 关键判据不是"相机不动"，而是**锚点语义仍然成立**：
+     * 指针下的那个"画布点"在缩放前后停在同一个屏幕位置。
+     * 旧写法（`ratio = 0.18/0 = Infinity`）会得到 `x = y = 0`，
+     * 也就是相机瞬移到原点 —— 那时的"锚点"根本不存在。
+     */
+    const ratio = out.scale / CANVAS_MIN_SCALE
+    expect(out.x, '锚点语义被破坏：x 不等于按锚点缩放应有值').toBeCloseTo(600 - (600 - 10) * ratio, 6)
+    expect(out.y, '锚点语义被破坏：y 不等于按锚点缩放应有值').toBeCloseTo(400 - (400 - 10) * ratio, 6)
+    // 而且绝不能再出现"瞬移到原点"那个旧症状
+    expect(out.x === 0 && out.y === 0, '又出现了"相机瞬移到原点"的老症状').toBe(false)
   })
 
   it('正常缩放值不受兜底影响（不许误杀合法缩放）', () => {

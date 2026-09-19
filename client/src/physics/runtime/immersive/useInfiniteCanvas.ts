@@ -370,22 +370,50 @@ export function useInfiniteCanvas({
    */
   const onPointerDownCapture = useCallback(
     (event: globalThis.PointerEvent) => {
-      pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
-      if (panRef.current !== null) return
-      if (!panEligible(event)) return
-      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
-      const captureTarget = event.currentTarget as
-        | (EventTarget & { setPointerCapture?: (id: number) => void })
-        | null
-      if (captureTarget !== null && typeof captureTarget.setPointerCapture === 'function') {
-        try {
-          captureTarget.setPointerCapture(event.pointerId)
-        } catch {
-          // 少数环境（含无头 DOM）不支持捕获；没有它也能靠手势层上的事件继续平移
+      /**
+       * ⚠️ **认领与捏合登记必须互斥**（真实 Chromium / happy-dom 均实测复现过回归）。
+       *
+       * 这条监听挂在手势层上，而手势层是**所有**指针的共同祖先：
+       * 学生拖器材时，器材手柄自己会 `setPointerCapture` + `stopPropagation`，
+       * 但**捕获阶段先跑**，所以那一次按下也一定会到这里。
+       *
+       * 若在这里**无条件** `pinchRef.set(...)`：被器材占走的那一指会**永久留在
+       * `pinchRef` 里**（真实设备上 `pointercancel` 基本不会来），
+       * 于是下一次任意指针按下就凑到 `pinchRef.size === 2`，
+       * `onPointerMove` 直接进捏合分支按两点**中点**做 `zoomAt` ——
+       * 表现是**拖器材时画布自己越缩越小**（实测 `scale 1 → 0.5`）。
+       *
+       * 所以：**认领走了的指针不进 `pinchRef`**，只把"确实空出来的第二指"留给捏合。
+       */
+      if (panRef.current === null && panEligible(event)) {
+        panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
+        const captureTarget = event.currentTarget as
+          | (EventTarget & { setPointerCapture?: (id: number) => void })
+          | null
+        if (captureTarget !== null && typeof captureTarget.setPointerCapture === 'function') {
+          try {
+            captureTarget.setPointerCapture(event.pointerId)
+          } catch {
+            // 少数环境（含无头 DOM）不支持捕获；没有它也能靠手势层上的事件继续平移
+          }
         }
+        // 认领后立刻截断：场景侧的器材 / 接线柱 / 导线收不到这次按下，不会被顺手拖走
+        event.stopPropagation()
+        return
       }
-      // 认领后立刻截断：场景侧的器材 / 接线柱 / 导线收不到这次按下，不会被顺手拖走
-      event.stopPropagation()
+      /**
+       * ⚠️ 到这里**仍然不能登记进 `pinchRef`**。
+       *
+       * 走到这里有两种情况，且都无法区分"这一指最终归谁"：
+       *   · 学生**拖器材 / 接导线**——场景侧手柄随后会
+       *     `setPointerCapture` + `stopPropagation`，这一指归场景；
+       *   · 真的**第二根手指**落在画布空白处——这一指归捏合。
+       *
+       * 捕获阶段无法分辨它们，而且**场景侧的 `pointerdown` 还没跑**。
+       * 因此登记推迟到"事件真的冒泡到手势层"时（`handlers.onPointerDown`）：
+       * 那时场景侧若已认领并截断，就根本不会走到那里 ——
+       * 被场景占走的指针自然**不会被登记**，也就不会凑出假的"双指"。
+       */
     },
     [panEligible],
   )
@@ -399,17 +427,27 @@ export function useInfiniteCanvas({
      * 判据与捕获阶段完全一致，避免两条入口口径不一。
      */
     onPointerDown: (event: PointerEvent<HTMLElement>) => {
+      // 与捕获阶段同一条纪律：认领与捏合登记互斥（见 `onPointerDownCapture` 注释）
+      if (panRef.current === null && panEligible(event)) {
+        panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
+        return
+      }
       pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
-      if (panRef.current !== null) return
-      if (!panEligible(event)) return
-      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
     },
     onPointerMove: (event: PointerEvent<HTMLElement>) => {
-      if (pinchRef.current.has(event.pointerId)) {
+      const panning = panRef.current !== null && panRef.current.pointerId === event.pointerId
+      /**
+       * ⚠️ **正在平移的那一指不参与捏合**。
+       *
+       * 认领平移时不会把它登记进 `pinchRef`，所以正常情况下这里进不去；
+       * 但兜底入口（`handlers.onPointerDown`）与历史状态仍可能留下它 ——
+       * 一旦把它算成捏合的一指，平移中就会多出一次按两点中点的 `zoomAt`。
+       */
+      if (!panning && pinchRef.current.has(event.pointerId)) {
         pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
       }
       // 双指捏合缩放
-      if (pinchRef.current.size === 2) {
+      if (!panning && pinchRef.current.size === 2) {
         const [first, second] = [...pinchRef.current.values()]
         const distance = Math.hypot(first.x - second.x, first.y - second.y)
         if (pinchDistanceRef.current !== null && distance > 0) {
@@ -457,9 +495,19 @@ export function useInfiniteCanvas({
        * "按住不放"期间必须能**连续拖多次**。这里一旦清掉 `panReady`，
        * 第二次拖动就完全失效（真实 Chromium 实测：连拖两次，第二次 `dx=0`）。
        *
-       * 空格状态的复位时机只有三个，都已经具备：
-       * `keyup`（真的松开了空格）、`blur`（窗口失焦）、`pointercancel`（手势被系统打断）。
+       * 空格状态的复位时机：`keyup`（真的松开了空格）、`blur`（窗口失焦）、
+       * `pointercancel`（手势被系统打断）。
+       *
+       * ⚠️ 再加一条**逃生阀**：`pointerup` 时若这次**根本没拖动过**
+       * （`moved === false`，也就是一次"点击"而不是"拖拽"），也清掉 `panReady`。
+       *
+       * 理由：「按住空格 + 左键点某个控件」与「按住空格拖动画布」是同一个手势前缀，
+       * 画布必然要抢在其中一种前面。抢下来之后如果学生松开鼠标却**忘了松开空格**，
+       * 之后任何一次左键拖动都会继续拖画布，看起来像"鼠标坏了"。
+       * 这条逃生阀不会影响诉求「按住不松开可以任意拖动」——
+       * 真正的拖动会把 `moved` 置为 `true`，`panReady` 依然保持。
        */
+      if (!pan.moved && event.button === 0) setPanReady(false)
       if (pan.moved) event.stopPropagation()
     },
     onPointerCancel: (event: PointerEvent<HTMLElement>) => {
