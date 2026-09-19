@@ -1,0 +1,229 @@
+{
+  "script_id": "thin-film",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 175.02,
+  "files": [
+    {
+      "script_id": "thin-film",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BD%A0%E4%B8%80%E5%AE%9A%E8%A7%81%E8%BF%87%E8%82%A5%E7%9A%82%E6%B3%A1%E5%92%8C%E6%B0%B4%E9%9D%A2%E6%B2%B9%E8%86%9C%E4%B8%8A%E6%B5%81%E5%8A%A8%E7%9A%84%E5%BD%A9%E8%99%B9%E8%89%B2%E3%80%82",
+      "path": "audio/narrations/thin-film/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BD%A0%E4%B8%80%E5%AE%9A%E8%A7%81%E8%BF%87%E8%82%A5%E7%9A%82%E6%B3%A1%E5%92%8C%E6%B0%B4%E9%9D%A2%E6%B2%B9%E8%86%9C%E4%B8%8A%E6%B5%81%E5%8A%A8%E7%9A%84%E5%BD%A9%E8%99%B9%E8%89%B2%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "欢迎来到薄膜干涉实验！你一定见过肥皂泡和水面油膜上流动的彩虹色。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E8%89%B2%E5%BD%A9%E5%B9%B6%E9%9D%9E%E6%9D%A5%E8%87%AA%E9%A2%9C%E6%96%99%EF%BC%8C%E8%80%8C%E6%98%AF%E5%85%89%E5%9C%A8%E8%96%84%E8%86%9C%E4%B8%8A%E5%8F%91%E7%94%9F%E5%B9%B2%E6%B6%89%E7%9A%84%E7%BB%93%E6%9E%9C%E3%80%82",
+      "path": "audio/narrations/thin-film/intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E8%89%B2%E5%BD%A9%E5%B9%B6%E9%9D%9E%E6%9D%A5%E8%87%AA%E9%A2%9C%E6%96%99%EF%BC%8C%E8%80%8C%E6%98%AF%E5%85%89%E5%9C%A8%E8%96%84%E8%86%9C%E4%B8%8A%E5%8F%91%E7%94%9F%E5%B9%B2%E6%B6%89%E7%9A%84%E7%BB%93%E6%9E%9C%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "这些色彩并非来自颜料，而是光在薄膜上发生干涉的结果。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8F%AD%E5%BC%80%E8%BF%99%E5%B1%82%E8%96%84%E8%96%84%E7%9A%84%E8%86%9C%E9%87%8C%E9%9A%90%E8%97%8F%E7%9A%84%E5%85%89%E5%AD%A6%E5%A5%A5%E7%A7%98%E3%80%82",
+      "path": "audio/narrations/thin-film/intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8F%AD%E5%BC%80%E8%BF%99%E5%B1%82%E8%96%84%E8%96%84%E7%9A%84%E8%86%9C%E9%87%8C%E9%9A%90%E8%97%8F%E7%9A%84%E5%85%89%E5%AD%A6%E5%A5%A5%E7%A7%98%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "今天我们就来揭开这层薄薄的膜里隐藏的光学奥秘。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%BD%93%E5%85%89%E7%85%A7%E5%88%B0%E8%96%84%E8%86%9C%E4%B8%8A%EF%BC%8C%E4%B8%80%E9%83%A8%E5%88%86%E5%9C%A8%E4%B8%8A%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%EF%BC%8C%E4%B8%80%E9%83%A8%E5%88%86%E8%BF%9B%E5%85%A5%E8%96%84%E8%86%9C%E5%90%8E%E5%9C%A8%E4%B8%8B%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E3%80%82",
+      "path": "audio/narrations/thin-film/concept-concept-1.speech?text=%E5%BD%93%E5%85%89%E7%85%A7%E5%88%B0%E8%96%84%E8%86%9C%E4%B8%8A%EF%BC%8C%E4%B8%80%E9%83%A8%E5%88%86%E5%9C%A8%E4%B8%8A%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%EF%BC%8C%E4%B8%80%E9%83%A8%E5%88%86%E8%BF%9B%E5%85%A5%E8%96%84%E8%86%9C%E5%90%8E%E5%9C%A8%E4%B8%8B%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "当光照到薄膜上，一部分在上表面反射，一部分进入薄膜后在下表面反射。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BF%99%E4%B8%A4%E6%9D%9F%E5%8F%8D%E5%B0%84%E5%85%89%E9%87%8D%E6%96%B0%E4%BC%9A%E5%90%88%EF%BC%8C%E7%94%B1%E4%BA%8E%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF%E7%A8%8B%E4%B8%8D%E5%90%8C%EF%BC%8C%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E4%BA%A7%E7%94%9F%E5%85%89%E7%A8%8B%E5%B7%AE%E3%80%82",
+      "path": "audio/narrations/thin-film/concept-concept-2.speech?text=%E8%BF%99%E4%B8%A4%E6%9D%9F%E5%8F%8D%E5%B0%84%E5%85%89%E9%87%8D%E6%96%B0%E4%BC%9A%E5%90%88%EF%BC%8C%E7%94%B1%E4%BA%8E%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF%E7%A8%8B%E4%B8%8D%E5%90%8C%EF%BC%8C%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E4%BA%A7%E7%94%9F%E5%85%89%E7%A8%8B%E5%B7%AE%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "这两束反射光重新会合，由于走过的路程不同，它们之间产生光程差。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%85%89%E5%9C%A8%E8%96%84%E8%86%9C%E5%86%85%E4%BC%A0%E6%92%AD%EF%BC%8C%E5%85%89%E7%A8%8B%E8%A6%81%E4%B9%98%E4%BB%A5%E6%8A%98%E5%B0%84%E7%8E%87%20n%EF%BC%8C%E5%BE%80%E8%BF%94%E4%B8%80%E6%AC%A1%E5%85%89%E7%A8%8B%E5%B7%AE%E5%B0%B1%E6%98%AF%202nd%E3%80%82",
+      "path": "audio/narrations/thin-film/concept-concept-3.speech?text=%E5%85%89%E5%9C%A8%E8%96%84%E8%86%9C%E5%86%85%E4%BC%A0%E6%92%AD%EF%BC%8C%E5%85%89%E7%A8%8B%E8%A6%81%E4%B9%98%E4%BB%A5%E6%8A%98%E5%B0%84%E7%8E%87%20n%EF%BC%8C%E5%BE%80%E8%BF%94%E4%B8%80%E6%AC%A1%E5%85%89%E7%A8%8B%E5%B7%AE%E5%B0%B1%E6%98%AF%202nd%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "光在薄膜内传播，光程要乘以折射率 n，往返一次光程差就是 2nd。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%85%89%E4%BB%8E%E5%85%89%E7%96%8F%E5%B0%84%E5%90%91%E5%85%89%E5%AF%86%E4%BB%8B%E8%B4%A8%E5%8F%8D%E5%B0%84%E6%97%B6%E4%BC%9A%E6%9C%89%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%EF%BC%8C%E7%9B%B8%E5%BD%93%E4%BA%8E%E9%A2%9D%E5%A4%96%E5%A4%9A%E5%87%BA%E5%8D%8A%E4%B8%AA%E6%B3%A2%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/thin-film/concept-concept-4.speech?text=%E5%85%89%E4%BB%8E%E5%85%89%E7%96%8F%E5%B0%84%E5%90%91%E5%85%89%E5%AF%86%E4%BB%8B%E8%B4%A8%E5%8F%8D%E5%B0%84%E6%97%B6%E4%BC%9A%E6%9C%89%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%EF%BC%8C%E7%9B%B8%E5%BD%93%E4%BA%8E%E9%A2%9D%E5%A4%96%E5%A4%9A%E5%87%BA%E5%8D%8A%E4%B8%AA%E6%B3%A2%E9%95%BF%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "光从光疏射向光密介质反射时会有半波损失，相当于额外多出半个波长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%80%83%E8%99%91%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%E5%90%8E%EF%BC%8C%E5%8F%8D%E5%B0%84%E5%8A%A0%E5%BC%BA%E5%8D%B3%E7%9C%8B%E5%88%B0%E4%BA%AE%E8%89%B2%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%A6%82%E4%B8%8B%E3%80%82",
+      "path": "audio/narrations/thin-film/formula-formula-1.speech?text=%E8%80%83%E8%99%91%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%E5%90%8E%EF%BC%8C%E5%8F%8D%E5%B0%84%E5%8A%A0%E5%BC%BA%E5%8D%B3%E7%9C%8B%E5%88%B0%E4%BA%AE%E8%89%B2%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%A6%82%E4%B8%8B%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "考虑半波损失后，反射加强即看到亮色的条件如下。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%8F%8D%E5%B0%84%E5%87%8F%E5%BC%B1%E3%80%81%E5%8F%98%E6%9A%97%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%98%AF%202nd%20%E7%AD%89%E4%BA%8E%E6%B3%A2%E9%95%BF%E7%9A%84%E6%95%B4%E6%95%B0%E5%80%8D%E3%80%82",
+      "path": "audio/narrations/thin-film/formula-formula-2.speech?text=%E5%8F%8D%E5%B0%84%E5%87%8F%E5%BC%B1%E3%80%81%E5%8F%98%E6%9A%97%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%98%AF%202nd%20%E7%AD%89%E4%BA%8E%E6%B3%A2%E9%95%BF%E7%9A%84%E6%95%B4%E6%95%B0%E5%80%8D%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "反射减弱、变暗的条件是 2nd 等于波长的整数倍。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%85%B6%E4%B8%AD%20n%20%E6%98%AF%E8%96%84%E8%86%9C%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8Cd%20%E6%98%AF%E8%96%84%E8%86%9C%E5%8E%9A%E5%BA%A6%EF%BC%8C%CE%BB%20%E6%98%AF%E5%85%89%E5%9C%A8%E7%9C%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E6%B3%A2%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/thin-film/formula-formula-3.speech?text=%E5%85%B6%E4%B8%AD%20n%20%E6%98%AF%E8%96%84%E8%86%9C%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8Cd%20%E6%98%AF%E8%96%84%E8%86%9C%E5%8E%9A%E5%BA%A6%EF%BC%8C%CE%BB%20%E6%98%AF%E5%85%89%E5%9C%A8%E7%9C%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E6%B3%A2%E9%95%BF%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "其中 n 是薄膜折射率，d 是薄膜厚度，λ 是光在真空中的波长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E4%B8%8D%E5%90%8C%E5%8E%9A%E5%BA%A6%E5%AF%B9%E5%BA%94%E4%B8%8D%E5%90%8C%E6%B3%A2%E9%95%BF%E7%9A%84%E5%8A%A0%E5%BC%BA%EF%BC%8C%E6%89%80%E4%BB%A5%E8%96%84%E8%86%9C%E4%BC%9A%E5%91%88%E7%8E%B0%E9%9A%8F%E5%8E%9A%E5%BA%A6%E5%8F%98%E5%8C%96%E7%9A%84%E5%BD%A9%E8%89%B2%E3%80%82",
+      "path": "audio/narrations/thin-film/formula-formula-4.speech?text=%E4%B8%8D%E5%90%8C%E5%8E%9A%E5%BA%A6%E5%AF%B9%E5%BA%94%E4%B8%8D%E5%90%8C%E6%B3%A2%E9%95%BF%E7%9A%84%E5%8A%A0%E5%BC%BA%EF%BC%8C%E6%89%80%E4%BB%A5%E8%96%84%E8%86%9C%E4%BC%9A%E5%91%88%E7%8E%B0%E9%9A%8F%E5%8E%9A%E5%BA%A6%E5%8F%98%E5%8C%96%E7%9A%84%E5%BD%A9%E8%89%B2%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "不同厚度对应不同波长的加强，所以薄膜会呈现随厚度变化的彩色。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E8%96%84%E8%86%9C%E5%8E%9A%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%8D%E5%B0%84%E5%85%89%E7%9A%84%E9%A2%9C%E8%89%B2%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/thin-film/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E8%96%84%E8%86%9C%E5%8E%9A%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%8D%E5%B0%84%E5%85%89%E7%9A%84%E9%A2%9C%E8%89%B2%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "调整薄膜厚度，观察反射光的颜色如何随之改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8C%E5%85%89%E7%A8%8B%E5%B7%AE%E9%9A%8F%E4%B9%8B%E5%8F%98%E5%8C%96%EF%BC%8C%E5%8A%A0%E5%BC%BA%E7%9A%84%E6%B3%A2%E9%95%BF%E4%B9%9F%E4%BC%9A%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/thin-film/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8C%E5%85%89%E7%A8%8B%E5%B7%AE%E9%9A%8F%E4%B9%8B%E5%8F%98%E5%8C%96%EF%BC%8C%E5%8A%A0%E5%BC%BA%E7%9A%84%E6%B3%A2%E9%95%BF%E4%B9%9F%E4%BC%9A%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "改变折射率，光程差随之变化，加强的波长也会移动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8E%9A%E5%BA%A6%E7%9A%84%E5%BE%AE%E5%B0%8F%E5%8F%98%E5%8C%96%EF%BC%8C%E5%B0%B1%E8%83%BD%E8%AE%A9%E9%A2%9C%E8%89%B2%E5%9C%A8%E5%BD%A9%E8%99%B9%E4%B8%AD%E5%BE%AA%E7%8E%AF%E5%8F%98%E6%8D%A2%E3%80%82",
+      "path": "audio/narrations/thin-film/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8E%9A%E5%BA%A6%E7%9A%84%E5%BE%AE%E5%B0%8F%E5%8F%98%E5%8C%96%EF%BC%8C%E5%B0%B1%E8%83%BD%E8%AE%A9%E9%A2%9C%E8%89%B2%E5%9C%A8%E5%BD%A9%E8%99%B9%E4%B8%AD%E5%BE%AA%E7%8E%AF%E5%8F%98%E6%8D%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "注意厚度的微小变化，就能让颜色在彩虹中循环变换。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E7%9B%B8%E6%9C%BA%E9%95%9C%E5%A4%B4%E7%9A%84%E5%A2%9E%E9%80%8F%E8%86%9C%EF%BC%8C%E6%AD%A3%E6%98%AF%E5%88%A9%E7%94%A8%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E8%AE%A9%E5%8F%8D%E5%B0%84%E5%85%89%E7%9B%B8%E6%B6%88%EF%BC%8C%E6%8F%90%E9%AB%98%E9%80%8F%E5%85%89%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/thin-film/application-application-1.speech?text=%E7%9B%B8%E6%9C%BA%E9%95%9C%E5%A4%B4%E7%9A%84%E5%A2%9E%E9%80%8F%E8%86%9C%EF%BC%8C%E6%AD%A3%E6%98%AF%E5%88%A9%E7%94%A8%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E8%AE%A9%E5%8F%8D%E5%B0%84%E5%85%89%E7%9B%B8%E6%B6%88%EF%BC%8C%E6%8F%90%E9%AB%98%E9%80%8F%E5%85%89%E7%8E%87%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "相机镜头的增透膜，正是利用薄膜干涉让反射光相消，提高透光率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%92%9E%E7%A5%A8%E5%92%8C%E8%AF%81%E4%BB%B6%E4%B8%8A%E7%9A%84%E9%98%B2%E4%BC%AA%E8%86%9C%EF%BC%8C%E4%BC%9A%E9%9A%8F%E8%A7%92%E5%BA%A6%E5%8F%98%E6%8D%A2%E9%A2%9C%E8%89%B2%EF%BC%8C%E9%9A%BE%E4%BB%A5%E4%BB%BF%E9%80%A0%E3%80%82",
+      "path": "audio/narrations/thin-film/application-application-2.speech?text=%E9%92%9E%E7%A5%A8%E5%92%8C%E8%AF%81%E4%BB%B6%E4%B8%8A%E7%9A%84%E9%98%B2%E4%BC%AA%E8%86%9C%EF%BC%8C%E4%BC%9A%E9%9A%8F%E8%A7%92%E5%BA%A6%E5%8F%98%E6%8D%A2%E9%A2%9C%E8%89%B2%EF%BC%8C%E9%9A%BE%E4%BB%A5%E4%BB%BF%E9%80%A0%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "钞票和证件上的防伪膜，会随角度变换颜色，难以仿造。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%B7%A5%E4%B8%9A%E4%B8%8A%E7%94%A8%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E7%B2%BE%E7%A1%AE%E6%B5%8B%E9%87%8F%E5%BE%AE%E5%B0%8F%E7%9A%84%E5%8E%9A%E5%BA%A6%E5%92%8C%E5%B9%B3%E6%95%B4%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/thin-film/application-application-3.speech?text=%E5%B7%A5%E4%B8%9A%E4%B8%8A%E7%94%A8%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E7%B2%BE%E7%A1%AE%E6%B5%8B%E9%87%8F%E5%BE%AE%E5%B0%8F%E7%9A%84%E5%8E%9A%E5%BA%A6%E5%92%8C%E5%B9%B3%E6%95%B4%E5%BA%A6%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "工业上用薄膜干涉精确测量微小的厚度和平整度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E6%9D%A5%E8%87%AA%E4%B8%8A%E4%B8%8B%E8%A1%A8%E9%9D%A2%E4%B8%A4%E6%9D%9F%E5%8F%8D%E5%B0%84%E5%85%89%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E5%85%89%E7%A8%8B%E5%B7%AE%E4%B8%BA%202nd%E3%80%82",
+      "path": "audio/narrations/thin-film/summary-summary-1.speech?text=%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E6%9D%A5%E8%87%AA%E4%B8%8A%E4%B8%8B%E8%A1%A8%E9%9D%A2%E4%B8%A4%E6%9D%9F%E5%8F%8D%E5%B0%84%E5%85%89%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E5%85%89%E7%A8%8B%E5%B7%AE%E4%B8%BA%202nd%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "薄膜干涉来自上下表面两束反射光的叠加，光程差为 2nd。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E8%80%83%E8%99%91%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%EF%BC%8C%E5%8F%8D%E5%B0%84%E5%8A%A0%E5%BC%BA%E6%9D%A1%E4%BB%B6%E4%B8%BA%202nd%20%E7%AD%89%E4%BA%8E%E5%8D%8A%E6%95%B4%E6%95%B0%E5%80%8D%E6%B3%A2%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/thin-film/summary-summary-2.speech?text=%E8%80%83%E8%99%91%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%EF%BC%8C%E5%8F%8D%E5%B0%84%E5%8A%A0%E5%BC%BA%E6%9D%A1%E4%BB%B6%E4%B8%BA%202nd%20%E7%AD%89%E4%BA%8E%E5%8D%8A%E6%95%B4%E6%95%B0%E5%80%8D%E6%B3%A2%E9%95%BF%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "考虑半波损失，反射加强条件为 2nd 等于半整数倍波长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "thin-film",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E8%82%A5%E7%9A%82%E6%B3%A1%E5%88%B0%E5%A2%9E%E9%80%8F%E8%86%9C%EF%BC%8C%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E8%A3%85%E7%82%B9%E5%B9%B6%E6%94%B9%E5%96%84%E7%9D%80%E6%88%91%E4%BB%AC%E7%9A%84%E4%B8%96%E7%95%8C%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E7%9C%8B%E6%87%82%E8%BF%99%E5%B1%82%E8%89%B2%E5%BD%A9%EF%BC%81",
+      "path": "audio/narrations/thin-film/summary-summary-3.speech?text=%E4%BB%8E%E8%82%A5%E7%9A%82%E6%B3%A1%E5%88%B0%E5%A2%9E%E9%80%8F%E8%86%9C%EF%BC%8C%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89%E8%A3%85%E7%82%B9%E5%B9%B6%E6%94%B9%E5%96%84%E7%9D%80%E6%88%91%E4%BB%AC%E7%9A%84%E4%B8%96%E7%95%8C%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E7%9C%8B%E6%87%82%E8%BF%99%E5%B1%82%E8%89%B2%E5%BD%A9%EF%BC%81",
+      "duration": 11.56,
+      "size": 0,
+      "text": "从肥皂泡到增透膜，薄膜干涉装点并改善着我们的世界。希望你已经看懂这层色彩！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

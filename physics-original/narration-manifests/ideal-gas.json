@@ -1,0 +1,273 @@
+{
+  "script_id": "ideal-gas",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 164.1,
+  "files": [
+    {
+      "script_id": "ideal-gas",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E6%B0%94%E4%BD%93%E7%9A%84%E5%AE%8F%E8%A7%82%E6%80%A7%E8%B4%A8%E3%80%82",
+      "path": "audio/narrations/ideal-gas/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E6%B0%94%E4%BD%93%E7%9A%84%E5%AE%8F%E8%A7%82%E6%80%A7%E8%B4%A8%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "欢迎来到理想气体实验！今天我们要探索气体的宏观性质。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BD%AE%E8%83%8E%E5%9C%A8%E5%A4%8F%E5%A4%A9%E5%AE%B9%E6%98%93%E7%88%86%E8%83%8E%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E9%AB%98%E5%8E%8B%E9%94%85%E8%83%BD%E6%9B%B4%E5%BF%AB%E7%85%AE%E7%86%9F%E9%A3%9F%E7%89%A9%EF%BC%9F",
+      "path": "audio/narrations/ideal-gas/intro-intro-2.speech?text=%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BD%AE%E8%83%8E%E5%9C%A8%E5%A4%8F%E5%A4%A9%E5%AE%B9%E6%98%93%E7%88%86%E8%83%8E%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E9%AB%98%E5%8E%8B%E9%94%85%E8%83%BD%E6%9B%B4%E5%BF%AB%E7%85%AE%E7%86%9F%E9%A3%9F%E7%89%A9%EF%BC%9F",
+      "duration": 8.44,
+      "size": 0,
+      "text": "为什么轮胎在夏天容易爆胎？为什么高压锅能更快煮熟食物？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%BA%9B%E9%83%BD%E4%B8%8E%E6%B0%94%E4%BD%93%E7%9A%84%E5%8E%8B%E5%BC%BA%E3%80%81%E4%BD%93%E7%A7%AF%E5%92%8C%E6%B8%A9%E5%BA%A6%E7%9A%84%E5%85%B3%E7%B3%BB%E6%9C%89%E5%85%B3%E3%80%82",
+      "path": "audio/narrations/ideal-gas/intro-intro-3.speech?text=%E8%BF%99%E4%BA%9B%E9%83%BD%E4%B8%8E%E6%B0%94%E4%BD%93%E7%9A%84%E5%8E%8B%E5%BC%BA%E3%80%81%E4%BD%93%E7%A7%AF%E5%92%8C%E6%B8%A9%E5%BA%A6%E7%9A%84%E5%85%B3%E7%B3%BB%E6%9C%89%E5%85%B3%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "这些都与气体的压强、体积和温度的关系有关。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E6%98%AF%E4%B8%80%E7%A7%8D%E7%90%86%E6%83%B3%E5%8C%96%E6%A8%A1%E5%9E%8B%EF%BC%8C%E5%BF%BD%E7%95%A5%E5%88%86%E5%AD%90%E4%BD%93%E7%A7%AF%E5%92%8C%E5%88%86%E5%AD%90%E9%97%B4%E4%BD%9C%E7%94%A8%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/ideal-gas/concept-concept-1.speech?text=%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E6%98%AF%E4%B8%80%E7%A7%8D%E7%90%86%E6%83%B3%E5%8C%96%E6%A8%A1%E5%9E%8B%EF%BC%8C%E5%BF%BD%E7%95%A5%E5%88%86%E5%AD%90%E4%BD%93%E7%A7%AF%E5%92%8C%E5%88%86%E5%AD%90%E9%97%B4%E4%BD%9C%E7%94%A8%E5%8A%9B%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "理想气体是一种理想化模型，忽略分子体积和分子间作用力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%B0%94%E4%BD%93%E7%9A%84%E7%8A%B6%E6%80%81%E7%94%B1%E5%8E%8B%E5%BC%BA%20P%E3%80%81%E4%BD%93%E7%A7%AF%20V%20%E5%92%8C%E6%B8%A9%E5%BA%A6%20T%20%E4%B8%89%E4%B8%AA%E9%87%8F%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "path": "audio/narrations/ideal-gas/concept-concept-2.speech?text=%E6%B0%94%E4%BD%93%E7%9A%84%E7%8A%B6%E6%80%81%E7%94%B1%E5%8E%8B%E5%BC%BA%20P%E3%80%81%E4%BD%93%E7%A7%AF%20V%20%E5%92%8C%E6%B8%A9%E5%BA%A6%20T%20%E4%B8%89%E4%B8%AA%E9%87%8F%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "气体的状态由压强 P、体积 V 和温度 T 三个量描述。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%AD%89%E6%B8%A9%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%B8%A9%E5%BA%A6%E4%B8%8D%E5%8F%98%EF%BC%8C%E7%AD%89%E5%8E%8B%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%8E%8B%E5%BC%BA%E4%B8%8D%E5%8F%98%EF%BC%8C%E7%AD%89%E5%AE%B9%E8%BF%87%E7%A8%8B%E4%B8%AD%E4%BD%93%E7%A7%AF%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/ideal-gas/concept-concept-3.speech?text=%E7%AD%89%E6%B8%A9%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%B8%A9%E5%BA%A6%E4%B8%8D%E5%8F%98%EF%BC%8C%E7%AD%89%E5%8E%8B%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%8E%8B%E5%BC%BA%E4%B8%8D%E5%8F%98%EF%BC%8C%E7%AD%89%E5%AE%B9%E8%BF%87%E7%A8%8B%E4%B8%AD%E4%BD%93%E7%A7%AF%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "等温过程中温度不变，等压过程中压强不变，等容过程中体积不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%AE%9E%E9%99%85%E6%B0%94%E4%BD%93%E5%9C%A8%E9%AB%98%E6%B8%A9%E4%BD%8E%E5%8E%8B%E4%B8%8B%E6%8E%A5%E8%BF%91%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E3%80%82",
+      "path": "audio/narrations/ideal-gas/concept-concept-4.speech?text=%E5%AE%9E%E9%99%85%E6%B0%94%E4%BD%93%E5%9C%A8%E9%AB%98%E6%B8%A9%E4%BD%8E%E5%8E%8B%E4%B8%8B%E6%8E%A5%E8%BF%91%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "实际气体在高温低压下接近理想气体。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E7%8A%B6%E6%80%81%E6%96%B9%E7%A8%8B%EF%BC%9APV%20%E7%AD%89%E4%BA%8E%20nRT%E3%80%82",
+      "path": "audio/narrations/ideal-gas/formula-formula-1.speech?text=%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E7%8A%B6%E6%80%81%E6%96%B9%E7%A8%8B%EF%BC%9APV%20%E7%AD%89%E4%BA%8E%20nRT%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "理想气体状态方程：PV 等于 nRT。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20n%20%E6%98%AF%E7%89%A9%E8%B4%A8%E7%9A%84%E9%87%8F%EF%BC%8CR%20%E6%98%AF%E6%B0%94%E4%BD%93%E5%B8%B8%E6%95%B0%EF%BC%8CT%20%E6%98%AF%E7%BB%9D%E5%AF%B9%E6%B8%A9%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/ideal-gas/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20n%20%E6%98%AF%E7%89%A9%E8%B4%A8%E7%9A%84%E9%87%8F%EF%BC%8CR%20%E6%98%AF%E6%B0%94%E4%BD%93%E5%B8%B8%E6%95%B0%EF%BC%8CT%20%E6%98%AF%E7%BB%9D%E5%AF%B9%E6%B8%A9%E5%BA%A6%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "其中 n 是物质的量，R 是气体常数，T 是绝对温度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%AD%89%E6%B8%A9%E8%BF%87%E7%A8%8B%EF%BC%9AP1V1%20%E7%AD%89%E4%BA%8E%20P2V2%EF%BC%8C%E8%BF%99%E6%98%AF%E7%8E%BB%E6%84%8F%E8%80%B3%E5%AE%9A%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/ideal-gas/formula-formula-3.speech?text=%E7%AD%89%E6%B8%A9%E8%BF%87%E7%A8%8B%EF%BC%9AP1V1%20%E7%AD%89%E4%BA%8E%20P2V2%EF%BC%8C%E8%BF%99%E6%98%AF%E7%8E%BB%E6%84%8F%E8%80%B3%E5%AE%9A%E5%BE%8B%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "等温过程：P1V1 等于 P2V2，这是玻意耳定律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E7%AD%89%E5%8E%8B%E8%BF%87%E7%A8%8B%EF%BC%9AV1%20%E9%99%A4%E4%BB%A5%20T1%20%E7%AD%89%E4%BA%8E%20V2%20%E9%99%A4%E4%BB%A5%20T2%EF%BC%8C%E8%BF%99%E6%98%AF%E7%9B%96-%E5%90%95%E8%90%A8%E5%85%8B%E5%AE%9A%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/ideal-gas/formula-formula-4.speech?text=%E7%AD%89%E5%8E%8B%E8%BF%87%E7%A8%8B%EF%BC%9AV1%20%E9%99%A4%E4%BB%A5%20T1%20%E7%AD%89%E4%BA%8E%20V2%20%E9%99%A4%E4%BB%A5%20T2%EF%BC%8C%E8%BF%99%E6%98%AF%E7%9B%96-%E5%90%95%E8%90%A8%E5%85%8B%E5%AE%9A%E5%BE%8B%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "等压过程：V1 除以 T1 等于 V2 除以 T2，这是盖-吕萨克定律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "animation",
+      "line_id": "animation-1",
+      "filename": "animation-animation-1.speech?text=%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%BA%86%E6%B0%94%E4%BD%93%E5%88%86%E5%AD%90%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E8%BF%90%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/ideal-gas/animation-animation-1.speech?text=%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%BA%86%E6%B0%94%E4%BD%93%E5%88%86%E5%AD%90%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E8%BF%90%E5%8A%A8%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "图中显示了气体分子在容器中的运动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "animation",
+      "line_id": "animation-2",
+      "filename": "animation-animation-2.speech?text=%E5%88%86%E5%AD%90%E4%B8%8D%E6%96%AD%E6%92%9E%E5%87%BB%E5%AE%B9%E5%99%A8%E5%A3%81%EF%BC%8C%E4%BA%A7%E7%94%9F%E5%8E%8B%E5%BC%BA%E3%80%82",
+      "path": "audio/narrations/ideal-gas/animation-animation-2.speech?text=%E5%88%86%E5%AD%90%E4%B8%8D%E6%96%AD%E6%92%9E%E5%87%BB%E5%AE%B9%E5%99%A8%E5%A3%81%EF%BC%8C%E4%BA%A7%E7%94%9F%E5%8E%8B%E5%BC%BA%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "分子不断撞击容器壁，产生压强。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "animation",
+      "line_id": "animation-3",
+      "filename": "animation-animation-3.speech?text=%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%EF%BC%8C%E5%88%86%E5%AD%90%E8%BF%90%E5%8A%A8%E8%B6%8A%E5%89%A7%E7%83%88%EF%BC%8C%E5%8E%8B%E5%BC%BA%E8%B6%8A%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/ideal-gas/animation-animation-3.speech?text=%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%EF%BC%8C%E5%88%86%E5%AD%90%E8%BF%90%E5%8A%A8%E8%B6%8A%E5%89%A7%E7%83%88%EF%BC%8C%E5%8E%8B%E5%BC%BA%E8%B6%8A%E5%A4%A7%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "温度越高，分子运动越剧烈，压强越大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8E%8B%E5%BC%BA%E5%92%8C%E4%BD%93%E7%A7%AF%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/ideal-gas/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8E%8B%E5%BC%BA%E5%92%8C%E4%BD%93%E7%A7%AF%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "调整温度，观察压强和体积的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%8E%8B%E7%BC%A9%E6%B4%BB%E5%A1%9E%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B0%94%E4%BD%93%E5%8E%8B%E5%BC%BA%E7%9A%84%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/ideal-gas/interaction-interaction-2.speech?text=%E5%8E%8B%E7%BC%A9%E6%B4%BB%E5%A1%9E%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B0%94%E4%BD%93%E5%8E%8B%E5%BC%BA%E7%9A%84%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "压缩活塞，观察气体压强的增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%88%87%E6%8D%A2%E4%B8%8D%E5%90%8C%E7%9A%84%E7%83%AD%E5%8A%9B%E5%AD%A6%E8%BF%87%E7%A8%8B%EF%BC%8C%E8%A7%82%E5%AF%9F%20PV%20%E5%9B%BE%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/ideal-gas/interaction-interaction-3.speech?text=%E5%88%87%E6%8D%A2%E4%B8%8D%E5%90%8C%E7%9A%84%E7%83%AD%E5%8A%9B%E5%AD%A6%E8%BF%87%E7%A8%8B%EF%BC%8C%E8%A7%82%E5%AF%9F%20PV%20%E5%9B%BE%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "切换不同的热力学过程，观察 PV 图的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%86%85%E7%87%83%E6%9C%BA%E5%88%A9%E7%94%A8%E6%B0%94%E4%BD%93%E8%86%A8%E8%83%80%E5%81%9A%E5%8A%9F%E9%A9%B1%E5%8A%A8%E6%B1%BD%E8%BD%A6%E3%80%82",
+      "path": "audio/narrations/ideal-gas/application-application-1.speech?text=%E5%86%85%E7%87%83%E6%9C%BA%E5%88%A9%E7%94%A8%E6%B0%94%E4%BD%93%E8%86%A8%E8%83%80%E5%81%9A%E5%8A%9F%E9%A9%B1%E5%8A%A8%E6%B1%BD%E8%BD%A6%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "内燃机利用气体膨胀做功驱动汽车。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E7%A9%BA%E8%B0%83%E5%92%8C%E5%86%B0%E7%AE%B1%E5%88%A9%E7%94%A8%E6%B0%94%E4%BD%93%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%86%A8%E8%83%80%E8%BF%9B%E8%A1%8C%E7%83%AD%E9%87%8F%E4%BC%A0%E9%80%92%E3%80%82",
+      "path": "audio/narrations/ideal-gas/application-application-2.speech?text=%E7%A9%BA%E8%B0%83%E5%92%8C%E5%86%B0%E7%AE%B1%E5%88%A9%E7%94%A8%E6%B0%94%E4%BD%93%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%86%A8%E8%83%80%E8%BF%9B%E8%A1%8C%E7%83%AD%E9%87%8F%E4%BC%A0%E9%80%92%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "空调和冰箱利用气体压缩和膨胀进行热量传递。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%88%A9%E7%94%A8%E6%B0%94%E4%BD%93%E5%AE%9A%E5%BE%8B%E9%A2%84%E6%B5%8B%E5%A4%A9%E6%B0%94%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/ideal-gas/application-application-3.speech?text=%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%88%A9%E7%94%A8%E6%B0%94%E4%BD%93%E5%AE%9A%E5%BE%8B%E9%A2%84%E6%B5%8B%E5%A4%A9%E6%B0%94%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "气象学利用气体定律预测天气变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "path": "audio/narrations/ideal-gas/summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "让我们总结一下今天学到的内容。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E7%8A%B6%E6%80%81%E6%96%B9%E7%A8%8B%20PV%3DnRT%20%E6%8F%8F%E8%BF%B0%E4%BA%86%E6%B0%94%E4%BD%93%E7%9A%84%E5%AE%8F%E8%A7%82%E6%80%A7%E8%B4%A8%E3%80%82",
+      "path": "audio/narrations/ideal-gas/summary-summary-2.speech?text=%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E7%8A%B6%E6%80%81%E6%96%B9%E7%A8%8B%20PV%3DnRT%20%E6%8F%8F%E8%BF%B0%E4%BA%86%E6%B0%94%E4%BD%93%E7%9A%84%E5%AE%8F%E8%A7%82%E6%80%A7%E8%B4%A8%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "理想气体状态方程 PV=nRT 描述了气体的宏观性质。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E7%AD%89%E6%B8%A9%E3%80%81%E7%AD%89%E5%8E%8B%E3%80%81%E7%AD%89%E5%AE%B9%E8%BF%87%E7%A8%8B%E5%90%84%E6%9C%89%E5%85%B6%E7%89%B9%E5%AE%9A%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/ideal-gas/summary-summary-3.speech?text=%E7%AD%89%E6%B8%A9%E3%80%81%E7%AD%89%E5%8E%8B%E3%80%81%E7%AD%89%E5%AE%B9%E8%BF%87%E7%A8%8B%E5%90%84%E6%9C%89%E5%85%B6%E7%89%B9%E5%AE%9A%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "等温、等压、等容过程各有其特定的规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ideal-gas",
+      "section_id": "summary",
+      "line_id": "summary-4",
+      "filename": "summary-summary-4.speech?text=%E5%B8%8C%E6%9C%9B%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%EF%BC%8C%E4%BD%A0%E5%AF%B9%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E6%9C%89%E4%BA%86%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%81",
+      "path": "audio/narrations/ideal-gas/summary-summary-4.speech?text=%E5%B8%8C%E6%9C%9B%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%EF%BC%8C%E4%BD%A0%E5%AF%B9%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E6%9C%89%E4%BA%86%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%81",
+      "duration": 7.5,
+      "size": 0,
+      "text": "希望通过这个实验，你对理想气体有了更深入的理解！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

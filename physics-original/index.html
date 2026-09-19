@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>物理之美实验</title>
+    <script>
+      ;(() => {
+        const runtimeBaseUrl = new URL('./', window.location.href)
+        window.__PHYSICS_ORIGINAL_ASSET_BASE__ = runtimeBaseUrl.pathname
+
+        const params = new URLSearchParams(window.location.search)
+        const route = params.get('route') || '/'
+        if (route.startsWith('/')) {
+          window.history.replaceState(null, '', route)
+        }
+
+        function runtimeUrl(path) {
+          return new URL(path, runtimeBaseUrl).href
+        }
+
+        function appendRuntimeAsset(tagName, attributes) {
+          const element = document.createElement(tagName)
+          for (const [name, value] of Object.entries(attributes)) {
+            if (value === true) {
+              element.setAttribute(name, '')
+            } else if (name in element) {
+              element[name] = value
+            } else {
+              element.setAttribute(name, value)
+            }
+          }
+          document.head.appendChild(element)
+          return element
+        }
+
+        function appendRuntimeAppAssets() {
+          appendRuntimeAsset('link', {
+            rel: 'stylesheet',
+            crossOrigin: '',
+            href: runtimeUrl('assets/index-CRp6zjtV.css'),
+          })
+          appendRuntimeAsset('link', {
+            rel: 'stylesheet',
+            crossOrigin: '',
+            href: runtimeUrl('embedded-experiment-overrides.css'),
+          })
+          appendRuntimeAsset('script', {
+            type: 'module',
+            crossOrigin: '',
+            src: runtimeUrl('assets/index-B9SOS4Fp.js'),
+          })
+        }
+
+        const fallbackScript = appendRuntimeAsset('script', {
+          src: runtimeUrl('physics-narration-fallback.js'),
+        })
+        fallbackScript.addEventListener('load', appendRuntimeAppAssets, { once: true })
+        fallbackScript.addEventListener('error', appendRuntimeAppAssets, { once: true })
+      })()
+    </script>
+  </head>
+  <body class="embedded-experiment-runtime">
+    <div id="root"></div>
+  </body>
+</html>

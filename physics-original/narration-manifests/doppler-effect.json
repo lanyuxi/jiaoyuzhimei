@@ -1,0 +1,273 @@
+{
+  "script_id": "doppler-effect",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 172.2,
+  "files": [
+    {
+      "script_id": "doppler-effect",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E4%B8%80%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E6%B3%A2%E5%8A%A8%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/doppler-effect/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E4%B8%80%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E6%B3%A2%E5%8A%A8%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "欢迎来到多普勒效应实验！今天我们要探索一个有趣的波动现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%BD%93%E6%95%91%E6%8A%A4%E8%BD%A6%E9%A9%B6%E8%BF%87%E6%97%B6%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%90%A6%E6%B3%A8%E6%84%8F%E5%88%B0%E8%AD%A6%E7%AC%9B%E5%A3%B0%E9%9F%B3%E7%9A%84%E5%8F%98%E5%8C%96%EF%BC%9F",
+      "path": "audio/narrations/doppler-effect/intro-intro-2.speech?text=%E5%BD%93%E6%95%91%E6%8A%A4%E8%BD%A6%E9%A9%B6%E8%BF%87%E6%97%B6%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%90%A6%E6%B3%A8%E6%84%8F%E5%88%B0%E8%AD%A6%E7%AC%9B%E5%A3%B0%E9%9F%B3%E7%9A%84%E5%8F%98%E5%8C%96%EF%BC%9F",
+      "duration": 6.88,
+      "size": 0,
+      "text": "当救护车驶过时，你是否注意到警笛声音的变化？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%EF%BC%8C%E7%94%B1%E5%A5%A5%E5%9C%B0%E5%88%A9%E7%89%A9%E7%90%86%E5%AD%A6%E5%AE%B6%E5%A4%9A%E6%99%AE%E5%8B%92%E5%9C%A8%201842%20%E5%B9%B4%E5%8F%91%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/doppler-effect/intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%EF%BC%8C%E7%94%B1%E5%A5%A5%E5%9C%B0%E5%88%A9%E7%89%A9%E7%90%86%E5%AD%A6%E5%AE%B6%E5%A4%9A%E6%99%AE%E5%8B%92%E5%9C%A8%201842%20%E5%B9%B4%E5%8F%91%E7%8E%B0%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "这就是多普勒效应，由奥地利物理学家多普勒在 1842 年发现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%98%AF%E6%8C%87%E6%B3%A2%E6%BA%90%E4%B8%8E%E8%A7%82%E5%AF%9F%E8%80%85%E7%9B%B8%E5%AF%B9%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E7%9A%84%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/doppler-effect/concept-concept-1.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%98%AF%E6%8C%87%E6%B3%A2%E6%BA%90%E4%B8%8E%E8%A7%82%E5%AF%9F%E8%80%85%E7%9B%B8%E5%AF%B9%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E7%9A%84%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "多普勒效应是指波源与观察者相对运动时，观察到的频率发生变化的现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%BD%93%E6%B3%A2%E6%BA%90%E9%9D%A0%E8%BF%91%E8%A7%82%E5%AF%9F%E8%80%85%E6%97%B6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%EF%BC%8C%E5%A3%B0%E9%9F%B3%E5%8F%98%E5%B0%96%E3%80%82",
+      "path": "audio/narrations/doppler-effect/concept-concept-2.speech?text=%E5%BD%93%E6%B3%A2%E6%BA%90%E9%9D%A0%E8%BF%91%E8%A7%82%E5%AF%9F%E8%80%85%E6%97%B6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%EF%BC%8C%E5%A3%B0%E9%9F%B3%E5%8F%98%E5%B0%96%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "当波源靠近观察者时，观察到的频率升高，声音变尖。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%BD%93%E6%B3%A2%E6%BA%90%E8%BF%9C%E7%A6%BB%E8%A7%82%E5%AF%9F%E8%80%85%E6%97%B6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%EF%BC%8C%E5%A3%B0%E9%9F%B3%E5%8F%98%E4%BD%8E%E6%B2%89%E3%80%82",
+      "path": "audio/narrations/doppler-effect/concept-concept-3.speech?text=%E5%BD%93%E6%B3%A2%E6%BA%90%E8%BF%9C%E7%A6%BB%E8%A7%82%E5%AF%9F%E8%80%85%E6%97%B6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%EF%BC%8C%E5%A3%B0%E9%9F%B3%E5%8F%98%E4%BD%8E%E6%B2%89%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "当波源远离观察者时，观察到的频率降低，声音变低沉。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E9%80%82%E7%94%A8%E4%BA%8E%E6%89%80%E6%9C%89%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%B3%A2%EF%BC%8C%E5%8C%85%E6%8B%AC%E5%A3%B0%E6%B3%A2%E5%92%8C%E7%94%B5%E7%A3%81%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/doppler-effect/concept-concept-4.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E9%80%82%E7%94%A8%E4%BA%8E%E6%89%80%E6%9C%89%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%B3%A2%EF%BC%8C%E5%8C%85%E6%8B%AC%E5%A3%B0%E6%B3%A2%E5%92%8C%E7%94%B5%E7%A3%81%E6%B3%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "多普勒效应适用于所有类型的波，包括声波和电磁波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%20f%20%E6%92%87%E7%AD%89%E4%BA%8E%20f%20%E4%B9%98%E4%BB%A5%20(v%20%E5%8A%A0%E5%87%8F%20v%E8%A7%82)%20%E9%99%A4%E4%BB%A5%20(v%20%E5%87%8F%E5%8A%A0%20v%E6%BA%90)%E3%80%82",
+      "path": "audio/narrations/doppler-effect/formula-formula-1.speech?text=%E8%A7%82%E5%AF%9F%E5%88%B0%E7%9A%84%E9%A2%91%E7%8E%87%20f%20%E6%92%87%E7%AD%89%E4%BA%8E%20f%20%E4%B9%98%E4%BB%A5%20(v%20%E5%8A%A0%E5%87%8F%20v%E8%A7%82)%20%E9%99%A4%E4%BB%A5%20(v%20%E5%87%8F%E5%8A%A0%20v%E6%BA%90)%E3%80%82",
+      "duration": 12.81,
+      "size": 0,
+      "text": "观察到的频率 f 撇等于 f 乘以 (v 加减 v观) 除以 (v 减加 v源)。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20v%20%E6%98%AF%E6%B3%A2%E9%80%9F%EF%BC%8Cv%E8%A7%82%20%E6%98%AF%E8%A7%82%E5%AF%9F%E8%80%85%E9%80%9F%E5%BA%A6%EF%BC%8Cv%E6%BA%90%20%E6%98%AF%E6%B3%A2%E6%BA%90%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/doppler-effect/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20v%20%E6%98%AF%E6%B3%A2%E9%80%9F%EF%BC%8Cv%E8%A7%82%20%E6%98%AF%E8%A7%82%E5%AF%9F%E8%80%85%E9%80%9F%E5%BA%A6%EF%BC%8Cv%E6%BA%90%20%E6%98%AF%E6%B3%A2%E6%BA%90%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "其中 v 是波速，v观 是观察者速度，v源 是波源速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E9%9D%A0%E8%BF%91%E6%97%B6%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%EF%BC%8C%E8%BF%9C%E7%A6%BB%E6%97%B6%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/doppler-effect/formula-formula-3.speech?text=%E9%9D%A0%E8%BF%91%E6%97%B6%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%EF%BC%8C%E8%BF%9C%E7%A6%BB%E6%97%B6%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "靠近时频率升高，远离时频率降低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%BD%93%E6%B3%A2%E6%BA%90%E9%80%9F%E5%BA%A6%E8%B6%85%E8%BF%87%E6%B3%A2%E9%80%9F%E6%97%B6%EF%BC%8C%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%BF%80%E6%B3%A2%EF%BC%88%E5%A6%82%E9%9F%B3%E7%88%86%EF%BC%89%E3%80%82",
+      "path": "audio/narrations/doppler-effect/formula-formula-4.speech?text=%E5%BD%93%E6%B3%A2%E6%BA%90%E9%80%9F%E5%BA%A6%E8%B6%85%E8%BF%87%E6%B3%A2%E9%80%9F%E6%97%B6%EF%BC%8C%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%BF%80%E6%B3%A2%EF%BC%88%E5%A6%82%E9%9F%B3%E7%88%86%EF%BC%89%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "当波源速度超过波速时，会产生激波（如音爆）。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "animation",
+      "line_id": "animation-1",
+      "filename": "animation-animation-1.speech?text=%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%BA%86%E8%BF%90%E5%8A%A8%E5%A3%B0%E6%BA%90%E4%BA%A7%E7%94%9F%E7%9A%84%E6%B3%A2%E5%89%8D%E5%88%86%E5%B8%83%E3%80%82",
+      "path": "audio/narrations/doppler-effect/animation-animation-1.speech?text=%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%BA%86%E8%BF%90%E5%8A%A8%E5%A3%B0%E6%BA%90%E4%BA%A7%E7%94%9F%E7%9A%84%E6%B3%A2%E5%89%8D%E5%88%86%E5%B8%83%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "图中显示了运动声源产生的波前分布。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "animation",
+      "line_id": "animation-2",
+      "filename": "animation-animation-2.speech?text=%E6%B3%A8%E6%84%8F%E8%A7%82%E5%AF%9F%EF%BC%8C%E5%A3%B0%E6%BA%90%E5%89%8D%E6%96%B9%E7%9A%84%E6%B3%A2%E5%89%8D%E8%A2%AB%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%90%8E%E6%96%B9%E7%9A%84%E6%B3%A2%E5%89%8D%E8%A2%AB%E6%8B%89%E4%BC%B8%E3%80%82",
+      "path": "audio/narrations/doppler-effect/animation-animation-2.speech?text=%E6%B3%A8%E6%84%8F%E8%A7%82%E5%AF%9F%EF%BC%8C%E5%A3%B0%E6%BA%90%E5%89%8D%E6%96%B9%E7%9A%84%E6%B3%A2%E5%89%8D%E8%A2%AB%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%90%8E%E6%96%B9%E7%9A%84%E6%B3%A2%E5%89%8D%E8%A2%AB%E6%8B%89%E4%BC%B8%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "注意观察，声源前方的波前被压缩，后方的波前被拉伸。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "animation",
+      "line_id": "animation-3",
+      "filename": "animation-animation-3.speech?text=%E6%B3%A2%E5%89%8D%E8%B6%8A%E5%AF%86%E9%9B%86%EF%BC%8C%E9%A2%91%E7%8E%87%E8%B6%8A%E9%AB%98%EF%BC%9B%E6%B3%A2%E5%89%8D%E8%B6%8A%E7%A8%80%E7%96%8F%EF%BC%8C%E9%A2%91%E7%8E%87%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/doppler-effect/animation-animation-3.speech?text=%E6%B3%A2%E5%89%8D%E8%B6%8A%E5%AF%86%E9%9B%86%EF%BC%8C%E9%A2%91%E7%8E%87%E8%B6%8A%E9%AB%98%EF%BC%9B%E6%B3%A2%E5%89%8D%E8%B6%8A%E7%A8%80%E7%96%8F%EF%BC%8C%E9%A2%91%E7%8E%87%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "波前越密集，频率越高；波前越稀疏，频率越低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E5%A3%B0%E6%BA%90%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B3%A2%E5%89%8D%E5%88%86%E5%B8%83%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/doppler-effect/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E5%A3%B0%E6%BA%90%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B3%A2%E5%89%8D%E5%88%86%E5%B8%83%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "调整声源速度，观察波前分布的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%BD%93%E9%80%9F%E5%BA%A6%E6%8E%A5%E8%BF%91%E5%A3%B0%E9%80%9F%E6%97%B6%EF%BC%8C%E6%B3%A2%E5%89%8D%E4%BC%9A%E5%A0%86%E7%A7%AF%E5%9C%A8%E4%B8%80%E8%B5%B7%E3%80%82",
+      "path": "audio/narrations/doppler-effect/interaction-interaction-2.speech?text=%E5%BD%93%E9%80%9F%E5%BA%A6%E6%8E%A5%E8%BF%91%E5%A3%B0%E9%80%9F%E6%97%B6%EF%BC%8C%E6%B3%A2%E5%89%8D%E4%BC%9A%E5%A0%86%E7%A7%AF%E5%9C%A8%E4%B8%80%E8%B5%B7%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "当速度接近声速时，波前会堆积在一起。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E8%A7%82%E5%AF%9F%E8%80%85%E4%BD%8D%E7%BD%AE%EF%BC%8C%E5%90%AC%E5%90%AC%E4%B8%8D%E5%90%8C%E4%BD%8D%E7%BD%AE%E7%9A%84%E9%A2%91%E7%8E%87%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/doppler-effect/interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E8%A7%82%E5%AF%9F%E8%80%85%E4%BD%8D%E7%BD%AE%EF%BC%8C%E5%90%AC%E5%90%AC%E4%B8%8D%E5%90%8C%E4%BD%8D%E7%BD%AE%E7%9A%84%E9%A2%91%E7%8E%87%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "改变观察者位置，听听不同位置的频率变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E9%9B%B7%E8%BE%BE%E7%94%A8%E4%BA%8E%E6%B5%8B%E9%87%8F%E8%BD%A6%E8%BE%86%E9%80%9F%E5%BA%A6%E5%92%8C%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5%E3%80%82",
+      "path": "audio/narrations/doppler-effect/application-application-1.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E9%9B%B7%E8%BE%BE%E7%94%A8%E4%BA%8E%E6%B5%8B%E9%87%8F%E8%BD%A6%E8%BE%86%E9%80%9F%E5%BA%A6%E5%92%8C%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "多普勒雷达用于测量车辆速度和天气预报。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%8C%BB%E5%AD%A6%E8%B6%85%E5%A3%B0%E5%88%A9%E7%94%A8%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%A3%80%E6%B5%8B%E8%A1%80%E6%B5%81%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/doppler-effect/application-application-2.speech?text=%E5%8C%BB%E5%AD%A6%E8%B6%85%E5%A3%B0%E5%88%A9%E7%94%A8%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%A3%80%E6%B5%8B%E8%A1%80%E6%B5%81%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "医学超声利用多普勒效应检测血流速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%AE%B6%E9%80%9A%E8%BF%87%E7%BA%A2%E7%A7%BB%E6%B5%8B%E9%87%8F%E6%98%9F%E7%B3%BB%E8%BF%9C%E7%A6%BB%E6%88%91%E4%BB%AC%E7%9A%84%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/doppler-effect/application-application-3.speech?text=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%AE%B6%E9%80%9A%E8%BF%87%E7%BA%A2%E7%A7%BB%E6%B5%8B%E9%87%8F%E6%98%9F%E7%B3%BB%E8%BF%9C%E7%A6%BB%E6%88%91%E4%BB%AC%E7%9A%84%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "天文学家通过红移测量星系远离我们的速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "path": "audio/narrations/doppler-effect/summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "让我们总结一下今天学到的内容。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%98%AF%E6%B3%A2%E6%BA%90%E4%B8%8E%E8%A7%82%E5%AF%9F%E8%80%85%E7%9B%B8%E5%AF%B9%E8%BF%90%E5%8A%A8%E5%BC%95%E8%B5%B7%E7%9A%84%E9%A2%91%E7%8E%87%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/doppler-effect/summary-summary-2.speech?text=%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%98%AF%E6%B3%A2%E6%BA%90%E4%B8%8E%E8%A7%82%E5%AF%9F%E8%80%85%E7%9B%B8%E5%AF%B9%E8%BF%90%E5%8A%A8%E5%BC%95%E8%B5%B7%E7%9A%84%E9%A2%91%E7%8E%87%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "多普勒效应是波源与观察者相对运动引起的频率变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E9%9D%A0%E8%BF%91%E6%97%B6%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%EF%BC%8C%E8%BF%9C%E7%A6%BB%E6%97%B6%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/doppler-effect/summary-summary-3.speech?text=%E9%9D%A0%E8%BF%91%E6%97%B6%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%EF%BC%8C%E8%BF%9C%E7%A6%BB%E6%97%B6%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "靠近时频率升高，远离时频率降低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "doppler-effect",
+      "section_id": "summary",
+      "line_id": "summary-4",
+      "filename": "summary-summary-4.speech?text=%E5%B8%8C%E6%9C%9B%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%EF%BC%8C%E4%BD%A0%E5%AF%B9%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%9C%89%E4%BA%86%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%81",
+      "path": "audio/narrations/doppler-effect/summary-summary-4.speech?text=%E5%B8%8C%E6%9C%9B%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%EF%BC%8C%E4%BD%A0%E5%AF%B9%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E6%9C%89%E4%BA%86%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%81",
+      "duration": 7.81,
+      "size": 0,
+      "text": "希望通过这个实验，你对多普勒效应有了更深入的理解！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

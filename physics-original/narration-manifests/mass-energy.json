@@ -1,0 +1,229 @@
+{
+  "script_id": "mass-energy",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 162.83,
+  "files": [
+    {
+      "script_id": "mass-energy",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%E5%AE%9E%E9%AA%8C%EF%BC%81E%20%E7%AD%89%E4%BA%8E%20m%20c%20%E5%B9%B3%E6%96%B9%EF%BC%8C%E4%B9%9F%E8%AE%B8%E6%98%AF%E7%89%A9%E7%90%86%E5%AD%A6%E4%B8%AD%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84%E5%85%AC%E5%BC%8F%E3%80%82",
+      "path": "audio/narrations/mass-energy/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%E5%AE%9E%E9%AA%8C%EF%BC%81E%20%E7%AD%89%E4%BA%8E%20m%20c%20%E5%B9%B3%E6%96%B9%EF%BC%8C%E4%B9%9F%E8%AE%B8%E6%98%AF%E7%89%A9%E7%90%86%E5%AD%A6%E4%B8%AD%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84%E5%85%AC%E5%BC%8F%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "欢迎来到质能方程实验！E 等于 m c 平方，也许是物理学中最著名的公式。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%EF%BC%8C%E8%B4%A8%E9%87%8F%E5%92%8C%E8%83%BD%E9%87%8F%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E5%90%8C%E4%B8%80%E4%BA%8B%E7%89%A9%E7%9A%84%E4%B8%A4%E9%9D%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/mass-energy/intro-intro-2.speech?text=%E5%AE%83%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%EF%BC%8C%E8%B4%A8%E9%87%8F%E5%92%8C%E8%83%BD%E9%87%8F%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E5%90%8C%E4%B8%80%E4%BA%8B%E7%89%A9%E7%9A%84%E4%B8%A4%E9%9D%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "它告诉我们，质量和能量本质上是同一事物的两面，可以相互转化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E5%8E%9F%E7%90%86%EF%BC%8C%E6%8F%AD%E7%A4%BA%E4%BA%86%E5%8E%9F%E5%AD%90%E6%A0%B8%E4%B8%AD%E8%95%B4%E8%97%8F%E7%9A%84%E6%83%8A%E4%BA%BA%E8%83%BD%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/mass-energy/intro-intro-3.speech?text=%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E5%8E%9F%E7%90%86%EF%BC%8C%E6%8F%AD%E7%A4%BA%E4%BA%86%E5%8E%9F%E5%AD%90%E6%A0%B8%E4%B8%AD%E8%95%B4%E8%97%8F%E7%9A%84%E6%83%8A%E4%BA%BA%E8%83%BD%E9%87%8F%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "正是这个原理，揭示了原子核中蕴藏的惊人能量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%8A%8A%E8%B4%A8%E5%AD%90%E5%92%8C%E4%B8%AD%E5%AD%90%E7%BB%84%E5%90%88%E6%88%90%E5%8E%9F%E5%AD%90%E6%A0%B8%EF%BC%8C%E6%80%BB%E8%B4%A8%E9%87%8F%E7%AB%9F%E7%84%B6%E6%AF%94%E5%AE%83%E4%BB%AC%E5%8D%95%E7%8B%AC%E6%97%B6%E7%9A%84%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%92%8C%E8%A6%81%E5%B0%8F%E3%80%82",
+      "path": "audio/narrations/mass-energy/concept-concept-1.speech?text=%E6%8A%8A%E8%B4%A8%E5%AD%90%E5%92%8C%E4%B8%AD%E5%AD%90%E7%BB%84%E5%90%88%E6%88%90%E5%8E%9F%E5%AD%90%E6%A0%B8%EF%BC%8C%E6%80%BB%E8%B4%A8%E9%87%8F%E7%AB%9F%E7%84%B6%E6%AF%94%E5%AE%83%E4%BB%AC%E5%8D%95%E7%8B%AC%E6%97%B6%E7%9A%84%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%92%8C%E8%A6%81%E5%B0%8F%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "把质子和中子组合成原子核，总质量竟然比它们单独时的质量之和要小。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BF%99%E5%87%8F%E5%B0%91%E7%9A%84%E8%B4%A8%E9%87%8F%E5%8F%AB%E5%81%9A%E8%B4%A8%E9%87%8F%E4%BA%8F%E6%8D%9F%EF%BC%8C%E5%AE%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E6%B6%88%E5%A4%B1%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BD%AC%E5%8C%96%E6%88%90%E4%BA%86%E8%83%BD%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/mass-energy/concept-concept-2.speech?text=%E8%BF%99%E5%87%8F%E5%B0%91%E7%9A%84%E8%B4%A8%E9%87%8F%E5%8F%AB%E5%81%9A%E8%B4%A8%E9%87%8F%E4%BA%8F%E6%8D%9F%EF%BC%8C%E5%AE%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E6%B6%88%E5%A4%B1%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BD%AC%E5%8C%96%E6%88%90%E4%BA%86%E8%83%BD%E9%87%8F%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "这减少的质量叫做质量亏损，它并没有消失，而是转化成了能量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E8%BF%99%E4%BB%BD%E8%83%BD%E9%87%8F%E5%B0%B1%E6%98%AF%E6%A0%B8%E7%BB%93%E5%90%88%E8%83%BD%EF%BC%8C%E6%8A%8A%E6%A0%B8%E5%AD%90%E7%B4%A7%E7%B4%A7%E6%9D%9F%E7%BC%9A%E5%9C%A8%E4%B8%80%E8%B5%B7%E3%80%82",
+      "path": "audio/narrations/mass-energy/concept-concept-3.speech?text=%E8%BF%99%E4%BB%BD%E8%83%BD%E9%87%8F%E5%B0%B1%E6%98%AF%E6%A0%B8%E7%BB%93%E5%90%88%E8%83%BD%EF%BC%8C%E6%8A%8A%E6%A0%B8%E5%AD%90%E7%B4%A7%E7%B4%A7%E6%9D%9F%E7%BC%9A%E5%9C%A8%E4%B8%80%E8%B5%B7%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "这份能量就是核结合能，把核子紧紧束缚在一起。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%8A%8A%E7%BB%93%E5%90%88%E8%83%BD%E9%99%A4%E4%BB%A5%E6%A0%B8%E5%AD%90%E6%95%B0%EF%BC%8C%E5%BE%97%E5%88%B0%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%EF%BC%8C%E5%AE%83%E8%A1%A1%E9%87%8F%E5%8E%9F%E5%AD%90%E6%A0%B8%E7%9A%84%E7%A8%B3%E5%AE%9A%E7%A8%8B%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/mass-energy/concept-concept-4.speech?text=%E6%8A%8A%E7%BB%93%E5%90%88%E8%83%BD%E9%99%A4%E4%BB%A5%E6%A0%B8%E5%AD%90%E6%95%B0%EF%BC%8C%E5%BE%97%E5%88%B0%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%EF%BC%8C%E5%AE%83%E8%A1%A1%E9%87%8F%E5%8E%9F%E5%AD%90%E6%A0%B8%E7%9A%84%E7%A8%B3%E5%AE%9A%E7%A8%8B%E5%BA%A6%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "把结合能除以核子数，得到比结合能，它衡量原子核的稳定程度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%E6%8C%87%E5%87%BA%E8%83%BD%E9%87%8F%E7%AD%89%E4%BA%8E%E8%B4%A8%E9%87%8F%E4%B9%98%E4%BB%A5%E5%85%89%E9%80%9F%E7%9A%84%E5%B9%B3%E6%96%B9%E3%80%82",
+      "path": "audio/narrations/mass-energy/formula-formula-1.speech?text=%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%E6%8C%87%E5%87%BA%E8%83%BD%E9%87%8F%E7%AD%89%E4%BA%8E%E8%B4%A8%E9%87%8F%E4%B9%98%E4%BB%A5%E5%85%89%E9%80%9F%E7%9A%84%E5%B9%B3%E6%96%B9%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "质能方程指出能量等于质量乘以光速的平方。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%A0%B8%E7%BB%93%E5%90%88%E8%83%BD%E7%AD%89%E4%BA%8E%E8%B4%A8%E9%87%8F%E4%BA%8F%E6%8D%9F%E4%B9%98%E4%BB%A5%E5%85%89%E9%80%9F%E5%B9%B3%E6%96%B9%E3%80%82",
+      "path": "audio/narrations/mass-energy/formula-formula-2.speech?text=%E6%A0%B8%E7%BB%93%E5%90%88%E8%83%BD%E7%AD%89%E4%BA%8E%E8%B4%A8%E9%87%8F%E4%BA%8F%E6%8D%9F%E4%B9%98%E4%BB%A5%E5%85%89%E9%80%9F%E5%B9%B3%E6%96%B9%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "核结合能等于质量亏损乘以光速平方。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E6%9B%B2%E7%BA%BF%E5%9C%A8%E9%93%81%E5%85%83%E7%B4%A0%E9%99%84%E8%BF%91%E8%BE%BE%E5%88%B0%E6%9C%80%E9%AB%98%E5%B3%B0%EF%BC%8C%E7%BA%A6%E6%AF%8F%E6%A0%B8%E5%AD%90%208.8%20%E5%85%86%E7%94%B5%E5%AD%90%E4%BC%8F%E3%80%82",
+      "path": "audio/narrations/mass-energy/formula-formula-3.speech?text=%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E6%9B%B2%E7%BA%BF%E5%9C%A8%E9%93%81%E5%85%83%E7%B4%A0%E9%99%84%E8%BF%91%E8%BE%BE%E5%88%B0%E6%9C%80%E9%AB%98%E5%B3%B0%EF%BC%8C%E7%BA%A6%E6%AF%8F%E6%A0%B8%E5%AD%90%208.8%20%E5%85%86%E7%94%B5%E5%AD%90%E4%BC%8F%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "比结合能曲线在铁元素附近达到最高峰，约每核子 8.8 兆电子伏。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BD%BB%E6%A0%B8%E8%81%9A%E5%8F%98%E6%88%90%E4%B8%AD%E7%AD%89%E6%A0%B8%E3%80%81%E6%88%96%E9%87%8D%E6%A0%B8%E8%A3%82%E5%8F%98%E6%88%90%E4%B8%AD%E7%AD%89%E6%A0%B8%EF%BC%8C%E9%83%BD%E4%BC%9A%E5%90%91%E6%9B%B4%E7%A8%B3%E5%AE%9A%E7%8A%B6%E6%80%81%E9%87%8A%E6%94%BE%E8%83%BD%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/mass-energy/formula-formula-4.speech?text=%E8%BD%BB%E6%A0%B8%E8%81%9A%E5%8F%98%E6%88%90%E4%B8%AD%E7%AD%89%E6%A0%B8%E3%80%81%E6%88%96%E9%87%8D%E6%A0%B8%E8%A3%82%E5%8F%98%E6%88%90%E4%B8%AD%E7%AD%89%E6%A0%B8%EF%BC%8C%E9%83%BD%E4%BC%9A%E5%90%91%E6%9B%B4%E7%A8%B3%E5%AE%9A%E7%8A%B6%E6%80%81%E9%87%8A%E6%94%BE%E8%83%BD%E9%87%8F%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "轻核聚变成中等核、或重核裂变成中等核，都会向更稳定状态释放能量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%9C%A8%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E6%9B%B2%E7%BA%BF%E4%B8%8A%E6%8B%96%E5%8A%A8%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%A0%B8%EF%BC%8C%E6%9F%A5%E7%9C%8B%E5%AE%83%E7%9A%84%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E3%80%82",
+      "path": "audio/narrations/mass-energy/interaction-interaction-1.speech?text=%E5%9C%A8%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E6%9B%B2%E7%BA%BF%E4%B8%8A%E6%8B%96%E5%8A%A8%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%A0%B8%EF%BC%8C%E6%9F%A5%E7%9C%8B%E5%AE%83%E7%9A%84%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "在比结合能曲线上拖动，选择不同的原子核，查看它的比结合能。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E6%9B%B2%E7%BA%BF%E5%9C%A8%E9%93%81%E5%85%83%E7%B4%A0%E9%99%84%E8%BF%91%E6%9C%80%E9%AB%98%EF%BC%8C%E9%82%A3%E9%87%8C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%A0%B8%E6%9C%80%E7%A8%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/mass-energy/interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E6%9B%B2%E7%BA%BF%E5%9C%A8%E9%93%81%E5%85%83%E7%B4%A0%E9%99%84%E8%BF%91%E6%9C%80%E9%AB%98%EF%BC%8C%E9%82%A3%E9%87%8C%E7%9A%84%E5%8E%9F%E5%AD%90%E6%A0%B8%E6%9C%80%E7%A8%B3%E5%AE%9A%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "注意曲线在铁元素附近最高，那里的原子核最稳定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%B7%A6%E4%BE%A7%E8%BD%BB%E6%A0%B8%E8%B5%B0%E5%90%91%E9%93%81%E6%98%AF%E8%81%9A%E5%8F%98%E6%94%BE%E8%83%BD%EF%BC%8C%E5%8F%B3%E4%BE%A7%E9%87%8D%E6%A0%B8%E8%B5%B0%E5%90%91%E9%93%81%E6%98%AF%E8%A3%82%E5%8F%98%E6%94%BE%E8%83%BD%E3%80%82",
+      "path": "audio/narrations/mass-energy/interaction-interaction-3.speech?text=%E5%B7%A6%E4%BE%A7%E8%BD%BB%E6%A0%B8%E8%B5%B0%E5%90%91%E9%93%81%E6%98%AF%E8%81%9A%E5%8F%98%E6%94%BE%E8%83%BD%EF%BC%8C%E5%8F%B3%E4%BE%A7%E9%87%8D%E6%A0%B8%E8%B5%B0%E5%90%91%E9%93%81%E6%98%AF%E8%A3%82%E5%8F%98%E6%94%BE%E8%83%BD%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "左侧轻核走向铁是聚变放能，右侧重核走向铁是裂变放能。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%A0%B8%E7%94%B5%E7%AB%99%E5%88%A9%E7%94%A8%E9%93%80%E6%A0%B8%E8%A3%82%E5%8F%98%E9%87%8A%E6%94%BE%E7%9A%84%E8%83%BD%E9%87%8F%E5%8F%91%E7%94%B5%E3%80%82",
+      "path": "audio/narrations/mass-energy/application-application-1.speech?text=%E6%A0%B8%E7%94%B5%E7%AB%99%E5%88%A9%E7%94%A8%E9%93%80%E6%A0%B8%E8%A3%82%E5%8F%98%E9%87%8A%E6%94%BE%E7%9A%84%E8%83%BD%E9%87%8F%E5%8F%91%E7%94%B5%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "核电站利用铀核裂变释放的能量发电。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%A4%AA%E9%98%B3%E5%92%8C%E6%81%92%E6%98%9F%E9%9D%A0%E6%B0%A2%E6%A0%B8%E8%81%9A%E5%8F%98%E6%88%90%E6%B0%A6%EF%BC%8C%E6%8C%81%E7%BB%AD%E5%8F%91%E5%85%89%E5%8F%91%E7%83%AD%E3%80%82",
+      "path": "audio/narrations/mass-energy/application-application-2.speech?text=%E5%A4%AA%E9%98%B3%E5%92%8C%E6%81%92%E6%98%9F%E9%9D%A0%E6%B0%A2%E6%A0%B8%E8%81%9A%E5%8F%98%E6%88%90%E6%B0%A6%EF%BC%8C%E6%8C%81%E7%BB%AD%E5%8F%91%E5%85%89%E5%8F%91%E7%83%AD%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "太阳和恒星靠氢核聚变成氦，持续发光发热。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%E4%B9%9F%E6%98%AF%E7%B2%92%E5%AD%90%E7%89%A9%E7%90%86%E5%92%8C%E5%AE%87%E5%AE%99%E5%AD%A6%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "path": "audio/narrations/mass-energy/application-application-3.speech?text=%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%E4%B9%9F%E6%98%AF%E7%B2%92%E5%AD%90%E7%89%A9%E7%90%86%E5%92%8C%E5%AE%87%E5%AE%99%E5%AD%A6%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "质能方程也是粒子物理和宇宙学的基础。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%20E%20%E7%AD%89%E4%BA%8E%20m%20c%20%E5%B9%B3%E6%96%B9%EF%BC%8C%E6%8F%AD%E7%A4%BA%E8%B4%A8%E9%87%8F%E4%B8%8E%E8%83%BD%E9%87%8F%E5%8F%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/mass-energy/summary-summary-1.speech?text=%E8%B4%A8%E8%83%BD%E6%96%B9%E7%A8%8B%20E%20%E7%AD%89%E4%BA%8E%20m%20c%20%E5%B9%B3%E6%96%B9%EF%BC%8C%E6%8F%AD%E7%A4%BA%E8%B4%A8%E9%87%8F%E4%B8%8E%E8%83%BD%E9%87%8F%E5%8F%AF%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "质能方程 E 等于 m c 平方，揭示质量与能量可相互转化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%A0%B8%E7%BB%93%E5%90%88%E8%83%BD%E6%9D%A5%E8%87%AA%E8%B4%A8%E9%87%8F%E4%BA%8F%E6%8D%9F%EF%BC%8C%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E6%9B%B2%E7%BA%BF%E5%9C%A8%E9%93%81%E9%99%84%E8%BF%91%E6%9C%80%E9%AB%98%E3%80%82",
+      "path": "audio/narrations/mass-energy/summary-summary-2.speech?text=%E6%A0%B8%E7%BB%93%E5%90%88%E8%83%BD%E6%9D%A5%E8%87%AA%E8%B4%A8%E9%87%8F%E4%BA%8F%E6%8D%9F%EF%BC%8C%E6%AF%94%E7%BB%93%E5%90%88%E8%83%BD%E6%9B%B2%E7%BA%BF%E5%9C%A8%E9%93%81%E9%99%84%E8%BF%91%E6%9C%80%E9%AB%98%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "核结合能来自质量亏损，比结合能曲线在铁附近最高。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "mass-energy",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E8%81%9A%E5%8F%98%E4%B8%8E%E8%A3%82%E5%8F%98%E9%83%BD%E5%90%91%E9%93%81%E9%9D%A0%E6%8B%A2%E9%87%8A%E6%94%BE%E8%83%BD%E9%87%8F%E3%80%82%E8%BF%99%E5%B0%B1%E6%98%AF%E6%A0%B8%E8%83%BD%E7%9A%84%E5%A5%A5%E7%A7%98%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/mass-energy/summary-summary-3.speech?text=%E8%81%9A%E5%8F%98%E4%B8%8E%E8%A3%82%E5%8F%98%E9%83%BD%E5%90%91%E9%93%81%E9%9D%A0%E6%8B%A2%E9%87%8A%E6%94%BE%E8%83%BD%E9%87%8F%E3%80%82%E8%BF%99%E5%B0%B1%E6%98%AF%E6%A0%B8%E8%83%BD%E7%9A%84%E5%A5%A5%E7%A7%98%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 10,
+      "size": 0,
+      "text": "聚变与裂变都向铁靠拢释放能量。这就是核能的奥秘。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

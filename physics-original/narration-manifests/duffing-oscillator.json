@@ -1,0 +1,229 @@
+{
+  "script_id": "duffing-oscillator",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 154.08,
+  "files": [
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%99%AE%E9%80%9A%E5%BC%B9%E7%B0%A7%E7%9A%84%E6%81%A2%E5%A4%8D%E5%8A%9B%E4%B8%8E%E4%BD%8D%E7%A7%BB%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E4%BD%86%E5%BE%88%E5%A4%9A%E7%9C%9F%E5%AE%9E%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%9D%9E%E5%A6%82%E6%AD%A4%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%99%AE%E9%80%9A%E5%BC%B9%E7%B0%A7%E7%9A%84%E6%81%A2%E5%A4%8D%E5%8A%9B%E4%B8%8E%E4%BD%8D%E7%A7%BB%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E4%BD%86%E5%BE%88%E5%A4%9A%E7%9C%9F%E5%AE%9E%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%9D%9E%E5%A6%82%E6%AD%A4%E3%80%82",
+      "duration": 11.88,
+      "size": 0,
+      "text": "欢迎来到达芬振子实验！普通弹簧的恢复力与位移成正比，但很多真实系统并非如此。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%BD%93%E6%81%A2%E5%A4%8D%E5%8A%9B%E5%90%AB%E6%9C%89%E4%BD%8D%E7%A7%BB%E7%9A%84%E7%AB%8B%E6%96%B9%E9%A1%B9%EF%BC%8C%E7%B3%BB%E7%BB%9F%E5%B0%B1%E5%8F%98%E6%88%90%E4%BA%86%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%9A%84%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/intro-intro-2.speech?text=%E5%BD%93%E6%81%A2%E5%A4%8D%E5%8A%9B%E5%90%AB%E6%9C%89%E4%BD%8D%E7%A7%BB%E7%9A%84%E7%AB%8B%E6%96%B9%E9%A1%B9%EF%BC%8C%E7%B3%BB%E7%BB%9F%E5%B0%B1%E5%8F%98%E6%88%90%E4%BA%86%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%9A%84%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "当恢复力含有位移的立方项，系统就变成了非线性的达芬振子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%9C%A8%E5%91%A8%E6%9C%9F%E9%A9%B1%E5%8A%A8%E4%B8%8B%EF%BC%8C%E5%AE%83%E8%83%BD%E5%B1%95%E7%8E%B0%E5%87%BA%E4%BB%A4%E4%BA%BA%E6%83%8A%E5%8F%B9%E7%9A%84%E6%B7%B7%E6%B2%8C%E8%A1%8C%E4%B8%BA%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/intro-intro-3.speech?text=%E5%9C%A8%E5%91%A8%E6%9C%9F%E9%A9%B1%E5%8A%A8%E4%B8%8B%EF%BC%8C%E5%AE%83%E8%83%BD%E5%B1%95%E7%8E%B0%E5%87%BA%E4%BB%A4%E4%BA%BA%E6%83%8A%E5%8F%B9%E7%9A%84%E6%B7%B7%E6%B2%8C%E8%A1%8C%E4%B8%BA%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "在周期驱动下，它能展现出令人惊叹的混沌行为。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E7%9A%84%E6%81%A2%E5%A4%8D%E5%8A%9B%E5%8C%85%E5%90%AB%E7%BA%BF%E6%80%A7%E9%A1%B9%E5%92%8C%E7%AB%8B%E6%96%B9%E9%A1%B9%E4%B8%A4%E9%83%A8%E5%88%86%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/concept-concept-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E7%9A%84%E6%81%A2%E5%A4%8D%E5%8A%9B%E5%8C%85%E5%90%AB%E7%BA%BF%E6%80%A7%E9%A1%B9%E5%92%8C%E7%AB%8B%E6%96%B9%E9%A1%B9%E4%B8%A4%E9%83%A8%E5%88%86%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "达芬振子的恢复力包含线性项和立方项两部分。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%BD%93%E7%AB%8B%E6%96%B9%E9%A1%B9%E7%B3%BB%E6%95%B0%E4%B8%BA%E8%B4%9F%E3%80%81%E7%BA%BF%E6%80%A7%E9%A1%B9%E4%B8%BA%E8%B4%9F%E6%97%B6%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%9C%89%E4%B8%A4%E4%B8%AA%E7%A8%B3%E5%AE%9A%E5%B9%B3%E8%A1%A1%E7%82%B9%EF%BC%8C%E5%BD%A2%E6%88%90%E5%8F%8C%E5%8A%BF%E9%98%B1%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/concept-concept-2.speech?text=%E5%BD%93%E7%AB%8B%E6%96%B9%E9%A1%B9%E7%B3%BB%E6%95%B0%E4%B8%BA%E8%B4%9F%E3%80%81%E7%BA%BF%E6%80%A7%E9%A1%B9%E4%B8%BA%E8%B4%9F%E6%97%B6%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%9C%89%E4%B8%A4%E4%B8%AA%E7%A8%B3%E5%AE%9A%E5%B9%B3%E8%A1%A1%E7%82%B9%EF%BC%8C%E5%BD%A2%E6%88%90%E5%8F%8C%E5%8A%BF%E9%98%B1%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "当立方项系数为负、线性项为负时，系统有两个稳定平衡点，形成双势阱。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%9C%A8%E5%91%A8%E6%9C%9F%E5%A4%96%E5%8A%9B%E9%A9%B1%E5%8A%A8%E4%B8%8B%EF%BC%8C%E6%8C%AF%E5%AD%90%E5%8F%AF%E8%83%BD%E5%9C%A8%E4%B8%A4%E4%B8%AA%E5%8A%BF%E9%98%B1%E9%97%B4%E6%9D%A5%E5%9B%9E%E8%B7%B3%E8%B7%83%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/concept-concept-3.speech?text=%E5%9C%A8%E5%91%A8%E6%9C%9F%E5%A4%96%E5%8A%9B%E9%A9%B1%E5%8A%A8%E4%B8%8B%EF%BC%8C%E6%8C%AF%E5%AD%90%E5%8F%AF%E8%83%BD%E5%9C%A8%E4%B8%A4%E4%B8%AA%E5%8A%BF%E9%98%B1%E9%97%B4%E6%9D%A5%E5%9B%9E%E8%B7%B3%E8%B7%83%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "在周期外力驱动下，振子可能在两个势阱间来回跳跃。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E4%BD%95%E6%97%B6%E8%B7%B3%E8%B7%83%E5%8F%98%E5%BE%97%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%87%E5%BF%97%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/concept-concept-4.speech?text=%E4%BD%95%E6%97%B6%E8%B7%B3%E8%B7%83%E5%8F%98%E5%BE%97%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%87%E5%BF%97%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "何时跳跃变得不可预测，这正是混沌的标志。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%96%B9%E7%A8%8B%E5%8C%85%E5%90%AB%E9%98%BB%E5%B0%BC%E3%80%81%E7%BA%BF%E6%80%A7%E6%81%A2%E5%A4%8D%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%81%A2%E5%A4%8D%E5%92%8C%E9%A9%B1%E5%8A%A8%E5%9B%9B%E9%A1%B9%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/formula-formula-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%96%B9%E7%A8%8B%E5%8C%85%E5%90%AB%E9%98%BB%E5%B0%BC%E3%80%81%E7%BA%BF%E6%80%A7%E6%81%A2%E5%A4%8D%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%81%A2%E5%A4%8D%E5%92%8C%E9%A9%B1%E5%8A%A8%E5%9B%9B%E9%A1%B9%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "达芬方程包含阻尼、线性恢复、非线性恢复和驱动四项。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20%CE%B4%20%E6%98%AF%E9%98%BB%E5%B0%BC%EF%BC%8C%CE%B2%20%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E6%95%B0%EF%BC%8C%CE%B3%20%E6%98%AF%E9%A9%B1%E5%8A%A8%E5%B9%85%E5%BA%A6%EF%BC%8C%CF%89%20%E6%98%AF%E9%A9%B1%E5%8A%A8%E9%A2%91%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20%CE%B4%20%E6%98%AF%E9%98%BB%E5%B0%BC%EF%BC%8C%CE%B2%20%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E6%95%B0%EF%BC%8C%CE%B3%20%E6%98%AF%E9%A9%B1%E5%8A%A8%E5%B9%85%E5%BA%A6%EF%BC%8C%CF%89%20%E6%98%AF%E9%A9%B1%E5%8A%A8%E9%A2%91%E7%8E%87%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "其中 δ 是阻尼，β 是非线性系数，γ 是驱动幅度，ω 是驱动频率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%BD%93%20%CE%B1%20%E4%B8%BA%E8%B4%9F%E3%80%81%CE%B2%20%E4%B8%BA%E6%AD%A3%E6%97%B6%EF%BC%8C%E5%8A%BF%E8%83%BD%E5%91%88%E5%8F%8C%E9%98%B1%E5%BD%A2%E7%8A%B6%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/formula-formula-3.speech?text=%E5%BD%93%20%CE%B1%20%E4%B8%BA%E8%B4%9F%E3%80%81%CE%B2%20%E4%B8%BA%E6%AD%A3%E6%97%B6%EF%BC%8C%E5%8A%BF%E8%83%BD%E5%91%88%E5%8F%8C%E9%98%B1%E5%BD%A2%E7%8A%B6%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "当 α 为负、β 为正时，势能呈双阱形状。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%A2%9E%E5%A4%A7%E9%A9%B1%E5%8A%A8%E5%B9%85%E5%BA%A6%EF%BC%8C%E7%B3%BB%E7%BB%9F%E4%BC%9A%E4%BB%8E%E8%A7%84%E5%88%99%E6%8C%AF%E5%8A%A8%E9%80%90%E6%B8%90%E8%B5%B0%E5%90%91%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/formula-formula-4.speech?text=%E5%A2%9E%E5%A4%A7%E9%A9%B1%E5%8A%A8%E5%B9%85%E5%BA%A6%EF%BC%8C%E7%B3%BB%E7%BB%9F%E4%BC%9A%E4%BB%8E%E8%A7%84%E5%88%99%E6%8C%AF%E5%8A%A8%E9%80%90%E6%B8%90%E8%B5%B0%E5%90%91%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "增大驱动幅度，系统会从规则振动逐渐走向混沌。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%9B%B8%E7%A9%BA%E9%97%B4%E8%BD%A8%E8%BF%B9%EF%BC%8C%E7%9C%8B%E6%8C%AF%E5%AD%90%E5%9C%A8%E4%B8%A4%E4%B8%AA%E5%8A%BF%E9%98%B1%E9%97%B4%E7%9A%84%E8%BF%90%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%9B%B8%E7%A9%BA%E9%97%B4%E8%BD%A8%E8%BF%B9%EF%BC%8C%E7%9C%8B%E6%8C%AF%E5%AD%90%E5%9C%A8%E4%B8%A4%E4%B8%AA%E5%8A%BF%E9%98%B1%E9%97%B4%E7%9A%84%E8%BF%90%E5%8A%A8%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "观察相空间轨迹，看振子在两个势阱间的运动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E9%A9%B1%E5%8A%A8%E5%B9%85%E5%BA%A6%20%CE%B3%EF%BC%8C%E8%BD%A8%E8%BF%B9%E4%BB%8E%E7%AE%80%E5%8D%95%E7%8E%AF%E5%8F%98%E5%BE%97%E9%94%99%E7%BB%BC%E5%A4%8D%E6%9D%82%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E9%A9%B1%E5%8A%A8%E5%B9%85%E5%BA%A6%20%CE%B3%EF%BC%8C%E8%BD%A8%E8%BF%B9%E4%BB%8E%E7%AE%80%E5%8D%95%E7%8E%AF%E5%8F%98%E5%BE%97%E9%94%99%E7%BB%BC%E5%A4%8D%E6%9D%82%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "增大驱动幅度 γ，轨迹从简单环变得错综复杂。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%9C%A8%E6%B7%B7%E6%B2%8C%E5%8C%BA%EF%BC%8C%E8%BD%A8%E8%BF%B9%E6%B0%B8%E4%B8%8D%E9%87%8D%E5%A4%8D%EF%BC%8C%E5%A1%AB%E6%BB%A1%E7%9B%B8%E7%A9%BA%E9%97%B4%E7%9A%84%E4%B8%80%E7%89%87%E5%8C%BA%E5%9F%9F%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/interaction-interaction-3.speech?text=%E5%9C%A8%E6%B7%B7%E6%B2%8C%E5%8C%BA%EF%BC%8C%E8%BD%A8%E8%BF%B9%E6%B0%B8%E4%B8%8D%E9%87%8D%E5%A4%8D%EF%BC%8C%E5%A1%AB%E6%BB%A1%E7%9B%B8%E7%A9%BA%E9%97%B4%E7%9A%84%E4%B8%80%E7%89%87%E5%8C%BA%E5%9F%9F%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "在混沌区，轨迹永不重复，填满相空间的一片区域。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%E4%BA%86%E8%AE%B8%E5%A4%9A%E7%9C%9F%E5%AE%9E%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8C%AF%E5%8A%A8%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%A6%82%E5%B1%88%E6%9B%B2%E6%A2%81%E7%9A%84%E6%8C%AF%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/application-application-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%E4%BA%86%E8%AE%B8%E5%A4%9A%E7%9C%9F%E5%AE%9E%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8C%AF%E5%8A%A8%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%A6%82%E5%B1%88%E6%9B%B2%E6%A2%81%E7%9A%84%E6%8C%AF%E5%8A%A8%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "达芬方程描述了许多真实的非线性振动系统，如屈曲梁的振动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E3%80%81%E5%88%86%E5%B2%94%E5%92%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%85%B1%E6%8C%AF%E7%9A%84%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/application-application-2.speech?text=%E5%AE%83%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E3%80%81%E5%88%86%E5%B2%94%E5%92%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%85%B1%E6%8C%AF%E7%9A%84%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "它是研究混沌、分岔和非线性共振的经典模型。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%9C%A8%E5%B7%A5%E7%A8%8B%E4%B8%8A%EF%BC%8C%E7%90%86%E8%A7%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8C%AF%E5%8A%A8%E6%9C%89%E5%8A%A9%E4%BA%8E%E9%81%BF%E5%85%8D%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%B1%E9%99%A9%E5%85%B1%E6%8C%AF%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/application-application-3.speech?text=%E5%9C%A8%E5%B7%A5%E7%A8%8B%E4%B8%8A%EF%BC%8C%E7%90%86%E8%A7%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8C%AF%E5%8A%A8%E6%9C%89%E5%8A%A9%E4%BA%8E%E9%81%BF%E5%85%8D%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%B1%E9%99%A9%E5%85%B1%E6%8C%AF%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "在工程上，理解非线性振动有助于避免结构的危险共振。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E6%98%AF%E5%90%AB%E7%AB%8B%E6%96%B9%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%A1%B9%E7%9A%84%E5%8F%97%E8%BF%AB%E6%8C%AF%E5%8A%A8%E7%B3%BB%E7%BB%9F%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/summary-summary-1.speech?text=%E8%BE%BE%E8%8A%AC%E6%8C%AF%E5%AD%90%E6%98%AF%E5%90%AB%E7%AB%8B%E6%96%B9%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%A1%B9%E7%9A%84%E5%8F%97%E8%BF%AB%E6%8C%AF%E5%8A%A8%E7%B3%BB%E7%BB%9F%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "达芬振子是含立方非线性项的受迫振动系统。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%8F%8C%E5%8A%BF%E9%98%B1%E7%BB%93%E6%9E%84%E4%B8%8B%EF%BC%8C%E5%A2%9E%E5%A4%A7%E9%A9%B1%E5%8A%A8%E4%BC%9A%E8%AE%A9%E7%B3%BB%E7%BB%9F%E4%BB%8E%E8%A7%84%E5%88%99%E8%B5%B0%E5%90%91%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "path": "audio/narrations/duffing-oscillator/summary-summary-2.speech?text=%E5%8F%8C%E5%8A%BF%E9%98%B1%E7%BB%93%E6%9E%84%E4%B8%8B%EF%BC%8C%E5%A2%9E%E5%A4%A7%E9%A9%B1%E5%8A%A8%E4%BC%9A%E8%AE%A9%E7%B3%BB%E7%BB%9F%E4%BB%8E%E8%A7%84%E5%88%99%E8%B5%B0%E5%90%91%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "双势阱结构下，增大驱动会让系统从规则走向混沌。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "duffing-oscillator",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%8A%A8%E5%8A%9B%E5%AD%A6%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/duffing-oscillator/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%8A%A8%E5%8A%9B%E5%AD%A6%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它是非线性动力学的经典范例。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

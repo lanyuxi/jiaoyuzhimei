@@ -1,0 +1,229 @@
+{
+  "script_id": "water-wave",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 137.84,
+  "files": [
+    {
+      "script_id": "water-wave",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%B0%B4%E6%B3%A2%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%B5%B7%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%B3%A2%E6%B5%AA%EF%BC%8C%E6%9C%89%E7%9A%84%E8%88%92%E7%BC%93%E7%BB%B5%E9%95%BF%EF%BC%8C%E6%9C%89%E7%9A%84%E7%BB%86%E7%A2%8E%E6%80%A5%E4%BF%83%E3%80%82",
+      "path": "audio/narrations/water-wave/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%B0%B4%E6%B3%A2%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%B5%B7%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%B3%A2%E6%B5%AA%EF%BC%8C%E6%9C%89%E7%9A%84%E8%88%92%E7%BC%93%E7%BB%B5%E9%95%BF%EF%BC%8C%E6%9C%89%E7%9A%84%E7%BB%86%E7%A2%8E%E6%80%A5%E4%BF%83%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "欢迎来到水波实验！海面上的波浪，有的舒缓绵长，有的细碎急促。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%BD%A0%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%B3%A8%E6%84%8F%EF%BC%8C%E4%B8%8D%E5%90%8C%E6%B3%A2%E9%95%BF%E7%9A%84%E6%B0%B4%E6%B3%A2%EF%BC%8C%E4%BC%A0%E6%92%AD%E9%80%9F%E5%BA%A6%E5%85%B6%E5%AE%9E%E5%B9%B6%E4%B8%8D%E7%9B%B8%E5%90%8C%E3%80%82",
+      "path": "audio/narrations/water-wave/intro-intro-2.speech?text=%E4%BD%A0%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%B3%A8%E6%84%8F%EF%BC%8C%E4%B8%8D%E5%90%8C%E6%B3%A2%E9%95%BF%E7%9A%84%E6%B0%B4%E6%B3%A2%EF%BC%8C%E4%BC%A0%E6%92%AD%E9%80%9F%E5%BA%A6%E5%85%B6%E5%AE%9E%E5%B9%B6%E4%B8%8D%E7%9B%B8%E5%90%8C%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "你可能没注意，不同波长的水波，传播速度其实并不相同。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E6%B0%B4%E9%9D%A2%E9%87%8D%E5%8A%9B%E6%B3%A2%E7%9A%84%E8%89%B2%E6%95%A3%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/water-wave/intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E6%B0%B4%E9%9D%A2%E9%87%8D%E5%8A%9B%E6%B3%A2%E7%9A%84%E8%89%B2%E6%95%A3%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "今天我们就来探索水面重力波的色散规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%B0%B4%E9%9D%A2%E6%B3%A2%E4%B8%BB%E8%A6%81%E9%9D%A0%E9%87%8D%E5%8A%9B%E4%BD%9C%E4%B8%BA%E5%9B%9E%E5%A4%8D%E5%8A%9B%EF%BC%8C%E7%A7%B0%E4%B8%BA%E9%87%8D%E5%8A%9B%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/water-wave/concept-concept-1.speech?text=%E6%B0%B4%E9%9D%A2%E6%B3%A2%E4%B8%BB%E8%A6%81%E9%9D%A0%E9%87%8D%E5%8A%9B%E4%BD%9C%E4%B8%BA%E5%9B%9E%E5%A4%8D%E5%8A%9B%EF%BC%8C%E7%A7%B0%E4%B8%BA%E9%87%8D%E5%8A%9B%E6%B3%A2%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "水面波主要靠重力作为回复力，称为重力波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%B0%B4%E7%9A%84%E8%B4%A8%E7%82%B9%E5%85%B6%E5%AE%9E%E5%81%9A%E8%BF%91%E4%BC%BC%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%EF%BC%8C%E5%B9%B6%E4%B8%8D%E9%9A%8F%E6%B3%A2%E8%BF%9C%E8%A1%8C%E3%80%82",
+      "path": "audio/narrations/water-wave/concept-concept-2.speech?text=%E6%B0%B4%E7%9A%84%E8%B4%A8%E7%82%B9%E5%85%B6%E5%AE%9E%E5%81%9A%E8%BF%91%E4%BC%BC%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%EF%BC%8C%E5%B9%B6%E4%B8%8D%E9%9A%8F%E6%B3%A2%E8%BF%9C%E8%A1%8C%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "水的质点其实做近似圆周运动，并不随波远行。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%9C%A8%E6%B7%B1%E6%B0%B4%E4%B8%AD%EF%BC%8C%E6%B3%A2%E9%95%BF%E8%B6%8A%E9%95%BF%E7%9A%84%E6%B3%A2%E4%BC%A0%E6%92%AD%E5%BE%97%E8%B6%8A%E5%BF%AB%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E8%89%B2%E6%95%A3%E3%80%82",
+      "path": "audio/narrations/water-wave/concept-concept-3.speech?text=%E5%9C%A8%E6%B7%B1%E6%B0%B4%E4%B8%AD%EF%BC%8C%E6%B3%A2%E9%95%BF%E8%B6%8A%E9%95%BF%E7%9A%84%E6%B3%A2%E4%BC%A0%E6%92%AD%E5%BE%97%E8%B6%8A%E5%BF%AB%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E8%89%B2%E6%95%A3%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "在深水中，波长越长的波传播得越快，这就是色散。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%9C%A8%E6%B5%85%E6%B0%B4%E4%B8%AD%EF%BC%8C%E6%83%85%E5%86%B5%E4%B8%8D%E5%90%8C%EF%BC%8C%E6%B3%A2%E9%80%9F%E4%B8%BB%E8%A6%81%E7%94%B1%E6%B0%B4%E6%B7%B1%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/water-wave/concept-concept-4.speech?text=%E5%9C%A8%E6%B5%85%E6%B0%B4%E4%B8%AD%EF%BC%8C%E6%83%85%E5%86%B5%E4%B8%8D%E5%90%8C%EF%BC%8C%E6%B3%A2%E9%80%9F%E4%B8%BB%E8%A6%81%E7%94%B1%E6%B0%B4%E6%B7%B1%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "在浅水中，情况不同，波速主要由水深决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%B7%B1%E6%B0%B4%E9%87%8D%E5%8A%9B%E6%B3%A2%E7%9A%84%E7%9B%B8%E9%80%9F%E5%BA%A6%E7%94%B1%E6%B3%A2%E9%95%BF%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/water-wave/formula-formula-1.speech?text=%E6%B7%B1%E6%B0%B4%E9%87%8D%E5%8A%9B%E6%B3%A2%E7%9A%84%E7%9B%B8%E9%80%9F%E5%BA%A6%E7%94%B1%E6%B3%A2%E9%95%BF%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "深水重力波的相速度由波长决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%B3%A2%E9%95%BF%E8%B6%8A%E9%95%BF%EF%BC%8C%E6%B3%A2%E9%80%9F%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%89%80%E4%BB%A5%E9%95%BF%E6%B3%A2%E8%B7%91%E5%9C%A8%E5%89%8D%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/water-wave/formula-formula-2.speech?text=%E6%B3%A2%E9%95%BF%E8%B6%8A%E9%95%BF%EF%BC%8C%E6%B3%A2%E9%80%9F%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%89%80%E4%BB%A5%E9%95%BF%E6%B3%A2%E8%B7%91%E5%9C%A8%E5%89%8D%E9%9D%A2%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "波长越长，波速越大，所以长波跑在前面。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%B7%B1%E6%B0%B4%E6%B3%A2%E7%9A%84%E7%BE%A4%E9%80%9F%E5%BA%A6%E5%8F%AA%E6%9C%89%E7%9B%B8%E9%80%9F%E5%BA%A6%E7%9A%84%E4%B8%80%E5%8D%8A%E3%80%82",
+      "path": "audio/narrations/water-wave/formula-formula-3.speech?text=%E6%B7%B1%E6%B0%B4%E6%B3%A2%E7%9A%84%E7%BE%A4%E9%80%9F%E5%BA%A6%E5%8F%AA%E6%9C%89%E7%9B%B8%E9%80%9F%E5%BA%A6%E7%9A%84%E4%B8%80%E5%8D%8A%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "深水波的群速度只有相速度的一半。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%9C%A8%E6%B5%85%E6%B0%B4%E4%B8%AD%EF%BC%8C%E6%B3%A2%E9%80%9F%E8%BF%91%E4%BC%BC%E5%8F%AA%E4%B8%8E%E6%B0%B4%E6%B7%B1%20h%20%E6%9C%89%E5%85%B3%E3%80%82",
+      "path": "audio/narrations/water-wave/formula-formula-4.speech?text=%E5%9C%A8%E6%B5%85%E6%B0%B4%E4%B8%AD%EF%BC%8C%E6%B3%A2%E9%80%9F%E8%BF%91%E4%BC%BC%E5%8F%AA%E4%B8%8E%E6%B0%B4%E6%B7%B1%20h%20%E6%9C%89%E5%85%B3%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "在浅水中，波速近似只与水深 h 有关。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%B3%A2%E9%95%BF%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B0%B4%E6%B3%A2%E7%9A%84%E4%BC%A0%E6%92%AD%E9%80%9F%E5%BA%A6%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/water-wave/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%B3%A2%E9%95%BF%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B0%B4%E6%B3%A2%E7%9A%84%E4%BC%A0%E6%92%AD%E9%80%9F%E5%BA%A6%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "调整波长，观察水波的传播速度如何变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E9%95%BF%E6%B3%A2%E4%BC%A0%E6%92%AD%E6%98%8E%E6%98%BE%E6%9B%B4%E5%BF%AB%EF%BC%8C%E8%BF%99%E4%B8%8E%E5%A3%B0%E6%B3%A2%E3%80%81%E5%85%89%E6%B3%A2%E5%9C%A8%E6%97%A0%E8%89%B2%E6%95%A3%E4%BB%8B%E8%B4%A8%E4%B8%AD%E4%B8%8D%E5%90%8C%E3%80%82",
+      "path": "audio/narrations/water-wave/interaction-interaction-2.speech?text=%E9%95%BF%E6%B3%A2%E4%BC%A0%E6%92%AD%E6%98%8E%E6%98%BE%E6%9B%B4%E5%BF%AB%EF%BC%8C%E8%BF%99%E4%B8%8E%E5%A3%B0%E6%B3%A2%E3%80%81%E5%85%89%E6%B3%A2%E5%9C%A8%E6%97%A0%E8%89%B2%E6%95%A3%E4%BB%8B%E8%B4%A8%E4%B8%AD%E4%B8%8D%E5%90%8C%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "长波传播明显更快，这与声波、光波在无色散介质中不同。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%B0%B4%E9%9D%A2%E8%B4%A8%E7%82%B9%E5%81%9A%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%EF%BC%8C%E6%B3%A2%E5%BD%A2%E5%90%91%E5%89%8D%E4%BD%86%E6%B0%B4%E4%B8%8D%E5%89%8D%E8%BF%9B%E3%80%82",
+      "path": "audio/narrations/water-wave/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%B0%B4%E9%9D%A2%E8%B4%A8%E7%82%B9%E5%81%9A%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%EF%BC%8C%E6%B3%A2%E5%BD%A2%E5%90%91%E5%89%8D%E4%BD%86%E6%B0%B4%E4%B8%8D%E5%89%8D%E8%BF%9B%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "注意水面质点做圆周运动，波形向前但水不前进。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%B5%B7%E5%95%B8%E6%98%AF%E8%B6%85%E9%95%BF%E6%B3%A2%E9%95%BF%E7%9A%84%E6%B5%85%E6%B0%B4%E6%B3%A2%EF%BC%8C%E9%80%9F%E5%BA%A6%E5%8F%AF%E8%BE%BE%E6%AF%8F%E5%B0%8F%E6%97%B6%E5%87%A0%E7%99%BE%E5%85%AC%E9%87%8C%E3%80%82",
+      "path": "audio/narrations/water-wave/application-application-1.speech?text=%E6%B5%B7%E5%95%B8%E6%98%AF%E8%B6%85%E9%95%BF%E6%B3%A2%E9%95%BF%E7%9A%84%E6%B5%85%E6%B0%B4%E6%B3%A2%EF%BC%8C%E9%80%9F%E5%BA%A6%E5%8F%AF%E8%BE%BE%E6%AF%8F%E5%B0%8F%E6%97%B6%E5%87%A0%E7%99%BE%E5%85%AC%E9%87%8C%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "海啸是超长波长的浅水波，速度可达每小时几百公里。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E8%BF%9C%E5%A4%84%E9%A3%8E%E6%9A%B4%E4%BA%A7%E7%94%9F%E7%9A%84%E9%95%BF%E6%B6%8C%E6%B5%AA%E4%BC%9A%E5%85%88%E4%BA%8E%E7%9F%AD%E6%B5%AA%E6%8A%B5%E8%BE%BE%E6%B5%B7%E5%B2%B8%E3%80%82",
+      "path": "audio/narrations/water-wave/application-application-2.speech?text=%E8%BF%9C%E5%A4%84%E9%A3%8E%E6%9A%B4%E4%BA%A7%E7%94%9F%E7%9A%84%E9%95%BF%E6%B6%8C%E6%B5%AA%E4%BC%9A%E5%85%88%E4%BA%8E%E7%9F%AD%E6%B5%AA%E6%8A%B5%E8%BE%BE%E6%B5%B7%E5%B2%B8%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "远处风暴产生的长涌浪会先于短浪抵达海岸。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E8%88%B9%E8%A1%8C%E6%B3%A2%E3%80%81%E6%B8%AF%E5%8F%A3%E8%AE%BE%E8%AE%A1%E9%83%BD%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E6%B0%B4%E6%B3%A2%E7%9A%84%E8%89%B2%E6%95%A3%E7%89%B9%E6%80%A7%E3%80%82",
+      "path": "audio/narrations/water-wave/application-application-3.speech?text=%E8%88%B9%E8%A1%8C%E6%B3%A2%E3%80%81%E6%B8%AF%E5%8F%A3%E8%AE%BE%E8%AE%A1%E9%83%BD%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E6%B0%B4%E6%B3%A2%E7%9A%84%E8%89%B2%E6%95%A3%E7%89%B9%E6%80%A7%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "船行波、港口设计都需要考虑水波的色散特性。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%B7%B1%E6%B0%B4%E9%87%8D%E5%8A%9B%E6%B3%A2%E7%9B%B8%E9%80%9F%E5%BA%A6%20v%20%E7%AD%89%E4%BA%8E%E6%A0%B9%E5%8F%B7%E4%B8%8B%20g%CE%BB%20%E9%99%A4%E4%BB%A5%202%CF%80%EF%BC%8C%E9%95%BF%E6%B3%A2%E6%9B%B4%E5%BF%AB%E3%80%82",
+      "path": "audio/narrations/water-wave/summary-summary-1.speech?text=%E6%B7%B1%E6%B0%B4%E9%87%8D%E5%8A%9B%E6%B3%A2%E7%9B%B8%E9%80%9F%E5%BA%A6%20v%20%E7%AD%89%E4%BA%8E%E6%A0%B9%E5%8F%B7%E4%B8%8B%20g%CE%BB%20%E9%99%A4%E4%BB%A5%202%CF%80%EF%BC%8C%E9%95%BF%E6%B3%A2%E6%9B%B4%E5%BF%AB%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "深水重力波相速度 v 等于根号下 gλ 除以 2π，长波更快。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E7%BE%A4%E9%80%9F%E5%BA%A6%E6%98%AF%E7%9B%B8%E9%80%9F%E5%BA%A6%E7%9A%84%E4%B8%80%E5%8D%8A%EF%BC%8C%E6%B5%85%E6%B0%B4%E6%B3%A2%E9%80%9F%E7%94%B1%E6%B0%B4%E6%B7%B1%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/water-wave/summary-summary-2.speech?text=%E7%BE%A4%E9%80%9F%E5%BA%A6%E6%98%AF%E7%9B%B8%E9%80%9F%E5%BA%A6%E7%9A%84%E4%B8%80%E5%8D%8A%EF%BC%8C%E6%B5%85%E6%B0%B4%E6%B3%A2%E9%80%9F%E7%94%B1%E6%B0%B4%E6%B7%B1%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "群速度是相速度的一半，浅水波速由水深决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "water-wave",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E6%B6%8C%E6%B5%AA%E5%88%B0%E6%B5%B7%E5%95%B8%EF%BC%8C%E6%B0%B4%E6%B3%A2%E7%9A%84%E8%89%B2%E6%95%A3%E5%A1%91%E9%80%A0%E4%BA%86%E6%B5%B7%E6%B4%8B%E7%9A%84%E5%BE%8B%E5%8A%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/water-wave/summary-summary-3.speech?text=%E4%BB%8E%E6%B6%8C%E6%B5%AA%E5%88%B0%E6%B5%B7%E5%95%B8%EF%BC%8C%E6%B0%B4%E6%B3%A2%E7%9A%84%E8%89%B2%E6%95%A3%E5%A1%91%E9%80%A0%E4%BA%86%E6%B5%B7%E6%B4%8B%E7%9A%84%E5%BE%8B%E5%8A%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 9.06,
+      "size": 0,
+      "text": "从涌浪到海啸，水波的色散塑造了海洋的律动。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

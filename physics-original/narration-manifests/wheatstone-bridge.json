@@ -1,0 +1,229 @@
+{
+  "script_id": "wheatstone-bridge",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 147.19,
+  "files": [
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%83%A0%E6%96%AF%E9%80%9A%E7%94%B5%E6%A1%A5%EF%BC%81%E5%AE%83%E6%98%AF%E6%B5%8B%E9%87%8F%E7%94%B5%E9%98%BB%E6%9C%80%E7%BB%8F%E5%85%B8%E3%80%81%E6%9C%80%E7%B2%BE%E7%A1%AE%E7%9A%84%E7%94%B5%E8%B7%AF%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%83%A0%E6%96%AF%E9%80%9A%E7%94%B5%E6%A1%A5%EF%BC%81%E5%AE%83%E6%98%AF%E6%B5%8B%E9%87%8F%E7%94%B5%E9%98%BB%E6%9C%80%E7%BB%8F%E5%85%B8%E3%80%81%E6%9C%80%E7%B2%BE%E7%A1%AE%E7%9A%84%E7%94%B5%E8%B7%AF%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "欢迎来到惠斯通电桥！它是测量电阻最经典、最精确的电路之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%9B%9B%E4%B8%AA%E7%94%B5%E9%98%BB%E8%BF%9E%E6%88%90%E8%8F%B1%E5%BD%A2%EF%BC%8C%E4%B8%AD%E9%97%B4%E6%9E%B6%E4%B8%80%E4%B8%AA%E7%81%B5%E6%95%8F%E7%94%B5%E6%B5%81%E8%AE%A1%EF%BC%8C%E5%B0%B1%E5%83%8F%E4%B8%80%E5%BA%A7%E6%A1%A5%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/intro-intro-2.speech?text=%E5%9B%9B%E4%B8%AA%E7%94%B5%E9%98%BB%E8%BF%9E%E6%88%90%E8%8F%B1%E5%BD%A2%EF%BC%8C%E4%B8%AD%E9%97%B4%E6%9E%B6%E4%B8%80%E4%B8%AA%E7%81%B5%E6%95%8F%E7%94%B5%E6%B5%81%E8%AE%A1%EF%BC%8C%E5%B0%B1%E5%83%8F%E4%B8%80%E5%BA%A7%E6%A1%A5%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "四个电阻连成菱形，中间架一个灵敏电流计，就像一座桥。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%B0%83%E8%8A%82%E7%94%B5%E9%98%BB%E8%AE%A9%E6%A1%A5%E4%B8%8A%E7%94%B5%E6%B5%81%E4%B8%BA%E9%9B%B6%EF%BC%8C%E5%B0%B1%E8%83%BD%E7%B2%BE%E7%A1%AE%E7%AE%97%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/intro-intro-3.speech?text=%E8%B0%83%E8%8A%82%E7%94%B5%E9%98%BB%E8%AE%A9%E6%A1%A5%E4%B8%8A%E7%94%B5%E6%B5%81%E4%B8%BA%E9%9B%B6%EF%BC%8C%E5%B0%B1%E8%83%BD%E7%B2%BE%E7%A1%AE%E7%AE%97%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "调节电阻让桥上电流为零，就能精确算出未知电阻。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%94%B5%E6%A1%A5%E7%94%B1%E5%9B%9B%E4%B8%AA%E7%94%B5%E9%98%BB%20R1%E3%80%81R2%E3%80%81R3%E3%80%81Rx%20%E7%BB%84%E6%88%90%E4%B8%A4%E6%9D%A1%E5%B9%B6%E8%81%94%E6%94%AF%E8%B7%AF%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/concept-concept-1.speech?text=%E7%94%B5%E6%A1%A5%E7%94%B1%E5%9B%9B%E4%B8%AA%E7%94%B5%E9%98%BB%20R1%E3%80%81R2%E3%80%81R3%E3%80%81Rx%20%E7%BB%84%E6%88%90%E4%B8%A4%E6%9D%A1%E5%B9%B6%E8%81%94%E6%94%AF%E8%B7%AF%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "电桥由四个电阻 R1、R2、R3、Rx 组成两条并联支路。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%A1%A5%E7%9A%84%E4%B8%AD%E9%97%B4%E8%BF%9E%E4%B8%80%E4%B8%AA%E6%A3%80%E6%B5%81%E8%AE%A1%EF%BC%8C%E6%A3%80%E6%B5%8B%E4%B8%A4%E7%82%B9%E4%B9%8B%E9%97%B4%E6%98%AF%E5%90%A6%E6%9C%89%E7%94%B5%E4%BD%8D%E5%B7%AE%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/concept-concept-2.speech?text=%E6%A1%A5%E7%9A%84%E4%B8%AD%E9%97%B4%E8%BF%9E%E4%B8%80%E4%B8%AA%E6%A3%80%E6%B5%81%E8%AE%A1%EF%BC%8C%E6%A3%80%E6%B5%8B%E4%B8%A4%E7%82%B9%E4%B9%8B%E9%97%B4%E6%98%AF%E5%90%A6%E6%9C%89%E7%94%B5%E4%BD%8D%E5%B7%AE%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "桥的中间连一个检流计，检测两点之间是否有电位差。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%BD%93%E4%B8%A4%E6%9D%A1%E6%94%AF%E8%B7%AF%E7%9A%84%E5%88%86%E5%8E%8B%E5%AE%8C%E5%85%A8%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8C%E4%B8%AD%E7%82%B9%E7%94%B5%E4%BD%8D%E7%9B%B8%E7%AD%89%EF%BC%8C%E6%A3%80%E6%B5%81%E8%AE%A1%E8%AF%BB%E6%95%B0%E4%B8%BA%E9%9B%B6%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/concept-concept-3.speech?text=%E5%BD%93%E4%B8%A4%E6%9D%A1%E6%94%AF%E8%B7%AF%E7%9A%84%E5%88%86%E5%8E%8B%E5%AE%8C%E5%85%A8%E7%9B%B8%E5%90%8C%E6%97%B6%EF%BC%8C%E4%B8%AD%E7%82%B9%E7%94%B5%E4%BD%8D%E7%9B%B8%E7%AD%89%EF%BC%8C%E6%A3%80%E6%B5%81%E8%AE%A1%E8%AF%BB%E6%95%B0%E4%B8%BA%E9%9B%B6%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "当两条支路的分压完全相同时，中点电位相等，检流计读数为零。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BF%99%E7%A7%8D%E8%AE%A9%E6%8C%87%E9%92%88%E5%BD%92%E9%9B%B6%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%AB%E9%9B%B6%E7%A4%BA%E6%B3%95%EF%BC%8C%E4%B8%8D%E5%8F%97%E7%94%B5%E6%BA%90%E7%94%B5%E5%8E%8B%E6%B3%A2%E5%8A%A8%E5%BD%B1%E5%93%8D%EF%BC%8C%E9%9D%9E%E5%B8%B8%E7%B2%BE%E7%A1%AE%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/concept-concept-4.speech?text=%E8%BF%99%E7%A7%8D%E8%AE%A9%E6%8C%87%E9%92%88%E5%BD%92%E9%9B%B6%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%AB%E9%9B%B6%E7%A4%BA%E6%B3%95%EF%BC%8C%E4%B8%8D%E5%8F%97%E7%94%B5%E6%BA%90%E7%94%B5%E5%8E%8B%E6%B3%A2%E5%8A%A8%E5%BD%B1%E5%93%8D%EF%BC%8C%E9%9D%9E%E5%B8%B8%E7%B2%BE%E7%A1%AE%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "这种让指针归零的方法叫零示法，不受电源电压波动影响，非常精确。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%94%B5%E6%A1%A5%E5%B9%B3%E8%A1%A1%E6%97%B6%EF%BC%8C%E7%9B%B8%E5%AF%B9%E4%B8%A4%E8%87%82%E7%94%B5%E9%98%BB%E7%9A%84%E4%B9%98%E7%A7%AF%E7%9B%B8%E7%AD%89%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/formula-formula-1.speech?text=%E7%94%B5%E6%A1%A5%E5%B9%B3%E8%A1%A1%E6%97%B6%EF%BC%8C%E7%9B%B8%E5%AF%B9%E4%B8%A4%E8%87%82%E7%94%B5%E9%98%BB%E7%9A%84%E4%B9%98%E7%A7%AF%E7%9B%B8%E7%AD%89%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "电桥平衡时，相对两臂电阻的乘积相等。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%94%B1%E6%AD%A4%E5%8F%AF%E8%A7%A3%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%20Rx%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/formula-formula-2.speech?text=%E7%94%B1%E6%AD%A4%E5%8F%AF%E8%A7%A3%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%20Rx%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "由此可解出未知电阻 Rx。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%8F%AA%E8%A6%81%E4%B8%89%E4%B8%AA%E5%B7%B2%E7%9F%A5%E7%94%B5%E9%98%BB%E8%B6%B3%E5%A4%9F%E7%B2%BE%E7%A1%AE%EF%BC%8CRx%20%E5%B0%B1%E8%83%BD%E7%AE%97%E5%BE%97%E9%9D%9E%E5%B8%B8%E5%87%86%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/formula-formula-3.speech?text=%E5%8F%AA%E8%A6%81%E4%B8%89%E4%B8%AA%E5%B7%B2%E7%9F%A5%E7%94%B5%E9%98%BB%E8%B6%B3%E5%A4%9F%E7%B2%BE%E7%A1%AE%EF%BC%8CRx%20%E5%B0%B1%E8%83%BD%E7%AE%97%E5%BE%97%E9%9D%9E%E5%B8%B8%E5%87%86%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "只要三个已知电阻足够精确，Rx 就能算得非常准。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E6%B5%8B%E9%87%8F%E4%B8%8D%E4%BE%9D%E8%B5%96%E7%94%B5%E6%B5%81%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%A4%A7%E5%B0%8F%EF%BC%8C%E5%8F%AA%E7%9C%8B%E5%AE%83%E6%98%AF%E5%90%A6%E4%B8%BA%E9%9B%B6%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/formula-formula-4.speech?text=%E6%B5%8B%E9%87%8F%E4%B8%8D%E4%BE%9D%E8%B5%96%E7%94%B5%E6%B5%81%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%A4%A7%E5%B0%8F%EF%BC%8C%E5%8F%AA%E7%9C%8B%E5%AE%83%E6%98%AF%E5%90%A6%E4%B8%BA%E9%9B%B6%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "测量不依赖电流的绝对大小，只看它是否为零。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%8F%AF%E5%8F%98%E7%94%B5%E9%98%BB%20R3%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%A3%80%E6%B5%81%E8%AE%A1%E6%8C%87%E9%92%88%E7%9A%84%E5%81%8F%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%8F%AF%E5%8F%98%E7%94%B5%E9%98%BB%20R3%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%A3%80%E6%B5%81%E8%AE%A1%E6%8C%87%E9%92%88%E7%9A%84%E5%81%8F%E8%BD%AC%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "调节可变电阻 R3，观察检流计指针的偏转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%BD%93%E6%8C%87%E9%92%88%E5%9B%9E%E5%88%B0%E9%9B%B6%E7%82%B9%E6%97%B6%EF%BC%8C%E7%94%B5%E6%A1%A5%E8%BE%BE%E5%88%B0%E5%B9%B3%E8%A1%A1%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/interaction-interaction-2.speech?text=%E5%BD%93%E6%8C%87%E9%92%88%E5%9B%9E%E5%88%B0%E9%9B%B6%E7%82%B9%E6%97%B6%EF%BC%8C%E7%94%B5%E6%A1%A5%E8%BE%BE%E5%88%B0%E5%B9%B3%E8%A1%A1%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "当指针回到零点时，电桥达到平衡。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%AD%A4%E6%97%B6%E7%94%A8%E5%B9%B3%E8%A1%A1%E5%85%AC%E5%BC%8F%E5%8D%B3%E5%8F%AF%E7%AE%97%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%20Rx%20%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%80%BC%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/interaction-interaction-3.speech?text=%E6%AD%A4%E6%97%B6%E7%94%A8%E5%B9%B3%E8%A1%A1%E5%85%AC%E5%BC%8F%E5%8D%B3%E5%8F%AF%E7%AE%97%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%20Rx%20%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%80%BC%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "此时用平衡公式即可算出未知电阻 Rx 的精确值。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E7%94%B5%E6%A1%A5%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E7%94%B5%E5%AD%90%E7%A7%A4%E3%80%81%E5%8E%8B%E5%8A%9B%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E5%8F%98%E7%89%87%E4%BF%A1%E5%8F%B7%E6%B5%8B%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/application-application-1.speech?text=%E7%94%B5%E6%A1%A5%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E7%94%B5%E5%AD%90%E7%A7%A4%E3%80%81%E5%8E%8B%E5%8A%9B%E8%AE%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E5%8F%98%E7%89%87%E4%BF%A1%E5%8F%B7%E6%B5%8B%E9%87%8F%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "电桥广泛用于电子秤、压力计中的应变片信号测量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%B8%B8%E6%8A%8A%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB%E6%8E%A5%E5%85%A5%E7%94%B5%E6%A1%A5%EF%BC%8C%E7%81%B5%E6%95%8F%E6%A3%80%E6%B5%8B%E6%B8%A9%E5%BA%A6%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/application-application-2.speech?text=%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%B8%B8%E6%8A%8A%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB%E6%8E%A5%E5%85%A5%E7%94%B5%E6%A1%A5%EF%BC%8C%E7%81%B5%E6%95%8F%E6%A3%80%E6%B5%8B%E6%B8%A9%E5%BA%A6%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "温度传感器常把热敏电阻接入电桥，灵敏检测温度变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E9%9B%B6%E7%A4%BA%E6%B3%95%E7%9A%84%E6%80%9D%E6%83%B3%E8%87%B3%E4%BB%8A%E4%BB%8D%E6%98%AF%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%87%8F%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/application-application-3.speech?text=%E9%9B%B6%E7%A4%BA%E6%B3%95%E7%9A%84%E6%80%9D%E6%83%B3%E8%87%B3%E4%BB%8A%E4%BB%8D%E6%98%AF%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%87%8F%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "零示法的思想至今仍是精密测量的基础。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%83%A0%E6%96%AF%E9%80%9A%E7%94%B5%E6%A1%A5%E7%94%A8%E5%9B%9B%E4%B8%AA%E7%94%B5%E9%98%BB%E5%92%8C%E4%B8%80%E4%B8%AA%E6%A3%80%E6%B5%81%E8%AE%A1%E6%9E%84%E6%88%90%E6%B5%8B%E9%87%8F%E7%94%B5%E8%B7%AF%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/summary-summary-1.speech?text=%E6%83%A0%E6%96%AF%E9%80%9A%E7%94%B5%E6%A1%A5%E7%94%A8%E5%9B%9B%E4%B8%AA%E7%94%B5%E9%98%BB%E5%92%8C%E4%B8%80%E4%B8%AA%E6%A3%80%E6%B5%81%E8%AE%A1%E6%9E%84%E6%88%90%E6%B5%8B%E9%87%8F%E7%94%B5%E8%B7%AF%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "惠斯通电桥用四个电阻和一个检流计构成测量电路。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%B9%B3%E8%A1%A1%E6%97%B6%E7%9B%B8%E5%AF%B9%E4%B8%A4%E8%87%82%E7%94%B5%E9%98%BB%E4%B9%98%E7%A7%AF%E7%9B%B8%E7%AD%89%EF%BC%8C%E7%94%B1%E6%AD%A4%E7%B2%BE%E7%A1%AE%E6%B1%82%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "path": "audio/narrations/wheatstone-bridge/summary-summary-2.speech?text=%E5%B9%B3%E8%A1%A1%E6%97%B6%E7%9B%B8%E5%AF%B9%E4%B8%A4%E8%87%82%E7%94%B5%E9%98%BB%E4%B9%98%E7%A7%AF%E7%9B%B8%E7%AD%89%EF%BC%8C%E7%94%B1%E6%AD%A4%E7%B2%BE%E7%A1%AE%E6%B1%82%E5%87%BA%E6%9C%AA%E7%9F%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "平衡时相对两臂电阻乘积相等，由此精确求出未知电阻。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "wheatstone-bridge",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E9%9B%B6%E7%A4%BA%E6%B3%95%E4%B8%8D%E4%BE%9D%E8%B5%96%E7%94%B5%E6%BA%90%E7%A8%B3%E5%AE%9A%E6%80%A7%EF%BC%8C%E6%98%AF%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%87%8F%E7%9A%84%E5%85%B8%E8%8C%83%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/wheatstone-bridge/summary-summary-3.speech?text=%E9%9B%B6%E7%A4%BA%E6%B3%95%E4%B8%8D%E4%BE%9D%E8%B5%96%E7%94%B5%E6%BA%90%E7%A8%B3%E5%AE%9A%E6%80%A7%EF%BC%8C%E6%98%AF%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%87%8F%E7%9A%84%E5%85%B8%E8%8C%83%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 9.06,
+      "size": 0,
+      "text": "零示法不依赖电源稳定性，是精密测量的典范。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

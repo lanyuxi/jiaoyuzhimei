@@ -1,0 +1,229 @@
+{
+  "script_id": "electromagnetic-induction",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 175.96,
+  "files": [
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E5%AE%9E%E9%AA%8C%EF%BC%811831%20%E5%B9%B4%EF%BC%8C%E6%B3%95%E6%8B%89%E7%AC%AC%E5%8F%91%E7%8E%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%94%B9%E5%8F%98%E4%B8%96%E7%95%8C%E7%9A%84%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E5%AE%9E%E9%AA%8C%EF%BC%811831%20%E5%B9%B4%EF%BC%8C%E6%B3%95%E6%8B%89%E7%AC%AC%E5%8F%91%E7%8E%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%94%B9%E5%8F%98%E4%B8%96%E7%95%8C%E7%9A%84%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "欢迎来到电磁感应实验！1831 年，法拉第发现了一个改变世界的现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%BD%93%E7%A3%81%E9%93%81%E9%9D%A0%E8%BF%91%E6%88%96%E7%A6%BB%E5%BC%80%E4%B8%80%E4%B8%AA%E7%BA%BF%E5%9C%88%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E9%87%8C%E7%AB%9F%E7%84%B6%E4%BA%A7%E7%94%9F%E4%BA%86%E7%94%B5%E6%B5%81%EF%BC%8C%E8%80%8C%E5%AE%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E8%BF%9E%E6%8E%A5%E7%94%B5%E6%BA%90%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/intro-intro-2.speech?text=%E5%BD%93%E7%A3%81%E9%93%81%E9%9D%A0%E8%BF%91%E6%88%96%E7%A6%BB%E5%BC%80%E4%B8%80%E4%B8%AA%E7%BA%BF%E5%9C%88%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E9%87%8C%E7%AB%9F%E7%84%B6%E4%BA%A7%E7%94%9F%E4%BA%86%E7%94%B5%E6%B5%81%EF%BC%8C%E8%80%8C%E5%AE%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E8%BF%9E%E6%8E%A5%E7%94%B5%E6%BA%90%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "当磁铁靠近或离开一个线圈时，线圈里竟然产生了电流，而它并没有连接电源。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E5%8F%91%E7%8E%B0%E5%82%AC%E7%94%9F%E4%BA%86%E5%8F%91%E7%94%B5%E6%9C%BA%E5%92%8C%E7%8E%B0%E4%BB%A3%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E4%B8%80%E6%8E%A2%E7%A9%B6%E7%AB%9F%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E5%8F%91%E7%8E%B0%E5%82%AC%E7%94%9F%E4%BA%86%E5%8F%91%E7%94%B5%E6%9C%BA%E5%92%8C%E7%8E%B0%E4%BB%A3%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E4%B8%80%E6%8E%A2%E7%A9%B6%E7%AB%9F%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "这个发现催生了发电机和现代电力系统，今天我们就来一探究竟。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%A9%BF%E8%BF%87%E7%BA%BF%E5%9C%88%E7%9A%84%E7%A3%81%E6%84%9F%E7%BA%BF%E6%9D%A1%E6%95%B0%EF%BC%8C%E7%94%A8%E7%A3%81%E9%80%9A%E9%87%8F%20%CE%A6%20%E6%9D%A5%E6%8F%8F%E8%BF%B0%EF%BC%8C%E7%AD%89%E4%BA%8E%E7%A3%81%E6%84%9F%E5%BA%94%E5%BC%BA%E5%BA%A6%E4%B9%98%E4%BB%A5%E9%9D%A2%E7%A7%AF%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/concept-concept-1.speech?text=%E7%A9%BF%E8%BF%87%E7%BA%BF%E5%9C%88%E7%9A%84%E7%A3%81%E6%84%9F%E7%BA%BF%E6%9D%A1%E6%95%B0%EF%BC%8C%E7%94%A8%E7%A3%81%E9%80%9A%E9%87%8F%20%CE%A6%20%E6%9D%A5%E6%8F%8F%E8%BF%B0%EF%BC%8C%E7%AD%89%E4%BA%8E%E7%A3%81%E6%84%9F%E5%BA%94%E5%BC%BA%E5%BA%A6%E4%B9%98%E4%BB%A5%E9%9D%A2%E7%A7%AF%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "穿过线圈的磁感线条数，用磁通量 Φ 来描述，等于磁感应强度乘以面积。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%8F%AA%E6%9C%89%E5%BD%93%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E4%B8%AD%E6%89%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/concept-concept-2.speech?text=%E5%8F%AA%E6%9C%89%E5%BD%93%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E4%B8%AD%E6%89%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "只有当磁通量发生变化时，线圈中才会产生感应电流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%A3%81%E9%93%81%E8%BF%90%E5%8A%A8%E5%BE%97%E8%B6%8A%E5%BF%AB%EF%BC%8C%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E8%B6%8A%E5%BF%AB%EF%BC%8C%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E5%B0%B1%E8%B6%8A%E5%BC%BA%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/concept-concept-3.speech?text=%E7%A3%81%E9%93%81%E8%BF%90%E5%8A%A8%E5%BE%97%E8%B6%8A%E5%BF%AB%EF%BC%8C%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E8%B6%8A%E5%BF%AB%EF%BC%8C%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E5%B0%B1%E8%B6%8A%E5%BC%BA%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "磁铁运动得越快，磁通量变化越快，感应电流就越强。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E7%A3%81%E9%93%81%E9%9D%99%E6%AD%A2%E4%B8%8D%E5%8A%A8%E6%97%B6%EF%BC%8C%E7%A3%81%E9%80%9A%E9%87%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E5%8D%B3%E4%BD%BF%E7%A3%81%E5%9C%BA%E5%BE%88%E5%BC%BA%E4%B9%9F%E6%B2%A1%E6%9C%89%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/concept-concept-4.speech?text=%E7%A3%81%E9%93%81%E9%9D%99%E6%AD%A2%E4%B8%8D%E5%8A%A8%E6%97%B6%EF%BC%8C%E7%A3%81%E9%80%9A%E9%87%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E5%8D%B3%E4%BD%BF%E7%A3%81%E5%9C%BA%E5%BE%88%E5%BC%BA%E4%B9%9F%E6%B2%A1%E6%9C%89%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "磁铁静止不动时，磁通量不变，即使磁场很强也没有感应电流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%B3%95%E6%8B%89%E7%AC%AC%E5%AE%9A%E5%BE%8B%E6%8C%87%E5%87%BA%EF%BC%8C%E6%84%9F%E5%BA%94%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%AD%89%E4%BA%8E%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E7%8E%87%E7%9A%84%E8%B4%9F%E5%80%BC%EF%BC%8C%E5%86%8D%E4%B9%98%E4%BB%A5%E5%8C%9D%E6%95%B0%20N%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/formula-formula-1.speech?text=%E6%B3%95%E6%8B%89%E7%AC%AC%E5%AE%9A%E5%BE%8B%E6%8C%87%E5%87%BA%EF%BC%8C%E6%84%9F%E5%BA%94%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%AD%89%E4%BA%8E%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E7%8E%87%E7%9A%84%E8%B4%9F%E5%80%BC%EF%BC%8C%E5%86%8D%E4%B9%98%E4%BB%A5%E5%8C%9D%E6%95%B0%20N%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "法拉第定律指出，感应电动势等于磁通量变化率的负值，再乘以匝数 N。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%AC%E5%BC%8F%E4%B8%AD%E7%9A%84%E8%B4%9F%E5%8F%B7%E6%AD%A3%E6%98%AF%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E7%9A%84%E4%BD%93%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/formula-formula-2.speech?text=%E5%85%AC%E5%BC%8F%E4%B8%AD%E7%9A%84%E8%B4%9F%E5%8F%B7%E6%AD%A3%E6%98%AF%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E7%9A%84%E4%BD%93%E7%8E%B0%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "公式中的负号正是楞次定律的体现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E8%AF%B4%EF%BC%9A%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E7%9A%84%E6%96%B9%E5%90%91%E6%80%BB%E6%98%AF%E9%98%BB%E7%A2%8D%E5%BC%95%E8%B5%B7%E5%AE%83%E7%9A%84%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/formula-formula-3.speech?text=%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E8%AF%B4%EF%BC%9A%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E7%9A%84%E6%96%B9%E5%90%91%E6%80%BB%E6%98%AF%E9%98%BB%E7%A2%8D%E5%BC%95%E8%B5%B7%E5%AE%83%E7%9A%84%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "楞次定律说：感应电流的方向总是阻碍引起它的磁通量变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E7%A3%81%E9%93%81%E9%9D%A0%E8%BF%91%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E6%8E%92%E6%96%A5%E5%AE%83%EF%BC%9B%E7%A3%81%E9%93%81%E8%BF%9C%E7%A6%BB%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E5%90%B8%E5%BC%95%E5%AE%83%EF%BC%8C%E5%A7%8B%E7%BB%88%E5%9C%A8%E5%8F%8D%E6%8A%97%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/formula-formula-4.speech?text=%E7%A3%81%E9%93%81%E9%9D%A0%E8%BF%91%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E6%8E%92%E6%96%A5%E5%AE%83%EF%BC%9B%E7%A3%81%E9%93%81%E8%BF%9C%E7%A6%BB%E6%97%B6%EF%BC%8C%E7%BA%BF%E5%9C%88%E5%90%B8%E5%BC%95%E5%AE%83%EF%BC%8C%E5%A7%8B%E7%BB%88%E5%9C%A8%E5%8F%8D%E6%8A%97%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "磁铁靠近时，线圈排斥它；磁铁远离时，线圈吸引它，始终在反抗变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E6%8B%96%E5%8A%A8%E7%A3%81%E9%93%81%E9%9D%A0%E8%BF%91%E7%BA%BF%E5%9C%88%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%94%B5%E6%B5%81%E8%A1%A8%E6%8C%87%E9%92%88%E7%9A%84%E5%81%8F%E8%BD%AC%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/interaction-interaction-1.speech?text=%E6%8B%96%E5%8A%A8%E7%A3%81%E9%93%81%E9%9D%A0%E8%BF%91%E7%BA%BF%E5%9C%88%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%94%B5%E6%B5%81%E8%A1%A8%E6%8C%87%E9%92%88%E7%9A%84%E5%81%8F%E8%BD%AC%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "拖动磁铁靠近线圈，观察电流表指针的偏转方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%8A%A0%E5%BF%AB%E7%A3%81%E9%93%81%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E4%BD%A0%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E6%98%8E%E6%98%BE%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/interaction-interaction-2.speech?text=%E5%8A%A0%E5%BF%AB%E7%A3%81%E9%93%81%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E4%BD%A0%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%84%9F%E5%BA%94%E7%94%B5%E6%B5%81%E6%98%8E%E6%98%BE%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "加快磁铁的速度，你会看到感应电流明显增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%8A%8A%E7%A3%81%E9%93%81%E6%8A%BD%E7%A6%BB%E6%97%B6%EF%BC%8C%E6%B3%A8%E6%84%8F%E7%94%B5%E6%B5%81%E6%96%B9%E5%90%91%E5%8F%8D%E4%BA%86%E8%BF%87%E6%9D%A5%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E7%9A%84%E9%A2%84%E8%A8%80%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/interaction-interaction-3.speech?text=%E6%8A%8A%E7%A3%81%E9%93%81%E6%8A%BD%E7%A6%BB%E6%97%B6%EF%BC%8C%E6%B3%A8%E6%84%8F%E7%94%B5%E6%B5%81%E6%96%B9%E5%90%91%E5%8F%8D%E4%BA%86%E8%BF%87%E6%9D%A5%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E7%9A%84%E9%A2%84%E8%A8%80%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "把磁铁抽离时，注意电流方向反了过来，这正是楞次定律的预言。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%8F%91%E7%94%B5%E6%9C%BA%E5%B0%B1%E6%98%AF%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E7%9A%84%E7%9B%B4%E6%8E%A5%E5%BA%94%E7%94%A8%EF%BC%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%BA%BF%E5%9C%88%E4%B8%8D%E6%96%AD%E5%88%87%E5%89%B2%E7%A3%81%E6%84%9F%E7%BA%BF%E4%BA%A7%E7%94%9F%E7%94%B5%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/application-application-1.speech?text=%E5%8F%91%E7%94%B5%E6%9C%BA%E5%B0%B1%E6%98%AF%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E7%9A%84%E7%9B%B4%E6%8E%A5%E5%BA%94%E7%94%A8%EF%BC%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%BA%BF%E5%9C%88%E4%B8%8D%E6%96%AD%E5%88%87%E5%89%B2%E7%A3%81%E6%84%9F%E7%BA%BF%E4%BA%A7%E7%94%9F%E7%94%B5%E6%B5%81%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "发电机就是电磁感应的直接应用，旋转的线圈不断切割磁感线产生电流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%8F%98%E5%8E%8B%E5%99%A8%E5%88%A9%E7%94%A8%E4%BA%92%E6%84%9F%E5%8E%9F%E7%90%86%EF%BC%8C%E6%94%B9%E5%8F%98%E4%BA%A4%E6%B5%81%E7%94%B5%E7%9A%84%E7%94%B5%E5%8E%8B%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/application-application-2.speech?text=%E5%8F%98%E5%8E%8B%E5%99%A8%E5%88%A9%E7%94%A8%E4%BA%92%E6%84%9F%E5%8E%9F%E7%90%86%EF%BC%8C%E6%94%B9%E5%8F%98%E4%BA%A4%E6%B5%81%E7%94%B5%E7%9A%84%E7%94%B5%E5%8E%8B%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "变压器利用互感原理，改变交流电的电压。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%94%B5%E7%A3%81%E7%82%89%E3%80%81%E6%97%A0%E7%BA%BF%E5%85%85%E7%94%B5%E3%80%81%E7%94%B5%E7%A3%81%E5%88%B6%E5%8A%A8%EF%BC%8C%E9%83%BD%E7%A6%BB%E4%B8%8D%E5%BC%80%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/application-application-3.speech?text=%E7%94%B5%E7%A3%81%E7%82%89%E3%80%81%E6%97%A0%E7%BA%BF%E5%85%85%E7%94%B5%E3%80%81%E7%94%B5%E7%A3%81%E5%88%B6%E5%8A%A8%EF%BC%8C%E9%83%BD%E7%A6%BB%E4%B8%8D%E5%BC%80%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "电磁炉、无线充电、电磁制动，都离不开电磁感应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E4%BA%A7%E7%94%9F%E6%84%9F%E5%BA%94%E7%94%B5%E5%8A%A8%E5%8A%BF%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/summary-summary-1.speech?text=%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E4%BA%A7%E7%94%9F%E6%84%9F%E5%BA%94%E7%94%B5%E5%8A%A8%E5%8A%BF%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "电磁感应的本质是磁通量变化产生感应电动势。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%B3%95%E6%8B%89%E7%AC%AC%E5%AE%9A%E5%BE%8B%20%CE%B5%20%E7%AD%89%E4%BA%8E%E8%B4%9F%20N%20%E4%B9%98%E4%BB%A5%20d%CE%A6%2Fdt%EF%BC%8C%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%86%B3%E5%AE%9A%E7%94%B5%E6%B5%81%E6%96%B9%E5%90%91%EF%BC%8C%E9%98%BB%E7%A2%8D%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/electromagnetic-induction/summary-summary-2.speech?text=%E6%B3%95%E6%8B%89%E7%AC%AC%E5%AE%9A%E5%BE%8B%20%CE%B5%20%E7%AD%89%E4%BA%8E%E8%B4%9F%20N%20%E4%B9%98%E4%BB%A5%20d%CE%A6%2Fdt%EF%BC%8C%E6%A5%9E%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%86%B3%E5%AE%9A%E7%94%B5%E6%B5%81%E6%96%B9%E5%90%91%EF%BC%8C%E9%98%BB%E7%A2%8D%E7%A3%81%E9%80%9A%E9%87%8F%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 13.13,
+      "size": 0,
+      "text": "法拉第定律 ε 等于负 N 乘以 dΦ/dt，楞次定律决定电流方向，阻碍磁通量变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electromagnetic-induction",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E6%B3%95%E6%8B%89%E7%AC%AC%E7%9A%84%E5%B0%8F%E7%BA%BF%E5%9C%88%E5%88%B0%E9%81%8D%E5%B8%83%E4%B8%96%E7%95%8C%E7%9A%84%E5%8F%91%E7%94%B5%E5%8E%82%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%8E%9F%E7%90%86%E7%82%B9%E4%BA%AE%E4%BA%86%E7%8E%B0%E4%BB%A3%E6%96%87%E6%98%8E%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E6%8E%8C%E6%8F%A1%EF%BC%81",
+      "path": "audio/narrations/electromagnetic-induction/summary-summary-3.speech?text=%E4%BB%8E%E6%B3%95%E6%8B%89%E7%AC%AC%E7%9A%84%E5%B0%8F%E7%BA%BF%E5%9C%88%E5%88%B0%E9%81%8D%E5%B8%83%E4%B8%96%E7%95%8C%E7%9A%84%E5%8F%91%E7%94%B5%E5%8E%82%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%8E%9F%E7%90%86%E7%82%B9%E4%BA%AE%E4%BA%86%E7%8E%B0%E4%BB%A3%E6%96%87%E6%98%8E%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E6%8E%8C%E6%8F%A1%EF%BC%81",
+      "duration": 11.88,
+      "size": 0,
+      "text": "从法拉第的小线圈到遍布世界的发电厂，这个原理点亮了现代文明。希望你已经掌握！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

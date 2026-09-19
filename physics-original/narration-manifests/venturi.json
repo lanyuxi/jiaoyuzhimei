@@ -1,0 +1,229 @@
+{
+  "script_id": "venturi",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 119.71,
+  "files": [
+    {
+      "script_id": "venturi",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%96%87%E4%B8%98%E9%87%8C%E7%AE%A1%EF%BC%81%E5%AE%83%E6%98%AF%E4%B8%80%E6%A0%B9%E4%B8%AD%E9%97%B4%E6%94%B6%E7%AA%84%E7%9A%84%E7%89%B9%E6%AE%8A%E7%AE%A1%E9%81%93%E3%80%82",
+      "path": "audio/narrations/venturi/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%96%87%E4%B8%98%E9%87%8C%E7%AE%A1%EF%BC%81%E5%AE%83%E6%98%AF%E4%B8%80%E6%A0%B9%E4%B8%AD%E9%97%B4%E6%94%B6%E7%AA%84%E7%9A%84%E7%89%B9%E6%AE%8A%E7%AE%A1%E9%81%93%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "欢迎来到文丘里管！它是一根中间收窄的特殊管道。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E6%B5%81%E4%BD%93%E7%BB%8F%E8%BF%87%E7%AA%84%E5%A4%84%E6%97%B6%E4%BC%9A%E5%8A%A0%E9%80%9F%EF%BC%8C%E5%8E%8B%E5%BC%BA%E5%8F%8D%E8%80%8C%E4%B8%8B%E9%99%8D%E3%80%82",
+      "path": "audio/narrations/venturi/intro-intro-2.speech?text=%E6%B5%81%E4%BD%93%E7%BB%8F%E8%BF%87%E7%AA%84%E5%A4%84%E6%97%B6%E4%BC%9A%E5%8A%A0%E9%80%9F%EF%BC%8C%E5%8E%8B%E5%BC%BA%E5%8F%8D%E8%80%8C%E4%B8%8B%E9%99%8D%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "流体经过窄处时会加速，压强反而下降。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E7%9C%8B%E4%BC%BC%E5%8F%8D%E5%B8%B8%E7%9A%84%E7%8E%B0%E8%B1%A1%EF%BC%8C%E6%AD%A3%E6%98%AF%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%8E%9F%E7%90%86%E7%9A%84%E7%B2%BE%E5%BD%A9%E4%BD%93%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/venturi/intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E7%9C%8B%E4%BC%BC%E5%8F%8D%E5%B8%B8%E7%9A%84%E7%8E%B0%E8%B1%A1%EF%BC%8C%E6%AD%A3%E6%98%AF%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%8E%9F%E7%90%86%E7%9A%84%E7%B2%BE%E5%BD%A9%E4%BD%93%E7%8E%B0%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "这个看似反常的现象，正是伯努利原理的精彩体现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%B5%81%E4%BD%93%E4%B8%8D%E5%8F%AF%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%8D%95%E4%BD%8D%E6%97%B6%E9%97%B4%E6%B5%81%E8%BF%87%E6%AF%8F%E4%B8%AA%E6%88%AA%E9%9D%A2%E7%9A%84%E6%B5%81%E9%87%8F%E7%9B%B8%E5%90%8C%E3%80%82",
+      "path": "audio/narrations/venturi/concept-concept-1.speech?text=%E6%B5%81%E4%BD%93%E4%B8%8D%E5%8F%AF%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%8D%95%E4%BD%8D%E6%97%B6%E9%97%B4%E6%B5%81%E8%BF%87%E6%AF%8F%E4%B8%AA%E6%88%AA%E9%9D%A2%E7%9A%84%E6%B5%81%E9%87%8F%E7%9B%B8%E5%90%8C%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "流体不可压缩，单位时间流过每个截面的流量相同。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%88%AA%E9%9D%A2%E8%B6%8A%E5%B0%8F%EF%BC%8C%E6%B5%81%E9%80%9F%E5%BF%85%E9%A1%BB%E8%B6%8A%E5%A4%A7%EF%BC%8C%E8%BF%99%E6%98%AF%E8%BF%9E%E7%BB%AD%E6%80%A7%E6%96%B9%E7%A8%8B%E3%80%82",
+      "path": "audio/narrations/venturi/concept-concept-2.speech?text=%E6%88%AA%E9%9D%A2%E8%B6%8A%E5%B0%8F%EF%BC%8C%E6%B5%81%E9%80%9F%E5%BF%85%E9%A1%BB%E8%B6%8A%E5%A4%A7%EF%BC%8C%E8%BF%99%E6%98%AF%E8%BF%9E%E7%BB%AD%E6%80%A7%E6%96%B9%E7%A8%8B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "截面越小，流速必须越大，这是连续性方程。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%B5%81%E9%80%9F%E5%A2%9E%E5%A4%A7%EF%BC%8C%E5%8A%A8%E8%83%BD%E5%A2%9E%E5%8A%A0%EF%BC%8C%E6%A0%B9%E6%8D%AE%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%8E%9F%E7%90%86%E5%8E%8B%E5%BC%BA%E5%BF%85%E7%84%B6%E4%B8%8B%E9%99%8D%E3%80%82",
+      "path": "audio/narrations/venturi/concept-concept-3.speech?text=%E6%B5%81%E9%80%9F%E5%A2%9E%E5%A4%A7%EF%BC%8C%E5%8A%A8%E8%83%BD%E5%A2%9E%E5%8A%A0%EF%BC%8C%E6%A0%B9%E6%8D%AE%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%8E%9F%E7%90%86%E5%8E%8B%E5%BC%BA%E5%BF%85%E7%84%B6%E4%B8%8B%E9%99%8D%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "流速增大，动能增加，根据伯努利原理压强必然下降。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%89%80%E4%BB%A5%E7%AA%84%E5%A4%84%E6%B5%81%E9%80%9F%E6%9C%80%E5%BF%AB%E3%80%81%E5%8E%8B%E5%BC%BA%E6%9C%80%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/venturi/concept-concept-4.speech?text=%E6%89%80%E4%BB%A5%E7%AA%84%E5%A4%84%E6%B5%81%E9%80%9F%E6%9C%80%E5%BF%AB%E3%80%81%E5%8E%8B%E5%BC%BA%E6%9C%80%E4%BD%8E%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "所以窄处流速最快、压强最低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%BF%9E%E7%BB%AD%E6%80%A7%E6%96%B9%E7%A8%8B%EF%BC%9A%E6%88%AA%E9%9D%A2%E7%A7%AF%E4%B9%98%E6%B5%81%E9%80%9F%E5%A4%84%E5%A4%84%E7%9B%B8%E7%AD%89%E3%80%82",
+      "path": "audio/narrations/venturi/formula-formula-1.speech?text=%E8%BF%9E%E7%BB%AD%E6%80%A7%E6%96%B9%E7%A8%8B%EF%BC%9A%E6%88%AA%E9%9D%A2%E7%A7%AF%E4%B9%98%E6%B5%81%E9%80%9F%E5%A4%84%E5%A4%84%E7%9B%B8%E7%AD%89%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "连续性方程：截面积乘流速处处相等。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E4%BC%AF%E5%8A%AA%E5%88%A9%E6%96%B9%E7%A8%8B%EF%BC%9A%E5%8E%8B%E5%BC%BA%E4%B8%8E%E5%8A%A8%E5%8E%8B%E4%B9%8B%E5%92%8C%E5%AE%88%E6%81%92%E3%80%82",
+      "path": "audio/narrations/venturi/formula-formula-2.speech?text=%E4%BC%AF%E5%8A%AA%E5%88%A9%E6%96%B9%E7%A8%8B%EF%BC%9A%E5%8E%8B%E5%BC%BA%E4%B8%8E%E5%8A%A8%E5%8E%8B%E4%B9%8B%E5%92%8C%E5%AE%88%E6%81%92%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "伯努利方程：压强与动压之和守恒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%AA%84%E5%A4%84%E9%9D%A2%E7%A7%AF%E5%B0%8F%E4%B8%80%E5%8D%8A%EF%BC%8C%E6%B5%81%E9%80%9F%E5%B0%B1%E5%BF%AB%E4%B8%80%E5%80%8D%E3%80%82",
+      "path": "audio/narrations/venturi/formula-formula-3.speech?text=%E7%AA%84%E5%A4%84%E9%9D%A2%E7%A7%AF%E5%B0%8F%E4%B8%80%E5%8D%8A%EF%BC%8C%E6%B5%81%E9%80%9F%E5%B0%B1%E5%BF%AB%E4%B8%80%E5%80%8D%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "窄处面积小一半，流速就快一倍。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E6%B5%81%E9%80%9F%E8%B6%8A%E5%BF%AB%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C%E5%8E%8B%E5%BC%BA%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/venturi/formula-formula-4.speech?text=%E6%B5%81%E9%80%9F%E8%B6%8A%E5%BF%AB%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C%E5%8E%8B%E5%BC%BA%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "流速越快的地方，压强越低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%96%89%E9%83%A8%E6%94%B6%E7%BC%A9%E6%AF%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%AA%84%E5%A4%84%E6%B5%81%E9%80%9F%E5%92%8C%E5%8E%8B%E5%BC%BA%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/venturi/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%96%89%E9%83%A8%E6%94%B6%E7%BC%A9%E6%AF%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%AA%84%E5%A4%84%E6%B5%81%E9%80%9F%E5%92%8C%E5%8E%8B%E5%BC%BA%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "调节喉部收缩比，观察窄处流速和压强的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%85%A5%E5%8F%A3%E6%B5%81%E9%80%9F%EF%BC%8C%E7%9C%8B%E5%8E%8B%E5%BC%BA%E5%B7%AE%E5%A6%82%E4%BD%95%E5%93%8D%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/venturi/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%85%A5%E5%8F%A3%E6%B5%81%E9%80%9F%EF%BC%8C%E7%9C%8B%E5%8E%8B%E5%BC%BA%E5%B7%AE%E5%A6%82%E4%BD%95%E5%93%8D%E5%BA%94%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "改变入口流速，看压强差如何响应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%88%AA%E9%9D%A2%E8%B6%8A%E5%B0%8F%E3%80%81%E6%B5%81%E9%80%9F%E8%B6%8A%E5%BF%AB%E3%80%81%E5%8E%8B%E5%BC%BA%E8%B6%8A%E4%BD%8E%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/venturi/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%88%AA%E9%9D%A2%E8%B6%8A%E5%B0%8F%E3%80%81%E6%B5%81%E9%80%9F%E8%B6%8A%E5%BF%AB%E3%80%81%E5%8E%8B%E5%BC%BA%E8%B6%8A%E4%BD%8E%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "注意截面越小、流速越快、压强越低的规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%B1%BD%E8%BD%A6%E5%8C%96%E6%B2%B9%E5%99%A8%E9%9D%A0%E6%96%87%E4%B8%98%E9%87%8C%E6%95%88%E5%BA%94%E6%8A%8A%E6%B1%BD%E6%B2%B9%E5%90%B8%E5%85%A5%E6%B0%94%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/venturi/application-application-1.speech?text=%E6%B1%BD%E8%BD%A6%E5%8C%96%E6%B2%B9%E5%99%A8%E9%9D%A0%E6%96%87%E4%B8%98%E9%87%8C%E6%95%88%E5%BA%94%E6%8A%8A%E6%B1%BD%E6%B2%B9%E5%90%B8%E5%85%A5%E6%B0%94%E6%B5%81%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "汽车化油器靠文丘里效应把汽油吸入气流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%96%B7%E9%9B%BE%E5%99%A8%E3%80%81%E9%A6%99%E6%B0%B4%E7%93%B6%E4%B9%9F%E5%88%A9%E7%94%A8%E5%90%8C%E6%A0%B7%E7%9A%84%E4%BD%8E%E5%8E%8B%E5%90%B8%E6%B6%B2%E5%8E%9F%E7%90%86%E3%80%82",
+      "path": "audio/narrations/venturi/application-application-2.speech?text=%E5%96%B7%E9%9B%BE%E5%99%A8%E3%80%81%E9%A6%99%E6%B0%B4%E7%93%B6%E4%B9%9F%E5%88%A9%E7%94%A8%E5%90%8C%E6%A0%B7%E7%9A%84%E4%BD%8E%E5%8E%8B%E5%90%B8%E6%B6%B2%E5%8E%9F%E7%90%86%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "喷雾器、香水瓶也利用同样的低压吸液原理。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%96%87%E4%B8%98%E9%87%8C%E6%B5%81%E9%87%8F%E8%AE%A1%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E5%B7%A5%E4%B8%9A%E7%AE%A1%E9%81%93%E6%B5%8B%E6%B5%81%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/venturi/application-application-3.speech?text=%E6%96%87%E4%B8%98%E9%87%8C%E6%B5%81%E9%87%8F%E8%AE%A1%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E5%B7%A5%E4%B8%9A%E7%AE%A1%E9%81%93%E6%B5%8B%E6%B5%81%E9%87%8F%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "文丘里流量计广泛用于工业管道测流量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%96%87%E4%B8%98%E9%87%8C%E7%AE%A1%E4%B8%AD%EF%BC%8C%E6%88%AA%E9%9D%A2%E6%94%B6%E7%AA%84%E4%BD%BF%E6%B5%81%E9%80%9F%E5%A2%9E%E5%A4%A7%E3%80%81%E5%8E%8B%E5%BC%BA%E4%B8%8B%E9%99%8D%E3%80%82",
+      "path": "audio/narrations/venturi/summary-summary-1.speech?text=%E6%96%87%E4%B8%98%E9%87%8C%E7%AE%A1%E4%B8%AD%EF%BC%8C%E6%88%AA%E9%9D%A2%E6%94%B6%E7%AA%84%E4%BD%BF%E6%B5%81%E9%80%9F%E5%A2%9E%E5%A4%A7%E3%80%81%E5%8E%8B%E5%BC%BA%E4%B8%8B%E9%99%8D%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "文丘里管中，截面收窄使流速增大、压强下降。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E8%BF%9E%E7%BB%AD%E6%80%A7%E6%96%B9%E7%A8%8B%E4%B8%8E%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%8E%9F%E7%90%86%E5%85%B1%E5%90%8C%E5%86%B3%E5%AE%9A%E4%BA%86%E6%B5%81%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/venturi/summary-summary-2.speech?text=%E8%BF%9E%E7%BB%AD%E6%80%A7%E6%96%B9%E7%A8%8B%E4%B8%8E%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%8E%9F%E7%90%86%E5%85%B1%E5%90%8C%E5%86%B3%E5%AE%9A%E4%BA%86%E6%B5%81%E5%8A%A8%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "连续性方程与伯努利原理共同决定了流动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "venturi",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E6%B5%81%E9%87%8F%E6%B5%8B%E9%87%8F%E4%B8%8E%E5%90%B8%E6%B6%B2%E8%A3%85%E7%BD%AE%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/venturi/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E6%B5%81%E9%87%8F%E6%B5%8B%E9%87%8F%E4%B8%8E%E5%90%B8%E6%B6%B2%E8%A3%85%E7%BD%AE%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.19,
+      "size": 0,
+      "text": "它是流量测量与吸液装置的基础。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

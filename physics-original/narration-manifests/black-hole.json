@@ -1,0 +1,229 @@
+{
+  "script_id": "black-hole",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 151.59,
+  "files": [
+    {
+      "script_id": "black-hole",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%B5%B0%E8%BF%91%E9%BB%91%E6%B4%9E%EF%BC%81%E5%AE%83%E6%98%AF%E5%AE%87%E5%AE%99%E4%B8%AD%E5%BC%95%E5%8A%9B%E6%9C%80%E5%BC%BA%E7%9A%84%E5%A4%A9%E4%BD%93%EF%BC%8C%E8%BF%9E%E5%85%89%E9%83%BD%E6%97%A0%E6%B3%95%E9%80%83%E7%A6%BB%E3%80%82",
+      "path": "audio/narrations/black-hole/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%B5%B0%E8%BF%91%E9%BB%91%E6%B4%9E%EF%BC%81%E5%AE%83%E6%98%AF%E5%AE%87%E5%AE%99%E4%B8%AD%E5%BC%95%E5%8A%9B%E6%9C%80%E5%BC%BA%E7%9A%84%E5%A4%A9%E4%BD%93%EF%BC%8C%E8%BF%9E%E5%85%89%E9%83%BD%E6%97%A0%E6%B3%95%E9%80%83%E7%A6%BB%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "欢迎走近黑洞！它是宇宙中引力最强的天体，连光都无法逃离。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E6%8A%8A%E8%B6%B3%E5%A4%9F%E5%A4%9A%E7%9A%84%E8%B4%A8%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%88%B0%E8%B6%B3%E5%A4%9F%E5%B0%8F%EF%BC%8C%E5%BC%95%E5%8A%9B%E5%B0%B1%E4%BC%9A%E5%BC%BA%E5%88%B0%E5%85%89%E4%B9%9F%E8%A2%AB%E5%9B%B0%E4%BD%8F%E3%80%82",
+      "path": "audio/narrations/black-hole/intro-intro-2.speech?text=%E6%8A%8A%E8%B6%B3%E5%A4%9F%E5%A4%9A%E7%9A%84%E8%B4%A8%E9%87%8F%E5%8E%8B%E7%BC%A9%E5%88%B0%E8%B6%B3%E5%A4%9F%E5%B0%8F%EF%BC%8C%E5%BC%95%E5%8A%9B%E5%B0%B1%E4%BC%9A%E5%BC%BA%E5%88%B0%E5%85%89%E4%B9%9F%E8%A2%AB%E5%9B%B0%E4%BD%8F%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "把足够多的质量压缩到足够小，引力就会强到光也被困住。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%22%E6%9C%89%E5%8E%BB%E6%97%A0%E5%9B%9E%22%E7%9A%84%E8%BE%B9%E7%95%8C%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E5%88%92%E5%87%BA%E7%9A%84%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E3%80%82",
+      "path": "audio/narrations/black-hole/intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%22%E6%9C%89%E5%8E%BB%E6%97%A0%E5%9B%9E%22%E7%9A%84%E8%BE%B9%E7%95%8C%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E5%88%92%E5%87%BA%E7%9A%84%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "这个\"有去无回\"的边界，就是史瓦西半径划出的事件视界。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E9%80%83%E7%A6%BB%E4%B8%80%E4%B8%AA%E5%A4%A9%E4%BD%93%E9%9C%80%E8%A6%81%E8%BE%BE%E5%88%B0%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%B4%A8%E9%87%8F%E8%B6%8A%E5%A4%A7%E3%80%81%E5%8D%8A%E5%BE%84%E8%B6%8A%E5%B0%8F%EF%BC%8C%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E8%B6%8A%E9%AB%98%E3%80%82",
+      "path": "audio/narrations/black-hole/concept-concept-1.speech?text=%E9%80%83%E7%A6%BB%E4%B8%80%E4%B8%AA%E5%A4%A9%E4%BD%93%E9%9C%80%E8%A6%81%E8%BE%BE%E5%88%B0%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%B4%A8%E9%87%8F%E8%B6%8A%E5%A4%A7%E3%80%81%E5%8D%8A%E5%BE%84%E8%B6%8A%E5%B0%8F%EF%BC%8C%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E8%B6%8A%E9%AB%98%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "逃离一个天体需要达到逃逸速度，质量越大、半径越小，逃逸速度越高。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%BD%93%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E7%AD%89%E4%BA%8E%E5%85%89%E9%80%9F%E6%97%B6%EF%BC%8C%E8%BF%9E%E5%85%89%E9%83%BD%E6%97%A0%E6%B3%95%E9%80%83%E5%87%BA%EF%BC%8C%E9%BB%91%E6%B4%9E%E5%B0%B1%E5%BD%A2%E6%88%90%E4%BA%86%E3%80%82",
+      "path": "audio/narrations/black-hole/concept-concept-2.speech?text=%E5%BD%93%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E7%AD%89%E4%BA%8E%E5%85%89%E9%80%9F%E6%97%B6%EF%BC%8C%E8%BF%9E%E5%85%89%E9%83%BD%E6%97%A0%E6%B3%95%E9%80%83%E5%87%BA%EF%BC%8C%E9%BB%91%E6%B4%9E%E5%B0%B1%E5%BD%A2%E6%88%90%E4%BA%86%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "当逃逸速度等于光速时，连光都无法逃出，黑洞就形成了。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%AD%A4%E6%97%B6%E5%A4%A9%E4%BD%93%E7%9A%84%E5%8D%8A%E5%BE%84%E5%8F%AB%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%EF%BC%8C%E5%AF%B9%E5%BA%94%E7%9A%84%E7%90%83%E9%9D%A2%E5%8F%AB%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E3%80%82",
+      "path": "audio/narrations/black-hole/concept-concept-3.speech?text=%E6%AD%A4%E6%97%B6%E5%A4%A9%E4%BD%93%E7%9A%84%E5%8D%8A%E5%BE%84%E5%8F%AB%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%EF%BC%8C%E5%AF%B9%E5%BA%94%E7%9A%84%E7%90%83%E9%9D%A2%E5%8F%AB%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "此时天体的半径叫史瓦西半径，对应的球面叫事件视界。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E4%B8%80%E6%97%A6%E8%B6%8A%E8%BF%87%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%EF%BC%8C%E4%BB%BB%E4%BD%95%E7%89%A9%E8%B4%A8%E5%92%8C%E4%BF%A1%E6%81%AF%E9%83%BD%E6%97%A0%E6%B3%95%E8%BF%94%E5%9B%9E%E5%A4%96%E7%95%8C%E3%80%82",
+      "path": "audio/narrations/black-hole/concept-concept-4.speech?text=%E4%B8%80%E6%97%A6%E8%B6%8A%E8%BF%87%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%EF%BC%8C%E4%BB%BB%E4%BD%95%E7%89%A9%E8%B4%A8%E5%92%8C%E4%BF%A1%E6%81%AF%E9%83%BD%E6%97%A0%E6%B3%95%E8%BF%94%E5%9B%9E%E5%A4%96%E7%95%8C%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "一旦越过事件视界，任何物质和信息都无法返回外界。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E7%94%B1%E8%B4%A8%E9%87%8F%E5%92%8C%E5%8D%8A%E5%BE%84%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/black-hole/formula-formula-1.speech?text=%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E7%94%B1%E8%B4%A8%E9%87%8F%E5%92%8C%E5%8D%8A%E5%BE%84%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "逃逸速度由质量和半径决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E4%BB%A4%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E7%AD%89%E4%BA%8E%E5%85%89%E9%80%9F%EF%BC%8C%E8%A7%A3%E5%87%BA%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E3%80%82",
+      "path": "audio/narrations/black-hole/formula-formula-2.speech?text=%E4%BB%A4%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E7%AD%89%E4%BA%8E%E5%85%89%E9%80%9F%EF%BC%8C%E8%A7%A3%E5%87%BA%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "令逃逸速度等于光速，解出史瓦西半径。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%A4%AA%E9%98%B3%E8%8B%A5%E5%8F%98%E6%88%90%E9%BB%91%E6%B4%9E%EF%BC%8C%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E5%8F%AA%E6%9C%89%E7%BA%A6%203%20%E5%85%AC%E9%87%8C%E3%80%82",
+      "path": "audio/narrations/black-hole/formula-formula-3.speech?text=%E5%A4%AA%E9%98%B3%E8%8B%A5%E5%8F%98%E6%88%90%E9%BB%91%E6%B4%9E%EF%BC%8C%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E5%8F%AA%E6%9C%89%E7%BA%A6%203%20%E5%85%AC%E9%87%8C%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "太阳若变成黑洞，史瓦西半径只有约 3 公里。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%9C%B0%E7%90%83%E7%9A%84%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E6%9B%B4%E5%B0%8F%EF%BC%8C%E5%8F%AA%E6%9C%89%E7%BA%A6%209%20%E6%AF%AB%E7%B1%B3%EF%BC%8C%E6%AF%94%E4%B8%80%E9%A2%97%E9%BB%84%E8%B1%86%E8%BF%98%E5%B0%8F%E3%80%82",
+      "path": "audio/narrations/black-hole/formula-formula-4.speech?text=%E5%9C%B0%E7%90%83%E7%9A%84%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E6%9B%B4%E5%B0%8F%EF%BC%8C%E5%8F%AA%E6%9C%89%E7%BA%A6%209%20%E6%AF%AB%E7%B1%B3%EF%BC%8C%E6%AF%94%E4%B8%80%E9%A2%97%E9%BB%84%E8%B1%86%E8%BF%98%E5%B0%8F%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "地球的史瓦西半径更小，只有约 9 毫米，比一颗黄豆还小。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%A4%A9%E4%BD%93%E8%B4%A8%E9%87%8F%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/black-hole/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%A4%A9%E4%BD%93%E8%B4%A8%E9%87%8F%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "调节天体质量，观察史瓦西半径如何随之线性增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%8A%8A%E8%B4%A8%E9%87%8F%E8%B0%83%E5%88%B0%E6%81%92%E6%98%9F%E7%BA%A7%E7%94%9A%E8%87%B3%E8%B6%85%E5%A4%A7%E8%B4%A8%E9%87%8F%EF%BC%8C%E6%84%9F%E5%8F%97%E9%BB%91%E6%B4%9E%E5%B0%BA%E5%BA%A6%E7%9A%84%E5%B7%AE%E5%BC%82%E3%80%82",
+      "path": "audio/narrations/black-hole/interaction-interaction-2.speech?text=%E6%8A%8A%E8%B4%A8%E9%87%8F%E8%B0%83%E5%88%B0%E6%81%92%E6%98%9F%E7%BA%A7%E7%94%9A%E8%87%B3%E8%B6%85%E5%A4%A7%E8%B4%A8%E9%87%8F%EF%BC%8C%E6%84%9F%E5%8F%97%E9%BB%91%E6%B4%9E%E5%B0%BA%E5%BA%A6%E7%9A%84%E5%B7%AE%E5%BC%82%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "把质量调到恒星级甚至超大质量，感受黑洞尺度的差异。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E9%99%84%E8%BF%91%E7%9A%84%E5%BC%95%E5%8A%9B%E7%BA%A2%E7%A7%BB%EF%BC%8C%E5%85%89%E8%A2%AB%E6%8B%89%E9%95%BF%E3%80%81%E5%8F%98%E6%9A%97%E3%80%82",
+      "path": "audio/narrations/black-hole/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E9%99%84%E8%BF%91%E7%9A%84%E5%BC%95%E5%8A%9B%E7%BA%A2%E7%A7%BB%EF%BC%8C%E5%85%89%E8%A2%AB%E6%8B%89%E9%95%BF%E3%80%81%E5%8F%98%E6%9A%97%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "注意事件视界附近的引力红移，光被拉长、变暗。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=2019%20%E5%B9%B4%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E6%9C%9B%E8%BF%9C%E9%95%9C%E6%8B%8D%E4%B8%8B%E4%BA%86%E4%BA%BA%E7%B1%BB%E9%A6%96%E5%BC%A0%E9%BB%91%E6%B4%9E%E7%85%A7%E7%89%87%E3%80%82",
+      "path": "audio/narrations/black-hole/application-application-1.speech?text=2019%20%E5%B9%B4%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E6%9C%9B%E8%BF%9C%E9%95%9C%E6%8B%8D%E4%B8%8B%E4%BA%86%E4%BA%BA%E7%B1%BB%E9%A6%96%E5%BC%A0%E9%BB%91%E6%B4%9E%E7%85%A7%E7%89%87%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "2019 年事件视界望远镜拍下了人类首张黑洞照片。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%93%B6%E6%B2%B3%E7%B3%BB%E4%B8%AD%E5%BF%83%E6%BD%9C%E4%BC%8F%E7%9D%80%E4%B8%80%E4%B8%AA%E5%9B%9B%E7%99%BE%E4%B8%87%E5%80%8D%E5%A4%AA%E9%98%B3%E8%B4%A8%E9%87%8F%E7%9A%84%E8%B6%85%E5%A4%A7%E8%B4%A8%E9%87%8F%E9%BB%91%E6%B4%9E%E3%80%82",
+      "path": "audio/narrations/black-hole/application-application-2.speech?text=%E9%93%B6%E6%B2%B3%E7%B3%BB%E4%B8%AD%E5%BF%83%E6%BD%9C%E4%BC%8F%E7%9D%80%E4%B8%80%E4%B8%AA%E5%9B%9B%E7%99%BE%E4%B8%87%E5%80%8D%E5%A4%AA%E9%98%B3%E8%B4%A8%E9%87%8F%E7%9A%84%E8%B6%85%E5%A4%A7%E8%B4%A8%E9%87%8F%E9%BB%91%E6%B4%9E%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "银河系中心潜伏着一个四百万倍太阳质量的超大质量黑洞。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E9%BB%91%E6%B4%9E%E5%90%88%E5%B9%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%BC%95%E5%8A%9B%E6%B3%A2%EF%BC%8C%E5%B7%B2%E8%A2%AB%20LIGO%20%E5%A4%9A%E6%AC%A1%E6%8E%A2%E6%B5%8B%E5%88%B0%E3%80%82",
+      "path": "audio/narrations/black-hole/application-application-3.speech?text=%E9%BB%91%E6%B4%9E%E5%90%88%E5%B9%B6%E4%BA%A7%E7%94%9F%E7%9A%84%E5%BC%95%E5%8A%9B%E6%B3%A2%EF%BC%8C%E5%B7%B2%E8%A2%AB%20LIGO%20%E5%A4%9A%E6%AC%A1%E6%8E%A2%E6%B5%8B%E5%88%B0%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "黑洞合并产生的引力波，已被 LIGO 多次探测到。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%BD%93%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E8%BE%BE%E5%88%B0%E5%85%89%E9%80%9F%EF%BC%8C%E5%A4%A9%E4%BD%93%E5%B0%B1%E6%88%90%E4%B8%BA%E9%BB%91%E6%B4%9E%E3%80%82",
+      "path": "audio/narrations/black-hole/summary-summary-1.speech?text=%E5%BD%93%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E8%BE%BE%E5%88%B0%E5%85%89%E9%80%9F%EF%BC%8C%E5%A4%A9%E4%BD%93%E5%B0%B1%E6%88%90%E4%B8%BA%E9%BB%91%E6%B4%9E%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "当逃逸速度达到光速，天体就成为黑洞。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%20Rs%3D2GM%2Fc%C2%B2%20%E6%A0%87%E5%87%BA%E4%BA%86%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E7%9A%84%E5%A4%A7%E5%B0%8F%E3%80%82",
+      "path": "audio/narrations/black-hole/summary-summary-2.speech?text=%E5%8F%B2%E7%93%A6%E8%A5%BF%E5%8D%8A%E5%BE%84%20Rs%3D2GM%2Fc%C2%B2%20%E6%A0%87%E5%87%BA%E4%BA%86%E4%BA%8B%E4%BB%B6%E8%A7%86%E7%95%8C%E7%9A%84%E5%A4%A7%E5%B0%8F%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "史瓦西半径 Rs=2GM/c² 标出了事件视界的大小。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "black-hole",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E4%B8%8E%E8%B4%A8%E9%87%8F%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E6%98%AF%E7%90%86%E8%A7%A3%E9%BB%91%E6%B4%9E%E7%9A%84%E9%92%A5%E5%8C%99%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/black-hole/summary-summary-3.speech?text=%E5%AE%83%E4%B8%8E%E8%B4%A8%E9%87%8F%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E6%98%AF%E7%90%86%E8%A7%A3%E9%BB%91%E6%B4%9E%E7%9A%84%E9%92%A5%E5%8C%99%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.81,
+      "size": 0,
+      "text": "它与质量成正比，是理解黑洞的钥匙。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

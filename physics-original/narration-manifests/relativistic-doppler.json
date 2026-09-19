@@ -1,0 +1,229 @@
+{
+  "script_id": "relativistic-doppler",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 120.66,
+  "files": [
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%EF%BC%81%E5%85%89%E6%BA%90%E9%AB%98%E9%80%9F%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E9%A2%9C%E8%89%B2%E4%BC%9A%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%EF%BC%81%E5%85%89%E6%BA%90%E9%AB%98%E9%80%9F%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E9%A2%9C%E8%89%B2%E4%BC%9A%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "欢迎来到相对论多普勒效应！光源高速运动时，颜色会发生改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%8E%E9%9D%A2%E8%80%8C%E6%9D%A5%E5%8F%98%E8%93%9D%EF%BC%8C%E8%BF%9C%E7%A6%BB%E8%80%8C%E5%8E%BB%E5%8F%98%E7%BA%A2%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/intro-intro-2.speech?text=%E8%BF%8E%E9%9D%A2%E8%80%8C%E6%9D%A5%E5%8F%98%E8%93%9D%EF%BC%8C%E8%BF%9C%E7%A6%BB%E8%80%8C%E5%8E%BB%E5%8F%98%E7%BA%A2%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "迎面而来变蓝，远离而去变红。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BD%86%E7%9B%B8%E5%AF%B9%E8%AE%BA%E7%9A%84%E7%89%88%E6%9C%AC%EF%BC%8C%E8%BF%98%E9%A2%9D%E5%A4%96%E5%8C%85%E5%90%AB%E4%BA%86%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E7%9A%84%E8%B4%A1%E7%8C%AE%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/intro-intro-3.speech?text=%E4%BD%86%E7%9B%B8%E5%AF%B9%E8%AE%BA%E7%9A%84%E7%89%88%E6%9C%AC%EF%BC%8C%E8%BF%98%E9%A2%9D%E5%A4%96%E5%8C%85%E5%90%AB%E4%BA%86%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E7%9A%84%E8%B4%A1%E7%8C%AE%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "但相对论的版本，还额外包含了时间膨胀的贡献。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%85%89%E6%BA%90%E8%BF%9C%E7%A6%BB%E6%97%B6%EF%BC%8C%E7%9B%B8%E9%82%BB%E6%B3%A2%E5%B3%B0%E8%A6%81%E8%BF%BD%E8%B5%B6%E6%9B%B4%E8%BF%9C%EF%BC%8C%E6%B3%A2%E9%95%BF%E8%A2%AB%E6%8B%89%E9%95%BF%EF%BC%8C%E5%8F%91%E7%94%9F%E7%BA%A2%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/concept-concept-1.speech?text=%E5%85%89%E6%BA%90%E8%BF%9C%E7%A6%BB%E6%97%B6%EF%BC%8C%E7%9B%B8%E9%82%BB%E6%B3%A2%E5%B3%B0%E8%A6%81%E8%BF%BD%E8%B5%B6%E6%9B%B4%E8%BF%9C%EF%BC%8C%E6%B3%A2%E9%95%BF%E8%A2%AB%E6%8B%89%E9%95%BF%EF%BC%8C%E5%8F%91%E7%94%9F%E7%BA%A2%E7%A7%BB%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "光源远离时，相邻波峰要追赶更远，波长被拉长，发生红移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%85%89%E6%BA%90%E6%8E%A5%E8%BF%91%E6%97%B6%EF%BC%8C%E6%B3%A2%E9%95%BF%E8%A2%AB%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%8F%91%E7%94%9F%E8%93%9D%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/concept-concept-2.speech?text=%E5%85%89%E6%BA%90%E6%8E%A5%E8%BF%91%E6%97%B6%EF%BC%8C%E6%B3%A2%E9%95%BF%E8%A2%AB%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%8F%91%E7%94%9F%E8%93%9D%E7%A7%BB%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "光源接近时，波长被压缩，发生蓝移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E4%B8%8E%E5%A3%B0%E6%B3%A2%E4%B8%8D%E5%90%8C%EF%BC%8C%E5%85%89%E9%80%9F%E5%AF%B9%E6%89%80%E6%9C%89%E8%A7%82%E5%AF%9F%E8%80%85%E7%9B%B8%E5%90%8C%EF%BC%8C%E8%BF%98%E8%A6%81%E8%AE%A1%E5%85%A5%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/concept-concept-3.speech?text=%E4%B8%8E%E5%A3%B0%E6%B3%A2%E4%B8%8D%E5%90%8C%EF%BC%8C%E5%85%89%E9%80%9F%E5%AF%B9%E6%89%80%E6%9C%89%E8%A7%82%E5%AF%9F%E8%80%85%E7%9B%B8%E5%90%8C%EF%BC%8C%E8%BF%98%E8%A6%81%E8%AE%A1%E5%85%A5%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "与声波不同，光速对所有观察者相同，还要计入时间膨胀。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%8D%B3%E4%BD%BF%E5%85%89%E6%BA%90%E6%A8%AA%E5%90%91%E6%8E%A0%E8%BF%87%EF%BC%8C%E4%B9%9F%E6%9C%89%E7%BA%AF%E7%B2%B9%E7%94%B1%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%BC%95%E8%B5%B7%E7%9A%84%E6%A8%AA%E5%90%91%E7%BA%A2%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/concept-concept-4.speech?text=%E5%8D%B3%E4%BD%BF%E5%85%89%E6%BA%90%E6%A8%AA%E5%90%91%E6%8E%A0%E8%BF%87%EF%BC%8C%E4%B9%9F%E6%9C%89%E7%BA%AF%E7%B2%B9%E7%94%B1%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%BC%95%E8%B5%B7%E7%9A%84%E6%A8%AA%E5%90%91%E7%BA%A2%E7%A7%BB%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "即使光源横向掠过，也有纯粹由时间膨胀引起的横向红移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%BA%B5%E5%90%91%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%A4%9A%E6%99%AE%E5%8B%92%E5%85%AC%E5%BC%8F%E5%A6%82%E4%B8%8B%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/formula-formula-1.speech?text=%E7%BA%B5%E5%90%91%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%A4%9A%E6%99%AE%E5%8B%92%E5%85%AC%E5%BC%8F%E5%A6%82%E4%B8%8B%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "纵向相对论多普勒公式如下。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%8E%A5%E8%BF%91%E6%97%B6%E5%88%86%E5%AD%90%E5%88%86%E6%AF%8D%E4%BA%92%E6%8D%A2%EF%BC%8C%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/formula-formula-2.speech?text=%E6%8E%A5%E8%BF%91%E6%97%B6%E5%88%86%E5%AD%90%E5%88%86%E6%AF%8D%E4%BA%92%E6%8D%A2%EF%BC%8C%E9%A2%91%E7%8E%87%E5%8D%87%E9%AB%98%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "接近时分子分母互换，频率升高。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%BA%A2%E7%A7%BB%E9%87%8F%20z%20%E6%8F%8F%E8%BF%B0%E6%B3%A2%E9%95%BF%E7%9A%84%E7%9B%B8%E5%AF%B9%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/formula-formula-3.speech?text=%E7%BA%A2%E7%A7%BB%E9%87%8F%20z%20%E6%8F%8F%E8%BF%B0%E6%B3%A2%E9%95%BF%E7%9A%84%E7%9B%B8%E5%AF%B9%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "红移量 z 描述波长的相对变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E9%80%9F%E5%BA%A6%E8%B6%8A%E6%8E%A5%E8%BF%91%E5%85%89%E9%80%9F%EF%BC%8C%E7%BA%A2%E7%A7%BB%E6%88%96%E8%93%9D%E7%A7%BB%E5%B0%B1%E8%B6%8A%E5%89%A7%E7%83%88%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/formula-formula-4.speech?text=%E9%80%9F%E5%BA%A6%E8%B6%8A%E6%8E%A5%E8%BF%91%E5%85%89%E9%80%9F%EF%BC%8C%E7%BA%A2%E7%A7%BB%E6%88%96%E8%93%9D%E7%A7%BB%E5%B0%B1%E8%B6%8A%E5%89%A7%E7%83%88%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "速度越接近光速，红移或蓝移就越剧烈。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%85%89%E6%BA%90%E9%80%9F%E5%BA%A6%E5%92%8C%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%EF%BC%8C%E8%A7%82%E5%AF%9F%E9%A2%9C%E8%89%B2%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%85%89%E6%BA%90%E9%80%9F%E5%BA%A6%E5%92%8C%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%EF%BC%8C%E8%A7%82%E5%AF%9F%E9%A2%9C%E8%89%B2%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "调节光源速度和运动方向，观察颜色变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%AF%94%E8%BE%83%E6%8E%A5%E8%BF%91%E6%97%B6%E7%9A%84%E8%93%9D%E7%A7%BB%E4%B8%8E%E8%BF%9C%E7%A6%BB%E6%97%B6%E7%9A%84%E7%BA%A2%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/interaction-interaction-2.speech?text=%E6%AF%94%E8%BE%83%E6%8E%A5%E8%BF%91%E6%97%B6%E7%9A%84%E8%93%9D%E7%A7%BB%E4%B8%8E%E8%BF%9C%E7%A6%BB%E6%97%B6%E7%9A%84%E7%BA%A2%E7%A7%BB%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "比较接近时的蓝移与远离时的红移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%8A%8A%E9%80%9F%E5%BA%A6%E6%8E%A8%E5%88%B0%E6%8E%A5%E8%BF%91%E5%85%89%E9%80%9F%EF%BC%8C%E7%9C%8B%E7%BA%A2%E7%A7%BB%E6%80%A5%E5%89%A7%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/interaction-interaction-3.speech?text=%E6%8A%8A%E9%80%9F%E5%BA%A6%E6%8E%A8%E5%88%B0%E6%8E%A5%E8%BF%91%E5%85%89%E9%80%9F%EF%BC%8C%E7%9C%8B%E7%BA%A2%E7%A7%BB%E6%80%A5%E5%89%A7%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "把速度推到接近光速，看红移急剧增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%AE%B6%E7%94%A8%E7%BA%A2%E7%A7%BB%E6%B5%8B%E9%87%8F%E6%81%92%E6%98%9F%E5%92%8C%E6%98%9F%E7%B3%BB%E7%9A%84%E9%80%80%E8%A1%8C%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/application-application-1.speech?text=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%AE%B6%E7%94%A8%E7%BA%A2%E7%A7%BB%E6%B5%8B%E9%87%8F%E6%81%92%E6%98%9F%E5%92%8C%E6%98%9F%E7%B3%BB%E7%9A%84%E9%80%80%E8%A1%8C%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "天文学家用红移测量恒星和星系的退行速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%87%E5%AE%99%E5%AD%A6%E7%BA%A2%E7%A7%BB%E6%8F%AD%E7%A4%BA%E4%BA%86%E5%AE%87%E5%AE%99%E7%9A%84%E8%86%A8%E8%83%80%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/application-application-2.speech?text=%E5%AE%87%E5%AE%99%E5%AD%A6%E7%BA%A2%E7%A7%BB%E6%8F%AD%E7%A4%BA%E4%BA%86%E5%AE%87%E5%AE%99%E7%9A%84%E8%86%A8%E8%83%80%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "宇宙学红移揭示了宇宙的膨胀。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%A8%AA%E5%90%91%E5%A4%9A%E6%99%AE%E5%8B%92%E5%AE%9E%E9%AA%8C%E7%9B%B4%E6%8E%A5%E9%AA%8C%E8%AF%81%E4%BA%86%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/application-application-3.speech?text=%E6%A8%AA%E5%90%91%E5%A4%9A%E6%99%AE%E5%8B%92%E5%AE%9E%E9%AA%8C%E7%9B%B4%E6%8E%A5%E9%AA%8C%E8%AF%81%E4%BA%86%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "横向多普勒实验直接验证了时间膨胀。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E4%BD%BF%E8%BF%90%E5%8A%A8%E5%85%89%E6%BA%90%E7%BA%A2%E7%A7%BB%E6%88%96%E8%93%9D%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/summary-summary-1.speech?text=%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%A4%9A%E6%99%AE%E5%8B%92%E6%95%88%E5%BA%94%E4%BD%BF%E8%BF%90%E5%8A%A8%E5%85%89%E6%BA%90%E7%BA%A2%E7%A7%BB%E6%88%96%E8%93%9D%E7%A7%BB%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "相对论多普勒效应使运动光源红移或蓝移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%AE%83%E5%9C%A8%E7%BB%8F%E5%85%B8%E6%95%88%E5%BA%94%E4%B9%8B%E5%A4%96%E8%BF%98%E5%8C%85%E5%90%AB%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E7%9A%84%E8%B4%A1%E7%8C%AE%E3%80%82",
+      "path": "audio/narrations/relativistic-doppler/summary-summary-2.speech?text=%E5%AE%83%E5%9C%A8%E7%BB%8F%E5%85%B8%E6%95%88%E5%BA%94%E4%B9%8B%E5%A4%96%E8%BF%98%E5%8C%85%E5%90%AB%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E7%9A%84%E8%B4%A1%E7%8C%AE%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "它在经典效应之外还包含时间膨胀的贡献。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "relativistic-doppler",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E6%98%AF%E6%B5%8B%E9%87%8F%E5%A4%A9%E4%BD%93%E9%80%9F%E5%BA%A6%E7%9A%84%E9%87%8D%E8%A6%81%E5%B7%A5%E5%85%B7%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/relativistic-doppler/summary-summary-3.speech?text=%E6%98%AF%E6%B5%8B%E9%87%8F%E5%A4%A9%E4%BD%93%E9%80%9F%E5%BA%A6%E7%9A%84%E9%87%8D%E8%A6%81%E5%B7%A5%E5%85%B7%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.56,
+      "size": 0,
+      "text": "是测量天体速度的重要工具。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

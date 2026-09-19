@@ -1,0 +1,229 @@
+{
+  "script_id": "bb84",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 122.22,
+  "files": [
+    {
+      "script_id": "bb84",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20BB84%20%E5%8D%8F%E8%AE%AE%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E6%96%B9%E6%A1%88%E3%80%82",
+      "path": "audio/narrations/bb84/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20BB84%20%E5%8D%8F%E8%AE%AE%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E6%96%B9%E6%A1%88%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "欢迎来到 BB84 协议——第一个量子密钥分发方案。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E8%AE%A9%E4%B8%A4%E4%B8%AA%E4%BA%BA%E5%85%B1%E4%BA%AB%E4%B8%80%E4%B8%B2%E5%8F%AA%E6%9C%89%E4%BB%96%E4%BB%AC%E7%9F%A5%E9%81%93%E7%9A%84%E5%AF%86%E9%92%A5%E3%80%82",
+      "path": "audio/narrations/bb84/intro-intro-2.speech?text=%E5%AE%83%E8%AE%A9%E4%B8%A4%E4%B8%AA%E4%BA%BA%E5%85%B1%E4%BA%AB%E4%B8%80%E4%B8%B2%E5%8F%AA%E6%9C%89%E4%BB%96%E4%BB%AC%E7%9F%A5%E9%81%93%E7%9A%84%E5%AF%86%E9%92%A5%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "它让两个人共享一串只有他们知道的密钥。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E6%9B%B4%E5%A6%99%E7%9A%84%E6%98%AF%EF%BC%8C%E4%BB%BB%E4%BD%95%E7%AA%83%E5%90%AC%E9%83%BD%E4%BC%9A%E8%A2%AB%E7%AB%8B%E5%88%BB%E5%8F%91%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/bb84/intro-intro-3.speech?text=%E6%9B%B4%E5%A6%99%E7%9A%84%E6%98%AF%EF%BC%8C%E4%BB%BB%E4%BD%95%E7%AA%83%E5%90%AC%E9%83%BD%E4%BC%9A%E8%A2%AB%E7%AB%8B%E5%88%BB%E5%8F%91%E7%8E%B0%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "更妙的是，任何窃听都会被立刻发现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%8F%91%E9%80%81%E6%96%B9%E7%94%A8%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%9F%BA%EF%BC%8C%E6%8A%8A%E6%AF%94%E7%89%B9%E7%BC%96%E7%A0%81%E5%88%B0%E5%85%89%E5%AD%90%E5%81%8F%E6%8C%AF%E4%B8%8A%E3%80%82",
+      "path": "audio/narrations/bb84/concept-concept-1.speech?text=%E5%8F%91%E9%80%81%E6%96%B9%E7%94%A8%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%9F%BA%EF%BC%8C%E6%8A%8A%E6%AF%94%E7%89%B9%E7%BC%96%E7%A0%81%E5%88%B0%E5%85%89%E5%AD%90%E5%81%8F%E6%8C%AF%E4%B8%8A%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "发送方用随机选择的两种基，把比特编码到光子偏振上。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%8E%A5%E6%94%B6%E6%96%B9%E4%B9%9F%E9%9A%8F%E6%9C%BA%E9%80%89%E5%9F%BA%E5%8E%BB%E6%B5%8B%E9%87%8F%E6%AF%8F%E4%B8%AA%E5%85%89%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/bb84/concept-concept-2.speech?text=%E6%8E%A5%E6%94%B6%E6%96%B9%E4%B9%9F%E9%9A%8F%E6%9C%BA%E9%80%89%E5%9F%BA%E5%8E%BB%E6%B5%8B%E9%87%8F%E6%AF%8F%E4%B8%AA%E5%85%89%E5%AD%90%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "接收方也随机选基去测量每个光子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E4%BA%8B%E5%90%8E%E5%8F%8C%E6%96%B9%E5%85%AC%E5%B8%83%E6%89%80%E7%94%A8%E7%9A%84%E5%9F%BA%EF%BC%8C%E5%8F%AA%E4%BF%9D%E7%95%99%E5%9F%BA%E7%9B%B8%E5%90%8C%E7%9A%84%E9%82%A3%E4%BA%9B%E6%AF%94%E7%89%B9%E3%80%82",
+      "path": "audio/narrations/bb84/concept-concept-3.speech?text=%E4%BA%8B%E5%90%8E%E5%8F%8C%E6%96%B9%E5%85%AC%E5%B8%83%E6%89%80%E7%94%A8%E7%9A%84%E5%9F%BA%EF%BC%8C%E5%8F%AA%E4%BF%9D%E7%95%99%E5%9F%BA%E7%9B%B8%E5%90%8C%E7%9A%84%E9%82%A3%E4%BA%9B%E6%AF%94%E7%89%B9%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "事后双方公布所用的基，只保留基相同的那些比特。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BF%99%E4%BA%9B%E4%BF%9D%E7%95%99%E4%B8%8B%E6%9D%A5%E7%9A%84%E6%AF%94%E7%89%B9%EF%BC%8C%E5%B0%B1%E6%9E%84%E6%88%90%E5%85%B1%E4%BA%AB%E5%AF%86%E9%92%A5%E3%80%82",
+      "path": "audio/narrations/bb84/concept-concept-4.speech?text=%E8%BF%99%E4%BA%9B%E4%BF%9D%E7%95%99%E4%B8%8B%E6%9D%A5%E7%9A%84%E6%AF%94%E7%89%B9%EF%BC%8C%E5%B0%B1%E6%9E%84%E6%88%90%E5%85%B1%E4%BA%AB%E5%AF%86%E9%92%A5%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "这些保留下来的比特，就构成共享密钥。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%9F%BA%E7%9B%B8%E5%90%8C%E6%97%B6%E7%BB%93%E6%9E%9C%E4%B8%80%E8%87%B4%EF%BC%8C%E5%9F%BA%E4%B8%8D%E5%90%8C%E6%97%B6%E7%BB%93%E6%9E%9C%E9%9A%8F%E6%9C%BA%E3%80%82",
+      "path": "audio/narrations/bb84/formula-formula-1.speech?text=%E5%9F%BA%E7%9B%B8%E5%90%8C%E6%97%B6%E7%BB%93%E6%9E%9C%E4%B8%80%E8%87%B4%EF%BC%8C%E5%9F%BA%E4%B8%8D%E5%90%8C%E6%97%B6%E7%BB%93%E6%9E%9C%E9%9A%8F%E6%9C%BA%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "基相同时结果一致，基不同时结果随机。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%8F%8C%E6%96%B9%E5%9F%BA%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A6%82%E7%8E%87%E7%BA%A6%E4%B8%BA%E4%B8%80%E5%8D%8A%E3%80%82",
+      "path": "audio/narrations/bb84/formula-formula-2.speech?text=%E5%8F%8C%E6%96%B9%E5%9F%BA%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A6%82%E7%8E%87%E7%BA%A6%E4%B8%BA%E4%B8%80%E5%8D%8A%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "双方基相同的概率约为一半。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%AA%83%E5%90%AC%E8%80%85%E6%B5%8B%E9%87%8F%E4%BC%9A%E6%89%B0%E5%8A%A8%E9%87%8F%E5%AD%90%E6%80%81%EF%BC%8C%E5%BC%95%E5%85%A5%E9%94%99%E8%AF%AF%E3%80%82",
+      "path": "audio/narrations/bb84/formula-formula-3.speech?text=%E7%AA%83%E5%90%AC%E8%80%85%E6%B5%8B%E9%87%8F%E4%BC%9A%E6%89%B0%E5%8A%A8%E9%87%8F%E5%AD%90%E6%80%81%EF%BC%8C%E5%BC%95%E5%85%A5%E9%94%99%E8%AF%AF%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "窃听者测量会扰动量子态，引入错误。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E9%80%9A%E8%BF%87%E6%AF%94%E5%AF%B9%E9%83%A8%E5%88%86%E5%AF%86%E9%92%A5%E7%9A%84%E9%94%99%E8%AF%AF%E7%8E%87%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AF%9F%E8%A7%89%E7%AA%83%E5%90%AC%E3%80%82",
+      "path": "audio/narrations/bb84/formula-formula-4.speech?text=%E9%80%9A%E8%BF%87%E6%AF%94%E5%AF%B9%E9%83%A8%E5%88%86%E5%AF%86%E9%92%A5%E7%9A%84%E9%94%99%E8%AF%AF%E7%8E%87%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AF%9F%E8%A7%89%E7%AA%83%E5%90%AC%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "通过比对部分密钥的错误率，就能察觉窃听。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E7%94%9F%E6%88%90%E4%B8%80%E8%BD%AE%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%8C%E6%96%B9%E7%9A%84%E5%9F%BA%E4%B8%8E%E6%AF%94%E7%89%B9%E3%80%82",
+      "path": "audio/narrations/bb84/interaction-interaction-1.speech?text=%E7%94%9F%E6%88%90%E4%B8%80%E8%BD%AE%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%8C%E6%96%B9%E7%9A%84%E5%9F%BA%E4%B8%8E%E6%AF%94%E7%89%B9%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "生成一轮密钥分发，观察双方的基与比特。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E7%9C%8B%E5%93%AA%E4%BA%9B%E4%BD%8D%E7%BD%AE%E5%9F%BA%E7%9B%B8%E5%90%8C%E3%80%81%E8%A2%AB%E4%BF%9D%E7%95%99%E4%B8%BA%E5%AF%86%E9%92%A5%E3%80%82",
+      "path": "audio/narrations/bb84/interaction-interaction-2.speech?text=%E7%9C%8B%E5%93%AA%E4%BA%9B%E4%BD%8D%E7%BD%AE%E5%9F%BA%E7%9B%B8%E5%90%8C%E3%80%81%E8%A2%AB%E4%BF%9D%E7%95%99%E4%B8%BA%E5%AF%86%E9%92%A5%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "看哪些位置基相同、被保留为密钥。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%BC%80%E5%90%AF%E7%AA%83%E5%90%AC%E8%80%85%EF%BC%8C%E8%A7%82%E5%AF%9F%E9%94%99%E8%AF%AF%E7%8E%87%E5%A6%82%E4%BD%95%E6%9A%B4%E9%9C%B2%E7%AA%83%E5%90%AC%E3%80%82",
+      "path": "audio/narrations/bb84/interaction-interaction-3.speech?text=%E5%BC%80%E5%90%AF%E7%AA%83%E5%90%AC%E8%80%85%EF%BC%8C%E8%A7%82%E5%AF%9F%E9%94%99%E8%AF%AF%E7%8E%87%E5%A6%82%E4%BD%95%E6%9A%B4%E9%9C%B2%E7%AA%83%E5%90%AC%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "开启窃听者，观察错误率如何暴露窃听。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=BB84%20%E6%98%AF%E7%8E%B0%E5%AE%9E%E9%87%8F%E5%AD%90%E4%BF%9D%E5%AF%86%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E5%8D%8F%E8%AE%AE%E3%80%82",
+      "path": "audio/narrations/bb84/application-application-1.speech?text=BB84%20%E6%98%AF%E7%8E%B0%E5%AE%9E%E9%87%8F%E5%AD%90%E4%BF%9D%E5%AF%86%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E5%8D%8F%E8%AE%AE%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "BB84 是现实量子保密通信的基础协议。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%88%91%E5%9B%BD%E5%A2%A8%E5%AD%90%E5%8F%B7%E5%8D%AB%E6%98%9F%E5%AE%9E%E7%8E%B0%E4%BA%86%E6%98%9F%E5%9C%B0%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E3%80%82",
+      "path": "audio/narrations/bb84/application-application-2.speech?text=%E6%88%91%E5%9B%BD%E5%A2%A8%E5%AD%90%E5%8F%B7%E5%8D%AB%E6%98%9F%E5%AE%9E%E7%8E%B0%E4%BA%86%E6%98%9F%E5%9C%B0%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "我国墨子号卫星实现了星地量子密钥分发。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E7%94%B1%E7%89%A9%E7%90%86%E5%AE%9A%E5%BE%8B%E8%80%8C%E9%9D%9E%E8%AE%A1%E7%AE%97%E9%9A%BE%E5%BA%A6%E4%BF%9D%E8%AF%81%E3%80%82",
+      "path": "audio/narrations/bb84/application-application-3.speech?text=%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E7%94%B1%E7%89%A9%E7%90%86%E5%AE%9A%E5%BE%8B%E8%80%8C%E9%9D%9E%E8%AE%A1%E7%AE%97%E9%9A%BE%E5%BA%A6%E4%BF%9D%E8%AF%81%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "量子密钥的安全性由物理定律而非计算难度保证。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=BB84%20%E7%94%A8%E9%9A%8F%E6%9C%BA%E5%9F%BA%E7%BC%96%E7%A0%81%E5%92%8C%E6%B5%8B%E9%87%8F%E5%85%89%E5%AD%90%E6%9D%A5%E5%88%86%E5%8F%91%E5%AF%86%E9%92%A5%E3%80%82",
+      "path": "audio/narrations/bb84/summary-summary-1.speech?text=BB84%20%E7%94%A8%E9%9A%8F%E6%9C%BA%E5%9F%BA%E7%BC%96%E7%A0%81%E5%92%8C%E6%B5%8B%E9%87%8F%E5%85%89%E5%AD%90%E6%9D%A5%E5%88%86%E5%8F%91%E5%AF%86%E9%92%A5%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "BB84 用随机基编码和测量光子来分发密钥。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%8F%AA%E4%BF%9D%E7%95%99%E5%9F%BA%E7%9B%B8%E5%90%8C%E7%9A%84%E6%AF%94%E7%89%B9%EF%BC%8C%E7%AA%83%E5%90%AC%E4%BC%9A%E5%BC%95%E5%85%A5%E5%8F%AF%E5%AF%9F%E8%A7%89%E7%9A%84%E9%94%99%E8%AF%AF%E3%80%82",
+      "path": "audio/narrations/bb84/summary-summary-2.speech?text=%E5%8F%AA%E4%BF%9D%E7%95%99%E5%9F%BA%E7%9B%B8%E5%90%8C%E7%9A%84%E6%AF%94%E7%89%B9%EF%BC%8C%E7%AA%83%E5%90%AC%E4%BC%9A%E5%BC%95%E5%85%A5%E5%8F%AF%E5%AF%9F%E8%A7%89%E7%9A%84%E9%94%99%E8%AF%AF%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "只保留基相同的比特，窃听会引入可察觉的错误。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "bb84",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E7%94%B1%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6%E4%BF%9D%E8%AF%81%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/bb84/summary-summary-3.speech?text=%E5%AE%83%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E7%94%B1%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6%E4%BF%9D%E8%AF%81%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.56,
+      "size": 0,
+      "text": "它的安全性由量子力学保证。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

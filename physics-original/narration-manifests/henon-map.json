@@ -1,0 +1,229 @@
+{
+  "script_id": "henon-map",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 133.18,
+  "files": [
+    {
+      "script_id": "henon-map",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%EF%BC%81%E5%8F%AA%E7%94%A8%E4%B8%A4%E4%B8%AA%E7%AE%80%E5%8D%95%E5%85%AC%E5%BC%8F%E5%8F%8D%E5%A4%8D%E8%BF%AD%E4%BB%A3%EF%BC%8C%E7%AB%9F%E8%83%BD%E7%94%BB%E5%87%BA%E7%B2%BE%E5%A6%99%E7%9A%84%E5%9B%BE%E6%A1%88%E3%80%82",
+      "path": "audio/narrations/henon-map/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%EF%BC%81%E5%8F%AA%E7%94%A8%E4%B8%A4%E4%B8%AA%E7%AE%80%E5%8D%95%E5%85%AC%E5%BC%8F%E5%8F%8D%E5%A4%8D%E8%BF%AD%E4%BB%A3%EF%BC%8C%E7%AB%9F%E8%83%BD%E7%94%BB%E5%87%BA%E7%B2%BE%E5%A6%99%E7%9A%84%E5%9B%BE%E6%A1%88%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "欢迎来到埃农映射！只用两个简单公式反复迭代，竟能画出精妙的图案。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E7%82%B9%E4%B8%8D%E4%BC%9A%E5%A1%AB%E6%BB%A1%E5%B9%B3%E9%9D%A2%EF%BC%8C%E8%80%8C%E6%98%AF%E8%81%9A%E6%88%90%E4%B8%80%E6%9D%A1%E5%8D%B7%E6%9B%B2%E7%9A%84%E7%BB%86%E5%B8%A6%E3%80%82",
+      "path": "audio/narrations/henon-map/intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E7%82%B9%E4%B8%8D%E4%BC%9A%E5%A1%AB%E6%BB%A1%E5%B9%B3%E9%9D%A2%EF%BC%8C%E8%80%8C%E6%98%AF%E8%81%9A%E6%88%90%E4%B8%80%E6%9D%A1%E5%8D%B7%E6%9B%B2%E7%9A%84%E7%BB%86%E5%B8%A6%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "这些点不会填满平面，而是聚成一条卷曲的细带。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%AE%83%E5%8F%AB%E5%A5%87%E5%BC%82%E5%90%B8%E5%BC%95%E5%AD%90%EF%BC%8C%E6%98%AF%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%E7%9A%84%E7%BB%8F%E5%85%B8%E4%BB%A3%E8%A1%A8%E3%80%82",
+      "path": "audio/narrations/henon-map/intro-intro-3.speech?text=%E5%AE%83%E5%8F%AB%E5%A5%87%E5%BC%82%E5%90%B8%E5%BC%95%E5%AD%90%EF%BC%8C%E6%98%AF%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%E7%9A%84%E7%BB%8F%E5%85%B8%E4%BB%A3%E8%A1%A8%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "它叫奇异吸引子，是确定性混沌的经典代表。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E6%98%AF%E4%B8%80%E4%B8%AA%E7%A6%BB%E6%95%A3%E5%8A%A8%E5%8A%9B%E7%B3%BB%E7%BB%9F%EF%BC%8C%E6%AF%8F%E4%B8%80%E6%AD%A5%E7%94%B1%E4%B8%8A%E4%B8%80%E6%AD%A5%E7%AE%97%E5%87%BA%E4%B8%8B%E4%B8%80%E6%AD%A5%E3%80%82",
+      "path": "audio/narrations/henon-map/concept-concept-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E6%98%AF%E4%B8%80%E4%B8%AA%E7%A6%BB%E6%95%A3%E5%8A%A8%E5%8A%9B%E7%B3%BB%E7%BB%9F%EF%BC%8C%E6%AF%8F%E4%B8%80%E6%AD%A5%E7%94%B1%E4%B8%8A%E4%B8%80%E6%AD%A5%E7%AE%97%E5%87%BA%E4%B8%8B%E4%B8%80%E6%AD%A5%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "埃农映射是一个离散动力系统，每一步由上一步算出下一步。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E4%B8%8D%E8%AE%BA%E4%BB%8E%E5%93%AA%E4%B8%AA%E5%88%9D%E5%A7%8B%E7%82%B9%E5%87%BA%E5%8F%91%EF%BC%8C%E8%BF%AD%E4%BB%A3%E5%90%8E%E9%83%BD%E4%BC%9A%E8%90%BD%E5%88%B0%E5%90%8C%E4%B8%80%E4%B8%AA%E5%90%B8%E5%BC%95%E5%AD%90%E4%B8%8A%E3%80%82",
+      "path": "audio/narrations/henon-map/concept-concept-2.speech?text=%E4%B8%8D%E8%AE%BA%E4%BB%8E%E5%93%AA%E4%B8%AA%E5%88%9D%E5%A7%8B%E7%82%B9%E5%87%BA%E5%8F%91%EF%BC%8C%E8%BF%AD%E4%BB%A3%E5%90%8E%E9%83%BD%E4%BC%9A%E8%90%BD%E5%88%B0%E5%90%8C%E4%B8%80%E4%B8%AA%E5%90%B8%E5%BC%95%E5%AD%90%E4%B8%8A%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "不论从哪个初始点出发，迭代后都会落到同一个吸引子上。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%94%BE%E5%A4%A7%E5%90%B8%E5%BC%95%E5%AD%90%EF%BC%8C%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%97%A0%E7%A9%B7%E5%B5%8C%E5%A5%97%E7%9A%84%E5%B1%82%E7%8A%B6%E7%BB%93%E6%9E%84%EF%BC%8C%E8%BF%99%E6%98%AF%E5%88%86%E5%BD%A2%E3%80%82",
+      "path": "audio/narrations/henon-map/concept-concept-3.speech?text=%E6%94%BE%E5%A4%A7%E5%90%B8%E5%BC%95%E5%AD%90%EF%BC%8C%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%97%A0%E7%A9%B7%E5%B5%8C%E5%A5%97%E7%9A%84%E5%B1%82%E7%8A%B6%E7%BB%93%E6%9E%84%EF%BC%8C%E8%BF%99%E6%98%AF%E5%88%86%E5%BD%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "放大吸引子，会看到无穷嵌套的层状结构，这是分形。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E7%B3%BB%E7%BB%9F%E5%AE%8C%E5%85%A8%E7%A1%AE%E5%AE%9A%EF%BC%8C%E5%8D%B4%E5%AF%B9%E5%88%9D%E5%80%BC%E6%9E%81%E5%85%B6%E6%95%8F%E6%84%9F%EF%BC%8C%E4%BD%93%E7%8E%B0%E4%BA%86%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "path": "audio/narrations/henon-map/concept-concept-4.speech?text=%E7%B3%BB%E7%BB%9F%E5%AE%8C%E5%85%A8%E7%A1%AE%E5%AE%9A%EF%BC%8C%E5%8D%B4%E5%AF%B9%E5%88%9D%E5%80%BC%E6%9E%81%E5%85%B6%E6%95%8F%E6%84%9F%EF%BC%8C%E4%BD%93%E7%8E%B0%E4%BA%86%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "系统完全确定，却对初值极其敏感，体现了混沌。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%85%AC%E5%BC%8F%E5%A6%82%E4%B8%8B%E3%80%82",
+      "path": "audio/narrations/henon-map/formula-formula-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%85%AC%E5%BC%8F%E5%A6%82%E4%B8%8B%E3%80%82",
+      "duration": 3.75,
+      "size": 0,
+      "text": "埃农映射的迭代公式如下。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%88%86%E9%87%8F%E5%8F%AA%E6%98%AF%E5%AF%B9%E5%89%8D%E4%B8%80%E4%B8%AA%20x%20%E7%9A%84%E7%BC%A9%E6%94%BE%E3%80%82",
+      "path": "audio/narrations/henon-map/formula-formula-2.speech?text=%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%88%86%E9%87%8F%E5%8F%AA%E6%98%AF%E5%AF%B9%E5%89%8D%E4%B8%80%E4%B8%AA%20x%20%E7%9A%84%E7%BC%A9%E6%94%BE%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "第二个分量只是对前一个 x 的缩放。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%BB%8F%E5%85%B8%E5%8F%82%E6%95%B0%E5%8F%96%20a%3D1.4%E3%80%81b%3D0.3%EF%BC%8C%E4%BA%A7%E7%94%9F%E8%91%97%E5%90%8D%E7%9A%84%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/henon-map/formula-formula-3.speech?text=%E7%BB%8F%E5%85%B8%E5%8F%82%E6%95%B0%E5%8F%96%20a%3D1.4%E3%80%81b%3D0.3%EF%BC%8C%E4%BA%A7%E7%94%9F%E8%91%97%E5%90%8D%E7%9A%84%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "经典参数取 a=1.4、b=0.3，产生著名的吸引子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E6%94%B9%E5%8F%98%E5%8F%82%E6%95%B0%EF%BC%8C%E5%90%B8%E5%BC%95%E5%AD%90%E4%BC%9A%E5%9C%A8%E6%9C%89%E5%BA%8F%E4%B8%8E%E6%B7%B7%E6%B2%8C%E4%B9%8B%E9%97%B4%E5%88%87%E6%8D%A2%E3%80%82",
+      "path": "audio/narrations/henon-map/formula-formula-4.speech?text=%E6%94%B9%E5%8F%98%E5%8F%82%E6%95%B0%EF%BC%8C%E5%90%B8%E5%BC%95%E5%AD%90%E4%BC%9A%E5%9C%A8%E6%9C%89%E5%BA%8F%E4%B8%8E%E6%B7%B7%E6%B2%8C%E4%B9%8B%E9%97%B4%E5%88%87%E6%8D%A2%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "改变参数，吸引子会在有序与混沌之间切换。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%8F%82%E6%95%B0%20a%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%90%B8%E5%BC%95%E5%AD%90%E5%BD%A2%E7%8A%B6%E7%9A%84%E5%89%A7%E7%83%88%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/henon-map/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%8F%82%E6%95%B0%20a%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%90%B8%E5%BC%95%E5%AD%90%E5%BD%A2%E7%8A%B6%E7%9A%84%E5%89%A7%E7%83%88%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "调节参数 a，观察吸引子形状的剧烈变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%8F%82%E6%95%B0%20b%EF%BC%8C%E7%9C%8B%E5%90%B8%E5%BC%95%E5%AD%90%E7%9A%84%E6%8B%89%E4%BC%B8%E4%B8%8E%E6%8A%98%E5%8F%A0%E3%80%82",
+      "path": "audio/narrations/henon-map/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%8F%82%E6%95%B0%20b%EF%BC%8C%E7%9C%8B%E5%90%B8%E5%BC%95%E5%AD%90%E7%9A%84%E6%8B%89%E4%BC%B8%E4%B8%8E%E6%8A%98%E5%8F%A0%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "改变参数 b，看吸引子的拉伸与折叠。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%9C%A8%E7%BB%8F%E5%85%B8%E5%80%BC%E9%99%84%E8%BF%91%EF%BC%8C%E6%AC%A3%E8%B5%8F%E9%82%A3%E6%9D%A1%E6%A0%87%E5%BF%97%E6%80%A7%E7%9A%84%E5%BC%AF%E6%9C%88%E5%BD%A2%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/henon-map/interaction-interaction-3.speech?text=%E5%9C%A8%E7%BB%8F%E5%85%B8%E5%80%BC%E9%99%84%E8%BF%91%EF%BC%8C%E6%AC%A3%E8%B5%8F%E9%82%A3%E6%9D%A1%E6%A0%87%E5%BF%97%E6%80%A7%E7%9A%84%E5%BC%AF%E6%9C%88%E5%BD%A2%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "在经典值附近，欣赏那条标志性的弯月形吸引子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E4%B8%8E%E5%88%86%E5%BD%A2%E7%9A%84%E6%A0%87%E5%87%86%E6%A8%A1%E5%9E%8B%E3%80%82",
+      "path": "audio/narrations/henon-map/application-application-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E4%B8%8E%E5%88%86%E5%BD%A2%E7%9A%84%E6%A0%87%E5%87%86%E6%A8%A1%E5%9E%8B%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "埃农映射是研究混沌与分形的标准模型。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E5%B8%AE%E5%8A%A9%E7%A7%91%E5%AD%A6%E5%AE%B6%E7%90%86%E8%A7%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%95%BF%E6%9C%9F%E8%A1%8C%E4%B8%BA%E3%80%82",
+      "path": "audio/narrations/henon-map/application-application-2.speech?text=%E5%AE%83%E5%B8%AE%E5%8A%A9%E7%A7%91%E5%AD%A6%E5%AE%B6%E7%90%86%E8%A7%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%95%BF%E6%9C%9F%E8%A1%8C%E4%B8%BA%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "它帮助科学家理解非线性系统的长期行为。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%B1%BB%E4%BC%BC%E7%9A%84%E8%BF%AD%E4%BB%A3%E6%80%9D%E6%83%B3%E4%B9%9F%E7%94%A8%E4%BA%8E%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%B8%8E%E5%8A%A0%E5%AF%86%E3%80%82",
+      "path": "audio/narrations/henon-map/application-application-3.speech?text=%E7%B1%BB%E4%BC%BC%E7%9A%84%E8%BF%AD%E4%BB%A3%E6%80%9D%E6%83%B3%E4%B9%9F%E7%94%A8%E4%BA%8E%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%B8%8E%E5%8A%A0%E5%AF%86%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "类似的迭代思想也用于伪随机数与加密。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E7%94%A8%E4%B8%A4%E4%B8%AA%E7%AE%80%E5%8D%95%E5%85%AC%E5%BC%8F%E8%BF%AD%E4%BB%A3%E5%87%BA%E5%A5%87%E5%BC%82%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/henon-map/summary-summary-1.speech?text=%E5%9F%83%E5%86%9C%E6%98%A0%E5%B0%84%E7%94%A8%E4%B8%A4%E4%B8%AA%E7%AE%80%E5%8D%95%E5%85%AC%E5%BC%8F%E8%BF%AD%E4%BB%A3%E5%87%BA%E5%A5%87%E5%BC%82%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "埃农映射用两个简单公式迭代出奇异吸引子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%90%B8%E5%BC%95%E5%AD%90%E5%85%B7%E6%9C%89%E5%88%86%E5%BD%A2%E7%BB%93%E6%9E%84%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%98%AF%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "path": "audio/narrations/henon-map/summary-summary-2.speech?text=%E5%90%B8%E5%BC%95%E5%AD%90%E5%85%B7%E6%9C%89%E5%88%86%E5%BD%A2%E7%BB%93%E6%9E%84%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%98%AF%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "吸引子具有分形结构，系统是确定性混沌。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "henon-map",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%8A%A8%E5%8A%9B%E5%AD%A6%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/henon-map/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%8A%A8%E5%8A%9B%E5%AD%A6%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它是非线性动力学的经典范例。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

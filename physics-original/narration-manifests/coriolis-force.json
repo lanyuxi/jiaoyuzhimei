@@ -1,0 +1,229 @@
+{
+  "script_id": "coriolis-force",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 131.28,
+  "files": [
+    {
+      "script_id": "coriolis-force",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%AE%A4%E8%AF%86%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%EF%BC%81%E5%AE%83%E6%98%AF%E4%B8%80%E7%A7%8D%E5%8F%AA%E5%9C%A8%E6%97%8B%E8%BD%AC%E4%B8%96%E7%95%8C%E9%87%8C%E6%89%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E5%A5%87%E7%89%B9%E7%9A%84%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/coriolis-force/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%AE%A4%E8%AF%86%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%EF%BC%81%E5%AE%83%E6%98%AF%E4%B8%80%E7%A7%8D%E5%8F%AA%E5%9C%A8%E6%97%8B%E8%BD%AC%E4%B8%96%E7%95%8C%E9%87%8C%E6%89%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E5%A5%87%E7%89%B9%E7%9A%84%E5%8A%9B%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "欢迎认识科里奥利力！它是一种只在旋转世界里才出现的奇特的力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%9C%A8%E6%97%8B%E8%BD%AC%E7%9A%84%E5%9C%86%E7%9B%98%E4%B8%8A%E7%9B%B4%E7%BA%BF%E6%8A%95%E7%90%83%EF%BC%8C%E7%90%83%E5%8D%B4%E4%BC%9A%E7%A5%9E%E7%A7%98%E5%9C%B0%E6%8B%90%E5%BC%AF%E3%80%82",
+      "path": "audio/narrations/coriolis-force/intro-intro-2.speech?text=%E5%9C%A8%E6%97%8B%E8%BD%AC%E7%9A%84%E5%9C%86%E7%9B%98%E4%B8%8A%E7%9B%B4%E7%BA%BF%E6%8A%95%E7%90%83%EF%BC%8C%E7%90%83%E5%8D%B4%E4%BC%9A%E7%A5%9E%E7%A7%98%E5%9C%B0%E6%8B%90%E5%BC%AF%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "在旋转的圆盘上直线投球，球却会神秘地拐弯。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%9C%B0%E7%90%83%E6%9C%AC%E8%BA%AB%E5%B0%B1%E6%98%AF%E4%B8%80%E4%B8%AA%E6%97%8B%E8%BD%AC%E7%9A%84%E5%9C%86%E7%9B%98%EF%BC%8C%E8%BF%99%E8%82%A1%E5%8A%9B%E5%A1%91%E9%80%A0%E4%BA%86%E9%A3%8E%E6%9A%B4%E5%92%8C%E6%B4%8B%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/coriolis-force/intro-intro-3.speech?text=%E5%9C%B0%E7%90%83%E6%9C%AC%E8%BA%AB%E5%B0%B1%E6%98%AF%E4%B8%80%E4%B8%AA%E6%97%8B%E8%BD%AC%E7%9A%84%E5%9C%86%E7%9B%98%EF%BC%8C%E8%BF%99%E8%82%A1%E5%8A%9B%E5%A1%91%E9%80%A0%E4%BA%86%E9%A3%8E%E6%9A%B4%E5%92%8C%E6%B4%8B%E6%B5%81%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "地球本身就是一个旋转的圆盘，这股力塑造了风暴和洋流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%E4%B8%8D%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84%E5%8A%9B%EF%BC%8C%E8%80%8C%E6%98%AF%E6%97%8B%E8%BD%AC%E5%8F%82%E8%80%83%E7%B3%BB%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%83%AF%E6%80%A7%E6%95%88%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/coriolis-force/concept-concept-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%E4%B8%8D%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84%E5%8A%9B%EF%BC%8C%E8%80%8C%E6%98%AF%E6%97%8B%E8%BD%AC%E5%8F%82%E8%80%83%E7%B3%BB%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%83%AF%E6%80%A7%E6%95%88%E5%BA%94%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "科里奥利力不是真实的力，而是旋转参考系带来的惯性效应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%9C%A8%E6%97%8B%E8%BD%AC%E5%9C%86%E7%9B%98%E4%B8%8A%E7%9C%8B%EF%BC%8C%E5%8C%80%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%E7%9A%84%E7%89%A9%E4%BD%93%E4%BC%9A%E5%81%8F%E7%A6%BB%E7%9B%B4%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/coriolis-force/concept-concept-2.speech?text=%E5%9C%A8%E6%97%8B%E8%BD%AC%E5%9C%86%E7%9B%98%E4%B8%8A%E7%9C%8B%EF%BC%8C%E5%8C%80%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8%E7%9A%84%E7%89%A9%E4%BD%93%E4%BC%9A%E5%81%8F%E7%A6%BB%E7%9B%B4%E7%BA%BF%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "在旋转圆盘上看，匀速直线运动的物体会偏离直线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%8C%97%E5%8D%8A%E7%90%83%E5%90%91%E5%8F%B3%E5%81%8F%EF%BC%8C%E5%8D%97%E5%8D%8A%E7%90%83%E5%90%91%E5%B7%A6%E5%81%8F%EF%BC%8C%E6%96%B9%E5%90%91%E7%94%B1%E8%87%AA%E8%BD%AC%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/coriolis-force/concept-concept-3.speech?text=%E5%8C%97%E5%8D%8A%E7%90%83%E5%90%91%E5%8F%B3%E5%81%8F%EF%BC%8C%E5%8D%97%E5%8D%8A%E7%90%83%E5%90%91%E5%B7%A6%E5%81%8F%EF%BC%8C%E6%96%B9%E5%90%91%E7%94%B1%E8%87%AA%E8%BD%AC%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "北半球向右偏，南半球向左偏，方向由自转决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%AE%83%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%89%A9%E4%BD%93%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E5%8F%AA%E6%94%B9%E5%8F%98%E6%96%B9%E5%90%91%EF%BC%8C%E4%B8%8D%E6%94%B9%E5%8F%98%E9%80%9F%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/coriolis-force/concept-concept-4.speech?text=%E5%AE%83%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%89%A9%E4%BD%93%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E5%8F%AA%E6%94%B9%E5%8F%98%E6%96%B9%E5%90%91%EF%BC%8C%E4%B8%8D%E6%94%B9%E5%8F%98%E9%80%9F%E7%8E%87%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它垂直于物体的速度，只改变方向，不改变速率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%A0%E9%80%9F%E5%BA%A6%E7%AD%89%E4%BA%8E%E4%BA%8C%E5%80%8D%E8%A7%92%E9%80%9F%E5%BA%A6%E5%8F%89%E4%B9%98%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/coriolis-force/formula-formula-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%A0%E9%80%9F%E5%BA%A6%E7%AD%89%E4%BA%8E%E4%BA%8C%E5%80%8D%E8%A7%92%E9%80%9F%E5%BA%A6%E5%8F%89%E4%B9%98%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "科里奥利加速度等于二倍角速度叉乘速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E8%A7%92%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%A4%A7%E3%80%81%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%BF%AB%EF%BC%8C%E5%81%8F%E8%BD%AC%E5%B0%B1%E8%B6%8A%E6%98%8E%E6%98%BE%E3%80%82",
+      "path": "audio/narrations/coriolis-force/formula-formula-2.speech?text=%E8%A7%92%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%A4%A7%E3%80%81%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%BF%AB%EF%BC%8C%E5%81%8F%E8%BD%AC%E5%B0%B1%E8%B6%8A%E6%98%8E%E6%98%BE%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "角速度越大、速度越快，偏转就越明显。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%9B%A0%E4%B8%BA%E5%8A%9B%E5%A7%8B%E7%BB%88%E5%9E%82%E7%9B%B4%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%89%80%E4%BB%A5%E8%BD%A8%E8%BF%B9%E5%BC%AF%E6%88%90%E5%BC%A7%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/coriolis-force/formula-formula-3.speech?text=%E5%9B%A0%E4%B8%BA%E5%8A%9B%E5%A7%8B%E7%BB%88%E5%9E%82%E7%9B%B4%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%89%80%E4%BB%A5%E8%BD%A8%E8%BF%B9%E5%BC%AF%E6%88%90%E5%BC%A7%E7%BA%BF%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "因为力始终垂直速度，所以轨迹弯成弧线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%AE%83%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%B8%8E%E7%89%A9%E4%BD%93%E8%B4%A8%E9%87%8F%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/coriolis-force/formula-formula-4.speech?text=%E5%AE%83%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%B8%8E%E7%89%A9%E4%BD%93%E8%B4%A8%E9%87%8F%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "它的大小与物体质量成正比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%9C%86%E7%9B%98%E8%BD%AC%E9%80%9F%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%90%83%E7%9A%84%E5%81%8F%E8%BD%AC%E5%BC%A7%E5%BA%A6%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/coriolis-force/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%9C%86%E7%9B%98%E8%BD%AC%E9%80%9F%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%90%83%E7%9A%84%E5%81%8F%E8%BD%AC%E5%BC%A7%E5%BA%A6%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "调节圆盘转速，观察球的偏转弧度变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E7%90%83%E7%9A%84%E5%88%9D%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%9C%8B%E8%BD%A8%E8%BF%B9%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E5%BC%AF%E6%9B%B2%E3%80%82",
+      "path": "audio/narrations/coriolis-force/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E7%90%83%E7%9A%84%E5%88%9D%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%9C%8B%E8%BD%A8%E8%BF%B9%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E5%BC%AF%E6%9B%B2%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "改变球的初速度，看轨迹如何随之弯曲。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%88%87%E6%8D%A2%E6%97%8B%E8%BD%AC%E6%96%B9%E5%90%91%EF%BC%8C%E4%BD%93%E4%BC%9A%E5%81%8F%E8%BD%AC%E6%96%B9%E5%90%91%E7%9A%84%E5%8F%8D%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/coriolis-force/interaction-interaction-3.speech?text=%E5%88%87%E6%8D%A2%E6%97%8B%E8%BD%AC%E6%96%B9%E5%90%91%EF%BC%8C%E4%BD%93%E4%BC%9A%E5%81%8F%E8%BD%AC%E6%96%B9%E5%90%91%E7%9A%84%E5%8F%8D%E8%BD%AC%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "切换旋转方向，体会偏转方向的反转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%E8%AE%A9%E5%8C%97%E5%8D%8A%E7%90%83%E7%9A%84%E6%B0%94%E6%97%8B%E9%80%86%E6%97%B6%E9%92%88%E6%97%8B%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/coriolis-force/application-application-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%E8%AE%A9%E5%8C%97%E5%8D%8A%E7%90%83%E7%9A%84%E6%B0%94%E6%97%8B%E9%80%86%E6%97%B6%E9%92%88%E6%97%8B%E8%BD%AC%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "科里奥利力让北半球的气旋逆时针旋转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E5%BD%B1%E5%93%8D%E6%B4%8B%E6%B5%81%E3%80%81%E4%BF%A1%E9%A3%8E%EF%BC%8C%E4%B9%83%E8%87%B3%E8%BF%9C%E7%A8%8B%E7%82%AE%E5%BC%B9%E7%9A%84%E5%BC%B9%E9%81%93%E4%BF%AE%E6%AD%A3%E3%80%82",
+      "path": "audio/narrations/coriolis-force/application-application-2.speech?text=%E5%AE%83%E5%BD%B1%E5%93%8D%E6%B4%8B%E6%B5%81%E3%80%81%E4%BF%A1%E9%A3%8E%EF%BC%8C%E4%B9%83%E8%87%B3%E8%BF%9C%E7%A8%8B%E7%82%AE%E5%BC%B9%E7%9A%84%E5%BC%B9%E9%81%93%E4%BF%AE%E6%AD%A3%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "它影响洋流、信风，乃至远程炮弹的弹道修正。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%82%85%E7%A7%91%E6%91%86%E7%9A%84%E7%BC%93%E6%85%A2%E8%BD%AC%E5%8A%A8%EF%BC%8C%E6%AD%A3%E6%98%AF%E5%9C%B0%E7%90%83%E8%87%AA%E8%BD%AC%E7%9A%84%E7%9B%B4%E6%8E%A5%E8%AF%81%E6%8D%AE%E3%80%82",
+      "path": "audio/narrations/coriolis-force/application-application-3.speech?text=%E5%82%85%E7%A7%91%E6%91%86%E7%9A%84%E7%BC%93%E6%85%A2%E8%BD%AC%E5%8A%A8%EF%BC%8C%E6%AD%A3%E6%98%AF%E5%9C%B0%E7%90%83%E8%87%AA%E8%BD%AC%E7%9A%84%E7%9B%B4%E6%8E%A5%E8%AF%81%E6%8D%AE%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "傅科摆的缓慢转动，正是地球自转的直接证据。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%E6%98%AF%E6%97%8B%E8%BD%AC%E5%8F%82%E8%80%83%E7%B3%BB%E4%B8%AD%E7%9A%84%E6%83%AF%E6%80%A7%E5%8A%9B%EF%BC%8C%E4%BD%BF%E8%BF%90%E5%8A%A8%E7%89%A9%E4%BD%93%E5%81%8F%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/coriolis-force/summary-summary-1.speech?text=%E7%A7%91%E9%87%8C%E5%A5%A5%E5%88%A9%E5%8A%9B%E6%98%AF%E6%97%8B%E8%BD%AC%E5%8F%82%E8%80%83%E7%B3%BB%E4%B8%AD%E7%9A%84%E6%83%AF%E6%80%A7%E5%8A%9B%EF%BC%8C%E4%BD%BF%E8%BF%90%E5%8A%A8%E7%89%A9%E4%BD%93%E5%81%8F%E8%BD%AC%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "科里奥利力是旋转参考系中的惯性力，使运动物体偏转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%8C%97%E5%8D%8A%E7%90%83%E5%8F%B3%E5%81%8F%E3%80%81%E5%8D%97%E5%8D%8A%E7%90%83%E5%B7%A6%E5%81%8F%EF%BC%8CaC%3D-2%CF%89%C3%97v%E3%80%82",
+      "path": "audio/narrations/coriolis-force/summary-summary-2.speech?text=%E5%8C%97%E5%8D%8A%E7%90%83%E5%8F%B3%E5%81%8F%E3%80%81%E5%8D%97%E5%8D%8A%E7%90%83%E5%B7%A6%E5%81%8F%EF%BC%8CaC%3D-2%CF%89%C3%97v%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "北半球右偏、南半球左偏，aC=-2ω×v。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "coriolis-force",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E5%A1%91%E9%80%A0%E4%BA%86%E5%9C%B0%E7%90%83%E7%9A%84%E5%A4%A9%E6%B0%94%E4%B8%8E%E6%B4%8B%E6%B5%81%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/coriolis-force/summary-summary-3.speech?text=%E5%AE%83%E5%A1%91%E9%80%A0%E4%BA%86%E5%9C%B0%E7%90%83%E7%9A%84%E5%A4%A9%E6%B0%94%E4%B8%8E%E6%B4%8B%E6%B5%81%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.56,
+      "size": 0,
+      "text": "它塑造了地球的天气与洋流。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

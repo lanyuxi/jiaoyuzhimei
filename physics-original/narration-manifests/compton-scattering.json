@@ -1,0 +1,229 @@
+{
+  "script_id": "compton-scattering",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 165.33,
+  "files": [
+    {
+      "script_id": "compton-scattering",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E5%AE%9E%E9%AA%8C%EF%BC%811923%20%E5%B9%B4%EF%BC%8C%E5%BA%B7%E6%99%AE%E9%A1%BF%E7%94%A8%20X%20%E5%B0%84%E7%BA%BF%E7%85%A7%E5%B0%84%E7%9F%B3%E5%A2%A8%EF%BC%8C%E6%9C%89%E4%BA%86%E6%83%8A%E4%BA%BA%E5%8F%91%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/compton-scattering/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E5%AE%9E%E9%AA%8C%EF%BC%811923%20%E5%B9%B4%EF%BC%8C%E5%BA%B7%E6%99%AE%E9%A1%BF%E7%94%A8%20X%20%E5%B0%84%E7%BA%BF%E7%85%A7%E5%B0%84%E7%9F%B3%E5%A2%A8%EF%BC%8C%E6%9C%89%E4%BA%86%E6%83%8A%E4%BA%BA%E5%8F%91%E7%8E%B0%E3%80%82",
+      "duration": 12.5,
+      "size": 0,
+      "text": "欢迎来到康普顿散射实验！1923 年，康普顿用 X 射线照射石墨，有了惊人发现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E6%95%A3%E5%B0%84%E5%90%8E%E7%9A%84%20X%20%E5%B0%84%E7%BA%BF%EF%BC%8C%E6%B3%A2%E9%95%BF%E7%AB%9F%E7%84%B6%E5%8F%98%E9%95%BF%E4%BA%86%EF%BC%8C%E8%80%8C%E4%B8%94%E5%8F%98%E9%95%BF%E7%9A%84%E5%A4%9A%E5%B0%91%E5%8F%AA%E4%B8%8E%E6%95%A3%E5%B0%84%E8%A7%92%E6%9C%89%E5%85%B3%E3%80%82",
+      "path": "audio/narrations/compton-scattering/intro-intro-2.speech?text=%E6%95%A3%E5%B0%84%E5%90%8E%E7%9A%84%20X%20%E5%B0%84%E7%BA%BF%EF%BC%8C%E6%B3%A2%E9%95%BF%E7%AB%9F%E7%84%B6%E5%8F%98%E9%95%BF%E4%BA%86%EF%BC%8C%E8%80%8C%E4%B8%94%E5%8F%98%E9%95%BF%E7%9A%84%E5%A4%9A%E5%B0%91%E5%8F%AA%E4%B8%8E%E6%95%A3%E5%B0%84%E8%A7%92%E6%9C%89%E5%85%B3%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "散射后的 X 射线，波长竟然变长了，而且变长的多少只与散射角有关。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E7%BB%8F%E5%85%B8%E6%B3%A2%E5%8A%A8%E7%90%86%E8%AE%BA%E6%97%A0%E6%B3%95%E8%A7%A3%E9%87%8A%EF%BC%8C%E4%BD%86%E5%A6%82%E6%9E%9C%E6%8A%8A%E5%85%89%E5%BD%93%E4%BD%9C%E7%B2%92%E5%AD%90%EF%BC%8C%E4%B8%80%E5%88%87%E5%B0%B1%E8%BF%8E%E5%88%83%E8%80%8C%E8%A7%A3%E3%80%82",
+      "path": "audio/narrations/compton-scattering/intro-intro-3.speech?text=%E7%BB%8F%E5%85%B8%E6%B3%A2%E5%8A%A8%E7%90%86%E8%AE%BA%E6%97%A0%E6%B3%95%E8%A7%A3%E9%87%8A%EF%BC%8C%E4%BD%86%E5%A6%82%E6%9E%9C%E6%8A%8A%E5%85%89%E5%BD%93%E4%BD%9C%E7%B2%92%E5%AD%90%EF%BC%8C%E4%B8%80%E5%88%87%E5%B0%B1%E8%BF%8E%E5%88%83%E8%80%8C%E8%A7%A3%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "经典波动理论无法解释，但如果把光当作粒子，一切就迎刃而解。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%8A%8A%20X%20%E5%B0%84%E7%BA%BF%E5%85%89%E5%AD%90%E7%9C%8B%E4%BD%9C%E6%90%BA%E5%B8%A6%E8%83%BD%E9%87%8F%E5%92%8C%E5%8A%A8%E9%87%8F%E7%9A%84%E7%B2%92%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/compton-scattering/concept-concept-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%8A%8A%20X%20%E5%B0%84%E7%BA%BF%E5%85%89%E5%AD%90%E7%9C%8B%E4%BD%9C%E6%90%BA%E5%B8%A6%E8%83%BD%E9%87%8F%E5%92%8C%E5%8A%A8%E9%87%8F%E7%9A%84%E7%B2%92%E5%AD%90%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "康普顿把 X 射线光子看作携带能量和动量的粒子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%85%89%E5%AD%90%E4%B8%8E%E7%94%B5%E5%AD%90%E5%8F%91%E7%94%9F%E5%BC%B9%E6%80%A7%E7%A2%B0%E6%92%9E%EF%BC%8C%E5%B0%B1%E5%83%8F%E4%B8%A4%E4%B8%AA%E5%8F%B0%E7%90%83%E7%9B%B8%E6%92%9E%E3%80%82",
+      "path": "audio/narrations/compton-scattering/concept-concept-2.speech?text=%E5%85%89%E5%AD%90%E4%B8%8E%E7%94%B5%E5%AD%90%E5%8F%91%E7%94%9F%E5%BC%B9%E6%80%A7%E7%A2%B0%E6%92%9E%EF%BC%8C%E5%B0%B1%E5%83%8F%E4%B8%A4%E4%B8%AA%E5%8F%B0%E7%90%83%E7%9B%B8%E6%92%9E%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "光子与电子发生弹性碰撞，就像两个台球相撞。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%85%89%E5%AD%90%E6%8A%8A%E4%B8%80%E9%83%A8%E5%88%86%E8%83%BD%E9%87%8F%E5%92%8C%E5%8A%A8%E9%87%8F%E4%BC%A0%E7%BB%99%E7%94%B5%E5%AD%90%EF%BC%8C%E8%87%AA%E5%B7%B1%E7%9A%84%E8%83%BD%E9%87%8F%E5%87%8F%E5%B0%8F%E3%80%82",
+      "path": "audio/narrations/compton-scattering/concept-concept-3.speech?text=%E5%85%89%E5%AD%90%E6%8A%8A%E4%B8%80%E9%83%A8%E5%88%86%E8%83%BD%E9%87%8F%E5%92%8C%E5%8A%A8%E9%87%8F%E4%BC%A0%E7%BB%99%E7%94%B5%E5%AD%90%EF%BC%8C%E8%87%AA%E5%B7%B1%E7%9A%84%E8%83%BD%E9%87%8F%E5%87%8F%E5%B0%8F%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "光子把一部分能量和动量传给电子，自己的能量减小。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%83%BD%E9%87%8F%E5%87%8F%E5%B0%8F%E6%84%8F%E5%91%B3%E7%9D%80%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%E3%80%81%E6%B3%A2%E9%95%BF%E5%8F%98%E9%95%BF%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E5%BA%B7%E6%99%AE%E9%A1%BF%E4%BD%8D%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/compton-scattering/concept-concept-4.speech?text=%E8%83%BD%E9%87%8F%E5%87%8F%E5%B0%8F%E6%84%8F%E5%91%B3%E7%9D%80%E9%A2%91%E7%8E%87%E9%99%8D%E4%BD%8E%E3%80%81%E6%B3%A2%E9%95%BF%E5%8F%98%E9%95%BF%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E5%BA%B7%E6%99%AE%E9%A1%BF%E4%BD%8D%E7%A7%BB%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "能量减小意味着频率降低、波长变长，这就是康普顿位移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E7%BB%99%E5%87%BA%E6%B3%A2%E9%95%BF%E7%9A%84%E5%A2%9E%E5%8A%A0%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/compton-scattering/formula-formula-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E7%BB%99%E5%87%BA%E6%B3%A2%E9%95%BF%E7%9A%84%E5%A2%9E%E5%8A%A0%E9%87%8F%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "康普顿位移公式给出波长的增加量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20h%20%E6%AF%94%20m_e%20c%20%E7%A7%B0%E4%B8%BA%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%B3%A2%E9%95%BF%EF%BC%8C%E7%BA%A6%E7%AD%89%E4%BA%8E%202.43%20%E7%9A%AE%E7%B1%B3%E3%80%82",
+      "path": "audio/narrations/compton-scattering/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20h%20%E6%AF%94%20m_e%20c%20%E7%A7%B0%E4%B8%BA%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%B3%A2%E9%95%BF%EF%BC%8C%E7%BA%A6%E7%AD%89%E4%BA%8E%202.43%20%E7%9A%AE%E7%B1%B3%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "其中 h 比 m_e c 称为康普顿波长，约等于 2.43 皮米。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%95%A3%E5%B0%84%E8%A7%92%20%CE%B8%20%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%B3%A2%E9%95%BF%E5%A2%9E%E5%8A%A0%E8%B6%8A%E5%A4%9A%EF%BC%9B%E6%95%A3%E5%B0%84%E8%A7%92%E4%B8%BA%E9%9B%B6%E6%97%B6%E6%B3%A2%E9%95%BF%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/compton-scattering/formula-formula-3.speech?text=%E6%95%A3%E5%B0%84%E8%A7%92%20%CE%B8%20%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%B3%A2%E9%95%BF%E5%A2%9E%E5%8A%A0%E8%B6%8A%E5%A4%9A%EF%BC%9B%E6%95%A3%E5%B0%84%E8%A7%92%E4%B8%BA%E9%9B%B6%E6%97%B6%E6%B3%A2%E9%95%BF%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "散射角 θ 越大，波长增加越多；散射角为零时波长不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%BD%93%E6%95%A3%E5%B0%84%E8%A7%92%E4%B8%BA%20180%20%E5%BA%A6%E6%97%B6%EF%BC%8C%E6%B3%A2%E9%95%BF%E5%A2%9E%E5%8A%A0%E8%BE%BE%E5%88%B0%E6%9C%80%E5%A4%A7%EF%BC%8C%E7%AD%89%E4%BA%8E%E4%B8%A4%E5%80%8D%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%B3%A2%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/compton-scattering/formula-formula-4.speech?text=%E5%BD%93%E6%95%A3%E5%B0%84%E8%A7%92%E4%B8%BA%20180%20%E5%BA%A6%E6%97%B6%EF%BC%8C%E6%B3%A2%E9%95%BF%E5%A2%9E%E5%8A%A0%E8%BE%BE%E5%88%B0%E6%9C%80%E5%A4%A7%EF%BC%8C%E7%AD%89%E4%BA%8E%E4%B8%A4%E5%80%8D%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%B3%A2%E9%95%BF%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "当散射角为 180 度时，波长增加达到最大，等于两倍康普顿波长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%95%A3%E5%B0%84%E8%A7%92%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%95%A3%E5%B0%84%E5%85%89%E5%AD%90%E7%9A%84%E6%B3%A2%E9%95%BF%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E5%A2%9E%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/compton-scattering/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%95%A3%E5%B0%84%E8%A7%92%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%95%A3%E5%B0%84%E5%85%89%E5%AD%90%E7%9A%84%E6%B3%A2%E9%95%BF%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E5%A2%9E%E5%8A%A0%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "调整散射角，观察散射光子的波长如何随之增加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%90%8C%E6%97%B6%E6%B3%A8%E6%84%8F%E5%8F%8D%E5%86%B2%E7%94%B5%E5%AD%90%E9%A3%9E%E5%87%BA%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%8C%E5%AE%83%E5%B8%A6%E8%B5%B0%E4%BA%86%E5%85%89%E5%AD%90%E5%A4%B1%E5%8E%BB%E7%9A%84%E5%8A%A8%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/compton-scattering/interaction-interaction-2.speech?text=%E5%90%8C%E6%97%B6%E6%B3%A8%E6%84%8F%E5%8F%8D%E5%86%B2%E7%94%B5%E5%AD%90%E9%A3%9E%E5%87%BA%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%8C%E5%AE%83%E5%B8%A6%E8%B5%B0%E4%BA%86%E5%85%89%E5%AD%90%E5%A4%B1%E5%8E%BB%E7%9A%84%E5%8A%A8%E9%87%8F%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "同时注意反冲电子飞出的方向，它带走了光子失去的动量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E5%85%A5%E5%B0%84%E5%85%89%E5%AD%90%E7%9A%84%E6%B3%A2%E9%95%BF%EF%BC%8C%E7%9C%8B%E5%BA%B7%E6%99%AE%E9%A1%BF%E4%BD%8D%E7%A7%BB%E5%8D%A0%E6%AF%94%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/compton-scattering/interaction-interaction-3.speech?text=%E6%94%B9%E5%8F%98%E5%85%A5%E5%B0%84%E5%85%89%E5%AD%90%E7%9A%84%E6%B3%A2%E9%95%BF%EF%BC%8C%E7%9C%8B%E5%BA%B7%E6%99%AE%E9%A1%BF%E4%BD%8D%E7%A7%BB%E5%8D%A0%E6%AF%94%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "改变入射光子的波长，看康普顿位移占比的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E6%98%AF%E7%A1%AE%E8%AE%A4%E5%85%89%E5%AD%90%E7%B2%92%E5%AD%90%E6%80%A7%E7%9A%84%E5%85%B3%E9%94%AE%E5%AE%9E%E9%AA%8C%EF%BC%8C%E8%AE%A9%E5%BA%B7%E6%99%AE%E9%A1%BF%E8%8E%B7%E5%BE%97%E8%AF%BA%E8%B4%9D%E5%B0%94%E5%A5%96%E3%80%82",
+      "path": "audio/narrations/compton-scattering/application-application-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E6%98%AF%E7%A1%AE%E8%AE%A4%E5%85%89%E5%AD%90%E7%B2%92%E5%AD%90%E6%80%A7%E7%9A%84%E5%85%B3%E9%94%AE%E5%AE%9E%E9%AA%8C%EF%BC%8C%E8%AE%A9%E5%BA%B7%E6%99%AE%E9%A1%BF%E8%8E%B7%E5%BE%97%E8%AF%BA%E8%B4%9D%E5%B0%94%E5%A5%96%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "康普顿散射是确认光子粒子性的关键实验，让康普顿获得诺贝尔奖。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E5%9C%A8%E4%BC%BD%E9%A9%AC%E5%B0%84%E7%BA%BF%E6%8E%A2%E6%B5%8B%E5%92%8C%E5%8C%BB%E5%AD%A6%E5%BD%B1%E5%83%8F%E4%B8%AD%E6%9C%89%E9%87%8D%E8%A6%81%E5%BA%94%E7%94%A8%E3%80%82",
+      "path": "audio/narrations/compton-scattering/application-application-2.speech?text=%E5%AE%83%E5%9C%A8%E4%BC%BD%E9%A9%AC%E5%B0%84%E7%BA%BF%E6%8E%A2%E6%B5%8B%E5%92%8C%E5%8C%BB%E5%AD%A6%E5%BD%B1%E5%83%8F%E4%B8%AD%E6%9C%89%E9%87%8D%E8%A6%81%E5%BA%94%E7%94%A8%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "它在伽马射线探测和医学影像中有重要应用。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%A4%A9%E4%BD%93%E7%89%A9%E7%90%86%E4%B8%AD%EF%BC%8C%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E5%B8%AE%E5%8A%A9%E6%88%91%E4%BB%AC%E7%90%86%E8%A7%A3%E9%AB%98%E8%83%BD%E5%AE%87%E5%AE%99%E5%B0%84%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/compton-scattering/application-application-3.speech?text=%E5%A4%A9%E4%BD%93%E7%89%A9%E7%90%86%E4%B8%AD%EF%BC%8C%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E5%B8%AE%E5%8A%A9%E6%88%91%E4%BB%AC%E7%90%86%E8%A7%A3%E9%AB%98%E8%83%BD%E5%AE%87%E5%AE%99%E5%B0%84%E7%BA%BF%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "天体物理中，康普顿散射帮助我们理解高能宇宙射线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E6%98%AF%E5%85%89%E5%AD%90%E4%B8%8E%E7%94%B5%E5%AD%90%E7%9A%84%E5%BC%B9%E6%80%A7%E7%A2%B0%E6%92%9E%EF%BC%8C%E6%95%A3%E5%B0%84%E5%85%89%E6%B3%A2%E9%95%BF%E5%8F%98%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/compton-scattering/summary-summary-1.speech?text=%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84%E6%98%AF%E5%85%89%E5%AD%90%E4%B8%8E%E7%94%B5%E5%AD%90%E7%9A%84%E5%BC%B9%E6%80%A7%E7%A2%B0%E6%92%9E%EF%BC%8C%E6%95%A3%E5%B0%84%E5%85%89%E6%B3%A2%E9%95%BF%E5%8F%98%E9%95%BF%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "康普顿散射是光子与电子的弹性碰撞，散射光波长变长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%B3%A2%E9%95%BF%E5%A2%9E%E9%87%8F%E7%AD%89%E4%BA%8E%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%B3%A2%E9%95%BF%E4%B9%98%E4%BB%A5%E6%8B%AC%E5%8F%B7%E4%B8%80%E5%87%8F%20cos%CE%B8%E3%80%82",
+      "path": "audio/narrations/compton-scattering/summary-summary-2.speech?text=%E6%B3%A2%E9%95%BF%E5%A2%9E%E9%87%8F%E7%AD%89%E4%BA%8E%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%B3%A2%E9%95%BF%E4%B9%98%E4%BB%A5%E6%8B%AC%E5%8F%B7%E4%B8%80%E5%87%8F%20cos%CE%B8%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "波长增量等于康普顿波长乘以括号一减 cosθ。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "compton-scattering",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%E6%9C%89%E5%8A%9B%E8%AF%81%E6%98%8E%E4%BA%86%E5%85%89%E7%9A%84%E7%B2%92%E5%AD%90%E6%80%A7%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%90%86%E8%A7%A3%E5%85%89%E5%AD%90%E5%A6%82%E4%BD%95%E5%83%8F%E7%B2%92%E5%AD%90%E8%88%AC%E7%A2%B0%E6%92%9E%EF%BC%81",
+      "path": "audio/narrations/compton-scattering/summary-summary-3.speech?text=%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%E6%9C%89%E5%8A%9B%E8%AF%81%E6%98%8E%E4%BA%86%E5%85%89%E7%9A%84%E7%B2%92%E5%AD%90%E6%80%A7%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%90%86%E8%A7%A3%E5%85%89%E5%AD%90%E5%A6%82%E4%BD%95%E5%83%8F%E7%B2%92%E5%AD%90%E8%88%AC%E7%A2%B0%E6%92%9E%EF%BC%81",
+      "duration": 10,
+      "size": 0,
+      "text": "这个实验有力证明了光的粒子性。希望你已理解光子如何像粒子般碰撞！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

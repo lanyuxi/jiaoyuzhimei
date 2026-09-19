@@ -1,0 +1,229 @@
+{
+  "script_id": "ampere-force",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 145.35,
+  "files": [
+    {
+      "script_id": "ampere-force",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%AE%89%E5%9F%B9%E5%8A%9B%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%8A%8A%E4%B8%80%E6%A0%B9%E9%80%9A%E7%94%B5%E5%AF%BC%E7%BA%BF%E6%94%BE%E8%BF%9B%E7%A3%81%E5%9C%BA%EF%BC%8C%E5%AE%83%E7%AB%9F%E7%84%B6%E4%BC%9A%E8%A2%AB%E6%8E%A8%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/ampere-force/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%AE%89%E5%9F%B9%E5%8A%9B%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%8A%8A%E4%B8%80%E6%A0%B9%E9%80%9A%E7%94%B5%E5%AF%BC%E7%BA%BF%E6%94%BE%E8%BF%9B%E7%A3%81%E5%9C%BA%EF%BC%8C%E5%AE%83%E7%AB%9F%E7%84%B6%E4%BC%9A%E8%A2%AB%E6%8E%A8%E5%8A%A8%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "欢迎来到安培力实验！把一根通电导线放进磁场，它竟然会被推动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%99%E4%B8%AA%E7%9C%8B%E4%B8%8D%E8%A7%81%E7%9A%84%E5%8A%9B%EF%BC%8C%E6%AD%A3%E6%98%AF%E7%94%B5%E5%8A%A8%E6%9C%BA%E8%83%BD%E5%A4%9F%E8%BD%AC%E5%8A%A8%E7%9A%84%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0%E3%80%82",
+      "path": "audio/narrations/ampere-force/intro-intro-2.speech?text=%E8%BF%99%E4%B8%AA%E7%9C%8B%E4%B8%8D%E8%A7%81%E7%9A%84%E5%8A%9B%EF%BC%8C%E6%AD%A3%E6%98%AF%E7%94%B5%E5%8A%A8%E6%9C%BA%E8%83%BD%E5%A4%9F%E8%BD%AC%E5%8A%A8%E7%9A%84%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "这个看不见的力，正是电动机能够转动的根本原因。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E9%80%9A%E7%94%B5%E5%AF%BC%E7%BA%BF%E5%9C%A8%E7%A3%81%E5%9C%BA%E4%B8%AD%E5%8F%97%E5%8A%9B%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/ampere-force/intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E9%80%9A%E7%94%B5%E5%AF%BC%E7%BA%BF%E5%9C%A8%E7%A3%81%E5%9C%BA%E4%B8%AD%E5%8F%97%E5%8A%9B%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "今天我们就来探索通电导线在磁场中受力的规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%94%B5%E6%B5%81%E6%98%AF%E5%A4%A7%E9%87%8F%E7%94%B5%E8%8D%B7%E7%9A%84%E5%AE%9A%E5%90%91%E7%A7%BB%E5%8A%A8%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%94%B5%E8%8D%B7%E5%9C%A8%E7%A3%81%E5%9C%BA%E4%B8%AD%E9%83%BD%E5%8F%97%E5%88%B0%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/ampere-force/concept-concept-1.speech?text=%E7%94%B5%E6%B5%81%E6%98%AF%E5%A4%A7%E9%87%8F%E7%94%B5%E8%8D%B7%E7%9A%84%E5%AE%9A%E5%90%91%E7%A7%BB%E5%8A%A8%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%94%B5%E8%8D%B7%E5%9C%A8%E7%A3%81%E5%9C%BA%E4%B8%AD%E9%83%BD%E5%8F%97%E5%88%B0%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%8A%9B%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "电流是大量电荷的定向移动，每个电荷在磁场中都受到洛伦兹力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BF%99%E4%BA%9B%E5%8A%9B%E7%9A%84%E6%80%BB%E5%92%8C%EF%BC%8C%E5%B0%B1%E8%A1%A8%E7%8E%B0%E4%B8%BA%E6%95%B4%E6%A0%B9%E5%AF%BC%E7%BA%BF%E5%8F%97%E5%88%B0%E7%9A%84%E5%AE%89%E5%9F%B9%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/ampere-force/concept-concept-2.speech?text=%E8%BF%99%E4%BA%9B%E5%8A%9B%E7%9A%84%E6%80%BB%E5%92%8C%EF%BC%8C%E5%B0%B1%E8%A1%A8%E7%8E%B0%E4%B8%BA%E6%95%B4%E6%A0%B9%E5%AF%BC%E7%BA%BF%E5%8F%97%E5%88%B0%E7%9A%84%E5%AE%89%E5%9F%B9%E5%8A%9B%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "这些力的总和，就表现为整根导线受到的安培力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%AE%89%E5%9F%B9%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%8C%E6%97%A2%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%94%B5%E6%B5%81%EF%BC%8C%E5%8F%88%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%A3%81%E5%9C%BA%E3%80%82",
+      "path": "audio/narrations/ampere-force/concept-concept-3.speech?text=%E5%AE%89%E5%9F%B9%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%8C%E6%97%A2%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%94%B5%E6%B5%81%EF%BC%8C%E5%8F%88%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%A3%81%E5%9C%BA%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "安培力的方向，既垂直于电流，又垂直于磁场。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%88%91%E4%BB%AC%E7%94%A8%E5%B7%A6%E6%89%8B%E5%AE%9A%E5%88%99%E6%9D%A5%E5%88%A4%E6%96%AD%E5%AE%83%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/ampere-force/concept-concept-4.speech?text=%E6%88%91%E4%BB%AC%E7%94%A8%E5%B7%A6%E6%89%8B%E5%AE%9A%E5%88%99%E6%9D%A5%E5%88%A4%E6%96%AD%E5%AE%83%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "我们用左手定则来判断它的方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%AE%89%E5%9F%B9%E5%8A%9B%E7%9A%84%E5%A4%A7%E5%B0%8F%E7%94%B1%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E7%BB%99%E5%87%BA%E3%80%82",
+      "path": "audio/narrations/ampere-force/formula-formula-1.speech?text=%E5%AE%89%E5%9F%B9%E5%8A%9B%E7%9A%84%E5%A4%A7%E5%B0%8F%E7%94%B1%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E7%BB%99%E5%87%BA%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "安培力的大小由这个公式给出。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20B%20%E6%98%AF%E7%A3%81%E6%84%9F%E5%BA%94%E5%BC%BA%E5%BA%A6%EF%BC%8CI%20%E6%98%AF%E7%94%B5%E6%B5%81%EF%BC%8CL%20%E6%98%AF%E5%AF%BC%E7%BA%BF%E9%95%BF%E5%BA%A6%EF%BC%8C%CE%B8%20%E6%98%AF%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E7%9A%84%E5%A4%B9%E8%A7%92%E3%80%82",
+      "path": "audio/narrations/ampere-force/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20B%20%E6%98%AF%E7%A3%81%E6%84%9F%E5%BA%94%E5%BC%BA%E5%BA%A6%EF%BC%8CI%20%E6%98%AF%E7%94%B5%E6%B5%81%EF%BC%8CL%20%E6%98%AF%E5%AF%BC%E7%BA%BF%E9%95%BF%E5%BA%A6%EF%BC%8C%CE%B8%20%E6%98%AF%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E7%9A%84%E5%A4%B9%E8%A7%92%E3%80%82",
+      "duration": 11.88,
+      "size": 0,
+      "text": "其中 B 是磁感应强度，I 是电流，L 是导线长度，θ 是电流与磁场的夹角。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%BD%93%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E5%9E%82%E7%9B%B4%E6%97%B6%EF%BC%8C%CE%B8%20%E4%B8%BA%2090%20%E5%BA%A6%EF%BC%8C%E5%8F%97%E5%8A%9B%E6%9C%80%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/ampere-force/formula-formula-3.speech?text=%E5%BD%93%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E5%9E%82%E7%9B%B4%E6%97%B6%EF%BC%8C%CE%B8%20%E4%B8%BA%2090%20%E5%BA%A6%EF%BC%8C%E5%8F%97%E5%8A%9B%E6%9C%80%E5%A4%A7%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "当电流与磁场垂直时，θ 为 90 度，受力最大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%BD%93%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E5%B9%B3%E8%A1%8C%E6%97%B6%EF%BC%8C%CE%B8%20%E4%B8%BA%E9%9B%B6%EF%BC%8C%E5%AE%89%E5%9F%B9%E5%8A%9B%E4%B8%BA%E9%9B%B6%E3%80%82",
+      "path": "audio/narrations/ampere-force/formula-formula-4.speech?text=%E5%BD%93%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E5%B9%B3%E8%A1%8C%E6%97%B6%EF%BC%8C%CE%B8%20%E4%B8%BA%E9%9B%B6%EF%BC%8C%E5%AE%89%E5%9F%B9%E5%8A%9B%E4%B8%BA%E9%9B%B6%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "当电流与磁场平行时，θ 为零，安培力为零。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E7%94%B5%E6%B5%81%E5%A4%A7%E5%B0%8F%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%89%E5%9F%B9%E5%8A%9B%E5%A6%82%E4%BD%95%E6%88%90%E6%AD%A3%E6%AF%94%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/ampere-force/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E7%94%B5%E6%B5%81%E5%A4%A7%E5%B0%8F%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%89%E5%9F%B9%E5%8A%9B%E5%A6%82%E4%BD%95%E6%88%90%E6%AD%A3%E6%AF%94%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "调整电流大小，观察安培力如何成正比变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E7%9A%84%E5%A4%B9%E8%A7%92%EF%BC%8C%E7%9C%8B%E5%8F%97%E5%8A%9B%E6%8C%89%E6%AD%A3%E5%BC%A6%E8%A7%84%E5%BE%8B%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/ampere-force/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E7%9A%84%E5%A4%B9%E8%A7%92%EF%BC%8C%E7%9C%8B%E5%8F%97%E5%8A%9B%E6%8C%89%E6%AD%A3%E5%BC%A6%E8%A7%84%E5%BE%8B%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "改变电流与磁场的夹角，看受力按正弦规律变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%E5%A7%8B%E7%BB%88%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%94%B5%E6%B5%81%E5%92%8C%E7%A3%81%E5%9C%BA%E6%89%80%E5%9C%A8%E7%9A%84%E5%B9%B3%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/ampere-force/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%E5%A7%8B%E7%BB%88%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%94%B5%E6%B5%81%E5%92%8C%E7%A3%81%E5%9C%BA%E6%89%80%E5%9C%A8%E7%9A%84%E5%B9%B3%E9%9D%A2%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "注意力的方向始终垂直于电流和磁场所在的平面。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E7%94%B5%E5%8A%A8%E6%9C%BA%E5%88%A9%E7%94%A8%E5%AE%89%E5%9F%B9%E5%8A%9B%E8%AE%A9%E7%BA%BF%E5%9C%88%E6%8C%81%E7%BB%AD%E8%BD%AC%E5%8A%A8%EF%BC%8C%E6%8A%8A%E7%94%B5%E8%83%BD%E5%8F%98%E6%88%90%E6%9C%BA%E6%A2%B0%E8%83%BD%E3%80%82",
+      "path": "audio/narrations/ampere-force/application-application-1.speech?text=%E7%94%B5%E5%8A%A8%E6%9C%BA%E5%88%A9%E7%94%A8%E5%AE%89%E5%9F%B9%E5%8A%9B%E8%AE%A9%E7%BA%BF%E5%9C%88%E6%8C%81%E7%BB%AD%E8%BD%AC%E5%8A%A8%EF%BC%8C%E6%8A%8A%E7%94%B5%E8%83%BD%E5%8F%98%E6%88%90%E6%9C%BA%E6%A2%B0%E8%83%BD%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "电动机利用安培力让线圈持续转动，把电能变成机械能。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%89%AC%E5%A3%B0%E5%99%A8%E9%9D%A0%E5%AE%89%E5%9F%B9%E5%8A%9B%E6%8E%A8%E5%8A%A8%E7%BA%B8%E7%9B%86%E6%8C%AF%E5%8A%A8%E5%8F%91%E5%A3%B0%E3%80%82",
+      "path": "audio/narrations/ampere-force/application-application-2.speech?text=%E6%89%AC%E5%A3%B0%E5%99%A8%E9%9D%A0%E5%AE%89%E5%9F%B9%E5%8A%9B%E6%8E%A8%E5%8A%A8%E7%BA%B8%E7%9B%86%E6%8C%AF%E5%8A%A8%E5%8F%91%E5%A3%B0%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "扬声器靠安培力推动纸盆振动发声。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%A3%81%E6%82%AC%E6%B5%AE%E5%88%97%E8%BD%A6%E5%92%8C%E7%94%B5%E7%A3%81%E7%82%AE%E4%B9%9F%E9%83%BD%E6%98%AF%E5%AE%89%E5%9F%B9%E5%8A%9B%E7%9A%84%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BA%94%E7%94%A8%E3%80%82",
+      "path": "audio/narrations/ampere-force/application-application-3.speech?text=%E7%A3%81%E6%82%AC%E6%B5%AE%E5%88%97%E8%BD%A6%E5%92%8C%E7%94%B5%E7%A3%81%E7%82%AE%E4%B9%9F%E9%83%BD%E6%98%AF%E5%AE%89%E5%9F%B9%E5%8A%9B%E7%9A%84%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BA%94%E7%94%A8%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "磁悬浮列车和电磁炮也都是安培力的大规模应用。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E9%80%9A%E7%94%B5%E5%AF%BC%E7%BA%BF%E5%9C%A8%E7%A3%81%E5%9C%BA%E4%B8%AD%E5%8F%97%E5%88%B0%E5%AE%89%E5%9F%B9%E5%8A%9B%EF%BC%8C%E5%A4%A7%E5%B0%8F%E4%B8%BA%20F%20%E7%AD%89%E4%BA%8E%20BIL%20sin%CE%B8%E3%80%82",
+      "path": "audio/narrations/ampere-force/summary-summary-1.speech?text=%E9%80%9A%E7%94%B5%E5%AF%BC%E7%BA%BF%E5%9C%A8%E7%A3%81%E5%9C%BA%E4%B8%AD%E5%8F%97%E5%88%B0%E5%AE%89%E5%9F%B9%E5%8A%9B%EF%BC%8C%E5%A4%A7%E5%B0%8F%E4%B8%BA%20F%20%E7%AD%89%E4%BA%8E%20BIL%20sin%CE%B8%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "通电导线在磁场中受到安培力，大小为 F 等于 BIL sinθ。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%96%B9%E5%90%91%E7%94%A8%E5%B7%A6%E6%89%8B%E5%AE%9A%E5%88%99%E5%88%A4%E6%96%AD%EF%BC%8C%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E3%80%82",
+      "path": "audio/narrations/ampere-force/summary-summary-2.speech?text=%E6%96%B9%E5%90%91%E7%94%A8%E5%B7%A6%E6%89%8B%E5%AE%9A%E5%88%99%E5%88%A4%E6%96%AD%EF%BC%8C%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%94%B5%E6%B5%81%E4%B8%8E%E7%A3%81%E5%9C%BA%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "方向用左手定则判断，垂直于电流与磁场。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ampere-force",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E7%94%B5%E5%8A%A8%E6%9C%BA%E5%88%B0%E6%89%AC%E5%A3%B0%E5%99%A8%EF%BC%8C%E5%AE%89%E5%9F%B9%E5%8A%9B%E9%A9%B1%E5%8A%A8%E7%9D%80%E7%8E%B0%E4%BB%A3%E4%B8%96%E7%95%8C%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/ampere-force/summary-summary-3.speech?text=%E4%BB%8E%E7%94%B5%E5%8A%A8%E6%9C%BA%E5%88%B0%E6%89%AC%E5%A3%B0%E5%99%A8%EF%BC%8C%E5%AE%89%E5%9F%B9%E5%8A%9B%E9%A9%B1%E5%8A%A8%E7%9D%80%E7%8E%B0%E4%BB%A3%E4%B8%96%E7%95%8C%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 8.75,
+      "size": 0,
+      "text": "从电动机到扬声器，安培力驱动着现代世界。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

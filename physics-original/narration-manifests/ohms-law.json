@@ -1,0 +1,174 @@
+{
+  "script_id": "ohms-law",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 100.95,
+  "files": [
+    {
+      "script_id": "ohms-law",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%BF%99%E6%98%AF%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90%E6%9C%80%E5%9F%BA%E7%A1%80%E4%B9%9F%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/ohms-law/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%BF%99%E6%98%AF%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90%E6%9C%80%E5%9F%BA%E7%A1%80%E4%B9%9F%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "欢迎来到欧姆定律实验！这是电路分析最基础也最重要的规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%93%9D%E8%89%B2%E7%9A%84%E5%B0%8F%E7%82%B9%E4%BB%A3%E8%A1%A8%E6%B5%81%E5%8A%A8%E7%9A%84%E7%94%B5%E6%B5%81%EF%BC%8C%E9%BB%84%E8%89%B2%E7%AC%A6%E5%8F%B7%E6%98%AF%E7%94%B5%E6%BA%90%E3%80%82",
+      "path": "audio/narrations/ohms-law/intro-intro-2.speech?text=%E8%93%9D%E8%89%B2%E7%9A%84%E5%B0%8F%E7%82%B9%E4%BB%A3%E8%A1%A8%E6%B5%81%E5%8A%A8%E7%9A%84%E7%94%B5%E6%B5%81%EF%BC%8C%E9%BB%84%E8%89%B2%E7%AC%A6%E5%8F%B7%E6%98%AF%E7%94%B5%E6%BA%90%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "蓝色的小点代表流动的电流，黄色符号是电源。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%EF%BC%9A%E5%AF%BC%E4%BD%93%E4%B8%A4%E7%AB%AF%E7%94%B5%E5%8E%8B%E7%AD%89%E4%BA%8E%E7%94%B5%E6%B5%81%E4%B9%98%E4%BB%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "path": "audio/narrations/ohms-law/concept-concept-1.speech?text=%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%EF%BC%9A%E5%AF%BC%E4%BD%93%E4%B8%A4%E7%AB%AF%E7%94%B5%E5%8E%8B%E7%AD%89%E4%BA%8E%E7%94%B5%E6%B5%81%E4%B9%98%E4%BB%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "欧姆定律告诉我们：导体两端电压等于电流乘以电阻。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E4%B8%B2%E8%81%94%E7%94%B5%E8%B7%AF%E4%B8%AD%EF%BC%8C%E7%94%B5%E6%B5%81%E5%A4%84%E5%A4%84%E7%9B%B8%E7%AD%89%EF%BC%8C%E7%94%B5%E5%8E%8B%E6%8C%89%E7%94%B5%E9%98%BB%E5%A4%A7%E5%B0%8F%E5%88%86%E9%85%8D%E3%80%82",
+      "path": "audio/narrations/ohms-law/concept-concept-2.speech?text=%E4%B8%B2%E8%81%94%E7%94%B5%E8%B7%AF%E4%B8%AD%EF%BC%8C%E7%94%B5%E6%B5%81%E5%A4%84%E5%A4%84%E7%9B%B8%E7%AD%89%EF%BC%8C%E7%94%B5%E5%8E%8B%E6%8C%89%E7%94%B5%E9%98%BB%E5%A4%A7%E5%B0%8F%E5%88%86%E9%85%8D%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "串联电路中，电流处处相等，电压按电阻大小分配。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%B9%B6%E8%81%94%E7%94%B5%E8%B7%AF%E4%B8%AD%EF%BC%8C%E5%90%84%E6%94%AF%E8%B7%AF%E7%94%B5%E5%8E%8B%E7%9B%B8%E5%90%8C%EF%BC%8C%E7%94%B5%E6%B5%81%E6%8C%89%E7%94%B5%E9%98%BB%E6%88%90%E5%8F%8D%E6%AF%94%E5%88%86%E9%85%8D%E3%80%82",
+      "path": "audio/narrations/ohms-law/concept-concept-3.speech?text=%E5%B9%B6%E8%81%94%E7%94%B5%E8%B7%AF%E4%B8%AD%EF%BC%8C%E5%90%84%E6%94%AF%E8%B7%AF%E7%94%B5%E5%8E%8B%E7%9B%B8%E5%90%8C%EF%BC%8C%E7%94%B5%E6%B5%81%E6%8C%89%E7%94%B5%E9%98%BB%E6%88%90%E5%8F%8D%E6%AF%94%E5%88%86%E9%85%8D%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "并联电路中，各支路电压相同，电流按电阻成反比分配。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%E7%9A%84%E6%A0%B8%E5%BF%83%E5%85%AC%E5%BC%8F%E3%80%82",
+      "path": "audio/narrations/ohms-law/formula-formula-1.speech?text=%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%E7%9A%84%E6%A0%B8%E5%BF%83%E5%85%AC%E5%BC%8F%E3%80%82",
+      "duration": 3.13,
+      "size": 0,
+      "text": "欧姆定律的核心公式。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E4%B8%B2%E8%81%94%E7%AD%89%E6%95%88%E7%94%B5%E9%98%BB%E7%AD%89%E4%BA%8E%E5%90%84%E7%94%B5%E9%98%BB%E4%B9%8B%E5%92%8C%E3%80%82",
+      "path": "audio/narrations/ohms-law/formula-formula-2.speech?text=%E4%B8%B2%E8%81%94%E7%AD%89%E6%95%88%E7%94%B5%E9%98%BB%E7%AD%89%E4%BA%8E%E5%90%84%E7%94%B5%E9%98%BB%E4%B9%8B%E5%92%8C%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "串联等效电阻等于各电阻之和。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%B9%B6%E8%81%94%E7%AD%89%E6%95%88%E7%94%B5%E9%98%BB%E7%9A%84%E5%80%92%E6%95%B0%E7%AD%89%E4%BA%8E%E5%90%84%E7%94%B5%E9%98%BB%E5%80%92%E6%95%B0%E4%B9%8B%E5%92%8C%E3%80%82",
+      "path": "audio/narrations/ohms-law/formula-formula-3.speech?text=%E5%B9%B6%E8%81%94%E7%AD%89%E6%95%88%E7%94%B5%E9%98%BB%E7%9A%84%E5%80%92%E6%95%B0%E7%AD%89%E4%BA%8E%E5%90%84%E7%94%B5%E9%98%BB%E5%80%92%E6%95%B0%E4%B9%8B%E5%92%8C%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "并联等效电阻的倒数等于各电阻倒数之和。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%9C%A8%E4%B8%B2%E8%81%94%E6%A8%A1%E5%BC%8F%E4%B8%8B%E5%A2%9E%E5%A4%A7%E6%9F%90%E4%B8%AA%E7%94%B5%E9%98%BB%EF%BC%8C%E5%AE%83%E5%88%86%E5%88%B0%E7%9A%84%E7%94%B5%E5%8E%8B%E9%9A%8F%E4%B9%8B%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/ohms-law/interaction-interaction-1.speech?text=%E5%9C%A8%E4%B8%B2%E8%81%94%E6%A8%A1%E5%BC%8F%E4%B8%8B%E5%A2%9E%E5%A4%A7%E6%9F%90%E4%B8%AA%E7%94%B5%E9%98%BB%EF%BC%8C%E5%AE%83%E5%88%86%E5%88%B0%E7%9A%84%E7%94%B5%E5%8E%8B%E9%9A%8F%E4%B9%8B%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "在串联模式下增大某个电阻，它分到的电压随之增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E5%B9%B6%E8%81%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%80%BB%E7%94%B5%E6%B5%81%E5%A6%82%E4%BD%95%E5%A4%A7%E4%BA%8E%E4%BB%BB%E4%BD%95%E4%B8%80%E6%9D%A1%E6%94%AF%E8%B7%AF%E7%9A%84%E7%94%B5%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/ohms-law/interaction-interaction-2.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E5%B9%B6%E8%81%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%80%BB%E7%94%B5%E6%B5%81%E5%A6%82%E4%BD%95%E5%A4%A7%E4%BA%8E%E4%BB%BB%E4%BD%95%E4%B8%80%E6%9D%A1%E6%94%AF%E8%B7%AF%E7%9A%84%E7%94%B5%E6%B5%81%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "切换到并联，观察总电流如何大于任何一条支路的电流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%8F%90%E9%AB%98%E7%94%B5%E6%BA%90%E7%94%B5%E5%8E%8B%EF%BC%8C%E7%94%B5%E6%B5%81%E5%92%8C%E5%8A%9F%E7%8E%87%E9%83%BD%E4%BC%9A%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/ohms-law/interaction-interaction-3.speech?text=%E6%8F%90%E9%AB%98%E7%94%B5%E6%BA%90%E7%94%B5%E5%8E%8B%EF%BC%8C%E7%94%B5%E6%B5%81%E5%92%8C%E5%8A%9F%E7%8E%87%E9%83%BD%E4%BC%9A%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "提高电源电压，电流和功率都会增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%AE%B6%E5%BA%AD%E7%94%B5%E5%99%A8%E9%83%BD%E9%87%87%E7%94%A8%E5%B9%B6%E8%81%94%EF%BC%8C%E4%BF%9D%E8%AF%81%E6%AF%8F%E4%B8%AA%E7%94%B5%E5%99%A8%E9%83%BD%E8%8E%B7%E5%BE%97%E7%9B%B8%E5%90%8C%E7%9A%84%E7%94%B5%E5%8E%8B%E3%80%82",
+      "path": "audio/narrations/ohms-law/application-application-1.speech?text=%E5%AE%B6%E5%BA%AD%E7%94%B5%E5%99%A8%E9%83%BD%E9%87%87%E7%94%A8%E5%B9%B6%E8%81%94%EF%BC%8C%E4%BF%9D%E8%AF%81%E6%AF%8F%E4%B8%AA%E7%94%B5%E5%99%A8%E9%83%BD%E8%8E%B7%E5%BE%97%E7%9B%B8%E5%90%8C%E7%9A%84%E7%94%B5%E5%8E%8B%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "家庭电器都采用并联，保证每个电器都获得相同的电压。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E4%B8%B2%E8%81%94%E5%88%86%E5%8E%8B%E5%B8%B8%E7%94%A8%E4%BA%8E%E7%94%B5%E4%BD%8D%E5%99%A8%E5%92%8C%E5%88%86%E5%8E%8B%E7%94%B5%E8%B7%AF%E3%80%82",
+      "path": "audio/narrations/ohms-law/application-application-2.speech?text=%E4%B8%B2%E8%81%94%E5%88%86%E5%8E%8B%E5%B8%B8%E7%94%A8%E4%BA%8E%E7%94%B5%E4%BD%8D%E5%99%A8%E5%92%8C%E5%88%86%E5%8E%8B%E7%94%B5%E8%B7%AF%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "串联分压常用于电位器和分压电路。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%20U%20%E7%AD%89%E4%BA%8E%20I%20%E4%B9%98%E4%BB%A5%20R%EF%BC%8C%E6%98%AF%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82",
+      "path": "audio/narrations/ohms-law/summary-summary-1.speech?text=%E6%AC%A7%E5%A7%86%E5%AE%9A%E5%BE%8B%20U%20%E7%AD%89%E4%BA%8E%20I%20%E4%B9%98%E4%BB%A5%20R%EF%BC%8C%E6%98%AF%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "欧姆定律 U 等于 I 乘以 R，是电路分析的基石。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ohms-law",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E4%B8%B2%E8%81%94%E5%88%86%E5%8E%8B%E3%80%81%E5%B9%B6%E8%81%94%E5%88%86%E6%B5%81%EF%BC%8C%E8%AE%B0%E4%BD%8F%E8%BF%99%E4%B8%A4%E6%9D%A1%E8%A7%84%E5%BE%8B%E5%B0%B1%E8%83%BD%E5%88%86%E6%9E%90%E7%AE%80%E5%8D%95%E7%94%B5%E8%B7%AF%E3%80%82",
+      "path": "audio/narrations/ohms-law/summary-summary-2.speech?text=%E4%B8%B2%E8%81%94%E5%88%86%E5%8E%8B%E3%80%81%E5%B9%B6%E8%81%94%E5%88%86%E6%B5%81%EF%BC%8C%E8%AE%B0%E4%BD%8F%E8%BF%99%E4%B8%A4%E6%9D%A1%E8%A7%84%E5%BE%8B%E5%B0%B1%E8%83%BD%E5%88%86%E6%9E%90%E7%AE%80%E5%8D%95%E7%94%B5%E8%B7%AF%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "串联分压、并联分流，记住这两条规律就能分析简单电路。",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

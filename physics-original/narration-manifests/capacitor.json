@@ -1,0 +1,229 @@
+{
+  "script_id": "capacitor",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 147.22,
+  "files": [
+    {
+      "script_id": "capacitor",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E5%AE%9E%E9%AA%8C%EF%BC%81%E7%94%B5%E5%AE%B9%E5%99%A8%E6%98%AF%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%85%83%E4%BB%B6%E4%B9%8B%E4%B8%80%EF%BC%8C%E4%B8%93%E9%97%A8%E7%94%A8%E6%9D%A5%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E3%80%82",
+      "path": "audio/narrations/capacitor/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E5%AE%9E%E9%AA%8C%EF%BC%81%E7%94%B5%E5%AE%B9%E5%99%A8%E6%98%AF%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%85%83%E4%BB%B6%E4%B9%8B%E4%B8%80%EF%BC%8C%E4%B8%93%E9%97%A8%E7%94%A8%E6%9D%A5%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E3%80%82",
+      "duration": 11.88,
+      "size": 0,
+      "text": "欢迎来到平行板电容器实验！电容器是电路中最基本的元件之一，专门用来储存电荷。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%BB%8E%E7%9B%B8%E6%9C%BA%E9%97%AA%E5%85%89%E7%81%AF%E5%88%B0%E7%94%B5%E8%84%91%E4%B8%BB%E6%9D%BF%EF%BC%8C%E5%A4%84%E5%A4%84%E9%83%BD%E6%9C%89%E7%94%B5%E5%AE%B9%E5%99%A8%E7%9A%84%E8%BA%AB%E5%BD%B1%E3%80%82",
+      "path": "audio/narrations/capacitor/intro-intro-2.speech?text=%E4%BB%8E%E7%9B%B8%E6%9C%BA%E9%97%AA%E5%85%89%E7%81%AF%E5%88%B0%E7%94%B5%E8%84%91%E4%B8%BB%E6%9D%BF%EF%BC%8C%E5%A4%84%E5%A4%84%E9%83%BD%E6%9C%89%E7%94%B5%E5%AE%B9%E5%99%A8%E7%9A%84%E8%BA%AB%E5%BD%B1%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "从相机闪光灯到电脑主板，处处都有电容器的身影。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E7%9C%8B%E7%9C%8B%EF%BC%8C%E4%B8%A4%E5%9D%97%E5%B9%B3%E8%A1%8C%E9%87%91%E5%B1%9E%E6%9D%BF%E6%98%AF%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E4%B8%8E%E7%94%B5%E5%9C%BA%E8%83%BD%E7%9A%84%E3%80%82",
+      "path": "audio/narrations/capacitor/intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E7%9C%8B%E7%9C%8B%EF%BC%8C%E4%B8%A4%E5%9D%97%E5%B9%B3%E8%A1%8C%E9%87%91%E5%B1%9E%E6%9D%BF%E6%98%AF%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E4%B8%8E%E7%94%B5%E5%9C%BA%E8%83%BD%E7%9A%84%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "今天我们就来看看，两块平行金属板是如何储存电荷与电场能的。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E7%94%B1%E4%B8%A4%E5%9D%97%E9%9D%A0%E5%BE%97%E5%BE%88%E8%BF%91%E7%9A%84%E5%B9%B3%E8%A1%8C%E9%87%91%E5%B1%9E%E6%9D%BF%E7%BB%84%E6%88%90%E3%80%82",
+      "path": "audio/narrations/capacitor/concept-concept-1.speech?text=%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E7%94%B1%E4%B8%A4%E5%9D%97%E9%9D%A0%E5%BE%97%E5%BE%88%E8%BF%91%E7%9A%84%E5%B9%B3%E8%A1%8C%E9%87%91%E5%B1%9E%E6%9D%BF%E7%BB%84%E6%88%90%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "平行板电容器由两块靠得很近的平行金属板组成。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%8E%A5%E4%B8%8A%E7%94%B5%E6%BA%90%E5%90%8E%EF%BC%8C%E4%B8%A4%E6%9D%BF%E5%88%86%E5%88%AB%E5%B8%A6%E4%B8%8A%E7%AD%89%E9%87%8F%E5%BC%82%E5%8F%B7%E7%9A%84%E7%94%B5%E8%8D%B7%E3%80%82",
+      "path": "audio/narrations/capacitor/concept-concept-2.speech?text=%E6%8E%A5%E4%B8%8A%E7%94%B5%E6%BA%90%E5%90%8E%EF%BC%8C%E4%B8%A4%E6%9D%BF%E5%88%86%E5%88%AB%E5%B8%A6%E4%B8%8A%E7%AD%89%E9%87%8F%E5%BC%82%E5%8F%B7%E7%9A%84%E7%94%B5%E8%8D%B7%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "接上电源后，两板分别带上等量异号的电荷。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%94%B5%E5%AE%B9%E6%8F%8F%E8%BF%B0%E7%94%B5%E5%AE%B9%E5%99%A8%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E7%9A%84%E8%83%BD%E5%8A%9B%EF%BC%8C%E7%AD%89%E4%BA%8E%E7%94%B5%E8%8D%B7%E9%87%8F%E9%99%A4%E4%BB%A5%E7%94%B5%E5%8E%8B%E3%80%82",
+      "path": "audio/narrations/capacitor/concept-concept-3.speech?text=%E7%94%B5%E5%AE%B9%E6%8F%8F%E8%BF%B0%E7%94%B5%E5%AE%B9%E5%99%A8%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E7%9A%84%E8%83%BD%E5%8A%9B%EF%BC%8C%E7%AD%89%E4%BA%8E%E7%94%B5%E8%8D%B7%E9%87%8F%E9%99%A4%E4%BB%A5%E7%94%B5%E5%8E%8B%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "电容描述电容器储存电荷的能力，等于电荷量除以电压。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%9D%BF%E9%97%B4%E5%BD%A2%E6%88%90%E5%9D%87%E5%8C%80%E7%94%B5%E5%9C%BA%EF%BC%8C%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E7%AD%89%E4%BA%8E%E7%94%B5%E5%8E%8B%E9%99%A4%E4%BB%A5%E6%9D%BF%E9%97%B4%E8%B7%9D%E3%80%82",
+      "path": "audio/narrations/capacitor/concept-concept-4.speech?text=%E6%9D%BF%E9%97%B4%E5%BD%A2%E6%88%90%E5%9D%87%E5%8C%80%E7%94%B5%E5%9C%BA%EF%BC%8C%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E7%AD%89%E4%BA%8E%E7%94%B5%E5%8E%8B%E9%99%A4%E4%BB%A5%E6%9D%BF%E9%97%B4%E8%B7%9D%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "板间形成均匀电场，电场强度等于电压除以板间距。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E7%9A%84%E7%94%B5%E5%AE%B9%E7%94%B1%E5%87%A0%E4%BD%95%E4%B8%8E%E4%BB%8B%E8%B4%A8%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/capacitor/formula-formula-1.speech?text=%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E7%9A%84%E7%94%B5%E5%AE%B9%E7%94%B1%E5%87%A0%E4%BD%95%E4%B8%8E%E4%BB%8B%E8%B4%A8%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "平行板电容器的电容由几何与介质决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%AD%A3%E5%AF%B9%E9%9D%A2%E7%A7%AF%E8%B6%8A%E5%A4%A7%E3%80%81%E6%9D%BF%E9%97%B4%E8%B7%9D%E8%B6%8A%E5%B0%8F%E3%80%81%E4%BB%8B%E7%94%B5%E5%B8%B8%E6%95%B0%E8%B6%8A%E5%A4%A7%EF%BC%8C%E7%94%B5%E5%AE%B9%E5%B0%B1%E8%B6%8A%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/capacitor/formula-formula-2.speech?text=%E6%AD%A3%E5%AF%B9%E9%9D%A2%E7%A7%AF%E8%B6%8A%E5%A4%A7%E3%80%81%E6%9D%BF%E9%97%B4%E8%B7%9D%E8%B6%8A%E5%B0%8F%E3%80%81%E4%BB%8B%E7%94%B5%E5%B8%B8%E6%95%B0%E8%B6%8A%E5%A4%A7%EF%BC%8C%E7%94%B5%E5%AE%B9%E5%B0%B1%E8%B6%8A%E5%A4%A7%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "正对面积越大、板间距越小、介电常数越大，电容就越大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%9D%BF%E9%97%B4%E7%94%B5%E5%9C%BA%E6%98%AF%E5%9D%87%E5%8C%80%E7%9A%84%EF%BC%8C%E5%BC%BA%E5%BA%A6%E7%AD%89%E4%BA%8E%E7%94%B5%E5%8E%8B%E9%99%A4%E4%BB%A5%E9%97%B4%E8%B7%9D%E3%80%82",
+      "path": "audio/narrations/capacitor/formula-formula-3.speech?text=%E6%9D%BF%E9%97%B4%E7%94%B5%E5%9C%BA%E6%98%AF%E5%9D%87%E5%8C%80%E7%9A%84%EF%BC%8C%E5%BC%BA%E5%BA%A6%E7%AD%89%E4%BA%8E%E7%94%B5%E5%8E%8B%E9%99%A4%E4%BB%A5%E9%97%B4%E8%B7%9D%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "板间电场是均匀的，强度等于电压除以间距。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E7%94%B5%E5%AE%B9%E5%99%A8%E5%82%A8%E5%AD%98%E7%9A%84%E7%94%B5%E5%9C%BA%E8%83%BD%E4%B8%8E%E7%94%B5%E5%8E%8B%E5%B9%B3%E6%96%B9%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/capacitor/formula-formula-4.speech?text=%E7%94%B5%E5%AE%B9%E5%99%A8%E5%82%A8%E5%AD%98%E7%9A%84%E7%94%B5%E5%9C%BA%E8%83%BD%E4%B8%8E%E7%94%B5%E5%8E%8B%E5%B9%B3%E6%96%B9%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "电容器储存的电场能与电压平方成正比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%87%8F%E5%B0%8F%E6%9D%BF%E9%97%B4%E8%B7%9D%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%94%B5%E5%AE%B9%E5%92%8C%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E5%A6%82%E4%BD%95%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/capacitor/interaction-interaction-1.speech?text=%E5%87%8F%E5%B0%8F%E6%9D%BF%E9%97%B4%E8%B7%9D%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%94%B5%E5%AE%B9%E5%92%8C%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E5%A6%82%E4%BD%95%E5%A2%9E%E5%A4%A7%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "减小板间距，观察电容和电场强度如何增大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E6%AD%A3%E5%AF%B9%E9%9D%A2%E7%A7%AF%EF%BC%8C%E7%94%B5%E5%AE%B9%E9%9A%8F%E4%B9%8B%E5%A2%9E%E5%A4%A7%EF%BC%8C%E5%82%A8%E5%AD%98%E6%9B%B4%E5%A4%9A%E7%94%B5%E8%8D%B7%E3%80%82",
+      "path": "audio/narrations/capacitor/interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E6%AD%A3%E5%AF%B9%E9%9D%A2%E7%A7%AF%EF%BC%8C%E7%94%B5%E5%AE%B9%E9%9A%8F%E4%B9%8B%E5%A2%9E%E5%A4%A7%EF%BC%8C%E5%82%A8%E5%AD%98%E6%9B%B4%E5%A4%9A%E7%94%B5%E8%8D%B7%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "增大正对面积，电容随之增大，储存更多电荷。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%8F%90%E9%AB%98%E7%94%B5%E5%8E%8B%EF%BC%8C%E5%82%A8%E8%83%BD%E6%8C%89%E7%94%B5%E5%8E%8B%E5%B9%B3%E6%96%B9%E8%BF%85%E9%80%9F%E5%A2%9E%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/capacitor/interaction-interaction-3.speech?text=%E6%8F%90%E9%AB%98%E7%94%B5%E5%8E%8B%EF%BC%8C%E5%82%A8%E8%83%BD%E6%8C%89%E7%94%B5%E5%8E%8B%E5%B9%B3%E6%96%B9%E8%BF%85%E9%80%9F%E5%A2%9E%E5%8A%A0%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "提高电压，储能按电压平方迅速增加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E7%9B%B8%E6%9C%BA%E9%97%AA%E5%85%89%E7%81%AF%E7%94%A8%E7%94%B5%E5%AE%B9%E5%99%A8%E5%BF%AB%E9%80%9F%E5%82%A8%E8%83%BD%E5%86%8D%E7%9E%AC%E9%97%B4%E9%87%8A%E6%94%BE%EF%BC%8C%E4%BA%A7%E7%94%9F%E5%BC%BA%E5%85%89%E3%80%82",
+      "path": "audio/narrations/capacitor/application-application-1.speech?text=%E7%9B%B8%E6%9C%BA%E9%97%AA%E5%85%89%E7%81%AF%E7%94%A8%E7%94%B5%E5%AE%B9%E5%99%A8%E5%BF%AB%E9%80%9F%E5%82%A8%E8%83%BD%E5%86%8D%E7%9E%AC%E9%97%B4%E9%87%8A%E6%94%BE%EF%BC%8C%E4%BA%A7%E7%94%9F%E5%BC%BA%E5%85%89%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "相机闪光灯用电容器快速储能再瞬间释放，产生强光。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E7%94%B5%E5%AE%B9%E5%99%A8%E5%9C%A8%E7%94%B5%E8%B7%AF%E4%B8%AD%E7%94%A8%E4%BA%8E%E6%BB%A4%E6%B3%A2%E3%80%81%E8%80%A6%E5%90%88%E5%92%8C%E5%82%A8%E8%83%BD%E3%80%82",
+      "path": "audio/narrations/capacitor/application-application-2.speech?text=%E7%94%B5%E5%AE%B9%E5%99%A8%E5%9C%A8%E7%94%B5%E8%B7%AF%E4%B8%AD%E7%94%A8%E4%BA%8E%E6%BB%A4%E6%B3%A2%E3%80%81%E8%80%A6%E5%90%88%E5%92%8C%E5%82%A8%E8%83%BD%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "电容器在电路中用于滤波、耦合和储能。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%94%B5%E5%AE%B9%E5%BC%8F%E8%A7%A6%E6%91%B8%E5%B1%8F%E6%AD%A3%E6%98%AF%E5%88%A9%E7%94%A8%E7%94%B5%E5%AE%B9%E7%9A%84%E5%8F%98%E5%8C%96%E6%9D%A5%E6%84%9F%E7%9F%A5%E6%89%8B%E6%8C%87%E3%80%82",
+      "path": "audio/narrations/capacitor/application-application-3.speech?text=%E7%94%B5%E5%AE%B9%E5%BC%8F%E8%A7%A6%E6%91%B8%E5%B1%8F%E6%AD%A3%E6%98%AF%E5%88%A9%E7%94%A8%E7%94%B5%E5%AE%B9%E7%9A%84%E5%8F%98%E5%8C%96%E6%9D%A5%E6%84%9F%E7%9F%A5%E6%89%8B%E6%8C%87%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "电容式触摸屏正是利用电容的变化来感知手指。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E7%94%B5%E5%AE%B9%20C%20%E7%AD%89%E4%BA%8E%20%CE%B5%E2%82%80%CE%B5r%20S%20%E9%99%A4%E4%BB%A5%20d%E3%80%82",
+      "path": "audio/narrations/capacitor/summary-summary-1.speech?text=%E5%B9%B3%E8%A1%8C%E6%9D%BF%E7%94%B5%E5%AE%B9%E5%99%A8%E7%94%B5%E5%AE%B9%20C%20%E7%AD%89%E4%BA%8E%20%CE%B5%E2%82%80%CE%B5r%20S%20%E9%99%A4%E4%BB%A5%20d%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "平行板电容器电容 C 等于 ε₀εr S 除以 d。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%9D%BF%E9%97%B4%E7%94%B5%E5%9C%BA%20E%20%E7%AD%89%E4%BA%8E%20U%20%E9%99%A4%E4%BB%A5%20d%EF%BC%8C%E5%82%A8%E8%83%BD%20W%20%E7%AD%89%E4%BA%8E%E4%BA%8C%E5%88%86%E4%B9%8B%E4%B8%80%20C%20U%20%E5%B9%B3%E6%96%B9%E3%80%82",
+      "path": "audio/narrations/capacitor/summary-summary-2.speech?text=%E6%9D%BF%E9%97%B4%E7%94%B5%E5%9C%BA%20E%20%E7%AD%89%E4%BA%8E%20U%20%E9%99%A4%E4%BB%A5%20d%EF%BC%8C%E5%82%A8%E8%83%BD%20W%20%E7%AD%89%E4%BA%8E%E4%BA%8C%E5%88%86%E4%B9%8B%E4%B8%80%20C%20U%20%E5%B9%B3%E6%96%B9%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "板间电场 E 等于 U 除以 d，储能 W 等于二分之一 C U 平方。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "capacitor",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E7%94%B5%E5%AE%B9%E5%99%A8%E6%98%AF%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E4%B8%8E%E7%94%B5%E5%9C%BA%E8%83%BD%E7%9A%84%E5%9F%BA%E7%A1%80%E5%85%83%E4%BB%B6%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/capacitor/summary-summary-3.speech?text=%E7%94%B5%E5%AE%B9%E5%99%A8%E6%98%AF%E5%82%A8%E5%AD%98%E7%94%B5%E8%8D%B7%E4%B8%8E%E7%94%B5%E5%9C%BA%E8%83%BD%E7%9A%84%E5%9F%BA%E7%A1%80%E5%85%83%E4%BB%B6%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 8.13,
+      "size": 0,
+      "text": "电容器是储存电荷与电场能的基础元件。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

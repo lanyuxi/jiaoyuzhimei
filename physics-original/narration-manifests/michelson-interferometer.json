@@ -1,0 +1,229 @@
+{
+  "script_id": "michelson-interferometer",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 157.52,
+  "files": [
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%BF%88%E5%85%8B%E5%B0%94%E9%80%8A%E5%B9%B2%E6%B6%89%E4%BB%AA%EF%BC%81%E5%AE%83%E6%98%AF%E4%BA%BA%E7%B1%BB%E5%88%B6%E9%80%A0%E8%BF%87%E7%9A%84%E6%9C%80%E7%B2%BE%E5%AF%86%E7%9A%84%E6%B5%8B%E9%87%8F%E5%B7%A5%E5%85%B7%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%BF%88%E5%85%8B%E5%B0%94%E9%80%8A%E5%B9%B2%E6%B6%89%E4%BB%AA%EF%BC%81%E5%AE%83%E6%98%AF%E4%BA%BA%E7%B1%BB%E5%88%B6%E9%80%A0%E8%BF%87%E7%9A%84%E6%9C%80%E7%B2%BE%E5%AF%86%E7%9A%84%E6%B5%8B%E9%87%8F%E5%B7%A5%E5%85%B7%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "欢迎来到迈克尔逊干涉仪！它是人类制造过的最精密的测量工具之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%80%E6%9D%9F%E5%85%89%E8%A2%AB%E5%88%86%E6%88%90%E4%B8%A4%E8%B7%AF%EF%BC%8C%E8%B5%B0%E8%BF%87%E4%B8%8D%E5%90%8C%E7%9A%84%E8%B7%AF%E5%BE%84%E5%90%8E%E5%86%8D%E7%9B%B8%E9%81%87%EF%BC%8C%E5%8F%A0%E5%8A%A0%E5%87%BA%E6%98%8E%E6%9A%97%E4%BA%A4%E6%9B%BF%E7%9A%84%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/intro-intro-2.speech?text=%E4%B8%80%E6%9D%9F%E5%85%89%E8%A2%AB%E5%88%86%E6%88%90%E4%B8%A4%E8%B7%AF%EF%BC%8C%E8%B5%B0%E8%BF%87%E4%B8%8D%E5%90%8C%E7%9A%84%E8%B7%AF%E5%BE%84%E5%90%8E%E5%86%8D%E7%9B%B8%E9%81%87%EF%BC%8C%E5%8F%A0%E5%8A%A0%E5%87%BA%E6%98%8E%E6%9A%97%E4%BA%A4%E6%9B%BF%E7%9A%84%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "一束光被分成两路，走过不同的路径后再相遇，叠加出明暗交替的条纹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%8F%AA%E8%A6%81%E4%B8%80%E9%9D%A2%E9%95%9C%E5%AD%90%E7%A7%BB%E5%8A%A8%E5%A4%B4%E5%8F%91%E4%B8%9D%E7%9A%84%E4%B8%87%E5%88%86%E4%B9%8B%E4%B8%80%EF%BC%8C%E6%9D%A1%E7%BA%B9%E5%B0%B1%E4%BC%9A%E8%82%89%E7%9C%BC%E5%8F%AF%E8%A7%81%E5%9C%B0%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/intro-intro-3.speech?text=%E5%8F%AA%E8%A6%81%E4%B8%80%E9%9D%A2%E9%95%9C%E5%AD%90%E7%A7%BB%E5%8A%A8%E5%A4%B4%E5%8F%91%E4%B8%9D%E7%9A%84%E4%B8%87%E5%88%86%E4%B9%8B%E4%B8%80%EF%BC%8C%E6%9D%A1%E7%BA%B9%E5%B0%B1%E4%BC%9A%E8%82%89%E7%9C%BC%E5%8F%AF%E8%A7%81%E5%9C%B0%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "只要一面镜子移动头发丝的万分之一，条纹就会肉眼可见地移动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%BF%80%E5%85%89%E7%BB%8F%E8%BF%87%E4%B8%80%E5%9D%97%E5%8D%8A%E9%80%8F%E5%8D%8A%E5%8F%8D%E7%9A%84%E5%88%86%E5%85%89%E9%95%9C%EF%BC%8C%E8%A2%AB%E5%88%86%E6%88%90%E4%B8%A4%E6%9D%9F%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/concept-concept-1.speech?text=%E6%BF%80%E5%85%89%E7%BB%8F%E8%BF%87%E4%B8%80%E5%9D%97%E5%8D%8A%E9%80%8F%E5%8D%8A%E5%8F%8D%E7%9A%84%E5%88%86%E5%85%89%E9%95%9C%EF%BC%8C%E8%A2%AB%E5%88%86%E6%88%90%E4%B8%A4%E6%9D%9F%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "激光经过一块半透半反的分光镜，被分成两束。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E4%B8%A4%E6%9D%9F%E5%85%89%E5%88%86%E5%88%AB%E5%B0%84%E5%90%91%E4%B8%A4%E9%9D%A2%E5%8F%8D%E5%B0%84%E9%95%9C%EF%BC%8C%E5%86%8D%E5%8E%9F%E8%B7%AF%E8%BF%94%E5%9B%9E%E5%88%B0%E5%88%86%E5%85%89%E9%95%9C%E6%B1%87%E5%90%88%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/concept-concept-2.speech?text=%E4%B8%A4%E6%9D%9F%E5%85%89%E5%88%86%E5%88%AB%E5%B0%84%E5%90%91%E4%B8%A4%E9%9D%A2%E5%8F%8D%E5%B0%84%E9%95%9C%EF%BC%8C%E5%86%8D%E5%8E%9F%E8%B7%AF%E8%BF%94%E5%9B%9E%E5%88%B0%E5%88%86%E5%85%89%E9%95%9C%E6%B1%87%E5%90%88%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "两束光分别射向两面反射镜，再原路返回到分光镜汇合。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E4%B8%A4%E8%B7%AF%E5%85%89%E7%A8%8B%E4%B8%8D%E5%90%8C%EF%BC%8C%E4%BC%9A%E4%BA%A7%E7%94%9F%E7%9B%B8%E4%BD%8D%E5%B7%AE%EF%BC%8C%E4%BB%8E%E8%80%8C%E5%B9%B2%E6%B6%89%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/concept-concept-3.speech?text=%E4%B8%A4%E8%B7%AF%E5%85%89%E7%A8%8B%E4%B8%8D%E5%90%8C%EF%BC%8C%E4%BC%9A%E4%BA%A7%E7%94%9F%E7%9B%B8%E4%BD%8D%E5%B7%AE%EF%BC%8C%E4%BB%8E%E8%80%8C%E5%B9%B2%E6%B6%89%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "两路光程不同，会产生相位差，从而干涉。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E7%A7%BB%E5%8A%A8%E5%85%B6%E4%B8%AD%E4%B8%80%E9%9D%A2%E9%95%9C%E5%AD%90%EF%BC%8C%E5%B0%B1%E6%94%B9%E5%8F%98%E4%BA%86%E5%85%89%E7%A8%8B%E5%B7%AE%EF%BC%8C%E6%9D%A1%E7%BA%B9%E9%9A%8F%E4%B9%8B%E5%90%9E%E5%90%90%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/concept-concept-4.speech?text=%E7%A7%BB%E5%8A%A8%E5%85%B6%E4%B8%AD%E4%B8%80%E9%9D%A2%E9%95%9C%E5%AD%90%EF%BC%8C%E5%B0%B1%E6%94%B9%E5%8F%98%E4%BA%86%E5%85%89%E7%A8%8B%E5%B7%AE%EF%BC%8C%E6%9D%A1%E7%BA%B9%E9%9A%8F%E4%B9%8B%E5%90%9E%E5%90%90%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "移动其中一面镜子，就改变了光程差，条纹随之吞吐移动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E4%B8%A4%E6%9D%9F%E5%85%89%E7%9A%84%E5%85%89%E7%A8%8B%E5%B7%AE%E7%AD%89%E4%BA%8E%E9%95%9C%E5%AD%90%E7%A7%BB%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E4%B8%A4%E5%80%8D%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%85%89%E8%A6%81%E5%BE%80%E8%BF%94%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/formula-formula-1.speech?text=%E4%B8%A4%E6%9D%9F%E5%85%89%E7%9A%84%E5%85%89%E7%A8%8B%E5%B7%AE%E7%AD%89%E4%BA%8E%E9%95%9C%E5%AD%90%E7%A7%BB%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E4%B8%A4%E5%80%8D%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%85%89%E8%A6%81%E5%BE%80%E8%BF%94%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "两束光的光程差等于镜子移动距离的两倍，因为光要往返。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%BD%93%E5%85%89%E7%A8%8B%E5%B7%AE%E6%98%AF%E6%B3%A2%E9%95%BF%E7%9A%84%E6%95%B4%E6%95%B0%E5%80%8D%E6%97%B6%EF%BC%8C%E5%B9%B2%E6%B6%89%E7%9B%B8%E9%95%BF%EF%BC%8C%E5%91%88%E7%8E%B0%E4%BA%AE%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/formula-formula-2.speech?text=%E5%BD%93%E5%85%89%E7%A8%8B%E5%B7%AE%E6%98%AF%E6%B3%A2%E9%95%BF%E7%9A%84%E6%95%B4%E6%95%B0%E5%80%8D%E6%97%B6%EF%BC%8C%E5%B9%B2%E6%B6%89%E7%9B%B8%E9%95%BF%EF%BC%8C%E5%91%88%E7%8E%B0%E4%BA%AE%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "当光程差是波长的整数倍时，干涉相长，呈现亮条纹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E9%95%9C%E5%AD%90%E6%AF%8F%E7%A7%BB%E5%8A%A8%E5%8D%8A%E4%B8%AA%E6%B3%A2%E9%95%BF%EF%BC%8C%E4%B8%AD%E5%BF%83%E5%B0%B1%E5%90%9E%E5%90%90%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/formula-formula-3.speech?text=%E9%95%9C%E5%AD%90%E6%AF%8F%E7%A7%BB%E5%8A%A8%E5%8D%8A%E4%B8%AA%E6%B3%A2%E9%95%BF%EF%BC%8C%E4%B8%AD%E5%BF%83%E5%B0%B1%E5%90%9E%E5%90%90%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "镜子每移动半个波长，中心就吞吐一个完整的条纹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E6%95%B0%E6%B8%85%E5%90%9E%E5%90%90%E7%9A%84%E6%9D%A1%E7%BA%B9%E6%95%B0%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%8F%8D%E6%8E%A8%E5%87%BA%E7%BA%B3%E7%B1%B3%E7%BA%A7%E7%9A%84%E4%BD%8D%E7%A7%BB%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/formula-formula-4.speech?text=%E6%95%B0%E6%B8%85%E5%90%9E%E5%90%90%E7%9A%84%E6%9D%A1%E7%BA%B9%E6%95%B0%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%8F%8D%E6%8E%A8%E5%87%BA%E7%BA%B3%E7%B1%B3%E7%BA%A7%E7%9A%84%E4%BD%8D%E7%A7%BB%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "数清吞吐的条纹数，就能反推出纳米级的位移。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E6%8B%96%E5%8A%A8%E6%BB%91%E5%9D%97%E7%A7%BB%E5%8A%A8%E5%8F%8D%E5%B0%84%E9%95%9C%EF%BC%8C%E8%A7%82%E5%AF%9F%E4%B8%AD%E5%BF%83%E6%9D%A1%E7%BA%B9%E7%9A%84%E5%90%9E%E5%90%90%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/interaction-interaction-1.speech?text=%E6%8B%96%E5%8A%A8%E6%BB%91%E5%9D%97%E7%A7%BB%E5%8A%A8%E5%8F%8D%E5%B0%84%E9%95%9C%EF%BC%8C%E8%A7%82%E5%AF%9F%E4%B8%AD%E5%BF%83%E6%9D%A1%E7%BA%B9%E7%9A%84%E5%90%9E%E5%90%90%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "拖动滑块移动反射镜，观察中心条纹的吞吐。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E6%B3%A2%E9%95%BF%EF%BC%8C%E7%9C%8B%E7%9C%8B%E6%9D%A1%E7%BA%B9%E7%9A%84%E7%96%8F%E5%AF%86%E5%92%8C%E9%A2%9C%E8%89%B2%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E6%B3%A2%E9%95%BF%EF%BC%8C%E7%9C%8B%E7%9C%8B%E6%9D%A1%E7%BA%B9%E7%9A%84%E7%96%8F%E5%AF%86%E5%92%8C%E9%A2%9C%E8%89%B2%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "改变波长，看看条纹的疏密和颜色如何变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E7%BB%9F%E8%AE%A1%E7%A7%BB%E5%8A%A8%E9%95%9C%E5%AD%90%E6%97%B6%E6%95%B0%E8%BF%87%E7%9A%84%E6%9D%A1%E7%BA%B9%E6%95%B0%EF%BC%8C%E9%AA%8C%E8%AF%81%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/interaction-interaction-3.speech?text=%E7%BB%9F%E8%AE%A1%E7%A7%BB%E5%8A%A8%E9%95%9C%E5%AD%90%E6%97%B6%E6%95%B0%E8%BF%87%E7%9A%84%E6%9D%A1%E7%BA%B9%E6%95%B0%EF%BC%8C%E9%AA%8C%E8%AF%81%E4%BD%8D%E7%A7%BB%E5%85%AC%E5%BC%8F%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "统计移动镜子时数过的条纹数，验证位移公式。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=1887%20%E5%B9%B4%E8%BF%88%E5%85%8B%E5%B0%94%E9%80%8A-%E8%8E%AB%E9%9B%B7%E5%AE%9E%E9%AA%8C%E7%94%A8%E5%AE%83%E5%90%A6%E5%AE%9A%E4%BA%86%E4%BB%A5%E5%A4%AA%EF%BC%8C%E4%B8%BA%E7%9B%B8%E5%AF%B9%E8%AE%BA%E9%93%BA%E8%B7%AF%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/application-application-1.speech?text=1887%20%E5%B9%B4%E8%BF%88%E5%85%8B%E5%B0%94%E9%80%8A-%E8%8E%AB%E9%9B%B7%E5%AE%9E%E9%AA%8C%E7%94%A8%E5%AE%83%E5%90%A6%E5%AE%9A%E4%BA%86%E4%BB%A5%E5%A4%AA%EF%BC%8C%E4%B8%BA%E7%9B%B8%E5%AF%B9%E8%AE%BA%E9%93%BA%E8%B7%AF%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "1887 年迈克尔逊-莫雷实验用它否定了以太，为相对论铺路。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E4%BB%8A%E5%A4%A9%E7%9A%84%20LIGO%20%E7%94%A8%E5%9B%9B%E5%85%AC%E9%87%8C%E9%95%BF%E7%9A%84%E5%B9%B2%E6%B6%89%E4%BB%AA%EF%BC%8C%E6%8E%A2%E6%B5%8B%E5%88%B0%E4%BA%86%E5%BC%95%E5%8A%9B%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/application-application-2.speech?text=%E4%BB%8A%E5%A4%A9%E7%9A%84%20LIGO%20%E7%94%A8%E5%9B%9B%E5%85%AC%E9%87%8C%E9%95%BF%E7%9A%84%E5%B9%B2%E6%B6%89%E4%BB%AA%EF%BC%8C%E6%8E%A2%E6%B5%8B%E5%88%B0%E4%BA%86%E5%BC%95%E5%8A%9B%E6%B3%A2%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "今天的 LIGO 用四公里长的干涉仪，探测到了引力波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%83%E8%BF%98%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%95%BF%E3%80%81%E5%85%89%E8%B0%B1%E5%88%86%E6%9E%90%E5%92%8C%E6%8A%98%E5%B0%84%E7%8E%87%E6%B5%8B%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/application-application-3.speech?text=%E5%AE%83%E8%BF%98%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%95%BF%E3%80%81%E5%85%89%E8%B0%B1%E5%88%86%E6%9E%90%E5%92%8C%E6%8A%98%E5%B0%84%E7%8E%87%E6%B5%8B%E9%87%8F%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它还广泛用于精密测长、光谱分析和折射率测量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%BF%88%E5%85%8B%E5%B0%94%E9%80%8A%E5%B9%B2%E6%B6%89%E4%BB%AA%E6%8A%8A%E4%B8%80%E6%9D%9F%E5%85%89%E5%88%86%E6%88%90%E4%B8%A4%E8%B7%AF%EF%BC%8C%E9%9D%A0%E5%85%89%E7%A8%8B%E5%B7%AE%E4%BA%A7%E7%94%9F%E5%B9%B2%E6%B6%89%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/summary-summary-1.speech?text=%E8%BF%88%E5%85%8B%E5%B0%94%E9%80%8A%E5%B9%B2%E6%B6%89%E4%BB%AA%E6%8A%8A%E4%B8%80%E6%9D%9F%E5%85%89%E5%88%86%E6%88%90%E4%B8%A4%E8%B7%AF%EF%BC%8C%E9%9D%A0%E5%85%89%E7%A8%8B%E5%B7%AE%E4%BA%A7%E7%94%9F%E5%B9%B2%E6%B6%89%E6%9D%A1%E7%BA%B9%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "迈克尔逊干涉仪把一束光分成两路，靠光程差产生干涉条纹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E9%95%9C%E5%AD%90%E6%AF%8F%E7%A7%BB%E5%8A%A8%E5%8D%8A%E4%B8%AA%E6%B3%A2%E9%95%BF%EF%BC%8C%E6%9D%A1%E7%BA%B9%E5%90%9E%E5%90%90%E4%B8%80%E6%AC%A1%EF%BC%8C%E7%94%B1%E6%AD%A4%E5%AE%9E%E7%8E%B0%E7%BA%B3%E7%B1%B3%E7%BA%A7%E6%B5%8B%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/michelson-interferometer/summary-summary-2.speech?text=%E9%95%9C%E5%AD%90%E6%AF%8F%E7%A7%BB%E5%8A%A8%E5%8D%8A%E4%B8%AA%E6%B3%A2%E9%95%BF%EF%BC%8C%E6%9D%A1%E7%BA%B9%E5%90%9E%E5%90%90%E4%B8%80%E6%AC%A1%EF%BC%8C%E7%94%B1%E6%AD%A4%E5%AE%9E%E7%8E%B0%E7%BA%B3%E7%B1%B3%E7%BA%A7%E6%B5%8B%E9%87%8F%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "镜子每移动半个波长，条纹吞吐一次，由此实现纳米级测量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "michelson-interferometer",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E4%BB%8E%E5%90%A6%E5%AE%9A%E4%BB%A5%E5%A4%AA%E5%88%B0%E6%8E%A2%E6%B5%8B%E5%BC%95%E5%8A%9B%E6%B3%A2%EF%BC%8C%E5%AE%83%E8%A7%81%E8%AF%81%E4%BA%86%E7%89%A9%E7%90%86%E5%AD%A6%E7%9A%84%E9%87%8D%E5%A4%A7%E7%AA%81%E7%A0%B4%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/michelson-interferometer/summary-summary-3.speech?text=%E4%BB%8E%E5%90%A6%E5%AE%9A%E4%BB%A5%E5%A4%AA%E5%88%B0%E6%8E%A2%E6%B5%8B%E5%BC%95%E5%8A%9B%E6%B3%A2%EF%BC%8C%E5%AE%83%E8%A7%81%E8%AF%81%E4%BA%86%E7%89%A9%E7%90%86%E5%AD%A6%E7%9A%84%E9%87%8D%E5%A4%A7%E7%AA%81%E7%A0%B4%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 10.31,
+      "size": 0,
+      "text": "从否定以太到探测引力波，它见证了物理学的重大突破。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "script_id": "dna-melting",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 130.03,
+  "files": [
+    {
+      "script_id": "dna-melting",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E4%BA%86%E8%A7%A3%20DNA%20%E7%86%94%E8%A7%A3%EF%BC%81%E5%8F%8C%E8%9E%BA%E6%97%8B%E7%9A%84%E4%B8%A4%E6%9D%A1%E9%93%BE%EF%BC%8C%E8%83%BD%E8%A2%AB%E5%8A%A0%E7%83%AD%E6%8B%86%E5%BC%80%E3%80%82",
+      "path": "audio/narrations/dna-melting/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E4%BA%86%E8%A7%A3%20DNA%20%E7%86%94%E8%A7%A3%EF%BC%81%E5%8F%8C%E8%9E%BA%E6%97%8B%E7%9A%84%E4%B8%A4%E6%9D%A1%E9%93%BE%EF%BC%8C%E8%83%BD%E8%A2%AB%E5%8A%A0%E7%83%AD%E6%8B%86%E5%BC%80%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "欢迎了解 DNA 熔解！双螺旋的两条链，能被加热拆开。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%B0%B1%E5%83%8F%E6%8B%89%E5%BC%80%E4%B8%80%E6%9D%A1%E5%88%86%E5%AD%90%E6%8B%89%E9%93%BE%EF%BC%8C%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%E6%8B%86%E5%BE%97%E8%B6%8A%E5%A4%9A%E3%80%82",
+      "path": "audio/narrations/dna-melting/intro-intro-2.speech?text=%E5%B0%B1%E5%83%8F%E6%8B%89%E5%BC%80%E4%B8%80%E6%9D%A1%E5%88%86%E5%AD%90%E6%8B%89%E9%93%BE%EF%BC%8C%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%E6%8B%86%E5%BE%97%E8%B6%8A%E5%A4%9A%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "就像拉开一条分子拉链，温度越高拆得越多。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E6%98%AF%E7%8E%B0%E4%BB%A3%E7%94%9F%E7%89%A9%E6%8A%80%E6%9C%AF%E7%9A%84%E5%85%B3%E9%94%AE%E4%B8%80%E6%AD%A5%E3%80%82",
+      "path": "audio/narrations/dna-melting/intro-intro-3.speech?text=%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E6%98%AF%E7%8E%B0%E4%BB%A3%E7%94%9F%E7%89%A9%E6%8A%80%E6%9C%AF%E7%9A%84%E5%85%B3%E9%94%AE%E4%B8%80%E6%AD%A5%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "这个过程是现代生物技术的关键一步。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=DNA%20%E4%B8%A4%E6%9D%A1%E9%93%BE%E9%9D%A0%E7%A2%B1%E5%9F%BA%E5%AF%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E6%B0%A2%E9%94%AE%E7%BB%93%E5%90%88%E3%80%82",
+      "path": "audio/narrations/dna-melting/concept-concept-1.speech?text=DNA%20%E4%B8%A4%E6%9D%A1%E9%93%BE%E9%9D%A0%E7%A2%B1%E5%9F%BA%E5%AF%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E6%B0%A2%E9%94%AE%E7%BB%93%E5%90%88%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "DNA 两条链靠碱基对之间的氢键结合。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=A%20%E4%B8%8E%20T%20%E4%B9%8B%E9%97%B4%E6%9C%89%202%20%E4%B8%AA%E6%B0%A2%E9%94%AE%EF%BC%8CG%20%E4%B8%8E%20C%20%E4%B9%8B%E9%97%B4%E6%9C%89%203%20%E4%B8%AA%E3%80%82",
+      "path": "audio/narrations/dna-melting/concept-concept-2.speech?text=A%20%E4%B8%8E%20T%20%E4%B9%8B%E9%97%B4%E6%9C%89%202%20%E4%B8%AA%E6%B0%A2%E9%94%AE%EF%BC%8CG%20%E4%B8%8E%20C%20%E4%B9%8B%E9%97%B4%E6%9C%89%203%20%E4%B8%AA%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "A 与 T 之间有 2 个氢键，G 与 C 之间有 3 个。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%8A%A0%E7%83%AD%E6%8F%90%E4%BE%9B%E8%83%BD%E9%87%8F%EF%BC%8C%E7%83%AD%E8%BF%90%E5%8A%A8%E9%80%90%E6%B8%90%E7%A0%B4%E5%9D%8F%E8%BF%99%E4%BA%9B%E6%B0%A2%E9%94%AE%E3%80%82",
+      "path": "audio/narrations/dna-melting/concept-concept-3.speech?text=%E5%8A%A0%E7%83%AD%E6%8F%90%E4%BE%9B%E8%83%BD%E9%87%8F%EF%BC%8C%E7%83%AD%E8%BF%90%E5%8A%A8%E9%80%90%E6%B8%90%E7%A0%B4%E5%9D%8F%E8%BF%99%E4%BA%9B%E6%B0%A2%E9%94%AE%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "加热提供能量，热运动逐渐破坏这些氢键。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%BD%93%E4%B8%80%E5%8D%8A%E7%A2%B1%E5%9F%BA%E5%AF%B9%E6%96%AD%E5%BC%80%E6%97%B6%EF%BC%8C%E5%AF%B9%E5%BA%94%E7%9A%84%E6%B8%A9%E5%BA%A6%E5%8F%AB%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%20Tm%E3%80%82",
+      "path": "audio/narrations/dna-melting/concept-concept-4.speech?text=%E5%BD%93%E4%B8%80%E5%8D%8A%E7%A2%B1%E5%9F%BA%E5%AF%B9%E6%96%AD%E5%BC%80%E6%97%B6%EF%BC%8C%E5%AF%B9%E5%BA%94%E7%9A%84%E6%B8%A9%E5%BA%A6%E5%8F%AB%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%20Tm%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "当一半碱基对断开时，对应的温度叫熔解温度 Tm。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=GC%20%E5%90%AB%E9%87%8F%E8%B6%8A%E9%AB%98%EF%BC%8C%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%B0%A2%E9%94%AE%E6%9B%B4%E5%A4%9A%E3%80%82",
+      "path": "audio/narrations/dna-melting/formula-formula-1.speech?text=GC%20%E5%90%AB%E9%87%8F%E8%B6%8A%E9%AB%98%EF%BC%8C%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%E8%B6%8A%E9%AB%98%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%B0%A2%E9%94%AE%E6%9B%B4%E5%A4%9A%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "GC 含量越高，熔解温度越高，因为氢键更多。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8C%96%E4%BC%B0%E7%AE%97%E5%85%AC%E5%BC%8F%E5%A6%82%E4%B8%8B%E3%80%82",
+      "path": "audio/narrations/dna-melting/formula-formula-2.speech?text=%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8C%96%E4%BC%B0%E7%AE%97%E5%85%AC%E5%BC%8F%E5%A6%82%E4%B8%8B%E3%80%82",
+      "duration": 3.44,
+      "size": 0,
+      "text": "一个简化估算公式如下。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E8%A7%A3%E9%93%BE%E6%AF%94%E4%BE%8B%E9%9A%8F%E6%B8%A9%E5%BA%A6%E5%91%88%20S%20%E5%BD%A2%E6%9B%B2%E7%BA%BF%E4%B8%8A%E5%8D%87%E3%80%82",
+      "path": "audio/narrations/dna-melting/formula-formula-3.speech?text=%E8%A7%A3%E9%93%BE%E6%AF%94%E4%BE%8B%E9%9A%8F%E6%B8%A9%E5%BA%A6%E5%91%88%20S%20%E5%BD%A2%E6%9B%B2%E7%BA%BF%E4%B8%8A%E5%8D%87%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "解链比例随温度呈 S 形曲线上升。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=GC%20%E5%A4%9A%E7%9A%84%20DNA%20%E6%9B%B4%E7%A8%B3%E5%AE%9A%EF%BC%8C%E9%9C%80%E8%A6%81%E6%9B%B4%E9%AB%98%E6%B8%A9%E5%BA%A6%E6%89%8D%E8%83%BD%E7%86%94%E8%A7%A3%E3%80%82",
+      "path": "audio/narrations/dna-melting/formula-formula-4.speech?text=GC%20%E5%A4%9A%E7%9A%84%20DNA%20%E6%9B%B4%E7%A8%B3%E5%AE%9A%EF%BC%8C%E9%9C%80%E8%A6%81%E6%9B%B4%E9%AB%98%E6%B8%A9%E5%BA%A6%E6%89%8D%E8%83%BD%E7%86%94%E8%A7%A3%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "GC 多的 DNA 更稳定，需要更高温度才能熔解。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%8C%E8%9E%BA%E6%97%8B%E4%BB%8E%E4%B8%A4%E7%AB%AF%E9%80%90%E6%B8%90%E8%A7%A3%E5%BC%80%E3%80%82",
+      "path": "audio/narrations/dna-melting/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%8F%8C%E8%9E%BA%E6%97%8B%E4%BB%8E%E4%B8%A4%E7%AB%AF%E9%80%90%E6%B8%90%E8%A7%A3%E5%BC%80%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "调节温度，观察双螺旋从两端逐渐解开。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%20GC%20%E5%90%AB%E9%87%8F%EF%BC%8C%E7%9C%8B%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%E5%A6%82%E4%BD%95%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/dna-melting/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%20GC%20%E5%90%AB%E9%87%8F%EF%BC%8C%E7%9C%8B%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%E5%A6%82%E4%BD%95%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "改变 GC 含量，看熔解温度如何移动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%89%BE%E5%88%B0%E4%B8%80%E5%8D%8A%E7%A2%B1%E5%9F%BA%E5%AF%B9%E6%96%AD%E5%BC%80%E6%97%B6%E7%9A%84%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%20Tm%E3%80%82",
+      "path": "audio/narrations/dna-melting/interaction-interaction-3.speech?text=%E6%89%BE%E5%88%B0%E4%B8%80%E5%8D%8A%E7%A2%B1%E5%9F%BA%E5%AF%B9%E6%96%AD%E5%BC%80%E6%97%B6%E7%9A%84%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%20Tm%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "找到一半碱基对断开时的熔解温度 Tm。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=PCR%20%E6%8A%80%E6%9C%AF%E9%9D%A0%E5%8A%A0%E7%83%AD%E5%8F%98%E6%80%A7%E6%8A%8A%20DNA%20%E8%A7%A3%E9%93%BE%EF%BC%8C%E5%86%8D%E6%89%A9%E5%A2%9E%E3%80%82",
+      "path": "audio/narrations/dna-melting/application-application-1.speech?text=PCR%20%E6%8A%80%E6%9C%AF%E9%9D%A0%E5%8A%A0%E7%83%AD%E5%8F%98%E6%80%A7%E6%8A%8A%20DNA%20%E8%A7%A3%E9%93%BE%EF%BC%8C%E5%86%8D%E6%89%A9%E5%A2%9E%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "PCR 技术靠加热变性把 DNA 解链，再扩增。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%BC%95%E7%89%A9%E8%AE%BE%E8%AE%A1%E5%BF%85%E9%A1%BB%E7%B2%BE%E7%A1%AE%E8%AE%A1%E7%AE%97%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/dna-melting/application-application-2.speech?text=%E5%BC%95%E7%89%A9%E8%AE%BE%E8%AE%A1%E5%BF%85%E9%A1%BB%E7%B2%BE%E7%A1%AE%E8%AE%A1%E7%AE%97%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "引物设计必须精确计算熔解温度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=DNA%20%E7%86%94%E8%A7%A3%E5%88%86%E6%9E%90%E8%BF%98%E7%94%A8%E4%BA%8E%E5%9F%BA%E5%9B%A0%E7%AA%81%E5%8F%98%E6%A3%80%E6%B5%8B%E3%80%82",
+      "path": "audio/narrations/dna-melting/application-application-3.speech?text=DNA%20%E7%86%94%E8%A7%A3%E5%88%86%E6%9E%90%E8%BF%98%E7%94%A8%E4%BA%8E%E5%9F%BA%E5%9B%A0%E7%AA%81%E5%8F%98%E6%A3%80%E6%B5%8B%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "DNA 熔解分析还用于基因突变检测。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=DNA%20%E5%8F%8C%E9%93%BE%E9%9D%A0%E7%A2%B1%E5%9F%BA%E5%AF%B9%E6%B0%A2%E9%94%AE%E7%BB%93%E5%90%88%EF%BC%8C%E5%8A%A0%E7%83%AD%E5%8F%AF%E6%8B%86%E5%BC%80%E3%80%82",
+      "path": "audio/narrations/dna-melting/summary-summary-1.speech?text=DNA%20%E5%8F%8C%E9%93%BE%E9%9D%A0%E7%A2%B1%E5%9F%BA%E5%AF%B9%E6%B0%A2%E9%94%AE%E7%BB%93%E5%90%88%EF%BC%8C%E5%8A%A0%E7%83%AD%E5%8F%AF%E6%8B%86%E5%BC%80%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "DNA 双链靠碱基对氢键结合，加热可拆开。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%20Tm%20%E9%9A%8F%20GC%20%E5%90%AB%E9%87%8F%E5%8D%87%E9%AB%98%EF%BC%8CGC%20%E9%94%AE%E5%A4%9A%E6%9B%B4%E7%A8%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/dna-melting/summary-summary-2.speech?text=%E7%86%94%E8%A7%A3%E6%B8%A9%E5%BA%A6%20Tm%20%E9%9A%8F%20GC%20%E5%90%AB%E9%87%8F%E5%8D%87%E9%AB%98%EF%BC%8CGC%20%E9%94%AE%E5%A4%9A%E6%9B%B4%E7%A8%B3%E5%AE%9A%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "熔解温度 Tm 随 GC 含量升高，GC 键多更稳定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "dna-melting",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%20PCR%20%E7%AD%89%E6%8A%80%E6%9C%AF%E7%9A%84%E7%89%A9%E7%90%86%E5%9F%BA%E7%A1%80%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/dna-melting/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%20PCR%20%E7%AD%89%E6%8A%80%E6%9C%AF%E7%9A%84%E7%89%A9%E7%90%86%E5%9F%BA%E7%A1%80%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.5,
+      "size": 0,
+      "text": "它是 PCR 等技术的物理基础。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}
