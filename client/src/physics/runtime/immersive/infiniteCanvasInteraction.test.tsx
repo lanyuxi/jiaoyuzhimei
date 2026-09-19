@@ -542,7 +542,8 @@ describe('空格平移不得吞掉悬浮控件（审查必修 1）', () => {
     expect(mid, '点在悬浮控件上却平移了画布').toEqual(before)
 
     act(() => {
-      button.dispatchEvent(pointerEvent('pointerup', { clientX: 1000, clientY: 200 }))
+      // 走真实派发路径：认领后 pointerup 只会派发给捕获元素（这里没有捕获，故落在手势层）
+      dispatchPointer('pointerup', { clientX: 1000, clientY: 200 })
       button.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     })
 
@@ -1039,5 +1040,164 @@ describe('空格粘住状态的逃生阀（审查 info 项）', () => {
       window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
     })
     act(() => root.unmount())
+  })
+})
+
+describe('空格连续性：慢速拖动也必须被识别为"拖动"（审查必修：moved 判据）', () => {
+  /**
+   * 真实的回归，真源码复现过：`moved` 原先用**相邻两帧**的位移判定，
+   * 而只要位移是**由多帧亚像素步长**组成的（高刷鼠标、触控板、系统缩放、慢速拖动），
+   * 每帧 `hypot(dx, dy)` 都不到 1px，`moved` **全程为 false** ——
+   * 明明画布已经跟手走了 180px，却仍被判成"点击"。
+   *
+   * 后果不是识别不准：逃生阀会因此清掉 `panReady`，
+   * 让"按住空格 + 拖过一次慢速拖动"之后的**所有拖动永久失效**（实测第二次 dx=0）。
+   */
+  function mountPan(): {
+    gestureLayer: HTMLElement
+    panX(): number
+    unmount(): void
+  } {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const stageRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement>()
+    const root = createRoot(host)
+    act(() => {
+      root.render(
+        <InfiniteCanvas
+          stageRef={stageRef}
+          content={{ minX: 0, minY: 0, maxX: 400, maxY: 300 }}
+          tilt={0}
+          showToolbar={false}
+        >
+          <div />
+        </InfiniteCanvas>,
+      )
+    })
+    const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
+    stubRect(stage, SIZE.width, SIZE.height)
+    patchPointerCapture(stage)
+    releaseRedirect()
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
+    patchPointerCapture(gestureLayer)
+    fallbackTarget = gestureLayer
+    return {
+      gestureLayer,
+      panX: () => {
+        const t = (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform
+        return panOf(t).x
+      },
+      unmount: () => act(() => root.unmount()),
+    }
+  }
+
+  it('分帧亚像素拖动（200 × 0.9px）之后，不松开空格再拖必须仍然跟手', () => {
+    const h = mountPan()
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+
+    // 第一次拖动：200 帧、每帧 0.9px —— 每帧都不到 1px 的阈值
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 200 }))
+    })
+    for (let i = 1; i <= 200; i += 1) {
+      act(() => {
+        dispatchPointer('pointermove', { clientX: 300 + i * 0.9, clientY: 200 })
+      })
+    }
+    const afterSlow = h.panX()
+    expect(afterSlow, '慢速拖动没有跟手（画布本身没动）').toBeCloseTo(180, 0)
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 300 + 200 * 0.9, clientY: 200 }))
+    })
+    releaseRedirect()
+
+    // 空格**没有松开**，第二次拖动必须照常跟手
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 500, clientY: 200 })
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 500, clientY: 200 }))
+    })
+    releaseRedirect()
+    expect(
+      h.panX() - afterSlow,
+      '慢速拖动被判成"点击"，逃生阀清掉 panReady → 第二次拖动完全失效',
+    ).toBeCloseTo(200, 0)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    h.unmount()
+  })
+
+  it('单帧位移只有 0.4px（未过阈值）也不该被当成"点击"而清掉空格状态', () => {
+    const h = mountPan()
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    // 按下 → 0.4px 位移 → 松开（这次是"几乎没动的一下"）
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 300.4, clientY: 200 })
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 300.4, clientY: 200 }))
+    })
+    releaseRedirect()
+    const before = h.panX()
+
+    /**
+     * 0.4px 的位移**根本不算点击** —— 它是被截断的拖动。
+     * 逃生阀若在这里清掉 `panReady`，接下来的真实拖动就整个失效。
+     */
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 450, clientY: 200 })
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 450, clientY: 200 }))
+    })
+    releaseRedirect()
+    expect(
+      h.panX() - before,
+      '一次 0.4px 的微小位移被当成"点击"，把空格状态清掉了 → 后续拖动失效',
+    ).toBeCloseTo(150, 0)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    h.unmount()
+  })
+
+  it('认领 → pointercancel → 不松开空格再拖，仍然必须跟手（真实设备唯一的清理出口）', () => {
+    const h = mountPan()
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    // 第一次手势被系统打断（真实设备上只会走 cancel，不会来 pointerup）
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 360, clientY: 200 })
+      h.gestureLayer.dispatchEvent(pointerEvent('pointercancel', { clientX: 360, clientY: 200 }))
+    })
+    releaseRedirect()
+    const afterCancel = h.panX()
+
+    // 空格仍按着，必须能继续拖
+    act(() => {
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 200 }))
+      dispatchPointer('pointermove', { clientX: 520, clientY: 200 })
+      h.gestureLayer.dispatchEvent(pointerEvent('pointerup', { clientX: 520, clientY: 200 }))
+    })
+    releaseRedirect()
+    expect(
+      h.panX() - afterCancel,
+      'pointercancel 之后画布没能重新认领手势（真实设备上这等于"拖动彻底卡死"）',
+    ).toBeCloseTo(220, 0)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    h.unmount()
   })
 })

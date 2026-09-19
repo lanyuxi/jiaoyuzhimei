@@ -114,7 +114,16 @@ export function useInfiniteCanvas({
   const [size, setSize] = useState<CanvasSize>({ width: 0, height: 0 })
   const [camera, setCamera] = useState<Camera>(IDENTITY_CAMERA)
   const [panReady, setPanReady] = useState(false)
-  const panRef = useRef<{ pointerId: number; x: number; y: number; moved: boolean } | null>(null)
+  const panRef = useRef<{
+    pointerId: number
+    /** 上一帧位置（用于算增量平移） */
+    x: number
+    y: number
+    /** 按下点（用于判定"这次手势到底是点击还是拖动"） */
+    originX: number
+    originY: number
+    moved: boolean
+  } | null>(null)
   /**
    * `panReady` 的**事件回调可读镜像**。
    *
@@ -386,7 +395,14 @@ export function useInfiniteCanvas({
        * 所以：**认领走了的指针不进 `pinchRef`**，只把"确实空出来的第二指"留给捏合。
        */
       if (panRef.current === null && panEligible(event)) {
-        panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
+        panRef.current = {
+          pointerId: event.pointerId,
+          x: event.clientX,
+          y: event.clientY,
+          originX: event.clientX,
+          originY: event.clientY,
+          moved: false,
+        }
         const captureTarget = event.currentTarget as
           | (EventTarget & { setPointerCapture?: (id: number) => void })
           | null
@@ -429,7 +445,14 @@ export function useInfiniteCanvas({
     onPointerDown: (event: PointerEvent<HTMLElement>) => {
       // 与捕获阶段同一条纪律：认领与捏合登记互斥（见 `onPointerDownCapture` 注释）
       if (panRef.current === null && panEligible(event)) {
-        panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
+        panRef.current = {
+          pointerId: event.pointerId,
+          x: event.clientX,
+          y: event.clientY,
+          originX: event.clientX,
+          originY: event.clientY,
+          moved: false,
+        }
         return
       }
       pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
@@ -437,11 +460,14 @@ export function useInfiniteCanvas({
     onPointerMove: (event: PointerEvent<HTMLElement>) => {
       const panning = panRef.current !== null && panRef.current.pointerId === event.pointerId
       /**
-       * ⚠️ **正在平移的那一指不参与捏合**。
+       * ⚠️ **正在平移的那一指不参与捏合** —— 这是**防御性**代码，不是被测试覆盖的行为。
        *
-       * 认领平移时不会把它登记进 `pinchRef`，所以正常情况下这里进不去；
-       * 但兜底入口（`handlers.onPointerDown`）与历史状态仍可能留下它 ——
-       * 一旦把它算成捏合的一指，平移中就会多出一次按两点中点的 `zoomAt`。
+       * 认领平移时不会把它登记进 `pinchRef`（见 `onPointerDownCapture`），
+       * 所以在当前两个入口下这里**进不去**。
+       * 保留它是因为"平移与捏合同源"是这个文件里最容易被改回去的一处：
+       * 一旦有人让认领也登记 `pinchRef`，平移中就会多出一次按两点中点的 `zoomAt`
+       * （实测 `scale 1 → 1.4`）。删掉它**不会让任何判据变红**，
+       * 请把它当"护栏"而不是"多余分支"。
        */
       if (!panning && pinchRef.current.has(event.pointerId)) {
         pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
@@ -462,7 +488,26 @@ export function useInfiniteCanvas({
       if (pan === null || pan.pointerId !== event.pointerId) return
       const dx = event.clientX - pan.x
       const dy = event.clientY - pan.y
-      if (!pan.moved && Math.hypot(dx, dy) > 1) pan.moved = true
+      /**
+       * `moved` = "这次手势到底是**点击**还是**拖动**"。
+       *
+       * ⚠️ 这里踩过两个坑，都不是"阈值调多大"的问题：
+       *
+       * 1. **不能用相邻两帧的位移判定**：只要位移由**多帧亚像素步长**组成
+       *    （高刷鼠标、触控板 `pointerrawupdate` 合并、系统缩放、慢速拖动），
+       *    每帧都不到 1px，`moved` 会**全程为 false** ——
+       *    明明画布已跟手走了 180px，却仍被判成"点击"。
+       *    后果不是识别不准，而是下面的逃生阀清掉 `panReady`，
+       *    让"按住空格 + 拖过一次慢速拖动"之后的**所有拖动永久失效**（实测第二次 dx=0）。
+       *
+       * 2. **也不能只看"相对按下点是否超过 1px"**：一次被截断的拖动可能只走了 0.4px，
+       *    它**根本不该算点击** —— 逃生阀一旦在这里清掉空格状态，
+       *    接下来的真实拖动就整个失效。
+       *
+       * 因此判据是：**只要真的产生过位移（`dx`/`dy` 非零，即确实调用了 `panBy`），
+       * 就算拖动**。这与"区分点击与拖动"的意图一致，也不会误伤任何真实拖动。
+       */
+      if (!pan.moved && (dx !== 0 || dy !== 0)) pan.moved = true
       pan.x = event.clientX
       pan.y = event.clientY
       setCamera((current) => panBy(current, dx, dy, sizeRef.current))
