@@ -231,6 +231,11 @@ export default function InfiniteCanvas({
     >
       <div
         {...canvas.handlers}
+        /**
+         * 手势层标记：`useInfiniteCanvas` 靠它找到这一层，把**捕获阶段的**
+         * 平移监听挂在这里、并把指针捕获在这一层上（理由见该 hook 内的长注释）。
+         */
+        data-canvas-gesture-layer
         className={`absolute inset-0 touch-none ${canvas.panReady ? 'cursor-grab' : 'cursor-default'}`}
       >
         <div ref={innerRef} style={worldStyle} className="absolute left-0 top-0 select-none">

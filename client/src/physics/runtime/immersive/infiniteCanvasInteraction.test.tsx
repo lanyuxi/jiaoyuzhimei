@@ -16,21 +16,66 @@
  * 而这正是用户唯一能感知的东西。
  */
 import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { createRef, type RefObject } from 'react'
 import InfiniteCanvas from './InfiniteCanvas'
 
-/** happy-dom 没有实现指针捕获，这里补一个 no-op，避免事件链被打断 */
+/**
+ * happy-dom **不实现指针捕获重定向**（它把 `pointermove` 派发给鼠标下的元素，
+ * 而不是派发给捕获元素）。这里补上**真实浏览器语义**的桩：
+ *
+ *   · `setPointerCapture(id)` → 该元素成为后续 `pointermove / pointerup` 的派发目标；
+ *   · `releasePointerCapture` / `pointerup` 隐式释放都会取消重定向。
+ *
+ * ⚠️ 为什么必须是"真重定向"而不是 no-op：no-op 桩会让
+ * "画布捕获指针后器材仍收到 `pointermove`" 这类回归**测不出来**，
+ * 测试绿只是因为 mock 少了实现，而不是实现正确 —— 这正是上一版被审查打穿的地方。
+ */
+const captureRegistry = new WeakMap<Element, number>()
+let redirectTarget: Element | null = null
+
 function patchPointerCapture(element: Element) {
   const target = element as Element & {
     setPointerCapture?: (id: number) => void
     releasePointerCapture?: (id: number) => void
     hasPointerCapture?: (id: number) => boolean
   }
-  target.setPointerCapture ??= () => {}
-  target.releasePointerCapture ??= () => {}
-  target.hasPointerCapture ??= () => false
+  target.setPointerCapture = (id: number) => {
+    captureRegistry.set(element, id)
+    redirectTarget = element
+  }
+  target.releasePointerCapture = (id: number) => {
+    if (captureRegistry.get(element) === id) captureRegistry.delete(element)
+    if (redirectTarget === element) redirectTarget = null
+  }
+  target.hasPointerCapture = (id: number) => captureRegistry.get(element) === id
+}
+
+/** 取消当前重定向（真实浏览器在 `pointerup` 时会隐式释放捕获） */
+function releaseRedirect() {
+  if (redirectTarget !== null) captureRegistry.delete(redirectTarget)
+  redirectTarget = null
+}
+
+/**
+ * 从**原始目标**派发指针事件，并复刻真实浏览器的捕获重定向。
+ *
+ * 真实语义：一旦某元素捕获了指针，后续 `pointermove` 的 `event.target`
+ * **就是那个捕获元素**，不再是鼠标下的元素。因此这里在派发前换成 `redirectTarget`。
+ */
+function dispatchPointer(type: string, init: PointerEventInit) {
+  /**
+   * 没有捕获时按"鼠标下的元素"派发是不现实的（测试里没有真实命中测试），
+   * 因此未捕获时退化为"从 body 派发"；有捕获时严格按真实语义派发给捕获元素。
+   * 断言只依赖"捕获后必须重定向"这一条，未捕获的分支不会被用来证明任何结论。
+   */
+  const actual = redirectTarget ?? document.body
+  const event = pointerEvent(type, init)
+  actual.dispatchEvent(event)
+  return event
 }
 
 /** 固定舞台尺寸：happy-dom 里 `getBoundingClientRect` 恒为 0，必须显式打桩 */
@@ -90,8 +135,9 @@ function mount(): Harness {
     window.dispatchEvent(new Event('resize'))
   })
 
-  const gestureLayer = stage.firstElementChild as HTMLElement
+  const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
   patchPointerCapture(gestureLayer)
+  releaseRedirect()
 
   const world = stage.querySelector('[style*="translate3d"]') as HTMLElement
   const label = stage.textContent ?? ''
@@ -153,9 +199,10 @@ describe('空格键 + 按住鼠标左键 = 任意拖动无限画布', () => {
     act(() => {
       svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 100, clientY: 100 }))
     })
-    // 捕获后指针事件重定向到捕获元素（见上一条用例的说明），从舞台继续派发
+    // 真实捕获语义：画布认领后在舞台捕获指针 → pointermove 目标变成舞台。
+    // 这里交给 `dispatchPointer` 复刻重定向，而不是手工从舞台派发。
     act(() => {
-      harness.stage.dispatchEvent(pointerEvent('pointermove', { clientX: 180, clientY: 160 }))
+      dispatchPointer('pointermove', { clientX: 180, clientY: 160 })
     })
 
     const moved = panOf(harness.worldTransform())
@@ -203,6 +250,7 @@ describe('空格键 + 按住鼠标左键 = 任意拖动无限画布', () => {
       svg.dispatchEvent(pointerEvent('pointermove', { clientX: 300, clientY: 300 }))
     })
     expect(panOf(harness.worldTransform()), '窗口失焦后画布仍然在跟着指针走').toEqual(settled)
+    releaseRedirect()
     harness.unmount()
   })
 
@@ -245,7 +293,7 @@ describe('空格键 + 按住鼠标左键 = 任意拖动无限画布', () => {
      * 器材既收不到 `pointerdown`，也收不到 `pointermove`。
      */
     act(() => {
-      harness.stage.dispatchEvent(pointerEvent('pointermove', { clientX: 110, clientY: 60 }))
+      dispatchPointer('pointermove', { clientX: 110, clientY: 60 })
     })
 
     const moved = panOf(harness.worldTransform())
@@ -262,7 +310,7 @@ describe('空格键 + 按住鼠标左键 = 任意拖动无限画布', () => {
     harness.stage.appendChild(svg)
     act(() => {
       svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 50, clientY: 50, button: 1 }))
-      svg.dispatchEvent(pointerEvent('pointermove', { clientX: 90, clientY: 30 }))
+      dispatchPointer('pointermove', { clientX: 90, clientY: 30, button: 1 })
     })
     const moved = panOf(harness.worldTransform())
     expect(moved.x - before.x).toBeCloseTo(40, 3)
@@ -287,7 +335,7 @@ describe('空格键 + 按住鼠标左键 = 任意拖动无限画布', () => {
       x += 4000
       y -= 3000
       act(() => {
-        svg.dispatchEvent(pointerEvent('pointermove', { clientX: x, clientY: y }))
+        dispatchPointer('pointermove', { clientX: x, clientY: y })
       })
     }
     const moved = panOf(harness.worldTransform())
@@ -392,10 +440,386 @@ describe('鼠标滚轮缩放画布', () => {
     harness.stage.appendChild(svg)
     act(() => {
       svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 0, clientY: 0 }))
-      svg.dispatchEvent(pointerEvent('pointermove', { clientX: 250, clientY: 0 }))
+      dispatchPointer('pointermove', { clientX: 250, clientY: 0 })
     })
     const after = panOfWorld()
     expect(after.x - before.x).toBeCloseTo(250, 3)
     harness.unmount()
+  })
+})
+
+describe('空格平移不得吞掉悬浮控件（审查必修 1）', () => {
+  /**
+   * 真实 Chromium 实测的回归：捕获阶段用 `stopPropagation` + `setPointerCapture`
+   * 认领手势后，画布工具条（`InfiniteCanvas` **内部**、`stageRef` 覆盖不到）
+   * 的 `pointerdown / pointerup / click` 一个都不再触发 —— 按钮彻底点不动，
+   * 且卡住后没有恢复路径（只能切路由）。
+   *
+   * 这一条就是那个回归的直接判据：按住空格点按钮，按钮必须照常响应。
+   */
+  it('按住空格时，点画布工具条按钮仍然生效（按钮不被画布吞掉）', () => {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const stageRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement>()
+    const root = createRoot(host)
+
+    let zoomClicks = 0
+    act(() => {
+      root.render(
+        <InfiniteCanvas
+          stageRef={stageRef}
+          content={{ minX: 0, minY: 0, maxX: 400, maxY: 300 }}
+          tilt={0}
+          showToolbar
+        >
+          <div data-testid="content" />
+        </InfiniteCanvas>,
+      )
+    })
+    const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
+    stubRect(stage, SIZE.width, SIZE.height)
+    patchPointerCapture(stage)
+    releaseRedirect()
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
+    patchPointerCapture(gestureLayer)
+
+    /**
+     * ⚠️ 这里刻意**放在手势层内部**，复刻真实场景的层级。
+     *
+     * 画布工具条是手势层的**兄弟**（结构上就不可能被手势层的捕获监听看到），
+     * 但 `CompetitorScene` 里的读数条 / 量程按钮 / 协作胶囊都渲染在
+     * 手势层**内部的 SVG 子树里** —— 它们才真正依赖 `data-canvas-pan-block` 守卫。
+     * 把判据放在这一层，去掉守卫时才会真红。
+     */
+    const overlay = document.createElement('button')
+    overlay.setAttribute('data-canvas-pan-block', '')
+    overlay.textContent = '量程 0.6A'
+    gestureLayer.appendChild(overlay)
+    const button = overlay
+    expect(button.closest('[data-canvas-gesture-layer]'), '测试前提：控件必须在手势层内部').not.toBeNull()
+    button.addEventListener('click', () => {
+      zoomClicks += 1
+    })
+    patchPointerCapture(button)
+
+    const before = panOf(
+      (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform,
+    )
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    /**
+     * 关键判据不是"手动补一个 click 能跑" —— 那测不出守卫被删掉。
+     * 真正要钉住的是**画布有没有背着自己把这次按下抢走**：
+     *   ① 手势层不得捕获指针（捕获了就会把后续 click 重定向掉）；
+     *   ② 画布不得平移。
+     * 这两条一起，才能把"去掉 `data-canvas-pan-block` 守卫"这个变异打红。
+     */
+    act(() => {
+      button.dispatchEvent(pointerEvent('pointerdown', { clientX: 1100, clientY: 40 }))
+    })
+    expect(
+      gestureLayer.hasPointerCapture(1),
+      '按住空格时，在悬浮按钮上按下仍被画布抢走了指针（按钮会被吞掉）',
+    ).toBe(false)
+
+    act(() => {
+      dispatchPointer('pointermove', { clientX: 1000, clientY: 200 })
+    })
+    const mid = panOf(
+      (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform,
+    )
+    expect(mid, '点在悬浮控件上却平移了画布').toEqual(before)
+
+    act(() => {
+      button.dispatchEvent(pointerEvent('pointerup', { clientX: 1000, clientY: 200 }))
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+
+    expect(zoomClicks, '按住空格时点工具条按钮被画布吞掉了').toBe(1)
+    const after = panOf(
+      (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform,
+    )
+    expect(after, '点在悬浮控件上却平移了画布').toEqual(before)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    releaseRedirect()
+    act(() => root.unmount())
+  })
+})
+
+describe('空格按住不放可以连续拖动（审查必修 2）', () => {
+  /**
+   * 用户原话：「空格键 = 按住长按鼠标左键不松开，可以任意拖动无限画布的位置」。
+   *
+   * 旧实现在 `pointerup` 里清掉 `panReady`，于是"按住空格不放"只能拖**一次**，
+   * 第二次完全失效（真实 Chromium 实测 `dx=0`）。
+   * 复位时机只能是 `keyup` / `blur` / `pointercancel`。
+   */
+  it('空格按住不放，连续拖两次画布都要跟手', () => {
+    const harness = mount()
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    Object.assign(svg.style, { position: 'absolute', inset: '0' })
+    harness.stage.appendChild(svg)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+
+    // 第一次拖动
+    const start1 = panOf(harness.worldTransform())
+    act(() => {
+      svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 100, clientY: 100 }))
+      dispatchPointer('pointermove', { clientX: 300, clientY: 100 })
+      svg.dispatchEvent(pointerEvent('pointerup', { clientX: 300, clientY: 100 }))
+    })
+    releaseRedirect()
+    const afterFirst = panOf(harness.worldTransform())
+    expect(afterFirst.x - start1.x, '第一次拖动没有平移').toBeCloseTo(200, 3)
+
+    // 空格**没有松开**，第二次拖动必须照常跟手
+    act(() => {
+      svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 300, clientY: 100 }))
+      dispatchPointer('pointermove', { clientX: 420, clientY: 160 })
+      svg.dispatchEvent(pointerEvent('pointerup', { clientX: 420, clientY: 160 }))
+    })
+    releaseRedirect()
+    const afterSecond = panOf(harness.worldTransform())
+    expect(
+      afterSecond.x - afterFirst.x,
+      '按住空格不放时第二次拖动失效（pointerup 把空格状态清掉了）',
+    ).toBeCloseTo(120, 3)
+    expect(afterSecond.y - afterFirst.y, '第二次拖动的纵向位移丢了').toBeCloseTo(60, 3)
+
+    // 真的松开空格之后，才应该不再跟着走
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    const settled = panOf(harness.worldTransform())
+    act(() => {
+      svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 0, clientY: 0 }))
+      svg.dispatchEvent(pointerEvent('pointermove', { clientX: 500, clientY: 500 }))
+    })
+    expect(panOf(harness.worldTransform()), '松开空格后画布仍然在跟着指针走').toEqual(settled)
+
+    harness.unmount()
+  })
+})
+
+describe('指针捕获语义按真实浏览器复刻（审查必修 3）', () => {
+  /**
+   * 这一组是"测试自身可信度"的判据：如果 happy-dom 桩没做真重定向，
+   * 下面这条会绿得毫无意义。
+   *
+   * 复刻点：捕获后 `pointermove` 的 `event.target` 必须**是捕获元素**，
+   * 而不再是鼠标下的元素。
+   */
+  it('指针被捕获后，pointermove 的目标变成捕获元素（重定向真的生效）', () => {
+    const harness = mount()
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    let svgMoves = 0
+    svg.addEventListener('pointermove', () => {
+      svgMoves += 1
+    })
+    harness.stage.appendChild(svg)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    act(() => {
+      svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 100, clientY: 100 }))
+    })
+    // 画布认领后在**舞台**上捕获：目标必须变成舞台，SVG 收不到
+    expect(harness.stage.hasPointerCapture(1), '画布认领手势后没有在舞台上捕获指针').toBe(true)
+    act(() => {
+      dispatchPointer('pointermove', { clientX: 200, clientY: 150 })
+    })
+    expect(svgMoves, 'SVG 仍然收到了 pointermove —— 说明测试桩没有复刻捕获重定向').toBe(0)
+
+    const moved = panOf(harness.worldTransform())
+    expect(moved.x).toBeCloseTo(100, 3)
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    releaseRedirect()
+    harness.unmount()
+  })
+})
+
+describe('相机不得被"每帧都变的新对象"打回初始构图（滚轮/平移的真正杀手）', () => {
+  /**
+   * 这是"滚轮缩放一放大就自己弹回去""按住空格平移推不动"的**真正根因**，
+   * 而且它在真实浏览器里才会显形 —— 单测里 `padding` 传常量，压根测不出来。
+   *
+   * 机制：调用方几乎都写成 `padding={fitPaddingWithinSafeArea(w, h)}`，
+   * 那是**每次渲染都新建的对象字面量**。只要"重新聚焦"effect 的依赖里挂着
+   * `padding` 这个对象，effect 就会在**每次渲染**重跑 → `setCamera(focus(...))`
+   * 把相机打回初始构图 —— 于是滚轮刚改完 scale 就被抹掉。
+   *
+   * 判据用"每次渲染都新建一个 padding 对象"来复刻真实调用方。
+   */
+  function mountWithVolatilePadding(onRerender?: () => void): {
+    stage: HTMLElement
+    gestureLayer: HTMLElement
+    camera(): { x: number; y: number; scale: number }
+    rerender(): void
+    unmount(): void
+  } {
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const stageRef: RefObject<HTMLDivElement | null> = createRef<HTMLDivElement>()
+    const root = createRoot(host)
+    const render = () => {
+      root.render(
+        <InfiniteCanvas
+          stageRef={stageRef}
+          content={{ minX: 0, minY: 0, maxX: 400, maxY: 300 }}
+          tilt={0}
+          showToolbar={false}
+          // ⚠️ 每次渲染都是**新对象**，与真实调用方 `fitPaddingWithinSafeArea(...)` 同构
+          padding={{ top: 56, bottom: 60, left: 28, right: 28 }}
+        >
+          <div data-testid="content" />
+        </InfiniteCanvas>,
+      )
+      onRerender?.()
+    }
+    act(() => render())
+
+    const stage = host.querySelector('[data-immersive-canvas]') as HTMLElement
+    stubRect(stage, SIZE.width, SIZE.height)
+    patchPointerCapture(stage)
+    releaseRedirect()
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    const gestureLayer = stage.querySelector('[data-canvas-gesture-layer]') as HTMLElement
+    patchPointerCapture(gestureLayer)
+
+    const read = () => {
+      const t = (stage.querySelector('[style*="translate3d"]') as HTMLElement).style.transform
+      const p = panOf(t)
+      const s = Number(t.match(/scale\(([-\d.]+)\)/)?.[1] ?? Number.NaN)
+      return { ...p, scale: s }
+    }
+
+    return {
+      stage,
+      gestureLayer,
+      camera: read,
+      rerender: () => act(() => render()),
+      unmount: () => act(() => root.unmount()),
+    }
+  }
+
+  /**
+   * ⚠️ 说明一个**测试能力的边界**（诚实交底，不假装覆盖到了）：
+   *
+   * 下面两条在 happy-dom 里其实**打不到真实根因** —— happy-dom 没有
+   * `ResizeObserver`，舞台尺寸恒为 0，"重新聚焦" effect 会提前 `return`，
+   * 于是"padding 每次都是新对象 → effect 每次重跑"这条链在单测里**根本不发生**。
+   *
+   * 真正能钉住它的是下面那条**源码契约**用例（直接检查依赖数组）。
+   * 保留这两条行为用例是因为它们仍然守住了"相机不被无谓重置"这个**语义**，
+   * 将来如果测试环境补上 ResizeObserver，它们会自动变成真覆盖。
+   */
+  it('滚轮缩放之后，即使因为别的原因重渲染（padding 是新对象），缩放也不会被打回', () => {
+    const h = mountWithVolatilePadding()
+
+    const before = h.camera()
+    act(() => {
+      h.stage.dispatchEvent(wheelEvent({ clientX: 600, clientY: 400, deltaY: -400 }))
+    })
+    const zoomed = h.camera()
+    expect(zoomed.scale, '滚轮没有放大').toBeGreaterThan(before.scale)
+
+    // 模拟"因为别的原因（相机回调 / 父组件状态）重渲染了一次"
+    h.rerender()
+    h.rerender()
+
+    const after = h.camera()
+    expect(
+      after.scale,
+      '重渲染后缩放被打回初始构图（padding 每次都是新对象 → 聚焦 effect 每次重跑）',
+    ).toBeCloseTo(zoomed.scale, 3)
+    expect(after.x, '重渲染后相机 x 被重置').toBeCloseTo(zoomed.x, 3)
+    expect(after.y, '重渲染后相机 y 被重置').toBeCloseTo(zoomed.y, 3)
+    h.unmount()
+  })
+
+  it('空格平移之后，重渲染同样不许把画布拉回原位', () => {
+    const h = mountWithVolatilePadding()
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', bubbles: true }))
+    })
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    h.gestureLayer.appendChild(svg)
+
+    act(() => {
+      svg.dispatchEvent(pointerEvent('pointerdown', { clientX: 100, clientY: 100 }))
+      dispatchPointer('pointermove', { clientX: 260, clientY: 160 })
+      svg.dispatchEvent(pointerEvent('pointerup', { clientX: 260, clientY: 160 }))
+    })
+    releaseRedirect()
+    const panned = h.camera()
+    expect(panned.x, '平移没有生效').toBeCloseTo(160, 3)
+
+    h.rerender()
+    const after = h.camera()
+    expect(after.x, '重渲染后平移被打回原位（表现为"推不动"）').toBeCloseTo(panned.x, 3)
+    expect(after.y, '重渲染后平移被打回原位').toBeCloseTo(panned.y, 3)
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', bubbles: true }))
+    })
+    h.unmount()
+  })
+})
+
+describe('源码契约：「重新聚焦」effect 不得把 padding 的对象身份当依赖', () => {
+  /**
+   * 这是"滚轮放大一松手就弹回初始大小""按住空格平移推不动"的**真正根因**，
+   * 而它只在真实浏览器里显形（happy-dom 没有 ResizeObserver，尺寸恒为 0，
+   * effect 会提前 return，行为用例打不到）。
+   *
+   * 所以这里直接钉**源码契约**：依赖数组里必须是 `paddingKey` 这样的**值表达**，
+   * 不能是 `padding` 这个**每帧都新建**的对象。
+   */
+  it('聚焦 effect 依赖 paddingKey（值），不得依赖 padding（对象身份）', () => {
+    const source = readFileSync(
+      join(process.cwd(), 'src/physics/runtime/immersive/useInfiniteCanvas.ts'),
+      'utf8',
+    )
+    const index = source.indexOf('// 尺寸或内容变化 → 重新聚焦')
+    expect(index, '找不到「重新聚焦」effect').toBeGreaterThan(-1)
+    const block = source.slice(index, index + 900)
+
+    // 必须存在一个由四个边距数值拼出来的稳定 key
+    expect(block, '没有把 padding 折成稳定的值表达（paddingKey）').toContain('paddingKey')
+    expect(block, 'paddingKey 没有参与依赖数组').toMatch(/\[contentKey,\s*size\.width,\s*size\.height,\s*paddingKey/)
+
+    // 依赖数组里**不许**出现裸的 `padding` —— 它每次渲染都是新引用
+    const depsLine = block.slice(block.indexOf('}, ['))
+    expect(
+      depsLine,
+      '依赖数组里又挂了 padding 对象（调用方的 fitPaddingWithinSafeArea(...) 每次都是新对象，'
+        + '会让 effect 每次渲染都重跑、把相机打回初始构图）',
+    ).not.toMatch(/\[contentKey[^\]]*\bpadding\b(?!Key)/)
+  })
+
+  it('聚焦 effect 用的是 paddingRef 里的**最新值**，而不是闭包里那份可能过期的', () => {
+    const source = readFileSync(
+      join(process.cwd(), 'src/physics/runtime/immersive/useInfiniteCanvas.ts'),
+      'utf8',
+    )
+    const index = source.indexOf('// 尺寸或内容变化 → 重新聚焦')
+    const block = source.slice(index, index + 900)
+    expect(block, '聚焦时读了闭包里的 padding（值可能过期）').toContain('paddingRef.current')
   })
 })

@@ -88,10 +88,23 @@ function clamp(value: number, min: number, max: number): number {
 export function clampCamera(camera: Camera, size: CanvasSize): Camera {
   const limits = cameraLimits(size)
   return {
-    scale: clamp(camera.scale, limits.minScale, limits.maxScale),
+    scale: clampScale(camera.scale, limits),
     x: clampPanOffset(camera.x),
     y: clampPanOffset(camera.y),
   }
+}
+
+/**
+ * 缩放的兜底：非有限值先归到 1，再夹进上下限。
+ *
+ * 必须显式兜 `scale` 的 NaN —— `clamp(NaN, min, max)` **返回 NaN**
+ * （`Math.min/Math.max` 遇 NaN 会一路传染），于是 `projectPerspective`
+ * 会算出 `{ x: null, y: null }`，画布整块消失且不报错。
+ * 平移侧早就有 `clampPanOffset` 这一层，缩放侧以前是漏的。
+ */
+export function clampScale(value: number, limits: { minScale: number; maxScale: number }): number {
+  if (!Number.isFinite(value)) return 1
+  return clamp(value, limits.minScale, limits.maxScale)
 }
 
 /** 平移量的浮点护栏：非有限值归零，超精度上限就停在护栏上（不是画布边界） */

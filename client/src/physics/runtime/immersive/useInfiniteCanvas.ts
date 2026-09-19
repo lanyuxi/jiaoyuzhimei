@@ -238,14 +238,36 @@ export function useInfiniteCanvas({
     [fitMaxScale, fitProjection, perspective, probeList, measureBounds],
   )
 
+  /**
+   * 聚焦边距的**稳定表达**。
+   *
+   * ⚠️ `padding` 的原型是对象字面量（调用方常写成
+   * `padding={fitPaddingWithinSafeArea(w, h)}`），**每次渲染都是新引用**。
+   * 直接把它放进依赖数组，会让下面的"重新聚焦" effect **每次渲染都重跑一次**，
+   * 于是：滚轮刚把 `scale` 改掉 → 渲染 → effect 重跑 → `setCamera(focus(...))`
+   * 把相机**打回初始构图** —— 用户看到的是"滚轮放大一下又自己弹回去了"，
+   * 空格平移同理（画布一移动就被拉回原位）。
+   *
+   * 这里把边距拆成四个数值再拼成字符串，只认**值**、不认引用；
+   * `paddingRef` 保证 effect 里读到的是最新值。
+   */
+  const paddingRef = useRef(padding)
+  paddingRef.current = padding
+  const resolvedPadding = resolveFitPadding(padding)
+  const paddingKey = `${resolvedPadding.top}:${resolvedPadding.right}:${resolvedPadding.bottom}:${resolvedPadding.left}`
+
   // 尺寸或内容变化 → 重新聚焦（进入实验即铺满整屏）
   const contentKey = `${content.minX}:${content.minY}:${content.maxX}:${content.maxY}`
   useEffect(() => {
     if (size.width <= 0 || size.height <= 0) return
-    setCamera(focus(content, size, padding))
-    // contentKey 是 content 的稳定表达，避免每帧重算导致相机抖动
+    setCamera(focus(content, size, paddingRef.current))
+    /**
+     * `contentKey` / `paddingKey` 是 `content` / `padding` 的**稳定值表达**：
+     * 只依赖"值有没有真的变"，不依赖"引用是不是同一个"，
+     * 否则每帧重算会把相机打回初始构图（见 `paddingKey` 的注释）。
+     */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentKey, size.width, size.height, padding, focus])
+  }, [contentKey, size.width, size.height, paddingKey, focus])
 
   /**
    * 空格键进入平移模式（= 按住鼠标左键即可任意拖动无限画布）。
@@ -268,7 +290,9 @@ export function useInfiniteCanvas({
     const onKeyUp = (event: KeyboardEvent) => {
       if (event.code === 'Space') setPanReady(false)
     }
-    const onBlur = () => setPanReady(false)
+    const onBlur = () => {
+      setPanReady(false)
+    }
     window.addEventListener('keydown', onKeyDown)
     window.addEventListener('keyup', onKeyUp)
     window.addEventListener('blur', onBlur)
@@ -303,70 +327,82 @@ export function useInfiniteCanvas({
   }, [])
 
   /**
-   * 尝试认领一次平移手势。返回是否认领成功。
+   * 平移资格判据（**纯判断，不带副作用**）。
    *
-   * 判据只看「按键 + 是否按着空格」，**不看指针落在哪一层**：
-   *   · 旧判据里的 `target.closest('svg') === null`（"只有空白处才能平移"）
-   *     在本实验台上是致命的 —— `<svg>` 铺满整个舞台，屏幕上不存在"空白处"，
-   *     空格 + 左键、甚至中键拖动都会被它挡掉，画布完全不能平移；
-   *   · 悬浮控件（工具条 / 读数条 / 胶囊组）自己带 `data-canvas-pan-block`，
-   *     点它们不该变成拖画布，否则按钮会"点不动"。
+   * 判据只看两件事：按键组合 + 指针是否落在带 `data-canvas-pan-block` 的悬浮控件上。
    *
-   * 认领动作 = 记下令牌 + 在**舞台**上捕获指针。
+   *   · **不看指针落在哪一层**：旧判据里的 `target.closest('svg') === null`
+   *     （"只有空白处才能平移"）在本实验台上是致命的 —— `<svg>` 铺满整个舞台，
+   *     屏幕上不存在"空白处"，空格 + 左键、甚至中键拖动都会被它挡掉；
+   *   · **但要看是否命中悬浮控件**：工具条 / 读数条 / 胶囊组自己带
+   *     `data-canvas-pan-block`，点它们不该变成拖画布，否则按钮会"点不动"。
+   *
+   * ⚠️ 必须用 `pointerdown` **当时**的 `event.target`。
+   * 捕获阶段它是真实目标（尚未发生捕获重定向）；一旦认领并捕获指针，
+   * 后续事件的 `target` 就变成捕获元素了。
    */
-  const beginPan = useCallback(
-    (event: { pointerId: number; clientX: number; clientY: number; button: number; target: EventTarget | null }) => {
-      const target = event.target as (HTMLElement & { closest?: (selector: string) => Element | null }) | null
-      const onInteractive = target?.closest?.('[data-canvas-pan-block]') != null
-      const wantsPan = event.button === 1 || event.button === 2 || (event.button === 0 && panReadyRef.current)
-      if (!wantsPan || onInteractive || panRef.current !== null) return false
-      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
-      /**
-       * 在**舞台**上捕获指针（而不是 `event.target`）。
-       *
-       * 舞台是所有交互子树的祖先：在它上面捕获之后，后续 `pointermove`
-       * 一定经过舞台，画布手势层（舞台的后代）因此必然收得到；
-       * 场景侧的器材 / 接线柱 / 导线手柄都在舞台**里面**，
-       * 它们各自再捕获也改变不了"事件仍会经过舞台"这一事实。
-       */
-      const captureTarget = stageRef.current
-      if (captureTarget !== null && typeof captureTarget.setPointerCapture === 'function') {
-        try {
-          captureTarget.setPointerCapture(event.pointerId)
-        } catch {
-          // 少数环境（含无头 DOM）不支持捕获；没有它也能靠舞台上的事件继续平移
-        }
-      }
-      return true
-    },
-    [stageRef],
-  )
+  const panEligible = useCallback((event: { button: number; target: EventTarget | null }) => {
+    const target = event.target as (HTMLElement & { closest?: (selector: string) => Element | null }) | null
+    // 悬浮控件（工具条 / 读数条 / 胶囊）自己声明"这里按下不是拖画布"，直接放行给它们
+    if (target?.closest?.('[data-canvas-pan-block]') != null) return false
+    return event.button === 1 || event.button === 2 || (event.button === 0 && panReadyRef.current)
+  }, [])
 
   /**
    * 捕获阶段的 `pointerdown`：本实验台里**真正的**平移入口。
    *
-   * 必须走捕获阶段：舞台里的手势容器是所有交互子树的共同祖先，
-   * 冒泡阶段一定最后才轮到它；而器材手柄 / 接线柱 / 导线折点各自在
-   * `pointerdown` 里 `setPointerCapture` 并 `stopPropagation` ——
-   * 冒泡到画布层时事件早被掐断，按住空格拖器材就不会平移画布。
+   * 为什么必须是捕获阶段：器材手柄 / 接线柱 / 导线折点各自在 `pointerdown` 里
+   * `setPointerCapture` + `stopPropagation`；冒泡阶段轮到手势层时事件早被掐断。
+   * 捕获阶段方向相反（祖先先收到），因此画布能先看到这次按下，
+   * "按住空格拖器材"才不会变成"把器材拖走"。
    *
-   * 捕获阶段方向相反（祖先先收到）：这里认领后立刻 `stopPropagation`，
-   * 场景侧的按钮 / 器材完全收不到这次按下 —— "按住空格拖动"永远是平移画布。
+   * ⚠️ 但捕获阶段认领**必须带守卫**：`event.target` 命中 `data-canvas-pan-block`
+   * 时必须原样放行，既不捕获也不截断。否则画布会把整棵子树里的悬浮控件
+   * （工具条的 放大/缩小/复位/铺满，它们挂在 `InfiniteCanvas` 内部、`stageRef` 覆盖不到）
+   * 一起吞掉 —— 真实 Chromium 实测按钮的 `pointerdown / pointerup / click` 一个都不再触发，
+   * 且卡住后没有恢复路径。守卫加上之后按钮照常响应。
+   *
+   * ⚠️ 捕获要打在**手势层**（`event.currentTarget`）上，**不能**打在更外层的舞台：
+   * 真实 Chromium 实测，指针捕获会把后续 `pointermove` 重定向到捕获元素本身，
+   * 而且**不会再下发给它的后代**；手势层是舞台的子节点，在舞台（祖先）上捕获会让
+   * 手势层的 `onPointerMove`（真正执行平移的那段代码）完全收不到事件，
+   * 表现为"捕获成功、画布纹丝不动"。
    */
   const onPointerDownCapture = useCallback(
     (event: globalThis.PointerEvent) => {
       pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
-      if (!beginPan(event)) return
+      if (panRef.current !== null) return
+      if (!panEligible(event)) return
+      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
+      const captureTarget = event.currentTarget as
+        | (EventTarget & { setPointerCapture?: (id: number) => void })
+        | null
+      if (captureTarget !== null && typeof captureTarget.setPointerCapture === 'function') {
+        try {
+          captureTarget.setPointerCapture(event.pointerId)
+        } catch {
+          // 少数环境（含无头 DOM）不支持捕获；没有它也能靠手势层上的事件继续平移
+        }
+      }
+      // 认领后立刻截断：场景侧的器材 / 接线柱 / 导线收不到这次按下，不会被顺手拖走
       event.stopPropagation()
     },
-    [beginPan],
+    [panEligible],
   )
 
   const handlers = {
-    /** 冒泡阶段的兜底：正常情况下已经被捕获阶段的 `onPointerDownCapture` 认领 */
+    /**
+     * 冒泡阶段兜底。
+     *
+     * 正常情况下平移已在**捕获阶段**认领（`onPointerDownCapture`）。
+     * 这里只处理"捕获阶段没跑"的场景（例如测试里直接从后代派发合成事件），
+     * 判据与捕获阶段完全一致，避免两条入口口径不一。
+     */
     onPointerDown: (event: PointerEvent<HTMLElement>) => {
       pinchRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
-      beginPan(event)
+      if (panRef.current !== null) return
+      if (!panEligible(event)) return
+      panRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false }
     },
     onPointerMove: (event: PointerEvent<HTMLElement>) => {
       if (pinchRef.current.has(event.pointerId)) {
@@ -406,13 +442,24 @@ export function useInfiniteCanvas({
       if (pinchRef.current.size < 2) pinchDistanceRef.current = null
       const pan = panRef.current
       if (pan === null || pan.pointerId !== event.pointerId) return
-      if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
+      const target = event.currentTarget as (Element & {
+        hasPointerCapture?: (id: number) => boolean
+        releasePointerCapture?: (id: number) => void
+      }) | null
+      if (target?.hasPointerCapture?.(event.pointerId) === true) {
+        target.releasePointerCapture?.(event.pointerId)
+      }
       panRef.current = null
       /**
-       * 松开指针时按下的空格可能已经先松了（keyup 先到），
-       * 这里再显式复位一次，避免"画布还抓着"的黏连状态。
+       * ⚠️ **刻意不复位 `panReady`**。
+       *
+       * 用户原话是「空格键 = 按住长按鼠标左键不松开，可以任意拖动」——
+       * "按住不放"期间必须能**连续拖多次**。这里一旦清掉 `panReady`，
+       * 第二次拖动就完全失效（真实 Chromium 实测：连拖两次，第二次 `dx=0`）。
+       *
+       * 空格状态的复位时机只有三个，都已经具备：
+       * `keyup`（真的松开了空格）、`blur`（窗口失焦）、`pointercancel`（手势被系统打断）。
        */
-      if (event.button === 0) setPanReady(false)
       if (pan.moved) event.stopPropagation()
     },
     onPointerCancel: (event: PointerEvent<HTMLElement>) => {
@@ -457,11 +504,25 @@ export function useInfiniteCanvas({
     /**
      * 空格 / 中键 / 右键拖动 —— 必须挂在**捕获阶段**（见 `onPointerDownCapture` 注释）。
      */
-    stage.addEventListener('pointerdown', onPointerDownCapture, { capture: true })
+    /**
+     * 手势层元素：渲染 `handlers` 的那个 `div`（`InfiniteCanvas` 给它打了
+     * `data-canvas-gesture-layer`）。
+     *
+     * 平移手势必须**挂在这里、也捕获在这里**，理由有两条：
+     *   · 挂在这里：器材手柄 / 接线柱 / 导线各自在 `pointerdown` 里
+     *     `setPointerCapture` + `stopPropagation`，冒泡阶段手势层收不到，
+     *     所以这条监听必须走**捕获阶段**；
+     *   · 捕获在这里：浏览器把捕获后的 `pointermove` **只派发给捕获元素本身，
+     *     不再下发给它的后代**（真实 Chromium 实测）。真正执行平移的
+     *     `onPointerMove` 就挂在手势层上 —— 若捕获在祖先舞台，
+     *     手势层反而收不到事件，表现为"捕获成功、画布纹丝不动"。
+     */
+    const gesture = stage.querySelector<HTMLElement>('[data-canvas-gesture-layer]')
+    gesture?.addEventListener('pointerdown', onPointerDownCapture, { capture: true })
     return () => {
       stage.removeEventListener('wheel', onWheel)
       stage.removeEventListener('contextmenu', onContextMenu)
-      stage.removeEventListener('pointerdown', onPointerDownCapture, { capture: true })
+      gesture?.removeEventListener('pointerdown', onPointerDownCapture, { capture: true })
     }
   }, [stageRef, onPointerDownCapture])
 

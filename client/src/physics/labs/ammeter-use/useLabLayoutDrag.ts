@@ -25,7 +25,6 @@ import {
   setWireBend,
   terminalPosition,
   wireHandleAt,
-  type CanvasVisibleRect,
   type LabComponentId,
   type LabLayout,
 } from './layout'
@@ -83,39 +82,7 @@ export interface UseLabLayoutDragOptions {
   nearestTerminal?(position: Position): { id: AmmeterTerminalId; position: Position } | null
   /** 指针屏幕坐标 → 画布坐标（经相机投影反算） */
   scenePosition(event: PointerEvent<SVGElement>): Position | null
-  /**
-   * 当前可见的画布矩形（布局坐标）。
-   *
-   * ⚠️ **拖动已经不再读它**。这个参数保留下来，是因为场景侧仍用它驱动
-   * 「全部收回」入口；但拖动路径一旦再读它，就会退回
-   * "拖到边沿被拽回来"的旧行为（用户原话：并不是无限画布）。
-   *
-   * @deprecated 拖动不再使用。
-   */
-  visibleRect?(): CanvasVisibleRect
-  /**
-   * 屏幕空间的越界量查询（0 = 屏幕内）。
-   *
-   * @deprecated 拖动不再使用 —— 无限画布不允许按屏幕像素把器材拽回来。
-   */
-  screenCheck?(id: LabComponentId, center: Position): number
-  /**
-   * 屏幕空间的"推回最近合法位置"收敛器。
-   *
-   * @deprecated 拖动不再使用。
-   */
-  pushIntoView?(id: LabComponentId, center: Position): Position | null
 }
-
-/**
- * @deprecated 拖动中不再保留"屏幕余量"。
- *
- * 它原本是"模型投影与浏览器 CSS 的 3D 变换不完全等价"的误差补偿，
- * 但副作用是：器材离屏幕边沿还有 64px 时就被判成"越界"并被拽回来 ——
- * 这正是用户反馈的「拖动靠近边沿就无法拖动」。
- * 保留导出仅为兼容既有引用。
- */
-export const DRAG_SCREEN_MARGIN = 64
 
 /** 指针离接线柱必须比离器材中心更近（且足够靠近），才认定为「按在接线柱上」 */
 export const TERMINAL_GRAB_RADIUS = 26
@@ -207,7 +174,7 @@ export function useLabLayoutDrag({ layout, setLayout, nearestTerminal, scenePosi
            * 于是器材一接近屏幕边沿就被拽回来 —— 用户的原话是
            * 「拖动靠近边沿就无法拖动了，并不是无限画布」。
            */
-          const target = clampComponentWithinView(active.id, wanted, null)
+          const target = clampComponentWithinView(active.id, wanted)
           if (samePosition(current.components[active.id], target)) return current
           return moveComponent(current, active.id, target)
         })

@@ -3,6 +3,7 @@ import {
   CANVAS_MAX_SCALE,
   CANVAS_MIN_SCALE,
   canvasToScreen,
+  clampCamera,
   fitContent,
   panBy,
   screenToCanvas,
@@ -103,5 +104,40 @@ describe('无限画布相机', () => {
     const roundTrip = screenToCanvas(canvasToScreen(point, camera), camera)
     expect(roundTrip.x).toBeCloseTo(point.x, 6)
     expect(roundTrip.y).toBeCloseTo(point.y, 6)
+  })
+})
+
+describe('缩放兜底：NaN 必须被拦住（否则画布整块消失且不报错）', () => {
+  const stage = { width: 1200, height: 800 }
+
+  /**
+   * `clamp(NaN, min, max)` **返回 NaN**（`Math.min/Math.max` 遇 NaN 一路传染），
+   * 再经 `projectPerspective` 会得到 `{ x: null, y: null }` ——
+   * 画布整块消失，而且**不抛错、不报警**。
+   *
+   * 平移侧早就有 `clampPanOffset` 兜底，缩放侧以前是漏的。
+   */
+  it('scale 为 NaN 时归到 1，不会把 NaN 传下去', () => {
+    const out = clampCamera({ scale: Number.NaN, x: 12, y: -34 }, stage)
+    expect(Number.isFinite(out.scale), 'scale 仍然是 NaN —— 画布会整块消失').toBe(true)
+    expect(out.scale).toBe(1)
+    // 平移量该保留的仍然保留（兜底只作用于缩放）
+    expect(out.x).toBe(12)
+    expect(out.y).toBe(-34)
+  })
+
+  it('scale 为 ±Infinity 时同样归到 1，并且仍然夹在合法区间内', () => {
+    for (const bad of [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+      const out = clampCamera({ scale: bad, x: 0, y: 0 }, stage)
+      expect(Number.isFinite(out.scale), `scale=${bad} 没有被兜住`).toBe(true)
+      expect(out.scale).toBeGreaterThanOrEqual(CANVAS_MIN_SCALE)
+      expect(out.scale).toBeLessThanOrEqual(CANVAS_MAX_SCALE)
+    }
+  })
+
+  it('正常缩放值不受兜底影响（不许误杀合法缩放）', () => {
+    for (const scale of [CANVAS_MIN_SCALE, 0.5, 1, 3.7, CANVAS_MAX_SCALE]) {
+      expect(clampCamera({ scale, x: 0, y: 0 }, stage).scale).toBeCloseTo(scale, 9)
+    }
   })
 })
