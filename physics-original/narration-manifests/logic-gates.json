@@ -1,0 +1,229 @@
+{
+  "script_id": "logic-gates",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 115.33,
+  "files": [
+    {
+      "script_id": "logic-gates",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E6%95%B0%E5%AD%97%E4%B8%96%E7%95%8C%EF%BC%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E4%B8%80%E5%88%87%E8%BF%90%E7%AE%97%EF%BC%8C%E9%83%BD%E5%BB%BA%E7%AB%8B%E5%9C%A8%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%BB%E8%BE%91%E9%97%A8%E4%B9%8B%E4%B8%8A%E3%80%82",
+      "path": "audio/narrations/logic-gates/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E6%95%B0%E5%AD%97%E4%B8%96%E7%95%8C%EF%BC%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E4%B8%80%E5%88%87%E8%BF%90%E7%AE%97%EF%BC%8C%E9%83%BD%E5%BB%BA%E7%AB%8B%E5%9C%A8%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%BB%E8%BE%91%E9%97%A8%E4%B9%8B%E4%B8%8A%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "欢迎进入数字世界！计算机的一切运算，都建立在简单的逻辑门之上。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E9%80%BB%E8%BE%91%E9%97%A8%E6%8E%A5%E6%94%B6%200%20%E5%92%8C%201%20%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%8C%E6%8C%89%E8%A7%84%E5%88%99%E8%BE%93%E5%87%BA%200%20%E6%88%96%201%E3%80%82",
+      "path": "audio/narrations/logic-gates/intro-intro-2.speech?text=%E9%80%BB%E8%BE%91%E9%97%A8%E6%8E%A5%E6%94%B6%200%20%E5%92%8C%201%20%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%8C%E6%8C%89%E8%A7%84%E5%88%99%E8%BE%93%E5%87%BA%200%20%E6%88%96%201%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "逻辑门接收 0 和 1 的输入，按规则输出 0 或 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%87%A0%E7%A7%8D%E5%9F%BA%E6%9C%AC%E9%97%A8%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E4%B9%83%E8%87%B3%E6%95%B4%E4%B8%AA%20CPU%E3%80%82",
+      "path": "audio/narrations/logic-gates/intro-intro-3.speech?text=%E5%87%A0%E7%A7%8D%E5%9F%BA%E6%9C%AC%E9%97%A8%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E4%B9%83%E8%87%B3%E6%95%B4%E4%B8%AA%20CPU%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "几种基本门组合起来，就能完成加减乘除乃至整个 CPU。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E4%B8%8E%E9%97%A8%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E9%83%BD%E4%B8%BA%201%20%E6%97%B6%E6%89%8D%E8%BE%93%E5%87%BA%201%E3%80%82",
+      "path": "audio/narrations/logic-gates/concept-concept-1.speech?text=%E4%B8%8E%E9%97%A8%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E9%83%BD%E4%B8%BA%201%20%E6%97%B6%E6%89%8D%E8%BE%93%E5%87%BA%201%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "与门只有两个输入都为 1 时才输出 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%88%96%E9%97%A8%E5%8F%AA%E8%A6%81%E6%9C%89%E4%B8%80%E4%B8%AA%E8%BE%93%E5%85%A5%E4%B8%BA%201%20%E5%B0%B1%E8%BE%93%E5%87%BA%201%E3%80%82",
+      "path": "audio/narrations/logic-gates/concept-concept-2.speech?text=%E6%88%96%E9%97%A8%E5%8F%AA%E8%A6%81%E6%9C%89%E4%B8%80%E4%B8%AA%E8%BE%93%E5%85%A5%E4%B8%BA%201%20%E5%B0%B1%E8%BE%93%E5%87%BA%201%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "或门只要有一个输入为 1 就输出 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E9%9D%9E%E9%97%A8%E6%8A%8A%E8%BE%93%E5%85%A5%E7%BF%BB%E8%BD%AC%EF%BC%8C0%20%E5%8F%98%201%E3%80%811%20%E5%8F%98%200%E3%80%82",
+      "path": "audio/narrations/logic-gates/concept-concept-3.speech?text=%E9%9D%9E%E9%97%A8%E6%8A%8A%E8%BE%93%E5%85%A5%E7%BF%BB%E8%BD%AC%EF%BC%8C0%20%E5%8F%98%201%E3%80%811%20%E5%8F%98%200%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "非门把输入翻转，0 变 1、1 变 0。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%BC%82%E6%88%96%E9%97%A8%E5%9C%A8%E4%B8%A4%E8%BE%93%E5%85%A5%E4%B8%8D%E5%90%8C%E6%97%B6%E8%BE%93%E5%87%BA%201%EF%BC%8C%E7%9B%B8%E5%90%8C%E6%97%B6%E8%BE%93%E5%87%BA%200%E3%80%82",
+      "path": "audio/narrations/logic-gates/concept-concept-4.speech?text=%E5%BC%82%E6%88%96%E9%97%A8%E5%9C%A8%E4%B8%A4%E8%BE%93%E5%85%A5%E4%B8%8D%E5%90%8C%E6%97%B6%E8%BE%93%E5%87%BA%201%EF%BC%8C%E7%9B%B8%E5%90%8C%E6%97%B6%E8%BE%93%E5%87%BA%200%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "异或门在两输入不同时输出 1，相同时输出 0。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E4%B8%8E%E8%BF%90%E7%AE%97%E7%94%A8%E4%B9%98%E5%8F%B7%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/logic-gates/formula-formula-1.speech?text=%E4%B8%8E%E8%BF%90%E7%AE%97%E7%94%A8%E4%B9%98%E5%8F%B7%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 2.81,
+      "size": 0,
+      "text": "与运算用乘号表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%88%96%E8%BF%90%E7%AE%97%E7%94%A8%E5%8A%A0%E5%8F%B7%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/logic-gates/formula-formula-2.speech?text=%E6%88%96%E8%BF%90%E7%AE%97%E7%94%A8%E5%8A%A0%E5%8F%B7%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 2.81,
+      "size": 0,
+      "text": "或运算用加号表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E9%9D%9E%E8%BF%90%E7%AE%97%E5%9C%A8%E5%8F%98%E9%87%8F%E4%B8%8A%E5%8A%A0%E4%B8%80%E6%A8%AA%E3%80%82",
+      "path": "audio/narrations/logic-gates/formula-formula-3.speech?text=%E9%9D%9E%E8%BF%90%E7%AE%97%E5%9C%A8%E5%8F%98%E9%87%8F%E4%B8%8A%E5%8A%A0%E4%B8%80%E6%A8%AA%E3%80%82",
+      "duration": 3.44,
+      "size": 0,
+      "text": "非运算在变量上加一横。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%BC%82%E6%88%96%E7%94%A8%E4%B8%93%E9%97%A8%E7%9A%84%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/logic-gates/formula-formula-4.speech?text=%E5%BC%82%E6%88%96%E7%94%A8%E4%B8%93%E9%97%A8%E7%9A%84%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 3.44,
+      "size": 0,
+      "text": "异或用专门的符号表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%88%87%E6%8D%A2%E9%80%BB%E8%BE%91%E9%97%A8%E7%B1%BB%E5%9E%8B%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%83%E7%9A%84%E7%AC%A6%E5%8F%B7%E5%92%8C%E7%9C%9F%E5%80%BC%E8%A1%A8%E3%80%82",
+      "path": "audio/narrations/logic-gates/interaction-interaction-1.speech?text=%E5%88%87%E6%8D%A2%E9%80%BB%E8%BE%91%E9%97%A8%E7%B1%BB%E5%9E%8B%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%AE%83%E7%9A%84%E7%AC%A6%E5%8F%B7%E5%92%8C%E7%9C%9F%E5%80%BC%E8%A1%A8%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "切换逻辑门类型，观察它的符号和真值表。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E7%82%B9%E5%87%BB%E5%88%87%E6%8D%A2%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E7%9A%84%200%20%E5%92%8C%201%E3%80%82",
+      "path": "audio/narrations/logic-gates/interaction-interaction-2.speech?text=%E7%82%B9%E5%87%BB%E5%88%87%E6%8D%A2%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E7%9A%84%200%20%E5%92%8C%201%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "点击切换两个输入的 0 和 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E7%9C%8B%E8%BE%93%E5%87%BA%E7%81%AF%E9%9A%8F%E8%BE%93%E5%85%A5%E5%92%8C%E9%97%A8%E7%B1%BB%E5%9E%8B%E5%AE%9E%E6%97%B6%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/logic-gates/interaction-interaction-3.speech?text=%E7%9C%8B%E8%BE%93%E5%87%BA%E7%81%AF%E9%9A%8F%E8%BE%93%E5%85%A5%E5%92%8C%E9%97%A8%E7%B1%BB%E5%9E%8B%E5%AE%9E%E6%97%B6%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "看输出灯随输入和门类型实时变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E9%80%BB%E8%BE%91%E9%97%A8%E7%BB%84%E5%90%88%E6%88%90%E5%8A%A0%E6%B3%95%E5%99%A8%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E6%B3%95%E3%80%82",
+      "path": "audio/narrations/logic-gates/application-application-1.speech?text=%E9%80%BB%E8%BE%91%E9%97%A8%E7%BB%84%E5%90%88%E6%88%90%E5%8A%A0%E6%B3%95%E5%99%A8%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E6%B3%95%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "逻辑门组合成加法器，实现二进制加法。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83%E3%80%81%E8%AE%A1%E6%95%B0%E5%99%A8%E4%B9%9F%E9%83%BD%E7%94%B1%E9%80%BB%E8%BE%91%E9%97%A8%E6%90%AD%E5%BB%BA%E3%80%82",
+      "path": "audio/narrations/logic-gates/application-application-2.speech?text=%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83%E3%80%81%E8%AE%A1%E6%95%B0%E5%99%A8%E4%B9%9F%E9%83%BD%E7%94%B1%E9%80%BB%E8%BE%91%E9%97%A8%E6%90%AD%E5%BB%BA%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "存储单元、计数器也都由逻辑门搭建。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%8E%B0%E4%BB%A3%E8%8A%AF%E7%89%87%E9%9B%86%E6%88%90%E4%BA%86%E6%95%B0%E7%99%BE%E4%BA%BF%E4%B8%AA%E9%80%BB%E8%BE%91%E9%97%A8%E3%80%82",
+      "path": "audio/narrations/logic-gates/application-application-3.speech?text=%E7%8E%B0%E4%BB%A3%E8%8A%AF%E7%89%87%E9%9B%86%E6%88%90%E4%BA%86%E6%95%B0%E7%99%BE%E4%BA%BF%E4%B8%AA%E9%80%BB%E8%BE%91%E9%97%A8%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "现代芯片集成了数百亿个逻辑门。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E9%80%BB%E8%BE%91%E9%97%A8%E6%8C%89%E8%A7%84%E5%88%99%E6%8A%8A%200%E3%80%811%20%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E4%B8%BA%E8%BE%93%E5%87%BA%E3%80%82",
+      "path": "audio/narrations/logic-gates/summary-summary-1.speech?text=%E9%80%BB%E8%BE%91%E9%97%A8%E6%8C%89%E8%A7%84%E5%88%99%E6%8A%8A%200%E3%80%811%20%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E4%B8%BA%E8%BE%93%E5%87%BA%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "逻辑门按规则把 0、1 输入映射为输出。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E4%B8%8E%E3%80%81%E6%88%96%E3%80%81%E9%9D%9E%E3%80%81%E5%BC%82%E6%88%96%E6%98%AF%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%87%A0%E7%A7%8D%E9%97%A8%E3%80%82",
+      "path": "audio/narrations/logic-gates/summary-summary-2.speech?text=%E4%B8%8E%E3%80%81%E6%88%96%E3%80%81%E9%9D%9E%E3%80%81%E5%BC%82%E6%88%96%E6%98%AF%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%87%A0%E7%A7%8D%E9%97%A8%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "与、或、非、异或是最基本的几种门。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "logic-gates",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E4%BB%AC%E7%BB%84%E5%90%88%E6%88%90%E4%BA%86%E6%95%B4%E4%B8%AA%E6%95%B0%E5%AD%97%E8%AE%A1%E7%AE%97%E4%B8%96%E7%95%8C%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/logic-gates/summary-summary-3.speech?text=%E5%AE%83%E4%BB%AC%E7%BB%84%E5%90%88%E6%88%90%E4%BA%86%E6%95%B4%E4%B8%AA%E6%95%B0%E5%AD%97%E8%AE%A1%E7%AE%97%E4%B8%96%E7%95%8C%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.19,
+      "size": 0,
+      "text": "它们组合成了整个数字计算世界。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

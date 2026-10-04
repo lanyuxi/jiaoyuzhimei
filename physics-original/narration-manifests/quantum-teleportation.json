@@ -1,0 +1,229 @@
+{
+  "script_id": "quantum-teleportation",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 147.85,
+  "files": [
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%EF%BC%81%E8%BF%99%E4%B8%8D%E6%98%AF%E7%A7%91%E5%B9%BB%E9%87%8C%E7%9A%84%E7%9E%AC%E9%97%B4%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%EF%BC%81%E8%BF%99%E4%B8%8D%E6%98%AF%E7%A7%91%E5%B9%BB%E9%87%8C%E7%9A%84%E7%9E%AC%E9%97%B4%E7%A7%BB%E5%8A%A8%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "欢迎来到量子隐形传态！这不是科幻里的瞬间移动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E4%BC%A0%E9%80%81%E7%9A%84%E4%B8%8D%E6%98%AF%E7%89%A9%E8%B4%A8%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9C%AA%E7%9F%A5%E9%87%8F%E5%AD%90%E6%80%81%E7%9A%84%E5%85%A8%E9%83%A8%E4%BF%A1%E6%81%AF%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/intro-intro-2.speech?text=%E5%AE%83%E4%BC%A0%E9%80%81%E7%9A%84%E4%B8%8D%E6%98%AF%E7%89%A9%E8%B4%A8%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9C%AA%E7%9F%A5%E9%87%8F%E5%AD%90%E6%80%81%E7%9A%84%E5%85%A8%E9%83%A8%E4%BF%A1%E6%81%AF%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "它传送的不是物质，而是一个未知量子态的全部信息。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%80%9F%E5%8A%A9%E7%BA%A0%E7%BC%A0%E5%92%8C%E4%B8%80%E7%82%B9%E7%BB%8F%E5%85%B8%E9%80%9A%E4%BF%A1%EF%BC%8C%E9%87%8F%E5%AD%90%E6%80%81%E5%B0%B1%E8%83%BD%E5%9C%A8%E8%BF%9C%E6%96%B9%E9%87%8D%E7%8E%B0%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/intro-intro-3.speech?text=%E5%80%9F%E5%8A%A9%E7%BA%A0%E7%BC%A0%E5%92%8C%E4%B8%80%E7%82%B9%E7%BB%8F%E5%85%B8%E9%80%9A%E4%BF%A1%EF%BC%8C%E9%87%8F%E5%AD%90%E6%80%81%E5%B0%B1%E8%83%BD%E5%9C%A8%E8%BF%9C%E6%96%B9%E9%87%8D%E7%8E%B0%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "借助纠缠和一点经典通信，量子态就能在远方重现。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=Alice%20%E5%92%8C%20Bob%20%E9%A2%84%E5%85%88%E5%85%B1%E4%BA%AB%E4%B8%80%E5%AF%B9%E7%BA%A0%E7%BC%A0%E7%B2%92%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/concept-concept-1.speech?text=Alice%20%E5%92%8C%20Bob%20%E9%A2%84%E5%85%88%E5%85%B1%E4%BA%AB%E4%B8%80%E5%AF%B9%E7%BA%A0%E7%BC%A0%E7%B2%92%E5%AD%90%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "Alice 和 Bob 预先共享一对纠缠粒子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=Alice%20%E6%8A%8A%E5%BE%85%E4%BC%A0%E7%9A%84%E6%9C%AA%E7%9F%A5%E6%80%81%E4%B8%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BA%A0%E7%BC%A0%E7%B2%92%E5%AD%90%E5%81%9A%E8%81%94%E5%90%88%E6%B5%8B%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/concept-concept-2.speech?text=Alice%20%E6%8A%8A%E5%BE%85%E4%BC%A0%E7%9A%84%E6%9C%AA%E7%9F%A5%E6%80%81%E4%B8%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BA%A0%E7%BC%A0%E7%B2%92%E5%AD%90%E5%81%9A%E8%81%94%E5%90%88%E6%B5%8B%E9%87%8F%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "Alice 把待传的未知态与自己的纠缠粒子做联合测量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%B5%8B%E9%87%8F%E5%BE%97%E5%88%B0%E4%B8%A4%E4%B8%AA%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%EF%BC%8C%E5%A5%B9%E9%80%9A%E8%BF%87%E6%99%AE%E9%80%9A%E4%BF%A1%E9%81%93%E5%8F%91%E7%BB%99%20Bob%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/concept-concept-3.speech?text=%E6%B5%8B%E9%87%8F%E5%BE%97%E5%88%B0%E4%B8%A4%E4%B8%AA%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%EF%BC%8C%E5%A5%B9%E9%80%9A%E8%BF%87%E6%99%AE%E9%80%9A%E4%BF%A1%E9%81%93%E5%8F%91%E7%BB%99%20Bob%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "测量得到两个经典比特，她通过普通信道发给 Bob。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=Bob%20%E6%8D%AE%E6%AD%A4%E5%AF%B9%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B2%92%E5%AD%90%E5%81%9A%E7%9B%B8%E5%BA%94%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%B0%B1%E8%BF%98%E5%8E%9F%E5%87%BA%E5%8E%9F%E5%A7%8B%E9%87%8F%E5%AD%90%E6%80%81%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/concept-concept-4.speech?text=Bob%20%E6%8D%AE%E6%AD%A4%E5%AF%B9%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B2%92%E5%AD%90%E5%81%9A%E7%9B%B8%E5%BA%94%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%B0%B1%E8%BF%98%E5%8E%9F%E5%87%BA%E5%8E%9F%E5%A7%8B%E9%87%8F%E5%AD%90%E6%80%81%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "Bob 据此对自己的粒子做相应操作，就还原出原始量子态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%BE%85%E4%BC%A0%E6%80%81%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%80%E8%88%AC%E7%9A%84%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/formula-formula-1.speech?text=%E5%BE%85%E4%BC%A0%E6%80%81%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%80%E8%88%AC%E7%9A%84%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "待传态是一个一般的量子比特。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=Alice%20%E7%9A%84%E8%B4%9D%E5%B0%94%E6%B5%8B%E9%87%8F%E6%9C%89%E5%9B%9B%E7%A7%8D%E7%AD%89%E6%A6%82%E7%8E%87%E7%BB%93%E6%9E%9C%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/formula-formula-2.speech?text=Alice%20%E7%9A%84%E8%B4%9D%E5%B0%94%E6%B5%8B%E9%87%8F%E6%9C%89%E5%9B%9B%E7%A7%8D%E7%AD%89%E6%A6%82%E7%8E%87%E7%BB%93%E6%9E%9C%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "Alice 的贝尔测量有四种等概率结果。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=Bob%20%E6%A0%B9%E6%8D%AE%E6%94%B6%E5%88%B0%E7%9A%84%E4%B8%A4%E6%AF%94%E7%89%B9%EF%BC%8C%E4%BD%9C%E7%94%A8%20I%E3%80%81X%E3%80%81Z%20%E6%88%96%20XZ%20%E4%BF%AE%E6%AD%A3%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/formula-formula-3.speech?text=Bob%20%E6%A0%B9%E6%8D%AE%E6%94%B6%E5%88%B0%E7%9A%84%E4%B8%A4%E6%AF%94%E7%89%B9%EF%BC%8C%E4%BD%9C%E7%94%A8%20I%E3%80%81X%E3%80%81Z%20%E6%88%96%20XZ%20%E4%BF%AE%E6%AD%A3%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "Bob 根据收到的两比特，作用 I、X、Z 或 XZ 修正。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%8E%9F%E6%80%81%E5%9C%A8%20Alice%20%E5%A4%84%E8%A2%AB%E6%B5%8B%E9%87%8F%E7%A0%B4%E5%9D%8F%EF%BC%8C%E6%89%80%E4%BB%A5%E5%B9%B6%E6%B2%A1%E6%9C%89%E5%A4%8D%E5%88%B6%EF%BC%8C%E7%AC%A6%E5%90%88%E4%B8%8D%E5%8F%AF%E5%85%8B%E9%9A%86%E5%AE%9A%E7%90%86%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/formula-formula-4.speech?text=%E5%8E%9F%E6%80%81%E5%9C%A8%20Alice%20%E5%A4%84%E8%A2%AB%E6%B5%8B%E9%87%8F%E7%A0%B4%E5%9D%8F%EF%BC%8C%E6%89%80%E4%BB%A5%E5%B9%B6%E6%B2%A1%E6%9C%89%E5%A4%8D%E5%88%B6%EF%BC%8C%E7%AC%A6%E5%90%88%E4%B8%8D%E5%8F%AF%E5%85%8B%E9%9A%86%E5%AE%9A%E7%90%86%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "原态在 Alice 处被测量破坏，所以并没有复制，符合不可克隆定理。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%AE%BE%E7%BD%AE%E5%BE%85%E4%BC%A0%E9%87%8F%E5%AD%90%E6%80%81%EF%BC%8C%E7%84%B6%E5%90%8E%E5%90%AF%E5%8A%A8%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E6%B5%81%E7%A8%8B%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/interaction-interaction-1.speech?text=%E8%AE%BE%E7%BD%AE%E5%BE%85%E4%BC%A0%E9%87%8F%E5%AD%90%E6%80%81%EF%BC%8C%E7%84%B6%E5%90%8E%E5%90%AF%E5%8A%A8%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E6%B5%81%E7%A8%8B%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "设置待传量子态，然后启动隐形传态流程。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%A7%82%E5%AF%9F%E8%B4%9D%E5%B0%94%E6%B5%8B%E9%87%8F%E3%80%81%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%E4%BC%A0%E8%BE%93%E5%92%8C%20Bob%20%E7%9A%84%E4%BF%AE%E6%AD%A3%E6%93%8D%E4%BD%9C%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/interaction-interaction-2.speech?text=%E8%A7%82%E5%AF%9F%E8%B4%9D%E5%B0%94%E6%B5%8B%E9%87%8F%E3%80%81%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%E4%BC%A0%E8%BE%93%E5%92%8C%20Bob%20%E7%9A%84%E4%BF%AE%E6%AD%A3%E6%93%8D%E4%BD%9C%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "观察贝尔测量、经典比特传输和 Bob 的修正操作。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E7%A1%AE%E8%AE%A4%20Bob%20%E6%9C%80%E7%BB%88%E5%BE%97%E5%88%B0%E7%9A%84%E6%80%81%E4%B8%8E%E5%8E%9F%E6%80%81%E5%AE%8C%E5%85%A8%E4%B8%80%E8%87%B4%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/interaction-interaction-3.speech?text=%E7%A1%AE%E8%AE%A4%20Bob%20%E6%9C%80%E7%BB%88%E5%BE%97%E5%88%B0%E7%9A%84%E6%80%81%E4%B8%8E%E5%8E%9F%E6%80%81%E5%AE%8C%E5%85%A8%E4%B8%80%E8%87%B4%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "确认 Bob 最终得到的态与原态完全一致。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E6%98%AF%E9%87%8F%E5%AD%90%E7%BD%91%E7%BB%9C%E5%92%8C%E9%87%8F%E5%AD%90%E4%B8%AD%E7%BB%A7%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/application-application-1.speech?text=%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E6%98%AF%E9%87%8F%E5%AD%90%E7%BD%91%E7%BB%9C%E5%92%8C%E9%87%8F%E5%AD%90%E4%B8%AD%E7%BB%A7%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "量子隐形传态是量子网络和量子中继的核心技术。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%88%91%E5%9B%BD%E5%A2%A8%E5%AD%90%E5%8F%B7%E5%8D%AB%E6%98%9F%E5%AE%9E%E7%8E%B0%E4%BA%86%E5%8D%83%E5%85%AC%E9%87%8C%E7%BA%A7%E7%9A%84%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/application-application-2.speech?text=%E6%88%91%E5%9B%BD%E5%A2%A8%E5%AD%90%E5%8F%B7%E5%8D%AB%E6%98%9F%E5%AE%9E%E7%8E%B0%E4%BA%86%E5%8D%83%E5%85%AC%E9%87%8C%E7%BA%A7%E7%9A%84%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "我国墨子号卫星实现了千公里级的量子隐形传态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%83%E4%B8%BA%E6%9C%AA%E6%9D%A5%E7%9A%84%E9%87%8F%E5%AD%90%E4%BA%92%E8%81%94%E7%BD%91%E5%A5%A0%E5%AE%9A%E4%BA%86%E5%9F%BA%E7%A1%80%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/application-application-3.speech?text=%E5%AE%83%E4%B8%BA%E6%9C%AA%E6%9D%A5%E7%9A%84%E9%87%8F%E5%AD%90%E4%BA%92%E8%81%94%E7%BD%91%E5%A5%A0%E5%AE%9A%E4%BA%86%E5%9F%BA%E7%A1%80%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "它为未来的量子互联网奠定了基础。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E7%94%A8%E7%BA%A0%E7%BC%A0%E5%8A%A0%E7%BB%8F%E5%85%B8%E9%80%9A%E4%BF%A1%EF%BC%8C%E6%8A%8A%E6%9C%AA%E7%9F%A5%E9%87%8F%E5%AD%90%E6%80%81%E9%80%81%E5%88%B0%E8%BF%9C%E6%96%B9%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/summary-summary-1.speech?text=%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E7%94%A8%E7%BA%A0%E7%BC%A0%E5%8A%A0%E7%BB%8F%E5%85%B8%E9%80%9A%E4%BF%A1%EF%BC%8C%E6%8A%8A%E6%9C%AA%E7%9F%A5%E9%87%8F%E5%AD%90%E6%80%81%E9%80%81%E5%88%B0%E8%BF%9C%E6%96%B9%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "隐形传态用纠缠加经典通信，把未知量子态送到远方。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=Alice%20%E6%B5%8B%E9%87%8F%E7%A0%B4%E5%9D%8F%E5%8E%9F%E6%80%81%EF%BC%8CBob%20%E6%8D%AE%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%E4%BF%AE%E6%AD%A3%E8%BF%98%E5%8E%9F%E3%80%82",
+      "path": "audio/narrations/quantum-teleportation/summary-summary-2.speech?text=Alice%20%E6%B5%8B%E9%87%8F%E7%A0%B4%E5%9D%8F%E5%8E%9F%E6%80%81%EF%BC%8CBob%20%E6%8D%AE%E7%BB%8F%E5%85%B8%E6%AF%94%E7%89%B9%E4%BF%AE%E6%AD%A3%E8%BF%98%E5%8E%9F%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "Alice 测量破坏原态，Bob 据经典比特修正还原。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-teleportation",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%B2%A1%E6%9C%89%E5%A4%8D%E5%88%B6%E9%87%8F%E5%AD%90%E6%80%81%EF%BC%8C%E6%98%AF%E9%87%8F%E5%AD%90%E7%BD%91%E7%BB%9C%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/quantum-teleportation/summary-summary-3.speech?text=%E5%AE%83%E6%B2%A1%E6%9C%89%E5%A4%8D%E5%88%B6%E9%87%8F%E5%AD%90%E6%80%81%EF%BC%8C%E6%98%AF%E9%87%8F%E5%AD%90%E7%BD%91%E7%BB%9C%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 8.13,
+      "size": 0,
+      "text": "它没有复制量子态，是量子网络的基石。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "script_id": "refraction",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 172.83,
+  "files": [
+    {
+      "script_id": "refraction",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E5%85%89%E5%9C%A8%E4%B8%8D%E5%90%8C%E4%BB%8B%E8%B4%A8%E4%B8%AD%E7%9A%84%E4%BC%A0%E6%92%AD%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/refraction/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E8%A6%81%E6%8E%A2%E7%B4%A2%E5%85%89%E5%9C%A8%E4%B8%8D%E5%90%8C%E4%BB%8B%E8%B4%A8%E4%B8%AD%E7%9A%84%E4%BC%A0%E6%92%AD%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "欢迎来到光的折射实验！今天我们要探索光在不同介质中的传播规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%BD%A0%E6%98%AF%E5%90%A6%E6%B3%A8%E6%84%8F%E8%BF%87%EF%BC%8C%E6%8A%8A%E7%AD%B7%E5%AD%90%E6%8F%92%E5%85%A5%E6%B0%B4%E4%B8%AD%EF%BC%8C%E7%AD%B7%E5%AD%90%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%83%8F%E6%98%AF%E5%BC%AF%E6%8A%98%E4%BA%86%EF%BC%9F",
+      "path": "audio/narrations/refraction/intro-intro-2.speech?text=%E4%BD%A0%E6%98%AF%E5%90%A6%E6%B3%A8%E6%84%8F%E8%BF%87%EF%BC%8C%E6%8A%8A%E7%AD%B7%E5%AD%90%E6%8F%92%E5%85%A5%E6%B0%B4%E4%B8%AD%EF%BC%8C%E7%AD%B7%E5%AD%90%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%83%8F%E6%98%AF%E5%BC%AF%E6%8A%98%E4%BA%86%EF%BC%9F",
+      "duration": 8.13,
+      "size": 0,
+      "text": "你是否注意过，把筷子插入水中，筷子看起来像是弯折了？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E7%8E%B0%E8%B1%A1%EF%BC%8C%E6%98%AF%E5%85%89%E5%AD%A6%E4%B8%AD%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E8%A7%84%E5%BE%8B%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/refraction/intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E7%8E%B0%E8%B1%A1%EF%BC%8C%E6%98%AF%E5%85%89%E5%AD%A6%E4%B8%AD%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E8%A7%84%E5%BE%8B%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "这就是光的折射现象，是光学中最基本的规律之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%85%89%E4%BB%8E%E4%B8%80%E7%A7%8D%E4%BB%8B%E8%B4%A8%E8%BF%9B%E5%85%A5%E5%8F%A6%E4%B8%80%E7%A7%8D%E4%BB%8B%E8%B4%A8%E6%97%B6%EF%BC%8C%E4%BC%A0%E6%92%AD%E6%96%B9%E5%90%91%E4%BC%9A%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E6%8A%98%E5%B0%84%E3%80%82",
+      "path": "audio/narrations/refraction/concept-concept-1.speech?text=%E5%85%89%E4%BB%8E%E4%B8%80%E7%A7%8D%E4%BB%8B%E8%B4%A8%E8%BF%9B%E5%85%A5%E5%8F%A6%E4%B8%80%E7%A7%8D%E4%BB%8B%E8%B4%A8%E6%97%B6%EF%BC%8C%E4%BC%A0%E6%92%AD%E6%96%B9%E5%90%91%E4%BC%9A%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E6%8A%98%E5%B0%84%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "光从一种介质进入另一种介质时，传播方向会发生改变，这就是折射。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%8A%98%E5%B0%84%E7%8E%87%20n%20%E7%AD%89%E4%BA%8E%E5%85%89%E5%9C%A8%E7%9C%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E9%80%9F%E5%BA%A6%E9%99%A4%E4%BB%A5%E5%85%89%E5%9C%A8%E4%BB%8B%E8%B4%A8%E4%B8%AD%E7%9A%84%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/refraction/concept-concept-2.speech?text=%E6%8A%98%E5%B0%84%E7%8E%87%20n%20%E7%AD%89%E4%BA%8E%E5%85%89%E5%9C%A8%E7%9C%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E9%80%9F%E5%BA%A6%E9%99%A4%E4%BB%A5%E5%85%89%E5%9C%A8%E4%BB%8B%E8%B4%A8%E4%B8%AD%E7%9A%84%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "折射率 n 等于光在真空中的速度除以光在介质中的速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%85%89%E4%BB%8E%E5%85%89%E7%96%8F%E4%BB%8B%E8%B4%A8%E8%BF%9B%E5%85%A5%E5%85%89%E5%AF%86%E4%BB%8B%E8%B4%A8%E6%97%B6%EF%BC%8C%E6%8A%98%E5%B0%84%E8%A7%92%E5%B0%8F%E4%BA%8E%E5%85%A5%E5%B0%84%E8%A7%92%E3%80%82",
+      "path": "audio/narrations/refraction/concept-concept-3.speech?text=%E5%85%89%E4%BB%8E%E5%85%89%E7%96%8F%E4%BB%8B%E8%B4%A8%E8%BF%9B%E5%85%A5%E5%85%89%E5%AF%86%E4%BB%8B%E8%B4%A8%E6%97%B6%EF%BC%8C%E6%8A%98%E5%B0%84%E8%A7%92%E5%B0%8F%E4%BA%8E%E5%85%A5%E5%B0%84%E8%A7%92%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "光从光疏介质进入光密介质时，折射角小于入射角。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%85%89%E4%BB%8E%E5%85%89%E5%AF%86%E4%BB%8B%E8%B4%A8%E8%BF%9B%E5%85%A5%E5%85%89%E7%96%8F%E4%BB%8B%E8%B4%A8%E6%97%B6%EF%BC%8C%E6%8A%98%E5%B0%84%E8%A7%92%E5%A4%A7%E4%BA%8E%E5%85%A5%E5%B0%84%E8%A7%92%E3%80%82",
+      "path": "audio/narrations/refraction/concept-concept-4.speech?text=%E5%85%89%E4%BB%8E%E5%85%89%E5%AF%86%E4%BB%8B%E8%B4%A8%E8%BF%9B%E5%85%A5%E5%85%89%E7%96%8F%E4%BB%8B%E8%B4%A8%E6%97%B6%EF%BC%8C%E6%8A%98%E5%B0%84%E8%A7%92%E5%A4%A7%E4%BA%8E%E5%85%A5%E5%B0%84%E8%A7%92%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "光从光密介质进入光疏介质时，折射角大于入射角。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E6%96%AF%E6%B6%85%E5%B0%94%E5%AE%9A%E5%BE%8B%EF%BC%9An1%20%E4%B9%98%E4%BB%A5%20sin%20%CE%B81%20%E7%AD%89%E4%BA%8E%20n2%20%E4%B9%98%E4%BB%A5%20sin%20%CE%B82%E3%80%82",
+      "path": "audio/narrations/refraction/formula-formula-1.speech?text=%E6%96%AF%E6%B6%85%E5%B0%94%E5%AE%9A%E5%BE%8B%EF%BC%9An1%20%E4%B9%98%E4%BB%A5%20sin%20%CE%B81%20%E7%AD%89%E4%BA%8E%20n2%20%E4%B9%98%E4%BB%A5%20sin%20%CE%B82%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "斯涅尔定律：n1 乘以 sin θ1 等于 n2 乘以 sin θ2。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20n1%20%E5%92%8C%20n2%20%E6%98%AF%E4%B8%A4%E7%A7%8D%E4%BB%8B%E8%B4%A8%E7%9A%84%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8C%CE%B81%20%E6%98%AF%E5%85%A5%E5%B0%84%E8%A7%92%EF%BC%8C%CE%B82%20%E6%98%AF%E6%8A%98%E5%B0%84%E8%A7%92%E3%80%82",
+      "path": "audio/narrations/refraction/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20n1%20%E5%92%8C%20n2%20%E6%98%AF%E4%B8%A4%E7%A7%8D%E4%BB%8B%E8%B4%A8%E7%9A%84%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8C%CE%B81%20%E6%98%AF%E5%85%A5%E5%B0%84%E8%A7%92%EF%BC%8C%CE%B82%20%E6%98%AF%E6%8A%98%E5%B0%84%E8%A7%92%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "其中 n1 和 n2 是两种介质的折射率，θ1 是入射角，θ2 是折射角。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E4%B8%B4%E7%95%8C%E8%A7%92%20%CE%B8c%20%E6%BB%A1%E8%B6%B3%20sin%20%CE%B8c%20%E7%AD%89%E4%BA%8E%20n2%20%E9%99%A4%E4%BB%A5%20n1%E3%80%82",
+      "path": "audio/narrations/refraction/formula-formula-3.speech?text=%E4%B8%B4%E7%95%8C%E8%A7%92%20%CE%B8c%20%E6%BB%A1%E8%B6%B3%20sin%20%CE%B8c%20%E7%AD%89%E4%BA%8E%20n2%20%E9%99%A4%E4%BB%A5%20n1%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "临界角 θc 满足 sin θc 等于 n2 除以 n1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%BD%93%E5%85%A5%E5%B0%84%E8%A7%92%E5%A4%A7%E4%BA%8E%E4%B8%B4%E7%95%8C%E8%A7%92%E6%97%B6%EF%BC%8C%E5%8F%91%E7%94%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E3%80%82",
+      "path": "audio/narrations/refraction/formula-formula-4.speech?text=%E5%BD%93%E5%85%A5%E5%B0%84%E8%A7%92%E5%A4%A7%E4%BA%8E%E4%B8%B4%E7%95%8C%E8%A7%92%E6%97%B6%EF%BC%8C%E5%8F%91%E7%94%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "当入射角大于临界角时，发生全反射。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "animation",
+      "line_id": "animation-1",
+      "filename": "animation-animation-1.speech?text=%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%BA%86%E5%85%89%E7%BA%BF%E4%BB%8E%E7%A9%BA%E6%B0%94%E8%BF%9B%E5%85%A5%E7%8E%BB%E7%92%83%E7%9A%84%E6%8A%98%E5%B0%84%E8%BF%87%E7%A8%8B%E3%80%82",
+      "path": "audio/narrations/refraction/animation-animation-1.speech?text=%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%BA%86%E5%85%89%E7%BA%BF%E4%BB%8E%E7%A9%BA%E6%B0%94%E8%BF%9B%E5%85%A5%E7%8E%BB%E7%92%83%E7%9A%84%E6%8A%98%E5%B0%84%E8%BF%87%E7%A8%8B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "图中显示了光线从空气进入玻璃的折射过程。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "animation",
+      "line_id": "animation-2",
+      "filename": "animation-animation-2.speech?text=%E6%B3%A8%E6%84%8F%E8%A7%82%E5%AF%9F%E5%85%A5%E5%B0%84%E5%85%89%E7%BA%BF%E3%80%81%E5%8F%8D%E5%B0%84%E5%85%89%E7%BA%BF%E5%92%8C%E6%8A%98%E5%B0%84%E5%85%89%E7%BA%BF%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/refraction/animation-animation-2.speech?text=%E6%B3%A8%E6%84%8F%E8%A7%82%E5%AF%9F%E5%85%A5%E5%B0%84%E5%85%89%E7%BA%BF%E3%80%81%E5%8F%8D%E5%B0%84%E5%85%89%E7%BA%BF%E5%92%8C%E6%8A%98%E5%B0%84%E5%85%89%E7%BA%BF%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "注意观察入射光线、反射光线和折射光线的关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "animation",
+      "line_id": "animation-3",
+      "filename": "animation-animation-3.speech?text=%E5%BD%93%E5%85%A5%E5%B0%84%E8%A7%92%E5%A2%9E%E5%A4%A7%E5%88%B0%E4%B8%B4%E7%95%8C%E8%A7%92%E6%97%B6%EF%BC%8C%E6%8A%98%E5%B0%84%E5%85%89%E7%BA%BF%E6%B6%88%E5%A4%B1%EF%BC%8C%E5%8F%91%E7%94%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E3%80%82",
+      "path": "audio/narrations/refraction/animation-animation-3.speech?text=%E5%BD%93%E5%85%A5%E5%B0%84%E8%A7%92%E5%A2%9E%E5%A4%A7%E5%88%B0%E4%B8%B4%E7%95%8C%E8%A7%92%E6%97%B6%EF%BC%8C%E6%8A%98%E5%B0%84%E5%85%89%E7%BA%BF%E6%B6%88%E5%A4%B1%EF%BC%8C%E5%8F%91%E7%94%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "当入射角增大到临界角时，折射光线消失，发生全反射。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E5%85%A5%E5%B0%84%E8%A7%92%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%8A%98%E5%B0%84%E8%A7%92%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/refraction/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E5%85%A5%E5%B0%84%E8%A7%92%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%8A%98%E5%B0%84%E8%A7%92%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "调整入射角，观察折射角的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E4%BB%8B%E8%B4%A8%E7%9A%84%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%85%89%E7%BA%BF%E5%81%8F%E6%8A%98%E7%A8%8B%E5%BA%A6%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/refraction/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E4%BB%8B%E8%B4%A8%E7%9A%84%E6%8A%98%E5%B0%84%E7%8E%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%85%89%E7%BA%BF%E5%81%8F%E6%8A%98%E7%A8%8B%E5%BA%A6%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "改变介质的折射率，观察光线偏折程度的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%B0%9D%E8%AF%95%E6%89%BE%E5%88%B0%E4%B8%B4%E7%95%8C%E8%A7%92%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/refraction/interaction-interaction-3.speech?text=%E5%B0%9D%E8%AF%95%E6%89%BE%E5%88%B0%E4%B8%B4%E7%95%8C%E8%A7%92%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "尝试找到临界角，观察全反射现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%85%89%E7%BA%A4%E9%80%9A%E4%BF%A1%E5%88%A9%E7%94%A8%E5%85%A8%E5%8F%8D%E5%B0%84%E5%8E%9F%E7%90%86%E4%BC%A0%E8%BE%93%E5%85%89%E4%BF%A1%E5%8F%B7%E3%80%82",
+      "path": "audio/narrations/refraction/application-application-1.speech?text=%E5%85%89%E7%BA%A4%E9%80%9A%E4%BF%A1%E5%88%A9%E7%94%A8%E5%85%A8%E5%8F%8D%E5%B0%84%E5%8E%9F%E7%90%86%E4%BC%A0%E8%BE%93%E5%85%89%E4%BF%A1%E5%8F%B7%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "光纤通信利用全反射原理传输光信号。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E7%9C%BC%E9%95%9C%E5%92%8C%E7%9B%B8%E6%9C%BA%E9%95%9C%E5%A4%B4%E5%88%A9%E7%94%A8%E6%8A%98%E5%B0%84%E5%8E%9F%E7%90%86%E8%81%9A%E7%84%A6%E5%85%89%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/refraction/application-application-2.speech?text=%E7%9C%BC%E9%95%9C%E5%92%8C%E7%9B%B8%E6%9C%BA%E9%95%9C%E5%A4%B4%E5%88%A9%E7%94%A8%E6%8A%98%E5%B0%84%E5%8E%9F%E7%90%86%E8%81%9A%E7%84%A6%E5%85%89%E7%BA%BF%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "眼镜和相机镜头利用折射原理聚焦光线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%B5%B7%E5%B8%82%E8%9C%83%E6%A5%BC%E6%98%AF%E5%A4%A7%E6%B0%94%E6%8A%98%E5%B0%84%E4%BA%A7%E7%94%9F%E7%9A%84%E8%87%AA%E7%84%B6%E5%A5%87%E8%A7%82%E3%80%82",
+      "path": "audio/narrations/refraction/application-application-3.speech?text=%E6%B5%B7%E5%B8%82%E8%9C%83%E6%A5%BC%E6%98%AF%E5%A4%A7%E6%B0%94%E6%8A%98%E5%B0%84%E4%BA%A7%E7%94%9F%E7%9A%84%E8%87%AA%E7%84%B6%E5%A5%87%E8%A7%82%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "海市蜃楼是大气折射产生的自然奇观。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "path": "audio/narrations/refraction/summary-summary-1.speech?text=%E8%AE%A9%E6%88%91%E4%BB%AC%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E4%BB%8A%E5%A4%A9%E5%AD%A6%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "让我们总结一下今天学到的内容。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E9%81%B5%E5%BE%AA%E6%96%AF%E6%B6%85%E5%B0%94%E5%AE%9A%E5%BE%8B%EF%BC%8C%E6%8A%98%E5%B0%84%E7%8E%87%E5%86%B3%E5%AE%9A%E5%85%89%E7%BA%BF%E5%81%8F%E6%8A%98%E7%A8%8B%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/refraction/summary-summary-2.speech?text=%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E9%81%B5%E5%BE%AA%E6%96%AF%E6%B6%85%E5%B0%94%E5%AE%9A%E5%BE%8B%EF%BC%8C%E6%8A%98%E5%B0%84%E7%8E%87%E5%86%B3%E5%AE%9A%E5%85%89%E7%BA%BF%E5%81%8F%E6%8A%98%E7%A8%8B%E5%BA%A6%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "光的折射遵循斯涅尔定律，折射率决定光线偏折程度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%BD%93%E5%85%A5%E5%B0%84%E8%A7%92%E5%A4%A7%E4%BA%8E%E4%B8%B4%E7%95%8C%E8%A7%92%E6%97%B6%EF%BC%8C%E5%8F%91%E7%94%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E3%80%82",
+      "path": "audio/narrations/refraction/summary-summary-3.speech?text=%E5%BD%93%E5%85%A5%E5%B0%84%E8%A7%92%E5%A4%A7%E4%BA%8E%E4%B8%B4%E7%95%8C%E8%A7%92%E6%97%B6%EF%BC%8C%E5%8F%91%E7%94%9F%E5%85%A8%E5%8F%8D%E5%B0%84%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "当入射角大于临界角时，发生全反射。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "refraction",
+      "section_id": "summary",
+      "line_id": "summary-4",
+      "filename": "summary-summary-4.speech?text=%E5%B8%8C%E6%9C%9B%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%EF%BC%8C%E4%BD%A0%E5%AF%B9%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E6%9C%89%E4%BA%86%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%81",
+      "path": "audio/narrations/refraction/summary-summary-4.speech?text=%E5%B8%8C%E6%9C%9B%E9%80%9A%E8%BF%87%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%EF%BC%8C%E4%BD%A0%E5%AF%B9%E5%85%89%E7%9A%84%E6%8A%98%E5%B0%84%E6%9C%89%E4%BA%86%E6%9B%B4%E6%B7%B1%E5%85%A5%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%81",
+      "duration": 7.5,
+      "size": 0,
+      "text": "希望通过这个实验，你对光的折射有了更深入的理解！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

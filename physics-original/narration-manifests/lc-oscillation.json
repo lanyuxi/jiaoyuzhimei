@@ -1,0 +1,229 @@
+{
+  "script_id": "lc-oscillation",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 156.59,
+  "files": [
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20LC%20%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%8A%8A%E4%B8%80%E4%B8%AA%E5%85%85%E4%BA%86%E7%94%B5%E7%9A%84%E7%94%B5%E5%AE%B9%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E7%94%B5%E6%84%9F%E4%B8%8A%EF%BC%8C%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F",
+      "path": "audio/narrations/lc-oscillation/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%20LC%20%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%8A%8A%E4%B8%80%E4%B8%AA%E5%85%85%E4%BA%86%E7%94%B5%E7%9A%84%E7%94%B5%E5%AE%B9%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E7%94%B5%E6%84%9F%E4%B8%8A%EF%BC%8C%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F",
+      "duration": 11.88,
+      "size": 0,
+      "text": "欢迎来到 LC 振荡电路实验！把一个充了电的电容接到一个电感上，会发生什么？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E7%94%B5%E6%B5%81%E4%BC%9A%E5%9C%A8%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9D%A5%E5%9B%9E%E6%8C%AF%E8%8D%A1%EF%BC%8C%E8%83%BD%E9%87%8F%E5%9C%A8%E7%94%B5%E5%AE%B9%E5%92%8C%E7%94%B5%E6%84%9F%E4%B9%8B%E9%97%B4%E4%B8%8D%E6%96%AD%E4%BC%A0%E9%80%92%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/intro-intro-2.speech?text=%E7%94%B5%E6%B5%81%E4%BC%9A%E5%9C%A8%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9D%A5%E5%9B%9E%E6%8C%AF%E8%8D%A1%EF%BC%8C%E8%83%BD%E9%87%8F%E5%9C%A8%E7%94%B5%E5%AE%B9%E5%92%8C%E7%94%B5%E6%84%9F%E4%B9%8B%E9%97%B4%E4%B8%8D%E6%96%AD%E4%BC%A0%E9%80%92%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "电流会在电路中来回振荡，能量在电容和电感之间不断传递。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E7%A7%8D%E7%94%B5%E7%A3%81%E6%8C%AF%E8%8D%A1%E6%98%AF%E6%97%A0%E7%BA%BF%E7%94%B5%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%BA%E7%A1%80%EF%BC%8C%E4%B9%9F%E4%B8%8E%E6%9C%BA%E6%A2%B0%E6%8C%AF%E5%8A%A8%E6%9C%89%E7%9D%80%E4%BC%98%E7%BE%8E%E7%9A%84%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/intro-intro-3.speech?text=%E8%BF%99%E7%A7%8D%E7%94%B5%E7%A3%81%E6%8C%AF%E8%8D%A1%E6%98%AF%E6%97%A0%E7%BA%BF%E7%94%B5%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%BA%E7%A1%80%EF%BC%8C%E4%B9%9F%E4%B8%8E%E6%9C%BA%E6%A2%B0%E6%8C%AF%E5%8A%A8%E6%9C%89%E7%9D%80%E4%BC%98%E7%BE%8E%E7%9A%84%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "这种电磁振荡是无线电技术的基础，也与机械振动有着优美的对应关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%94%B5%E5%AE%B9%E5%82%A8%E5%AD%98%E7%94%B5%E5%9C%BA%E8%83%BD%EF%BC%8C%E7%94%B5%E6%84%9F%E5%82%A8%E5%AD%98%E7%A3%81%E5%9C%BA%E8%83%BD%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/concept-concept-1.speech?text=%E7%94%B5%E5%AE%B9%E5%82%A8%E5%AD%98%E7%94%B5%E5%9C%BA%E8%83%BD%EF%BC%8C%E7%94%B5%E6%84%9F%E5%82%A8%E5%AD%98%E7%A3%81%E5%9C%BA%E8%83%BD%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "电容储存电场能，电感储存磁场能。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E7%94%B5%E5%AE%B9%E6%94%BE%E7%94%B5%E6%97%B6%E7%94%B5%E6%B5%81%E5%A2%9E%E5%A4%A7%EF%BC%8C%E8%83%BD%E9%87%8F%E4%BB%8E%E7%94%B5%E5%9C%BA%E8%BD%AC%E7%A7%BB%E5%88%B0%E7%94%B5%E6%84%9F%E7%9A%84%E7%A3%81%E5%9C%BA%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/concept-concept-2.speech?text=%E7%94%B5%E5%AE%B9%E6%94%BE%E7%94%B5%E6%97%B6%E7%94%B5%E6%B5%81%E5%A2%9E%E5%A4%A7%EF%BC%8C%E8%83%BD%E9%87%8F%E4%BB%8E%E7%94%B5%E5%9C%BA%E8%BD%AC%E7%A7%BB%E5%88%B0%E7%94%B5%E6%84%9F%E7%9A%84%E7%A3%81%E5%9C%BA%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "电容放电时电流增大，能量从电场转移到电感的磁场。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%94%B5%E6%B5%81%E5%88%B0%E6%9C%80%E5%A4%A7%E5%90%8E%EF%BC%8C%E7%94%B5%E6%84%9F%E5%8F%88%E7%BB%99%E7%94%B5%E5%AE%B9%E5%8F%8D%E5%90%91%E5%85%85%E7%94%B5%EF%BC%8C%E7%A3%81%E5%9C%BA%E8%83%BD%E5%9B%9E%E5%88%B0%E7%94%B5%E5%9C%BA%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/concept-concept-3.speech?text=%E7%94%B5%E6%B5%81%E5%88%B0%E6%9C%80%E5%A4%A7%E5%90%8E%EF%BC%8C%E7%94%B5%E6%84%9F%E5%8F%88%E7%BB%99%E7%94%B5%E5%AE%B9%E5%8F%8D%E5%90%91%E5%85%85%E7%94%B5%EF%BC%8C%E7%A3%81%E5%9C%BA%E8%83%BD%E5%9B%9E%E5%88%B0%E7%94%B5%E5%9C%BA%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "电流到最大后，电感又给电容反向充电，磁场能回到电场。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BF%99%E4%B8%80%E8%BF%87%E7%A8%8B%E5%91%A8%E8%80%8C%E5%A4%8D%E5%A7%8B%EF%BC%8C%E5%BD%A2%E6%88%90%E6%8C%81%E7%BB%AD%E7%9A%84%E7%94%B5%E7%A3%81%E6%8C%AF%E8%8D%A1%EF%BC%8C%E6%80%BB%E8%83%BD%E9%87%8F%E4%BF%9D%E6%8C%81%E5%AE%88%E6%81%92%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/concept-concept-4.speech?text=%E8%BF%99%E4%B8%80%E8%BF%87%E7%A8%8B%E5%91%A8%E8%80%8C%E5%A4%8D%E5%A7%8B%EF%BC%8C%E5%BD%A2%E6%88%90%E6%8C%81%E7%BB%AD%E7%9A%84%E7%94%B5%E7%A3%81%E6%8C%AF%E8%8D%A1%EF%BC%8C%E6%80%BB%E8%83%BD%E9%87%8F%E4%BF%9D%E6%8C%81%E5%AE%88%E6%81%92%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "这一过程周而复始，形成持续的电磁振荡，总能量保持守恒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=LC%20%E5%9B%9E%E8%B7%AF%E7%9A%84%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%E7%94%B1%E7%94%B5%E6%84%9F%E5%92%8C%E7%94%B5%E5%AE%B9%E5%85%B1%E5%90%8C%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/formula-formula-1.speech?text=LC%20%E5%9B%9E%E8%B7%AF%E7%9A%84%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%E7%94%B1%E7%94%B5%E6%84%9F%E5%92%8C%E7%94%B5%E5%AE%B9%E5%85%B1%E5%90%8C%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "LC 回路的振荡频率由电感和电容共同决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%94%B5%E6%84%9F%E6%88%96%E7%94%B5%E5%AE%B9%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%8C%AF%E8%8D%A1%E8%B6%8A%E6%85%A2%EF%BC%8C%E9%A2%91%E7%8E%87%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/formula-formula-2.speech?text=%E7%94%B5%E6%84%9F%E6%88%96%E7%94%B5%E5%AE%B9%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%8C%AF%E8%8D%A1%E8%B6%8A%E6%85%A2%EF%BC%8C%E9%A2%91%E7%8E%87%E8%B6%8A%E4%BD%8E%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "电感或电容越大，振荡越慢，频率越低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%94%B5%E5%AE%B9%E4%B8%8A%E7%9A%84%E7%94%B5%E8%8D%B7%E9%9A%8F%E6%97%B6%E9%97%B4%E5%81%9A%E6%AD%A3%E5%BC%A6%E5%8F%98%E5%8C%96%EF%BC%8C%E4%B8%8E%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E5%AE%8C%E5%85%A8%E7%B1%BB%E4%BC%BC%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/formula-formula-3.speech?text=%E7%94%B5%E5%AE%B9%E4%B8%8A%E7%9A%84%E7%94%B5%E8%8D%B7%E9%9A%8F%E6%97%B6%E9%97%B4%E5%81%9A%E6%AD%A3%E5%BC%A6%E5%8F%98%E5%8C%96%EF%BC%8C%E4%B8%8E%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E5%AE%8C%E5%85%A8%E7%B1%BB%E4%BC%BC%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "电容上的电荷随时间做正弦变化，与简谐振动完全类似。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E7%94%B5%E5%AE%B9%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%BC%B9%E7%B0%A7%E7%9A%84%E5%8A%B2%E5%BA%A6%EF%BC%8C%E7%94%B5%E6%84%9F%E7%9B%B8%E5%BD%93%E4%BA%8E%E7%89%A9%E4%BD%93%E7%9A%84%E6%83%AF%E6%80%A7%E8%B4%A8%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/formula-formula-4.speech?text=%E7%94%B5%E5%AE%B9%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%BC%B9%E7%B0%A7%E7%9A%84%E5%8A%B2%E5%BA%A6%EF%BC%8C%E7%94%B5%E6%84%9F%E7%9B%B8%E5%BD%93%E4%BA%8E%E7%89%A9%E4%BD%93%E7%9A%84%E6%83%AF%E6%80%A7%E8%B4%A8%E9%87%8F%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "电容相当于弹簧的劲度，电感相当于物体的惯性质量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%94%B5%E8%8D%B7%E4%B8%8E%E7%94%B5%E6%B5%81%E7%9A%84%E6%AD%A3%E5%BC%A6%E6%8C%AF%E8%8D%A1%EF%BC%8C%E4%BB%A5%E5%8F%8A%E7%94%B5%E5%9C%BA%E8%83%BD%E3%80%81%E7%A3%81%E5%9C%BA%E8%83%BD%E7%9A%84%E6%AD%A4%E6%B6%88%E5%BD%BC%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%94%B5%E8%8D%B7%E4%B8%8E%E7%94%B5%E6%B5%81%E7%9A%84%E6%AD%A3%E5%BC%A6%E6%8C%AF%E8%8D%A1%EF%BC%8C%E4%BB%A5%E5%8F%8A%E7%94%B5%E5%9C%BA%E8%83%BD%E3%80%81%E7%A3%81%E5%9C%BA%E8%83%BD%E7%9A%84%E6%AD%A4%E6%B6%88%E5%BD%BC%E9%95%BF%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "观察电荷与电流的正弦振荡，以及电场能、磁场能的此消彼长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E7%94%B5%E6%84%9F%20L%20%E6%88%96%E7%94%B5%E5%AE%B9%20C%EF%BC%8C%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%E9%9A%8F%E4%B9%8B%E9%99%8D%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E7%94%B5%E6%84%9F%20L%20%E6%88%96%E7%94%B5%E5%AE%B9%20C%EF%BC%8C%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%E9%9A%8F%E4%B9%8B%E9%99%8D%E4%BD%8E%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "增大电感 L 或电容 C，振荡频率随之降低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E8%83%BD%E9%87%8F%E6%80%BB%E5%92%8C%E5%A7%8B%E7%BB%88%E4%B8%8D%E5%8F%98%EF%BC%8C%E5%8F%AA%E6%98%AF%E5%9C%A8%E7%94%B5%E5%9C%BA%E5%92%8C%E7%A3%81%E5%9C%BA%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E8%83%BD%E9%87%8F%E6%80%BB%E5%92%8C%E5%A7%8B%E7%BB%88%E4%B8%8D%E5%8F%98%EF%BC%8C%E5%8F%AA%E6%98%AF%E5%9C%A8%E7%94%B5%E5%9C%BA%E5%92%8C%E7%A3%81%E5%9C%BA%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "注意能量总和始终不变，只是在电场和磁场之间转换。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%94%B6%E9%9F%B3%E6%9C%BA%E7%94%A8%E5%8F%AF%E8%B0%83%20LC%20%E5%9B%9E%E8%B7%AF%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%94%B5%E5%8F%B0%E7%9A%84%E9%A2%91%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/application-application-1.speech?text=%E6%94%B6%E9%9F%B3%E6%9C%BA%E7%94%A8%E5%8F%AF%E8%B0%83%20LC%20%E5%9B%9E%E8%B7%AF%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%94%B5%E5%8F%B0%E7%9A%84%E9%A2%91%E7%8E%87%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "收音机用可调 LC 回路选择不同电台的频率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF%E6%98%AF%E4%BA%A7%E7%94%9F%E9%AB%98%E9%A2%91%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A0%B8%E5%BF%83%EF%BC%8C%E7%94%A8%E4%BA%8E%E9%80%9A%E4%BF%A1%E5%92%8C%E5%B9%BF%E6%92%AD%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/application-application-2.speech?text=%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF%E6%98%AF%E4%BA%A7%E7%94%9F%E9%AB%98%E9%A2%91%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A0%B8%E5%BF%83%EF%BC%8C%E7%94%A8%E4%BA%8E%E9%80%9A%E4%BF%A1%E5%92%8C%E5%B9%BF%E6%92%AD%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "振荡电路是产生高频信号的核心，用于通信和广播。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E9%87%91%E5%B1%9E%E6%8E%A2%E6%B5%8B%E5%99%A8%E4%B9%9F%E5%88%A9%E7%94%A8%20LC%20%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%E7%9A%84%E5%8F%98%E5%8C%96%E6%9D%A5%E6%8E%A2%E6%B5%8B%E9%87%91%E5%B1%9E%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/application-application-3.speech?text=%E9%87%91%E5%B1%9E%E6%8E%A2%E6%B5%8B%E5%99%A8%E4%B9%9F%E5%88%A9%E7%94%A8%20LC%20%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%E7%9A%84%E5%8F%98%E5%8C%96%E6%9D%A5%E6%8E%A2%E6%B5%8B%E9%87%91%E5%B1%9E%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "金属探测器也利用 LC 振荡频率的变化来探测金属。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=LC%20%E5%9B%9E%E8%B7%AF%E4%B8%AD%E7%94%B5%E5%9C%BA%E8%83%BD%E4%B8%8E%E7%A3%81%E5%9C%BA%E8%83%BD%E5%91%A8%E6%9C%9F%E6%80%A7%E8%BD%AC%E6%8D%A2%EF%BC%8C%E5%BD%A2%E6%88%90%E7%94%B5%E7%A3%81%E6%8C%AF%E8%8D%A1%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/summary-summary-1.speech?text=LC%20%E5%9B%9E%E8%B7%AF%E4%B8%AD%E7%94%B5%E5%9C%BA%E8%83%BD%E4%B8%8E%E7%A3%81%E5%9C%BA%E8%83%BD%E5%91%A8%E6%9C%9F%E6%80%A7%E8%BD%AC%E6%8D%A2%EF%BC%8C%E5%BD%A2%E6%88%90%E7%94%B5%E7%A3%81%E6%8C%AF%E8%8D%A1%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "LC 回路中电场能与磁场能周期性转换，形成电磁振荡。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%20f%20%E7%AD%89%E4%BA%8E%201%20%E9%99%A4%E4%BB%A5%202%CF%80%20%E6%A0%B9%E5%8F%B7%20LC%E3%80%82",
+      "path": "audio/narrations/lc-oscillation/summary-summary-2.speech?text=%E6%8C%AF%E8%8D%A1%E9%A2%91%E7%8E%87%20f%20%E7%AD%89%E4%BA%8E%201%20%E9%99%A4%E4%BB%A5%202%CF%80%20%E6%A0%B9%E5%8F%B7%20LC%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "振荡频率 f 等于 1 除以 2π 根号 LC。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "lc-oscillation",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E4%B8%8E%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E4%B8%80%E4%B8%80%E5%AF%B9%E5%BA%94%EF%BC%8C%E6%98%AF%E6%97%A0%E7%BA%BF%E7%94%B5%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/lc-oscillation/summary-summary-3.speech?text=%E5%AE%83%E4%B8%8E%E7%AE%80%E8%B0%90%E6%8C%AF%E5%8A%A8%E4%B8%80%E4%B8%80%E5%AF%B9%E5%BA%94%EF%BC%8C%E6%98%AF%E6%97%A0%E7%BA%BF%E7%94%B5%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 9.06,
+      "size": 0,
+      "text": "它与简谐振动一一对应，是无线电技术的基石。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

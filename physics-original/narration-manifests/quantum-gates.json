@@ -1,0 +1,229 @@
+{
+  "script_id": "quantum-gates",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 147.83,
+  "files": [
+    {
+      "script_id": "quantum-gates",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%87%8F%E5%AD%90%E9%97%A8%EF%BC%81%E5%AE%83%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%87%8C%E6%93%8D%E4%BD%9C%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83%E3%80%82",
+      "path": "audio/narrations/quantum-gates/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%87%8F%E5%AD%90%E9%97%A8%EF%BC%81%E5%AE%83%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%87%8C%E6%93%8D%E4%BD%9C%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "欢迎来到量子门！它是量子计算机里操作量子比特的基本单元。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%92%8C%E7%BB%8F%E5%85%B8%E9%80%BB%E8%BE%91%E9%97%A8%E4%B8%8D%E5%90%8C%EF%BC%8C%E9%87%8F%E5%AD%90%E9%97%A8%E8%AE%A9%E6%80%81%E7%9F%A2%E9%87%8F%E5%9C%A8%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E4%B8%8A%E6%97%8B%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/quantum-gates/intro-intro-2.speech?text=%E5%92%8C%E7%BB%8F%E5%85%B8%E9%80%BB%E8%BE%91%E9%97%A8%E4%B8%8D%E5%90%8C%EF%BC%8C%E9%87%8F%E5%AD%90%E9%97%A8%E8%AE%A9%E6%80%81%E7%9F%A2%E9%87%8F%E5%9C%A8%E5%B8%83%E6%B4%9B%E8%B5%AB%E7%90%83%E4%B8%8A%E6%97%8B%E8%BD%AC%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "和经典逻辑门不同，量子门让态矢量在布洛赫球上旋转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%87%8F%E5%AD%90%E9%97%A8%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E4%BB%BB%E6%84%8F%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E3%80%82",
+      "path": "audio/narrations/quantum-gates/intro-intro-3.speech?text=%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%87%8F%E5%AD%90%E9%97%A8%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E4%BB%BB%E6%84%8F%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "几个基本量子门组合起来，就能完成任意量子计算。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=X%20%E9%97%A8%E7%9B%B8%E5%BD%93%E4%BA%8E%E7%BB%8F%E5%85%B8%E7%9A%84%E9%9D%9E%E9%97%A8%EF%BC%8C%E6%8A%8A%200%20%E5%92%8C%201%20%E4%BA%92%E6%8D%A2%EF%BC%8C%E5%8D%B3%E7%BB%95%20X%20%E8%BD%B4%E7%BF%BB%E8%BD%AC%20180%20%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/quantum-gates/concept-concept-1.speech?text=X%20%E9%97%A8%E7%9B%B8%E5%BD%93%E4%BA%8E%E7%BB%8F%E5%85%B8%E7%9A%84%E9%9D%9E%E9%97%A8%EF%BC%8C%E6%8A%8A%200%20%E5%92%8C%201%20%E4%BA%92%E6%8D%A2%EF%BC%8C%E5%8D%B3%E7%BB%95%20X%20%E8%BD%B4%E7%BF%BB%E8%BD%AC%20180%20%E5%BA%A6%E3%80%82",
+      "duration": 11.88,
+      "size": 0,
+      "text": "X 门相当于经典的非门，把 0 和 1 互换，即绕 X 轴翻转 180 度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=Z%20%E9%97%A8%E7%BB%99%E7%8A%B6%E6%80%81%201%20%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%B4%9F%E7%9B%B8%E4%BD%8D%EF%BC%8C%E6%98%AF%E7%BB%95%20Z%20%E8%BD%B4%E6%97%8B%E8%BD%AC%20180%20%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/quantum-gates/concept-concept-2.speech?text=Z%20%E9%97%A8%E7%BB%99%E7%8A%B6%E6%80%81%201%20%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%B4%9F%E7%9B%B8%E4%BD%8D%EF%BC%8C%E6%98%AF%E7%BB%95%20Z%20%E8%BD%B4%E6%97%8B%E8%BD%AC%20180%20%E5%BA%A6%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "Z 门给状态 1 加一个负相位，是绕 Z 轴旋转 180 度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E9%98%BF%E8%BE%BE%E9%A9%AC%E9%97%A8%20H%20%E6%8A%8A%E7%A1%AE%E5%AE%9A%E6%80%81%E5%8F%98%E6%88%90%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%E6%80%81%EF%BC%8C%E6%98%AF%E9%87%8F%E5%AD%90%E5%B9%B6%E8%A1%8C%E7%9A%84%E5%BC%80%E5%85%B3%E3%80%82",
+      "path": "audio/narrations/quantum-gates/concept-concept-3.speech?text=%E9%98%BF%E8%BE%BE%E9%A9%AC%E9%97%A8%20H%20%E6%8A%8A%E7%A1%AE%E5%AE%9A%E6%80%81%E5%8F%98%E6%88%90%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%E6%80%81%EF%BC%8C%E6%98%AF%E9%87%8F%E5%AD%90%E5%B9%B6%E8%A1%8C%E7%9A%84%E5%BC%80%E5%85%B3%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "阿达马门 H 把确定态变成均等叠加态，是量子并行的开关。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E6%89%80%E6%9C%89%E9%87%8F%E5%AD%90%E9%97%A8%E9%83%BD%E6%98%AF%E5%8F%AF%E9%80%86%E7%9A%84%E5%B9%BA%E6%AD%A3%E5%8F%98%E6%8D%A2%EF%BC%8C%E4%BF%9D%E6%8C%81%E6%80%81%E7%9F%A2%E9%87%8F%E9%95%BF%E5%BA%A6%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/quantum-gates/concept-concept-4.speech?text=%E6%89%80%E6%9C%89%E9%87%8F%E5%AD%90%E9%97%A8%E9%83%BD%E6%98%AF%E5%8F%AF%E9%80%86%E7%9A%84%E5%B9%BA%E6%AD%A3%E5%8F%98%E6%8D%A2%EF%BC%8C%E4%BF%9D%E6%8C%81%E6%80%81%E7%9F%A2%E9%87%8F%E9%95%BF%E5%BA%A6%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "所有量子门都是可逆的幺正变换，保持态矢量长度不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=X%20%E9%97%A8%E7%9A%84%E7%9F%A9%E9%98%B5%E4%BA%A4%E6%8D%A2%200%20%E4%B8%8E%201%E3%80%82",
+      "path": "audio/narrations/quantum-gates/formula-formula-1.speech?text=X%20%E9%97%A8%E7%9A%84%E7%9F%A9%E9%98%B5%E4%BA%A4%E6%8D%A2%200%20%E4%B8%8E%201%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "X 门的矩阵交换 0 与 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E9%98%BF%E8%BE%BE%E9%A9%AC%E9%97%A8%E5%88%B6%E9%80%A0%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/quantum-gates/formula-formula-2.speech?text=%E9%98%BF%E8%BE%BE%E9%A9%AC%E9%97%A8%E5%88%B6%E9%80%A0%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 2.81,
+      "size": 0,
+      "text": "阿达马门制造叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=H%20%E4%BD%9C%E7%94%A8%E4%BA%8E%200%EF%BC%8C%E5%BE%97%E5%88%B0%200%20%E4%B8%8E%201%20%E7%9A%84%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/quantum-gates/formula-formula-3.speech?text=H%20%E4%BD%9C%E7%94%A8%E4%BA%8E%200%EF%BC%8C%E5%BE%97%E5%88%B0%200%20%E4%B8%8E%201%20%E7%9A%84%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "H 作用于 0，得到 0 与 1 的均等叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BF%9E%E7%BB%AD%E4%BD%9C%E7%94%A8%E4%B8%A4%E6%AC%A1%20H%20%E4%BC%9A%E5%9B%9E%E5%88%B0%E5%8E%9F%E6%80%81%EF%BC%8C%E4%BD%93%E7%8E%B0%E9%87%8F%E5%AD%90%E9%97%A8%E7%9A%84%E5%8F%AF%E9%80%86%E6%80%A7%E3%80%82",
+      "path": "audio/narrations/quantum-gates/formula-formula-4.speech?text=%E8%BF%9E%E7%BB%AD%E4%BD%9C%E7%94%A8%E4%B8%A4%E6%AC%A1%20H%20%E4%BC%9A%E5%9B%9E%E5%88%B0%E5%8E%9F%E6%80%81%EF%BC%8C%E4%BD%93%E7%8E%B0%E9%87%8F%E5%AD%90%E9%97%A8%E7%9A%84%E5%8F%AF%E9%80%86%E6%80%A7%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "连续作用两次 H 会回到原态，体现量子门的可逆性。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E4%BE%9D%E6%AC%A1%E7%82%B9%E5%87%BB%20X%E3%80%81H%E3%80%81Z%20%E9%97%A8%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%80%81%E7%9F%A2%E9%87%8F%E5%9C%A8%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%97%8B%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/quantum-gates/interaction-interaction-1.speech?text=%E4%BE%9D%E6%AC%A1%E7%82%B9%E5%87%BB%20X%E3%80%81H%E3%80%81Z%20%E9%97%A8%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%80%81%E7%9F%A2%E9%87%8F%E5%9C%A8%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84%E6%97%8B%E8%BD%AC%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "依次点击 X、H、Z 门，观察态矢量在球面上的旋转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%AF%95%E8%AF%95%E5%AF%B9%200%20%E6%80%81%E4%BD%9C%E7%94%A8%20H%20%E9%97%A8%EF%BC%8C%E7%9C%8B%E5%AE%83%E8%B7%B3%E5%88%B0%E8%B5%A4%E9%81%93%E5%8F%98%E6%88%90%E5%8F%A0%E5%8A%A0%E6%80%81%E3%80%82",
+      "path": "audio/narrations/quantum-gates/interaction-interaction-2.speech?text=%E8%AF%95%E8%AF%95%E5%AF%B9%200%20%E6%80%81%E4%BD%9C%E7%94%A8%20H%20%E9%97%A8%EF%BC%8C%E7%9C%8B%E5%AE%83%E8%B7%B3%E5%88%B0%E8%B5%A4%E9%81%93%E5%8F%98%E6%88%90%E5%8F%A0%E5%8A%A0%E6%80%81%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "试试对 0 态作用 H 门，看它跳到赤道变成叠加态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E8%BF%9E%E7%BB%AD%E4%BD%9C%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E9%97%A8%E4%B8%A4%E6%AC%A1%EF%BC%8C%E9%AA%8C%E8%AF%81%E5%AE%83%E5%9B%9E%E5%88%B0%E5%88%9D%E5%A7%8B%E6%80%81%E3%80%82",
+      "path": "audio/narrations/quantum-gates/interaction-interaction-3.speech?text=%E8%BF%9E%E7%BB%AD%E4%BD%9C%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E9%97%A8%E4%B8%A4%E6%AC%A1%EF%BC%8C%E9%AA%8C%E8%AF%81%E5%AE%83%E5%9B%9E%E5%88%B0%E5%88%9D%E5%A7%8B%E6%80%81%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "连续作用同一个门两次，验证它回到初始态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E9%87%8F%E5%AD%90%E7%AE%97%E6%B3%95%E6%9C%AC%E8%B4%A8%E4%B8%8A%E5%B0%B1%E6%98%AF%E7%B2%BE%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%80%E4%B8%B2%E9%87%8F%E5%AD%90%E9%97%A8%E3%80%82",
+      "path": "audio/narrations/quantum-gates/application-application-1.speech?text=%E9%87%8F%E5%AD%90%E7%AE%97%E6%B3%95%E6%9C%AC%E8%B4%A8%E4%B8%8A%E5%B0%B1%E6%98%AF%E7%B2%BE%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%80%E4%B8%B2%E9%87%8F%E5%AD%90%E9%97%A8%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "量子算法本质上就是精心设计的一串量子门。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%98%BF%E8%BE%BE%E9%A9%AC%E9%97%A8%E6%98%AF%20Grover%20%E6%90%9C%E7%B4%A2%E5%92%8C%20Shor%20%E5%88%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%9A%84%E8%B5%B7%E7%82%B9%E3%80%82",
+      "path": "audio/narrations/quantum-gates/application-application-2.speech?text=%E9%98%BF%E8%BE%BE%E9%A9%AC%E9%97%A8%E6%98%AF%20Grover%20%E6%90%9C%E7%B4%A2%E5%92%8C%20Shor%20%E5%88%86%E8%A7%A3%E7%AE%97%E6%B3%95%E7%9A%84%E8%B5%B7%E7%82%B9%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "阿达马门是 Grover 搜索和 Shor 分解算法的起点。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%9C%9F%E5%AE%9E%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%94%A8%E5%BE%AE%E6%B3%A2%E6%88%96%E6%BF%80%E5%85%89%E8%84%89%E5%86%B2%E5%AE%9E%E7%8E%B0%E8%BF%99%E4%BA%9B%E9%97%A8%E3%80%82",
+      "path": "audio/narrations/quantum-gates/application-application-3.speech?text=%E7%9C%9F%E5%AE%9E%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%94%A8%E5%BE%AE%E6%B3%A2%E6%88%96%E6%BF%80%E5%85%89%E8%84%89%E5%86%B2%E5%AE%9E%E7%8E%B0%E8%BF%99%E4%BA%9B%E9%97%A8%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "真实量子计算机用微波或激光脉冲实现这些门。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E9%87%8F%E5%AD%90%E9%97%A8%E6%98%AF%E4%BD%9C%E7%94%A8%E5%9C%A8%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E4%B8%8A%E7%9A%84%E5%B9%BA%E6%AD%A3%E6%97%8B%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/quantum-gates/summary-summary-1.speech?text=%E9%87%8F%E5%AD%90%E9%97%A8%E6%98%AF%E4%BD%9C%E7%94%A8%E5%9C%A8%E9%87%8F%E5%AD%90%E6%AF%94%E7%89%B9%E4%B8%8A%E7%9A%84%E5%B9%BA%E6%AD%A3%E6%97%8B%E8%BD%AC%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "量子门是作用在量子比特上的幺正旋转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=X%20%E9%97%A8%E7%BF%BB%E8%BD%AC%E3%80%81Z%20%E9%97%A8%E5%8A%A0%E7%9B%B8%E4%BD%8D%E3%80%81H%20%E9%97%A8%E5%88%B6%E9%80%A0%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/quantum-gates/summary-summary-2.speech?text=X%20%E9%97%A8%E7%BF%BB%E8%BD%AC%E3%80%81Z%20%E9%97%A8%E5%8A%A0%E7%9B%B8%E4%BD%8D%E3%80%81H%20%E9%97%A8%E5%88%B6%E9%80%A0%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "X 门翻转、Z 门加相位、H 门制造叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-gates",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E4%BB%AC%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A7%AF%E6%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/quantum-gates/summary-summary-3.speech?text=%E5%AE%83%E4%BB%AC%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A7%AF%E6%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.56,
+      "size": 0,
+      "text": "它们是量子计算的基本积木。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

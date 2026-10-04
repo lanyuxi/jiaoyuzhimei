@@ -1,0 +1,229 @@
+{
+  "script_id": "ecg",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 130.94,
+  "files": [
+    {
+      "script_id": "ecg",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%BF%83%E7%94%B5%E5%9B%BE%EF%BC%81%E5%AE%83%E6%8A%8A%E5%BF%83%E8%84%8F%E7%9A%84%E6%AF%8F%E4%B8%80%E6%AC%A1%E8%B7%B3%E5%8A%A8%E7%94%BB%E6%88%90%E4%B8%80%E4%B8%B2%E6%B3%A2%E5%BD%A2%E3%80%82",
+      "path": "audio/narrations/ecg/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%BF%83%E7%94%B5%E5%9B%BE%EF%BC%81%E5%AE%83%E6%8A%8A%E5%BF%83%E8%84%8F%E7%9A%84%E6%AF%8F%E4%B8%80%E6%AC%A1%E8%B7%B3%E5%8A%A8%E7%94%BB%E6%88%90%E4%B8%80%E4%B8%B2%E6%B3%A2%E5%BD%A2%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "欢迎来到心电图！它把心脏的每一次跳动画成一串波形。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%8C%BB%E7%94%9F%E9%80%9A%E8%BF%87%E8%BF%99%E4%BA%9B%E8%B5%B7%E4%BC%8F%EF%BC%8C%E5%B0%B1%E8%83%BD%E8%AF%BB%E5%87%BA%E5%BF%83%E8%84%8F%E7%9A%84%E5%81%A5%E5%BA%B7%E7%8A%B6%E5%86%B5%E3%80%82",
+      "path": "audio/narrations/ecg/intro-intro-2.speech?text=%E5%8C%BB%E7%94%9F%E9%80%9A%E8%BF%87%E8%BF%99%E4%BA%9B%E8%B5%B7%E4%BC%8F%EF%BC%8C%E5%B0%B1%E8%83%BD%E8%AF%BB%E5%87%BA%E5%BF%83%E8%84%8F%E7%9A%84%E5%81%A5%E5%BA%B7%E7%8A%B6%E5%86%B5%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "医生通过这些起伏，就能读出心脏的健康状况。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E4%BA%9B%E6%B3%A2%E5%BD%A2%EF%BC%8C%E6%AD%A3%E6%98%AF%E5%BF%83%E8%82%8C%E7%94%B5%E6%B4%BB%E5%8A%A8%E5%9C%A8%E4%BD%93%E8%A1%A8%E7%9A%84%E6%8A%95%E5%BD%B1%E3%80%82",
+      "path": "audio/narrations/ecg/intro-intro-3.speech?text=%E8%BF%99%E4%BA%9B%E6%B3%A2%E5%BD%A2%EF%BC%8C%E6%AD%A3%E6%98%AF%E5%BF%83%E8%82%8C%E7%94%B5%E6%B4%BB%E5%8A%A8%E5%9C%A8%E4%BD%93%E8%A1%A8%E7%9A%84%E6%8A%95%E5%BD%B1%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "这些波形，正是心肌电活动在体表的投影。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%BF%83%E8%84%8F%E7%9A%84%E7%AA%A6%E6%88%BF%E7%BB%93%E5%83%8F%E5%A4%A9%E7%84%B6%E8%B5%B7%E6%90%8F%E5%99%A8%EF%BC%8C%E5%AE%9A%E6%97%B6%E5%8F%91%E5%87%BA%E7%94%B5%E4%BF%A1%E5%8F%B7%E3%80%82",
+      "path": "audio/narrations/ecg/concept-concept-1.speech?text=%E5%BF%83%E8%84%8F%E7%9A%84%E7%AA%A6%E6%88%BF%E7%BB%93%E5%83%8F%E5%A4%A9%E7%84%B6%E8%B5%B7%E6%90%8F%E5%99%A8%EF%BC%8C%E5%AE%9A%E6%97%B6%E5%8F%91%E5%87%BA%E7%94%B5%E4%BF%A1%E5%8F%B7%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "心脏的窦房结像天然起搏器，定时发出电信号。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=P%20%E6%B3%A2%E4%BB%A3%E8%A1%A8%E5%BF%83%E6%88%BF%E5%8E%BB%E6%9E%81%E5%8C%96%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%BF%83%E6%88%BF%E6%94%B6%E7%BC%A9%E3%80%82",
+      "path": "audio/narrations/ecg/concept-concept-2.speech?text=P%20%E6%B3%A2%E4%BB%A3%E8%A1%A8%E5%BF%83%E6%88%BF%E5%8E%BB%E6%9E%81%E5%8C%96%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%BF%83%E6%88%BF%E6%94%B6%E7%BC%A9%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "P 波代表心房去极化，也就是心房收缩。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=QRS%20%E6%B3%A2%E7%BE%A4%E6%98%AF%E5%BF%83%E5%AE%A4%E5%8E%BB%E6%9E%81%E5%8C%96%EF%BC%8C%E5%B9%85%E5%BA%A6%E6%9C%80%E5%A4%A7%EF%BC%8C%E5%AF%B9%E5%BA%94%E5%BF%83%E5%AE%A4%E6%94%B6%E7%BC%A9%E3%80%82",
+      "path": "audio/narrations/ecg/concept-concept-3.speech?text=QRS%20%E6%B3%A2%E7%BE%A4%E6%98%AF%E5%BF%83%E5%AE%A4%E5%8E%BB%E6%9E%81%E5%8C%96%EF%BC%8C%E5%B9%85%E5%BA%A6%E6%9C%80%E5%A4%A7%EF%BC%8C%E5%AF%B9%E5%BA%94%E5%BF%83%E5%AE%A4%E6%94%B6%E7%BC%A9%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "QRS 波群是心室去极化，幅度最大，对应心室收缩。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=T%20%E6%B3%A2%E6%98%AF%E5%BF%83%E5%AE%A4%E5%A4%8D%E6%9E%81%E5%8C%96%EF%BC%8C%E5%BF%83%E8%82%8C%E6%81%A2%E5%A4%8D%E5%87%86%E5%A4%87%E4%B8%8B%E4%B8%80%E6%AC%A1%E8%B7%B3%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/ecg/concept-concept-4.speech?text=T%20%E6%B3%A2%E6%98%AF%E5%BF%83%E5%AE%A4%E5%A4%8D%E6%9E%81%E5%8C%96%EF%BC%8C%E5%BF%83%E8%82%8C%E6%81%A2%E5%A4%8D%E5%87%86%E5%A4%87%E4%B8%8B%E4%B8%80%E6%AC%A1%E8%B7%B3%E5%8A%A8%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "T 波是心室复极化，心肌恢复准备下一次跳动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%BF%83%E7%8E%87%E7%94%B1%E7%9B%B8%E9%82%BB%20R%20%E6%B3%A2%E7%9A%84%E9%97%B4%E9%9A%94%E8%AE%A1%E7%AE%97%E3%80%82",
+      "path": "audio/narrations/ecg/formula-formula-1.speech?text=%E5%BF%83%E7%8E%87%E7%94%B1%E7%9B%B8%E9%82%BB%20R%20%E6%B3%A2%E7%9A%84%E9%97%B4%E9%9A%94%E8%AE%A1%E7%AE%97%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "心率由相邻 R 波的间隔计算。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%AD%A3%E5%B8%B8%E6%88%90%E4%BA%BA%E9%9D%99%E6%81%AF%E5%BF%83%E7%8E%87%E7%BA%A6%E4%B8%BA%E6%AF%8F%E5%88%86%E9%92%9F%2060%20%E5%88%B0%20100%20%E6%AC%A1%E3%80%82",
+      "path": "audio/narrations/ecg/formula-formula-2.speech?text=%E6%AD%A3%E5%B8%B8%E6%88%90%E4%BA%BA%E9%9D%99%E6%81%AF%E5%BF%83%E7%8E%87%E7%BA%A6%E4%B8%BA%E6%AF%8F%E5%88%86%E9%92%9F%2060%20%E5%88%B0%20100%20%E6%AC%A1%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "正常成人静息心率约为每分钟 60 到 100 次。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=RR%20%E9%97%B4%E6%9C%9F%E8%B6%8A%E7%9F%AD%EF%BC%8C%E5%BF%83%E7%8E%87%E8%B6%8A%E5%BF%AB%E3%80%82",
+      "path": "audio/narrations/ecg/formula-formula-3.speech?text=RR%20%E9%97%B4%E6%9C%9F%E8%B6%8A%E7%9F%AD%EF%BC%8C%E5%BF%83%E7%8E%87%E8%B6%8A%E5%BF%AB%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "RR 间期越短，心率越快。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E6%B3%A2%E5%BD%A2%E7%9A%84%E5%BD%A2%E7%8A%B6%E5%92%8C%E9%97%B4%E6%9C%9F%E5%BC%82%E5%B8%B8%EF%BC%8C%E6%8F%90%E7%A4%BA%E5%8F%AF%E8%83%BD%E7%9A%84%E5%BF%83%E8%84%8F%E9%97%AE%E9%A2%98%E3%80%82",
+      "path": "audio/narrations/ecg/formula-formula-4.speech?text=%E6%B3%A2%E5%BD%A2%E7%9A%84%E5%BD%A2%E7%8A%B6%E5%92%8C%E9%97%B4%E6%9C%9F%E5%BC%82%E5%B8%B8%EF%BC%8C%E6%8F%90%E7%A4%BA%E5%8F%AF%E8%83%BD%E7%9A%84%E5%BF%83%E8%84%8F%E9%97%AE%E9%A2%98%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "波形的形状和间期异常，提示可能的心脏问题。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%BF%83%E7%8E%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B3%A2%E5%BD%A2%E7%96%8F%E5%AF%86%E5%92%8C%E6%BB%9A%E5%8A%A8%E9%80%9F%E5%BA%A6%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/ecg/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%BF%83%E7%8E%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E6%B3%A2%E5%BD%A2%E7%96%8F%E5%AF%86%E5%92%8C%E6%BB%9A%E5%8A%A8%E9%80%9F%E5%BA%A6%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "调节心率，观察波形疏密和滚动速度的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%BE%A8%E8%AE%A4%E6%AF%8F%E4%B8%AA%E5%91%A8%E6%9C%9F%E9%87%8C%E7%9A%84%20P%20%E6%B3%A2%E3%80%81QRS%20%E6%B3%A2%E7%BE%A4%E5%92%8C%20T%20%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/ecg/interaction-interaction-2.speech?text=%E8%BE%A8%E8%AE%A4%E6%AF%8F%E4%B8%AA%E5%91%A8%E6%9C%9F%E9%87%8C%E7%9A%84%20P%20%E6%B3%A2%E3%80%81QRS%20%E6%B3%A2%E7%BE%A4%E5%92%8C%20T%20%E6%B3%A2%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "辨认每个周期里的 P 波、QRS 波群和 T 波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%BF%83%E7%8E%87%E4%B8%8E%20RR%20%E9%97%B4%E6%9C%9F%E7%9A%84%E5%8F%8D%E6%AF%94%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/ecg/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%BF%83%E7%8E%87%E4%B8%8E%20RR%20%E9%97%B4%E6%9C%9F%E7%9A%84%E5%8F%8D%E6%AF%94%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "注意心率与 RR 间期的反比关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%BF%83%E7%94%B5%E5%9B%BE%E6%98%AF%E8%AF%8A%E6%96%AD%E5%BF%83%E5%BE%8B%E5%A4%B1%E5%B8%B8%E5%92%8C%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E7%9A%84%E9%87%8D%E8%A6%81%E5%B7%A5%E5%85%B7%E3%80%82",
+      "path": "audio/narrations/ecg/application-application-1.speech?text=%E5%BF%83%E7%94%B5%E5%9B%BE%E6%98%AF%E8%AF%8A%E6%96%AD%E5%BF%83%E5%BE%8B%E5%A4%B1%E5%B8%B8%E5%92%8C%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E7%9A%84%E9%87%8D%E8%A6%81%E5%B7%A5%E5%85%B7%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "心电图是诊断心律失常和心肌梗死的重要工具。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%8F%AF%E7%A9%BF%E6%88%B4%E8%AE%BE%E5%A4%87%E5%A6%82%E6%99%BA%E8%83%BD%E6%89%8B%E8%A1%A8%E5%B7%B2%E8%83%BD%E8%AE%B0%E5%BD%95%E7%AE%80%E6%98%93%E5%BF%83%E7%94%B5%E5%9B%BE%E3%80%82",
+      "path": "audio/narrations/ecg/application-application-2.speech?text=%E5%8F%AF%E7%A9%BF%E6%88%B4%E8%AE%BE%E5%A4%87%E5%A6%82%E6%99%BA%E8%83%BD%E6%89%8B%E8%A1%A8%E5%B7%B2%E8%83%BD%E8%AE%B0%E5%BD%95%E7%AE%80%E6%98%93%E5%BF%83%E7%94%B5%E5%9B%BE%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "可穿戴设备如智能手表已能记录简易心电图。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%83%E6%8A%8A%E6%8A%BD%E8%B1%A1%E7%9A%84%E7%94%9F%E7%89%A9%E7%94%B5%E5%8F%98%E6%88%90%E5%8F%AF%E8%AF%BB%E7%9A%84%E4%B8%B4%E5%BA%8A%E4%BF%A1%E6%81%AF%E3%80%82",
+      "path": "audio/narrations/ecg/application-application-3.speech?text=%E5%AE%83%E6%8A%8A%E6%8A%BD%E8%B1%A1%E7%9A%84%E7%94%9F%E7%89%A9%E7%94%B5%E5%8F%98%E6%88%90%E5%8F%AF%E8%AF%BB%E7%9A%84%E4%B8%B4%E5%BA%8A%E4%BF%A1%E6%81%AF%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "它把抽象的生物电变成可读的临床信息。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%BF%83%E7%94%B5%E5%9B%BE%E8%AE%B0%E5%BD%95%E5%BF%83%E8%84%8F%E7%94%B5%E6%B4%BB%E5%8A%A8%EF%BC%8C%E5%91%88%E7%8E%B0%20P%E3%80%81QRS%E3%80%81T%20%E6%B3%A2%E3%80%82",
+      "path": "audio/narrations/ecg/summary-summary-1.speech?text=%E5%BF%83%E7%94%B5%E5%9B%BE%E8%AE%B0%E5%BD%95%E5%BF%83%E8%84%8F%E7%94%B5%E6%B4%BB%E5%8A%A8%EF%BC%8C%E5%91%88%E7%8E%B0%20P%E3%80%81QRS%E3%80%81T%20%E6%B3%A2%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "心电图记录心脏电活动，呈现 P、QRS、T 波。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%BF%83%E7%8E%87%E7%94%B1%20RR%20%E9%97%B4%E6%9C%9F%E8%AE%A1%E7%AE%97%EF%BC%8C%E6%AD%A3%E5%B8%B8%E4%B8%BA%E6%AF%8F%E5%88%86%E9%92%9F%2060%20%E5%88%B0%20100%20%E6%AC%A1%E3%80%82",
+      "path": "audio/narrations/ecg/summary-summary-2.speech?text=%E5%BF%83%E7%8E%87%E7%94%B1%20RR%20%E9%97%B4%E6%9C%9F%E8%AE%A1%E7%AE%97%EF%BC%8C%E6%AD%A3%E5%B8%B8%E4%B8%BA%E6%AF%8F%E5%88%86%E9%92%9F%2060%20%E5%88%B0%20100%20%E6%AC%A1%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "心率由 RR 间期计算，正常为每分钟 60 到 100 次。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "ecg",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E5%BF%83%E8%84%8F%E5%81%A5%E5%BA%B7%E7%9A%84%E7%AA%97%E5%8F%A3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/ecg/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E5%BF%83%E8%84%8F%E5%81%A5%E5%BA%B7%E7%9A%84%E7%AA%97%E5%8F%A3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 5.63,
+      "size": 0,
+      "text": "它是心脏健康的窗口。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "script_id": "double-pendulum",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 165.64,
+  "files": [
+    {
+      "script_id": "double-pendulum",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%8F%8C%E6%91%86%E5%AE%9E%E9%AA%8C%EF%BC%81%E5%8F%AA%E6%98%AF%E5%9C%A8%E5%8D%95%E6%91%86%E4%B8%8B%E9%9D%A2%E5%86%8D%E6%8C%82%E4%B8%80%E4%B8%AA%E6%91%86%EF%BC%8C%E8%BF%90%E5%8A%A8%E5%B0%B1%E5%8F%98%E5%BE%97%E9%9A%BE%E4%BB%A5%E9%A2%84%E6%B5%8B%E3%80%82",
+      "path": "audio/narrations/double-pendulum/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%8F%8C%E6%91%86%E5%AE%9E%E9%AA%8C%EF%BC%81%E5%8F%AA%E6%98%AF%E5%9C%A8%E5%8D%95%E6%91%86%E4%B8%8B%E9%9D%A2%E5%86%8D%E6%8C%82%E4%B8%80%E4%B8%AA%E6%91%86%EF%BC%8C%E8%BF%90%E5%8A%A8%E5%B0%B1%E5%8F%98%E5%BE%97%E9%9A%BE%E4%BB%A5%E9%A2%84%E6%B5%8B%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "欢迎来到双摆实验！只是在单摆下面再挂一个摆，运动就变得难以预测。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E4%BC%9A%E7%BF%BB%E8%BD%AC%E3%80%81%E7%94%A9%E5%8A%A8%EF%BC%8C%E5%88%92%E5%87%BA%E7%9C%BC%E8%8A%B1%E7%BC%AD%E4%B9%B1%E7%9A%84%E8%BD%A8%E8%BF%B9%EF%BC%8C%E5%87%A0%E4%B9%8E%E7%9C%8B%E4%B8%8D%E5%87%BA%E4%BB%BB%E4%BD%95%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/double-pendulum/intro-intro-2.speech?text=%E5%AE%83%E4%BC%9A%E7%BF%BB%E8%BD%AC%E3%80%81%E7%94%A9%E5%8A%A8%EF%BC%8C%E5%88%92%E5%87%BA%E7%9C%BC%E8%8A%B1%E7%BC%AD%E4%B9%B1%E7%9A%84%E8%BD%A8%E8%BF%B9%EF%BC%8C%E5%87%A0%E4%B9%8E%E7%9C%8B%E4%B8%8D%E5%87%BA%E4%BB%BB%E4%BD%95%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "它会翻转、甩动，划出眼花缭乱的轨迹，几乎看不出任何规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%8F%AF%E5%AE%83%E6%98%8E%E6%98%8E%E9%81%B5%E5%BE%AA%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%89%A9%E7%90%86%E5%AE%9A%E5%BE%8B%E3%80%82%E8%BF%99%E6%AD%A3%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%9A%84%E5%A5%87%E5%A6%99%E4%B9%8B%E5%A4%84%E3%80%82",
+      "path": "audio/narrations/double-pendulum/intro-intro-3.speech?text=%E5%8F%AF%E5%AE%83%E6%98%8E%E6%98%8E%E9%81%B5%E5%BE%AA%E7%A1%AE%E5%AE%9A%E7%9A%84%E7%89%A9%E7%90%86%E5%AE%9A%E5%BE%8B%E3%80%82%E8%BF%99%E6%AD%A3%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%9A%84%E5%A5%87%E5%A6%99%E4%B9%8B%E5%A4%84%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "可它明明遵循确定的物理定律。这正是混沌的奇妙之处。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E5%8F%8C%E6%91%86%E7%94%B1%E4%B8%A4%E6%A0%B9%E6%91%86%E6%9D%86%E5%92%8C%E4%B8%A4%E4%B8%AA%E6%91%86%E7%90%83%E7%BB%84%E6%88%90%EF%BC%8C%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%91%86%E6%8C%82%E5%9C%A8%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%91%86%E7%9A%84%E6%9C%AB%E7%AB%AF%E3%80%82",
+      "path": "audio/narrations/double-pendulum/concept-concept-1.speech?text=%E5%8F%8C%E6%91%86%E7%94%B1%E4%B8%A4%E6%A0%B9%E6%91%86%E6%9D%86%E5%92%8C%E4%B8%A4%E4%B8%AA%E6%91%86%E7%90%83%E7%BB%84%E6%88%90%EF%BC%8C%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%91%86%E6%8C%82%E5%9C%A8%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%91%86%E7%9A%84%E6%9C%AB%E7%AB%AF%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "双摆由两根摆杆和两个摆球组成，第二个摆挂在第一个摆的末端。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E4%B8%A4%E4%B8%AA%E6%91%86%E9%80%9A%E8%BF%87%E8%BF%9E%E6%8E%A5%E7%82%B9%E7%9B%B8%E4%BA%92%E8%80%A6%E5%90%88%EF%BC%8C%E4%B8%80%E4%B8%AA%E7%9A%84%E8%BF%90%E5%8A%A8%E4%BC%9A%E5%BC%BA%E7%83%88%E5%BD%B1%E5%93%8D%E5%8F%A6%E4%B8%80%E4%B8%AA%E3%80%82",
+      "path": "audio/narrations/double-pendulum/concept-concept-2.speech?text=%E4%B8%A4%E4%B8%AA%E6%91%86%E9%80%9A%E8%BF%87%E8%BF%9E%E6%8E%A5%E7%82%B9%E7%9B%B8%E4%BA%92%E8%80%A6%E5%90%88%EF%BC%8C%E4%B8%80%E4%B8%AA%E7%9A%84%E8%BF%90%E5%8A%A8%E4%BC%9A%E5%BC%BA%E7%83%88%E5%BD%B1%E5%93%8D%E5%8F%A6%E4%B8%80%E4%B8%AA%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "两个摆通过连接点相互耦合，一个的运动会强烈影响另一个。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%AE%83%E7%9A%84%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B%E6%98%AF%E4%B8%80%E7%BB%84%E8%80%A6%E5%90%88%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%EF%BC%8C%E6%B2%A1%E6%9C%89%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A3%E6%9E%90%E8%A7%A3%E3%80%82",
+      "path": "audio/narrations/double-pendulum/concept-concept-3.speech?text=%E5%AE%83%E7%9A%84%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B%E6%98%AF%E4%B8%80%E7%BB%84%E8%80%A6%E5%90%88%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%EF%BC%8C%E6%B2%A1%E6%9C%89%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A3%E6%9E%90%E8%A7%A3%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "它的运动方程是一组耦合的非线性微分方程，没有简单的解析解。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%9C%A8%E5%A4%A7%E6%91%86%E8%A7%92%E4%B8%8B%EF%BC%8C%E5%8F%8C%E6%91%86%E8%A1%A8%E7%8E%B0%E5%87%BA%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%EF%BC%9A%E8%A7%84%E5%BE%8B%E7%A1%AE%E5%AE%9A%EF%BC%8C%E8%A1%8C%E4%B8%BA%E5%8D%B4%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E3%80%82",
+      "path": "audio/narrations/double-pendulum/concept-concept-4.speech?text=%E5%9C%A8%E5%A4%A7%E6%91%86%E8%A7%92%E4%B8%8B%EF%BC%8C%E5%8F%8C%E6%91%86%E8%A1%A8%E7%8E%B0%E5%87%BA%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%EF%BC%9A%E8%A7%84%E5%BE%8B%E7%A1%AE%E5%AE%9A%EF%BC%8C%E8%A1%8C%E4%B8%BA%E5%8D%B4%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "在大摆角下，双摆表现出确定性混沌：规律确定，行为却不可预测。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%99%BD%E7%84%B6%E7%B3%BB%E7%BB%9F%E5%AE%8C%E5%85%A8%E7%94%B1%E7%89%9B%E9%A1%BF%E5%AE%9A%E5%BE%8B%E5%86%B3%E5%AE%9A%EF%BC%8C%E4%BD%86%E6%96%B9%E7%A8%8B%E9%AB%98%E5%BA%A6%E9%9D%9E%E7%BA%BF%E6%80%A7%E3%80%81%E7%9B%B8%E4%BA%92%E8%80%A6%E5%90%88%E3%80%82",
+      "path": "audio/narrations/double-pendulum/formula-formula-1.speech?text=%E8%99%BD%E7%84%B6%E7%B3%BB%E7%BB%9F%E5%AE%8C%E5%85%A8%E7%94%B1%E7%89%9B%E9%A1%BF%E5%AE%9A%E5%BE%8B%E5%86%B3%E5%AE%9A%EF%BC%8C%E4%BD%86%E6%96%B9%E7%A8%8B%E9%AB%98%E5%BA%A6%E9%9D%9E%E7%BA%BF%E6%80%A7%E3%80%81%E7%9B%B8%E4%BA%92%E8%80%A6%E5%90%88%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "虽然系统完全由牛顿定律决定，但方程高度非线性、相互耦合。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%B8%E5%BF%83%E7%89%B9%E5%BE%81%E6%98%AF%E5%AF%B9%E5%88%9D%E5%A7%8B%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%9E%81%E7%AB%AF%E6%95%8F%E6%84%9F%E3%80%82",
+      "path": "audio/narrations/double-pendulum/formula-formula-2.speech?text=%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%B8%E5%BF%83%E7%89%B9%E5%BE%81%E6%98%AF%E5%AF%B9%E5%88%9D%E5%A7%8B%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%9E%81%E7%AB%AF%E6%95%8F%E6%84%9F%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "混沌的核心特征是对初始条件的极端敏感。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E4%B8%A4%E4%B8%AA%E5%88%9D%E5%A7%8B%E8%A7%92%E5%BA%A6%E5%8F%AA%E5%B7%AE%E5%8D%83%E5%88%86%E4%B9%8B%E4%B8%80%E7%9A%84%E5%8F%8C%E6%91%86%EF%BC%8C%E5%BE%88%E5%BF%AB%E5%B0%B1%E4%BC%9A%E8%B5%B0%E4%B8%8A%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "path": "audio/narrations/double-pendulum/formula-formula-3.speech?text=%E4%B8%A4%E4%B8%AA%E5%88%9D%E5%A7%8B%E8%A7%92%E5%BA%A6%E5%8F%AA%E5%B7%AE%E5%8D%83%E5%88%86%E4%B9%8B%E4%B8%80%E7%9A%84%E5%8F%8C%E6%91%86%EF%BC%8C%E5%BE%88%E5%BF%AB%E5%B0%B1%E4%BC%9A%E8%B5%B0%E4%B8%8A%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BD%A8%E8%BF%B9%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "两个初始角度只差千分之一的双摆，很快就会走上完全不同的轨迹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%85%B6%E4%B8%AD%20%CE%BB%20%E6%98%AF%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E6%8C%87%E6%95%B0%EF%BC%8C%E5%AE%83%E5%A4%A7%E4%BA%8E%E9%9B%B6%EF%BC%8C%E6%AD%A3%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%87%E5%BF%97%E3%80%82",
+      "path": "audio/narrations/double-pendulum/formula-formula-4.speech?text=%E5%85%B6%E4%B8%AD%20%CE%BB%20%E6%98%AF%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E6%8C%87%E6%95%B0%EF%BC%8C%E5%AE%83%E5%A4%A7%E4%BA%8E%E9%9B%B6%EF%BC%8C%E6%AD%A3%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%87%E5%BF%97%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "其中 λ 是李雅普诺夫指数，它大于零，正是混沌的标志。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%94%BB%E9%9D%A2%E4%B8%AD%E4%B8%A4%E4%B8%AA%E4%BB%85%E6%9C%89%E5%BE%AE%E5%B0%8F%E5%88%9D%E5%A7%8B%E5%B7%AE%E5%88%AB%E7%9A%84%E5%8F%8C%E6%91%86%EF%BC%8C%E7%94%A8%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/double-pendulum/interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%94%BB%E9%9D%A2%E4%B8%AD%E4%B8%A4%E4%B8%AA%E4%BB%85%E6%9C%89%E5%BE%AE%E5%B0%8F%E5%88%9D%E5%A7%8B%E5%B7%AE%E5%88%AB%E7%9A%84%E5%8F%8C%E6%91%86%EF%BC%8C%E7%94%A8%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E8%A1%A8%E7%A4%BA%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "观察画面中两个仅有微小初始差别的双摆，用不同颜色表示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%B5%B7%E5%88%9D%E5%AE%83%E4%BB%AC%E5%87%A0%E4%B9%8E%E9%87%8D%E5%90%88%EF%BC%8C%E4%BD%86%E5%BE%88%E5%BF%AB%E5%B0%B1%E5%88%86%E9%81%93%E6%89%AC%E9%95%B3%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E8%9D%B4%E8%9D%B6%E6%95%88%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/double-pendulum/interaction-interaction-2.speech?text=%E8%B5%B7%E5%88%9D%E5%AE%83%E4%BB%AC%E5%87%A0%E4%B9%8E%E9%87%8D%E5%90%88%EF%BC%8C%E4%BD%86%E5%BE%88%E5%BF%AB%E5%B0%B1%E5%88%86%E9%81%93%E6%89%AC%E9%95%B3%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E8%9D%B4%E8%9D%B6%E6%95%88%E5%BA%94%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "起初它们几乎重合，但很快就分道扬镳，这就是蝴蝶效应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E8%B0%83%E6%95%B4%E5%88%9D%E5%A7%8B%E8%A7%92%E5%BA%A6%EF%BC%8C%E6%84%9F%E5%8F%97%E5%8F%8C%E6%91%86%E8%BD%A8%E8%BF%B9%E7%9A%84%E5%8D%83%E5%8F%98%E4%B8%87%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/double-pendulum/interaction-interaction-3.speech?text=%E8%B0%83%E6%95%B4%E5%88%9D%E5%A7%8B%E8%A7%92%E5%BA%A6%EF%BC%8C%E6%84%9F%E5%8F%97%E5%8F%8C%E6%91%86%E8%BD%A8%E8%BF%B9%E7%9A%84%E5%8D%83%E5%8F%98%E4%B8%87%E5%8C%96%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "调整初始角度，感受双摆轨迹的千变万化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%B7%B7%E6%B2%8C%E7%90%86%E8%AE%BA%E8%A7%A3%E9%87%8A%E4%BA%86%E4%B8%BA%E4%BB%80%E4%B9%88%E9%95%BF%E6%9C%9F%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5%E5%A6%82%E6%AD%A4%E5%9B%B0%E9%9A%BE%E3%80%82",
+      "path": "audio/narrations/double-pendulum/application-application-1.speech?text=%E6%B7%B7%E6%B2%8C%E7%90%86%E8%AE%BA%E8%A7%A3%E9%87%8A%E4%BA%86%E4%B8%BA%E4%BB%80%E4%B9%88%E9%95%BF%E6%9C%9F%E5%A4%A9%E6%B0%94%E9%A2%84%E6%8A%A5%E5%A6%82%E6%AD%A4%E5%9B%B0%E9%9A%BE%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "混沌理论解释了为什么长期天气预报如此困难。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E4%BB%8E%E5%BF%83%E8%B7%B3%E8%8A%82%E5%BE%8B%E5%88%B0%E8%A1%8C%E6%98%9F%E8%BD%A8%E9%81%93%EF%BC%8C%E6%B7%B7%E6%B2%8C%E7%8E%B0%E8%B1%A1%E5%B9%BF%E6%B3%9B%E5%AD%98%E5%9C%A8%E4%BA%8E%E8%87%AA%E7%84%B6%E7%95%8C%E3%80%82",
+      "path": "audio/narrations/double-pendulum/application-application-2.speech?text=%E4%BB%8E%E5%BF%83%E8%B7%B3%E8%8A%82%E5%BE%8B%E5%88%B0%E8%A1%8C%E6%98%9F%E8%BD%A8%E9%81%93%EF%BC%8C%E6%B7%B7%E6%B2%8C%E7%8E%B0%E8%B1%A1%E5%B9%BF%E6%B3%9B%E5%AD%98%E5%9C%A8%E4%BA%8E%E8%87%AA%E7%84%B6%E7%95%8C%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "从心跳节律到行星轨道，混沌现象广泛存在于自然界。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%90%86%E8%A7%A3%E6%B7%B7%E6%B2%8C%EF%BC%8C%E5%B8%AE%E5%8A%A9%E6%88%91%E4%BB%AC%E8%AE%A4%E8%AF%86%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%AF%E9%A2%84%E6%B5%8B%E8%BE%B9%E7%95%8C%E3%80%82",
+      "path": "audio/narrations/double-pendulum/application-application-3.speech?text=%E7%90%86%E8%A7%A3%E6%B7%B7%E6%B2%8C%EF%BC%8C%E5%B8%AE%E5%8A%A9%E6%88%91%E4%BB%AC%E8%AE%A4%E8%AF%86%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%AF%E9%A2%84%E6%B5%8B%E8%BE%B9%E7%95%8C%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "理解混沌，帮助我们认识复杂系统的可预测边界。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%8F%8C%E6%91%86%E6%98%AF%E8%80%A6%E5%90%88%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%9C%A8%E5%A4%A7%E6%91%86%E8%A7%92%E4%B8%8B%E8%A1%A8%E7%8E%B0%E5%87%BA%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "path": "audio/narrations/double-pendulum/summary-summary-1.speech?text=%E5%8F%8C%E6%91%86%E6%98%AF%E8%80%A6%E5%90%88%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%9C%A8%E5%A4%A7%E6%91%86%E8%A7%92%E4%B8%8B%E8%A1%A8%E7%8E%B0%E5%87%BA%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "双摆是耦合非线性系统，在大摆角下表现出确定性混沌。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%B8%E5%BF%83%E6%98%AF%E5%AF%B9%E5%88%9D%E5%80%BC%E7%9A%84%E6%9E%81%E7%AB%AF%E6%95%8F%E6%84%9F%EF%BC%8C%E5%BE%AE%E5%B0%8F%E5%B7%AE%E5%88%AB%E6%8C%87%E6%95%B0%E7%BA%A7%E6%94%BE%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/double-pendulum/summary-summary-2.speech?text=%E6%B7%B7%E6%B2%8C%E7%9A%84%E6%A0%B8%E5%BF%83%E6%98%AF%E5%AF%B9%E5%88%9D%E5%80%BC%E7%9A%84%E6%9E%81%E7%AB%AF%E6%95%8F%E6%84%9F%EF%BC%8C%E5%BE%AE%E5%B0%8F%E5%B7%AE%E5%88%AB%E6%8C%87%E6%95%B0%E7%BA%A7%E6%94%BE%E5%A4%A7%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "混沌的核心是对初值的极端敏感，微小差别指数级放大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "double-pendulum",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E7%A1%AE%E5%AE%9A%E7%9A%84%E5%AE%9A%E5%BE%8B%E6%9C%AA%E5%BF%85%E5%B8%A6%E6%9D%A5%E5%8F%AF%E9%A2%84%E6%B5%8B%E7%9A%84%E6%9C%AA%E6%9D%A5%E3%80%82%E8%BF%99%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%BB%99%E6%88%91%E4%BB%AC%E7%9A%84%E6%B7%B1%E5%88%BB%E5%90%AF%E7%A4%BA%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/double-pendulum/summary-summary-3.speech?text=%E7%A1%AE%E5%AE%9A%E7%9A%84%E5%AE%9A%E5%BE%8B%E6%9C%AA%E5%BF%85%E5%B8%A6%E6%9D%A5%E5%8F%AF%E9%A2%84%E6%B5%8B%E7%9A%84%E6%9C%AA%E6%9D%A5%E3%80%82%E8%BF%99%E6%98%AF%E6%B7%B7%E6%B2%8C%E7%BB%99%E6%88%91%E4%BB%AC%E7%9A%84%E6%B7%B1%E5%88%BB%E5%90%AF%E7%A4%BA%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 11.56,
+      "size": 0,
+      "text": "确定的定律未必带来可预测的未来。这是混沌给我们的深刻启示。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

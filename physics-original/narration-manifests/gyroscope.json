@@ -1,0 +1,229 @@
+{
+  "script_id": "gyroscope",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 117.53,
+  "files": [
+    {
+      "script_id": "gyroscope",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%99%80%E8%9E%BA%E7%9A%84%E4%B8%96%E7%95%8C%EF%BC%81%E9%AB%98%E9%80%9F%E6%97%8B%E8%BD%AC%E7%9A%84%E9%99%80%E8%9E%BA%E4%B8%BA%E4%BD%95%E4%B8%8D%E4%BC%9A%E5%80%92%E4%B8%8B%EF%BC%9F",
+      "path": "audio/narrations/gyroscope/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%99%80%E8%9E%BA%E7%9A%84%E4%B8%96%E7%95%8C%EF%BC%81%E9%AB%98%E9%80%9F%E6%97%8B%E8%BD%AC%E7%9A%84%E9%99%80%E8%9E%BA%E4%B8%BA%E4%BD%95%E4%B8%8D%E4%BC%9A%E5%80%92%E4%B8%8B%EF%BC%9F",
+      "duration": 7.5,
+      "size": 0,
+      "text": "欢迎来到陀螺的世界！高速旋转的陀螺为何不会倒下？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E4%B8%8D%E4%BB%85%E4%B8%8D%E5%80%92%EF%BC%8C%E8%BD%AC%E8%BD%B4%E8%BF%98%E4%BC%9A%E7%BC%93%E7%BC%93%E7%94%BB%E5%9C%88%EF%BC%8C%E8%BF%99%E5%8F%AB%E8%BF%9B%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/gyroscope/intro-intro-2.speech?text=%E5%AE%83%E4%B8%8D%E4%BB%85%E4%B8%8D%E5%80%92%EF%BC%8C%E8%BD%AC%E8%BD%B4%E8%BF%98%E4%BC%9A%E7%BC%93%E7%BC%93%E7%94%BB%E5%9C%88%EF%BC%8C%E8%BF%99%E5%8F%AB%E8%BF%9B%E5%8A%A8%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "它不仅不倒，转轴还会缓缓画圈，这叫进动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E8%83%8C%E5%90%8E%E6%98%AF%E8%A7%92%E5%8A%A8%E9%87%8F%E5%AE%88%E6%81%92%E7%9A%84%E5%A5%87%E5%A6%99%E7%89%A9%E7%90%86%E3%80%82",
+      "path": "audio/narrations/gyroscope/intro-intro-3.speech?text=%E8%BF%99%E8%83%8C%E5%90%8E%E6%98%AF%E8%A7%92%E5%8A%A8%E9%87%8F%E5%AE%88%E6%81%92%E7%9A%84%E5%A5%87%E5%A6%99%E7%89%A9%E7%90%86%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "这背后是角动量守恒的奇妙物理。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%97%8B%E8%BD%AC%E7%9A%84%E9%99%80%E8%9E%BA%E6%8B%A5%E6%9C%89%E6%B2%BF%E8%BD%AC%E8%BD%B4%E6%96%B9%E5%90%91%E7%9A%84%E8%A7%92%E5%8A%A8%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/gyroscope/concept-concept-1.speech?text=%E6%97%8B%E8%BD%AC%E7%9A%84%E9%99%80%E8%9E%BA%E6%8B%A5%E6%9C%89%E6%B2%BF%E8%BD%AC%E8%BD%B4%E6%96%B9%E5%90%91%E7%9A%84%E8%A7%92%E5%8A%A8%E9%87%8F%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "旋转的陀螺拥有沿转轴方向的角动量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E9%87%8D%E5%8A%9B%E5%AF%B9%E9%99%80%E8%9E%BA%E4%BA%A7%E7%94%9F%E4%B8%80%E4%B8%AA%E5%8A%9B%E7%9F%A9%EF%BC%8C%E8%AF%95%E5%9B%BE%E8%AE%A9%E5%AE%83%E5%80%92%E4%B8%8B%E3%80%82",
+      "path": "audio/narrations/gyroscope/concept-concept-2.speech?text=%E9%87%8D%E5%8A%9B%E5%AF%B9%E9%99%80%E8%9E%BA%E4%BA%A7%E7%94%9F%E4%B8%80%E4%B8%AA%E5%8A%9B%E7%9F%A9%EF%BC%8C%E8%AF%95%E5%9B%BE%E8%AE%A9%E5%AE%83%E5%80%92%E4%B8%8B%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "重力对陀螺产生一个力矩，试图让它倒下。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E4%BD%86%E5%8A%9B%E7%9F%A9%E4%B8%8D%E4%BC%9A%E6%94%B9%E5%8F%98%E8%A7%92%E5%8A%A8%E9%87%8F%E5%A4%A7%E5%B0%8F%EF%BC%8C%E5%8F%AA%E6%94%B9%E5%8F%98%E5%AE%83%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/gyroscope/concept-concept-3.speech?text=%E4%BD%86%E5%8A%9B%E7%9F%A9%E4%B8%8D%E4%BC%9A%E6%94%B9%E5%8F%98%E8%A7%92%E5%8A%A8%E9%87%8F%E5%A4%A7%E5%B0%8F%EF%BC%8C%E5%8F%AA%E6%94%B9%E5%8F%98%E5%AE%83%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "但力矩不会改变角动量大小，只改变它的方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E4%BA%8E%E6%98%AF%E8%BD%AC%E8%BD%B4%E7%BB%95%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%BC%93%E7%BC%93%E6%97%8B%E8%BD%AC%EF%BC%8C%E5%BD%A2%E6%88%90%E8%BF%9B%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/gyroscope/concept-concept-4.speech?text=%E4%BA%8E%E6%98%AF%E8%BD%AC%E8%BD%B4%E7%BB%95%E7%AB%96%E7%9B%B4%E6%96%B9%E5%90%91%E7%BC%93%E7%BC%93%E6%97%8B%E8%BD%AC%EF%BC%8C%E5%BD%A2%E6%88%90%E8%BF%9B%E5%8A%A8%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "于是转轴绕竖直方向缓缓旋转，形成进动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%8A%9B%E7%9F%A9%E7%AD%89%E4%BA%8E%E8%A7%92%E5%8A%A8%E9%87%8F%E7%9A%84%E5%8F%98%E5%8C%96%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/gyroscope/formula-formula-1.speech?text=%E5%8A%9B%E7%9F%A9%E7%AD%89%E4%BA%8E%E8%A7%92%E5%8A%A8%E9%87%8F%E7%9A%84%E5%8F%98%E5%8C%96%E7%8E%87%E3%80%82",
+      "duration": 3.75,
+      "size": 0,
+      "text": "力矩等于角动量的变化率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E8%BF%9B%E5%8A%A8%E8%A7%92%E9%80%9F%E5%BA%A6%E7%94%B1%E9%87%8D%E5%8A%9B%E7%9F%A9%E4%B8%8E%E8%87%AA%E8%BD%AC%E8%A7%92%E5%8A%A8%E9%87%8F%E4%B9%8B%E6%AF%94%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/gyroscope/formula-formula-2.speech?text=%E8%BF%9B%E5%8A%A8%E8%A7%92%E9%80%9F%E5%BA%A6%E7%94%B1%E9%87%8D%E5%8A%9B%E7%9F%A9%E4%B8%8E%E8%87%AA%E8%BD%AC%E8%A7%92%E5%8A%A8%E9%87%8F%E4%B9%8B%E6%AF%94%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "进动角速度由重力矩与自转角动量之比决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E8%87%AA%E8%BD%AC%E8%B6%8A%E5%BF%AB%EF%BC%8C%E8%BF%9B%E5%8A%A8%E8%B6%8A%E6%85%A2%EF%BC%8C%E9%99%80%E8%9E%BA%E8%B6%8A%E7%A8%B3%E3%80%82",
+      "path": "audio/narrations/gyroscope/formula-formula-3.speech?text=%E8%87%AA%E8%BD%AC%E8%B6%8A%E5%BF%AB%EF%BC%8C%E8%BF%9B%E5%8A%A8%E8%B6%8A%E6%85%A2%EF%BC%8C%E9%99%80%E8%9E%BA%E8%B6%8A%E7%A8%B3%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "自转越快，进动越慢，陀螺越稳。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E4%B8%BA%E4%BB%80%E4%B9%88%E9%AB%98%E9%80%9F%E9%99%80%E8%9E%BA%E5%87%A0%E4%B9%8E%E7%AB%96%E7%9B%B4%E7%AB%99%E7%AB%8B%E3%80%82",
+      "path": "audio/narrations/gyroscope/formula-formula-4.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E4%B8%BA%E4%BB%80%E4%B9%88%E9%AB%98%E9%80%9F%E9%99%80%E8%9E%BA%E5%87%A0%E4%B9%8E%E7%AB%96%E7%9B%B4%E7%AB%99%E7%AB%8B%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "这就是为什么高速陀螺几乎竖直站立。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E8%87%AA%E8%BD%AC%E8%A7%92%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%BF%9B%E5%8A%A8%E5%BF%AB%E6%85%A2%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/gyroscope/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E8%87%AA%E8%BD%AC%E8%A7%92%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%BF%9B%E5%8A%A8%E5%BF%AB%E6%85%A2%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "调节自转角速度，观察进动快慢的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%80%BE%E8%A7%92%E4%B8%8E%E9%87%8D%E5%BF%83%E8%B7%9D%E7%A6%BB%EF%BC%8C%E7%9C%8B%E8%BF%9B%E5%8A%A8%E5%A6%82%E4%BD%95%E5%93%8D%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/gyroscope/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%80%BE%E8%A7%92%E4%B8%8E%E9%87%8D%E5%BF%83%E8%B7%9D%E7%A6%BB%EF%BC%8C%E7%9C%8B%E8%BF%9B%E5%8A%A8%E5%A6%82%E4%BD%95%E5%93%8D%E5%BA%94%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "改变倾角与重心距离，看进动如何响应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E8%87%AA%E8%BD%AC%E8%B6%8A%E5%BF%AB%EF%BC%8C%E8%BF%9B%E5%8A%A8%E8%B6%8A%E6%85%A2%E7%9A%84%E5%8F%8D%E6%AF%94%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/gyroscope/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E8%87%AA%E8%BD%AC%E8%B6%8A%E5%BF%AB%EF%BC%8C%E8%BF%9B%E5%8A%A8%E8%B6%8A%E6%85%A2%E7%9A%84%E5%8F%8D%E6%AF%94%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "注意自转越快，进动越慢的反比关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E9%99%80%E8%9E%BA%E4%BB%AA%E6%98%AF%E9%A3%9E%E6%9C%BA%E3%80%81%E7%81%AB%E7%AE%AD%E5%92%8C%E6%89%8B%E6%9C%BA%E7%9A%84%E5%A7%BF%E6%80%81%E4%BC%A0%E6%84%9F%E5%99%A8%E3%80%82",
+      "path": "audio/narrations/gyroscope/application-application-1.speech?text=%E9%99%80%E8%9E%BA%E4%BB%AA%E6%98%AF%E9%A3%9E%E6%9C%BA%E3%80%81%E7%81%AB%E7%AE%AD%E5%92%8C%E6%89%8B%E6%9C%BA%E7%9A%84%E5%A7%BF%E6%80%81%E4%BC%A0%E6%84%9F%E5%99%A8%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "陀螺仪是飞机、火箭和手机的姿态传感器。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%E9%9D%A0%E9%99%80%E8%9E%BA%E4%BB%AA%E5%9C%A8%E6%B2%A1%E6%9C%89%E4%BF%A1%E5%8F%B7%E6%97%B6%E7%A1%AE%E5%AE%9A%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/gyroscope/application-application-2.speech?text=%E6%83%AF%E6%80%A7%E5%AF%BC%E8%88%AA%E9%9D%A0%E9%99%80%E8%9E%BA%E4%BB%AA%E5%9C%A8%E6%B2%A1%E6%9C%89%E4%BF%A1%E5%8F%B7%E6%97%B6%E7%A1%AE%E5%AE%9A%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "惯性导航靠陀螺仪在没有信号时确定方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%9C%B0%E8%BD%B4%E7%9A%84%E4%B8%A4%E4%B8%87%E5%85%AD%E5%8D%83%E5%B9%B4%E5%B2%81%E5%B7%AE%EF%BC%8C%E4%B9%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E8%BF%9B%E5%8A%A8%E3%80%82",
+      "path": "audio/narrations/gyroscope/application-application-3.speech?text=%E5%9C%B0%E8%BD%B4%E7%9A%84%E4%B8%A4%E4%B8%87%E5%85%AD%E5%8D%83%E5%B9%B4%E5%B2%81%E5%B7%AE%EF%BC%8C%E4%B9%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E8%BF%9B%E5%8A%A8%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "地轴的两万六千年岁差，也是一种进动。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%97%8B%E8%BD%AC%E9%99%80%E8%9E%BA%E5%9C%A8%E9%87%8D%E5%8A%9B%E7%9F%A9%E4%BD%9C%E7%94%A8%E4%B8%8B%E5%8F%91%E7%94%9F%E8%BF%9B%E5%8A%A8%E8%80%8C%E9%9D%9E%E5%80%92%E4%B8%8B%E3%80%82",
+      "path": "audio/narrations/gyroscope/summary-summary-1.speech?text=%E6%97%8B%E8%BD%AC%E9%99%80%E8%9E%BA%E5%9C%A8%E9%87%8D%E5%8A%9B%E7%9F%A9%E4%BD%9C%E7%94%A8%E4%B8%8B%E5%8F%91%E7%94%9F%E8%BF%9B%E5%8A%A8%E8%80%8C%E9%9D%9E%E5%80%92%E4%B8%8B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "旋转陀螺在重力矩作用下发生进动而非倒下。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E8%BF%9B%E5%8A%A8%E8%A7%92%E9%80%9F%E5%BA%A6%20%CE%A9%3Dmgr%2F(I%CF%89)%EF%BC%8C%E8%87%AA%E8%BD%AC%E8%B6%8A%E5%BF%AB%E8%BF%9B%E5%8A%A8%E8%B6%8A%E6%85%A2%E3%80%82",
+      "path": "audio/narrations/gyroscope/summary-summary-2.speech?text=%E8%BF%9B%E5%8A%A8%E8%A7%92%E9%80%9F%E5%BA%A6%20%CE%A9%3Dmgr%2F(I%CF%89)%EF%BC%8C%E8%87%AA%E8%BD%AC%E8%B6%8A%E5%BF%AB%E8%BF%9B%E5%8A%A8%E8%B6%8A%E6%85%A2%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "进动角速度 Ω=mgr/(Iω)，自转越快进动越慢。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "gyroscope",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E5%AF%BC%E8%88%AA%E4%B8%8E%E5%A4%A9%E6%96%87%E4%B8%AD%E7%9A%84%E6%A0%B8%E5%BF%83%E7%8E%B0%E8%B1%A1%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/gyroscope/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E5%AF%BC%E8%88%AA%E4%B8%8E%E5%A4%A9%E6%96%87%E4%B8%AD%E7%9A%84%E6%A0%B8%E5%BF%83%E7%8E%B0%E8%B1%A1%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它是导航与天文中的核心现象。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

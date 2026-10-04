@@ -1,0 +1,33 @@
+/*
+  Hide chrome from the original physics site when it is embedded inside
+  教育之美. The host app already provides navigation and page ownership.
+*/
+.embedded-experiment-runtime #root > .flex.h-screen > aside,
+.embedded-experiment-runtime #root > .flex.h-screen > header,
+.embedded-experiment-runtime #root > .flex.h-screen > main footer {
+  display: none !important;
+}
+
+body.embedded-experiment-runtime,
+body.embedded-experiment-runtime #root,
+body.embedded-experiment-runtime #root > .flex.h-screen {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+body.embedded-experiment-runtime {
+  overflow: hidden !important;
+}
+
+.embedded-experiment-runtime #root > .flex.h-screen > main {
+  width: 100% !important;
+  margin-left: 0 !important;
+  padding-top: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.embedded-experiment-runtime #root > .flex.h-screen > main > .min-h-full {
+  min-height: 0 !important;
+}

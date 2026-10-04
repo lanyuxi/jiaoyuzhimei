@@ -1,0 +1,229 @@
+{
+  "script_id": "simultaneity",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 128.45,
+  "files": [
+    {
+      "script_id": "simultaneity",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%90%8C%E6%97%B6%E6%80%A7%E7%9A%84%E7%9B%B8%E5%AF%B9%E6%80%A7%EF%BC%81%E4%B8%A4%E4%BB%B6%E4%BA%8B%E6%98%AF%E5%90%A6%E5%90%8C%E6%97%B6%E5%8F%91%E7%94%9F%EF%BC%8C%E7%AB%9F%E7%84%B6%E5%9B%A0%E4%BA%BA%E8%80%8C%E5%BC%82%E3%80%82",
+      "path": "audio/narrations/simultaneity/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%90%8C%E6%97%B6%E6%80%A7%E7%9A%84%E7%9B%B8%E5%AF%B9%E6%80%A7%EF%BC%81%E4%B8%A4%E4%BB%B6%E4%BA%8B%E6%98%AF%E5%90%A6%E5%90%8C%E6%97%B6%E5%8F%91%E7%94%9F%EF%BC%8C%E7%AB%9F%E7%84%B6%E5%9B%A0%E4%BA%BA%E8%80%8C%E5%BC%82%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "欢迎来到同时性的相对性！两件事是否同时发生，竟然因人而异。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%9C%A8%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%9D%A5%E5%90%8C%E6%97%B6%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%BA%8B%E4%BB%B6%EF%BC%8C%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%BF%90%E5%8A%A8%E7%9A%84%E4%BA%BA%E7%9C%8B%E6%9D%A5%E5%8D%B4%E6%9C%89%E5%85%88%E5%90%8E%E3%80%82",
+      "path": "audio/narrations/simultaneity/intro-intro-2.speech?text=%E5%9C%A8%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%9D%A5%E5%90%8C%E6%97%B6%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%BA%8B%E4%BB%B6%EF%BC%8C%E5%9C%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%BF%90%E5%8A%A8%E7%9A%84%E4%BA%BA%E7%9C%8B%E6%9D%A5%E5%8D%B4%E6%9C%89%E5%85%88%E5%90%8E%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "在一个人看来同时的两个事件，在另一个运动的人看来却有先后。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E6%98%AF%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%9B%B8%E5%AF%B9%E8%AE%BA%E4%B8%AD%E6%9C%80%E5%8F%8D%E7%9B%B4%E8%A7%89%E7%9A%84%E7%BB%93%E8%AE%BA%E4%B9%8B%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/simultaneity/intro-intro-3.speech?text=%E8%BF%99%E6%98%AF%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%9B%B8%E5%AF%B9%E8%AE%BA%E4%B8%AD%E6%9C%80%E5%8F%8D%E7%9B%B4%E8%A7%89%E7%9A%84%E7%BB%93%E8%AE%BA%E4%B9%8B%E4%B8%80%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "这是爱因斯坦相对论中最反直觉的结论之一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E8%AE%BE%E6%83%B3%E4%B8%80%E5%88%97%E9%AB%98%E9%80%9F%E8%A1%8C%E9%A9%B6%E7%9A%84%E7%81%AB%E8%BD%A6%EF%BC%8C%E8%BD%A6%E5%8E%A2%E6%AD%A3%E4%B8%AD%E6%9C%89%E4%B8%80%E7%9B%8F%E7%81%AF%E3%80%82",
+      "path": "audio/narrations/simultaneity/concept-concept-1.speech?text=%E8%AE%BE%E6%83%B3%E4%B8%80%E5%88%97%E9%AB%98%E9%80%9F%E8%A1%8C%E9%A9%B6%E7%9A%84%E7%81%AB%E8%BD%A6%EF%BC%8C%E8%BD%A6%E5%8E%A2%E6%AD%A3%E4%B8%AD%E6%9C%89%E4%B8%80%E7%9B%8F%E7%81%AF%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "设想一列高速行驶的火车，车厢正中有一盏灯。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BD%A6%E4%B8%8A%E7%9A%84%E4%BA%BA%E7%9C%8B%EF%BC%9A%E7%81%AF%E5%85%89%E5%90%8C%E6%97%B6%E5%88%B0%E8%BE%BE%E8%BD%A6%E5%A4%B4%E5%92%8C%E8%BD%A6%E5%B0%BE%E3%80%82",
+      "path": "audio/narrations/simultaneity/concept-concept-2.speech?text=%E8%BD%A6%E4%B8%8A%E7%9A%84%E4%BA%BA%E7%9C%8B%EF%BC%9A%E7%81%AF%E5%85%89%E5%90%8C%E6%97%B6%E5%88%B0%E8%BE%BE%E8%BD%A6%E5%A4%B4%E5%92%8C%E8%BD%A6%E5%B0%BE%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "车上的人看：灯光同时到达车头和车尾。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%AB%99%E5%8F%B0%E4%B8%8A%E7%9A%84%E4%BA%BA%E7%9C%8B%EF%BC%9A%E8%BD%A6%E5%B0%BE%E8%BF%8E%E7%9D%80%E5%85%89%EF%BC%8C%E8%BD%A6%E5%A4%B4%E5%9C%A8%E9%80%83%E7%A6%BB%E5%85%89%E3%80%82",
+      "path": "audio/narrations/simultaneity/concept-concept-3.speech?text=%E7%AB%99%E5%8F%B0%E4%B8%8A%E7%9A%84%E4%BA%BA%E7%9C%8B%EF%BC%9A%E8%BD%A6%E5%B0%BE%E8%BF%8E%E7%9D%80%E5%85%89%EF%BC%8C%E8%BD%A6%E5%A4%B4%E5%9C%A8%E9%80%83%E7%A6%BB%E5%85%89%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "站台上的人看：车尾迎着光，车头在逃离光。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E7%94%B1%E4%BA%8E%E5%85%89%E9%80%9F%E4%B8%8D%E5%8F%98%EF%BC%8C%E7%AB%99%E5%8F%B0%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%A4%E4%B8%BA%E5%85%89%E5%85%88%E5%88%B0%E8%BD%A6%E5%B0%BE%EF%BC%8C%E5%B9%B6%E4%B8%8D%E5%90%8C%E6%97%B6%E3%80%82",
+      "path": "audio/narrations/simultaneity/concept-concept-4.speech?text=%E7%94%B1%E4%BA%8E%E5%85%89%E9%80%9F%E4%B8%8D%E5%8F%98%EF%BC%8C%E7%AB%99%E5%8F%B0%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%A4%E4%B8%BA%E5%85%89%E5%85%88%E5%88%B0%E8%BD%A6%E5%B0%BE%EF%BC%8C%E5%B9%B6%E4%B8%8D%E5%90%8C%E6%97%B6%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "由于光速不变，站台观察者认为光先到车尾，并不同时。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E4%B8%8D%E5%90%8C%E5%8F%82%E8%80%83%E7%B3%BB%E7%9A%84%E6%97%B6%E9%97%B4%E7%94%B1%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%8F%98%E6%8D%A2%E8%81%94%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/simultaneity/formula-formula-1.speech?text=%E4%B8%8D%E5%90%8C%E5%8F%82%E8%80%83%E7%B3%BB%E7%9A%84%E6%97%B6%E9%97%B4%E7%94%B1%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%8F%98%E6%8D%A2%E8%81%94%E7%B3%BB%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "不同参考系的时间由洛伦兹变换联系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B3%E9%94%AE%E5%9C%A8%E4%BA%8E%E5%90%AB%E4%BD%8D%E7%BD%AE%20x%20%E7%9A%84%E9%82%A3%E4%B8%80%E9%A1%B9%E3%80%82",
+      "path": "audio/narrations/simultaneity/formula-formula-2.speech?text=%E5%85%B3%E9%94%AE%E5%9C%A8%E4%BA%8E%E5%90%AB%E4%BD%8D%E7%BD%AE%20x%20%E7%9A%84%E9%82%A3%E4%B8%80%E9%A1%B9%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "关键在于含位置 x 的那一项。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E4%B8%A4%E4%BA%8B%E4%BB%B6%E7%A9%BA%E9%97%B4%E9%97%B4%E9%9A%94%E8%B6%8A%E5%A4%A7%E3%80%81%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%BF%AB%EF%BC%8C%E6%97%B6%E9%97%B4%E5%B7%AE%E8%B6%8A%E6%98%8E%E6%98%BE%E3%80%82",
+      "path": "audio/narrations/simultaneity/formula-formula-3.speech?text=%E4%B8%A4%E4%BA%8B%E4%BB%B6%E7%A9%BA%E9%97%B4%E9%97%B4%E9%9A%94%E8%B6%8A%E5%A4%A7%E3%80%81%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%BF%AB%EF%BC%8C%E6%97%B6%E9%97%B4%E5%B7%AE%E8%B6%8A%E6%98%8E%E6%98%BE%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "两事件空间间隔越大、速度越快，时间差越明显。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%8F%AA%E6%9C%89%E5%90%8C%E5%9C%B0%E5%8F%91%E7%94%9F%E7%9A%84%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%89%80%E6%9C%89%E4%BA%BA%E6%89%8D%E4%B8%80%E8%87%B4%E8%AE%A4%E4%B8%BA%E5%90%8C%E6%97%B6%E3%80%82",
+      "path": "audio/narrations/simultaneity/formula-formula-4.speech?text=%E5%8F%AA%E6%9C%89%E5%90%8C%E5%9C%B0%E5%8F%91%E7%94%9F%E7%9A%84%E4%BA%8B%E4%BB%B6%EF%BC%8C%E6%89%80%E6%9C%89%E4%BA%BA%E6%89%8D%E4%B8%80%E8%87%B4%E8%AE%A4%E4%B8%BA%E5%90%8C%E6%97%B6%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "只有同地发生的事件，所有人才一致认为同时。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E7%81%AB%E8%BD%A6%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%AB%99%E5%8F%B0%E5%8F%82%E8%80%83%E7%B3%BB%E4%B8%AD%E5%85%89%E5%88%B0%E8%BE%BE%E4%B8%A4%E7%AB%AF%E7%9A%84%E6%97%B6%E9%97%B4%E5%B7%AE%E3%80%82",
+      "path": "audio/narrations/simultaneity/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E7%81%AB%E8%BD%A6%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%AB%99%E5%8F%B0%E5%8F%82%E8%80%83%E7%B3%BB%E4%B8%AD%E5%85%89%E5%88%B0%E8%BE%BE%E4%B8%A4%E7%AB%AF%E7%9A%84%E6%97%B6%E9%97%B4%E5%B7%AE%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "调节火车速度，观察站台参考系中光到达两端的时间差。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%AF%B9%E6%AF%94%E8%BD%A6%E4%B8%8A%E4%B8%8E%E7%AB%99%E5%8F%B0%E4%B8%A4%E4%B8%AA%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84%E4%BA%8B%E4%BB%B6%E9%A1%BA%E5%BA%8F%E3%80%82",
+      "path": "audio/narrations/simultaneity/interaction-interaction-2.speech?text=%E5%AF%B9%E6%AF%94%E8%BD%A6%E4%B8%8A%E4%B8%8E%E7%AB%99%E5%8F%B0%E4%B8%A4%E4%B8%AA%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84%E4%BA%8B%E4%BB%B6%E9%A1%BA%E5%BA%8F%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "对比车上与站台两个视角下的事件顺序。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%8F%90%E9%AB%98%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%9C%8B%E5%90%8C%E6%97%B6%E6%80%A7%E7%A0%B4%E7%BC%BA%E8%B6%8A%E5%8F%91%E6%98%8E%E6%98%BE%E3%80%82",
+      "path": "audio/narrations/simultaneity/interaction-interaction-3.speech?text=%E6%8F%90%E9%AB%98%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%9C%8B%E5%90%8C%E6%97%B6%E6%80%A7%E7%A0%B4%E7%BC%BA%E8%B6%8A%E5%8F%91%E6%98%8E%E6%98%BE%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "提高速度，看同时性破缺越发明显。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E5%90%8C%E6%97%B6%E6%80%A7%E7%9A%84%E7%9B%B8%E5%AF%B9%E6%80%A7%E6%98%AF%E7%90%86%E8%A7%A3%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%8F%98%E6%8D%A2%E7%9A%84%E5%85%B3%E9%94%AE%E3%80%82",
+      "path": "audio/narrations/simultaneity/application-application-1.speech?text=%E5%90%8C%E6%97%B6%E6%80%A7%E7%9A%84%E7%9B%B8%E5%AF%B9%E6%80%A7%E6%98%AF%E7%90%86%E8%A7%A3%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%8F%98%E6%8D%A2%E7%9A%84%E5%85%B3%E9%94%AE%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "同时性的相对性是理解洛伦兹变换的关键。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E8%A7%A3%E9%87%8A%E4%BA%86%E5%8F%8C%E7%94%9F%E5%AD%90%E4%BD%AF%E8%B0%AC%E7%AD%89%E8%AF%B8%E5%A4%9A%E7%9B%B8%E5%AF%B9%E8%AE%BA%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/simultaneity/application-application-2.speech?text=%E5%AE%83%E8%A7%A3%E9%87%8A%E4%BA%86%E5%8F%8C%E7%94%9F%E5%AD%90%E4%BD%AF%E8%B0%AC%E7%AD%89%E8%AF%B8%E5%A4%9A%E7%9B%B8%E5%AF%B9%E8%AE%BA%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "它解释了双生子佯谬等诸多相对论现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%83%E5%BD%BB%E5%BA%95%E6%94%B9%E5%8F%98%E4%BA%86%E4%BA%BA%E7%B1%BB%E5%AF%B9%E6%97%B6%E9%97%B4%E5%92%8C%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AE%A4%E8%AF%86%E3%80%82",
+      "path": "audio/narrations/simultaneity/application-application-3.speech?text=%E5%AE%83%E5%BD%BB%E5%BA%95%E6%94%B9%E5%8F%98%E4%BA%86%E4%BA%BA%E7%B1%BB%E5%AF%B9%E6%97%B6%E9%97%B4%E5%92%8C%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AE%A4%E8%AF%86%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "它彻底改变了人类对时间和空间的认识。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%90%8C%E6%97%B6%E6%80%A7%E6%98%AF%E7%9B%B8%E5%AF%B9%E7%9A%84%EF%BC%8C%E5%8F%96%E5%86%B3%E4%BA%8E%E8%A7%82%E5%AF%9F%E8%80%85%E7%9A%84%E5%8F%82%E8%80%83%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/simultaneity/summary-summary-1.speech?text=%E5%90%8C%E6%97%B6%E6%80%A7%E6%98%AF%E7%9B%B8%E5%AF%B9%E7%9A%84%EF%BC%8C%E5%8F%96%E5%86%B3%E4%BA%8E%E8%A7%82%E5%AF%9F%E8%80%85%E7%9A%84%E5%8F%82%E8%80%83%E7%B3%BB%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "同时性是相对的，取决于观察者的参考系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%85%89%E9%80%9F%E4%B8%8D%E5%8F%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%90%8C%E5%8F%82%E8%80%83%E7%B3%BB%E5%AF%B9%E4%BA%8B%E4%BB%B6%E9%A1%BA%E5%BA%8F%E5%88%A4%E6%96%AD%E4%B8%8D%E5%90%8C%E3%80%82",
+      "path": "audio/narrations/simultaneity/summary-summary-2.speech?text=%E5%85%89%E9%80%9F%E4%B8%8D%E5%8F%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%90%8C%E5%8F%82%E8%80%83%E7%B3%BB%E5%AF%B9%E4%BA%8B%E4%BB%B6%E9%A1%BA%E5%BA%8F%E5%88%A4%E6%96%AD%E4%B8%8D%E5%90%8C%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "光速不变导致不同参考系对事件顺序判断不同。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "simultaneity",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%8F%AA%E6%9C%89%E5%90%8C%E5%9C%B0%E4%BA%8B%E4%BB%B6%E6%89%8D%E7%BB%9D%E5%AF%B9%E5%90%8C%E6%97%B6%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/simultaneity/summary-summary-3.speech?text=%E5%8F%AA%E6%9C%89%E5%90%8C%E5%9C%B0%E4%BA%8B%E4%BB%B6%E6%89%8D%E7%BB%9D%E5%AF%B9%E5%90%8C%E6%97%B6%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.25,
+      "size": 0,
+      "text": "只有同地事件才绝对同时。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

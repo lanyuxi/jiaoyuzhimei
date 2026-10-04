@@ -1,0 +1,229 @@
+{
+  "script_id": "schrodinger-cat",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 126.93,
+  "files": [
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84%E6%80%9D%E6%83%B3%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%EF%BC%81",
+      "path": "audio/narrations/schrodinger-cat/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84%E6%80%9D%E6%83%B3%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%EF%BC%81",
+      "duration": 6.25,
+      "size": 0,
+      "text": "欢迎来到最著名的思想实验——薛定谔的猫！",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%80%E5%8F%AA%E7%8C%AB%E8%A2%AB%E5%85%B3%E5%9C%A8%E7%9B%92%E5%AD%90%E9%87%8C%EF%BC%8C%E5%91%BD%E8%BF%90%E4%B8%8E%E4%B8%80%E4%B8%AA%E9%87%8F%E5%AD%90%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/intro-intro-2.speech?text=%E4%B8%80%E5%8F%AA%E7%8C%AB%E8%A2%AB%E5%85%B3%E5%9C%A8%E7%9B%92%E5%AD%90%E9%87%8C%EF%BC%8C%E5%91%BD%E8%BF%90%E4%B8%8E%E4%B8%80%E4%B8%AA%E9%87%8F%E5%AD%90%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "一只猫被关在盒子里，命运与一个量子事件绑定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%9C%A8%E6%89%93%E5%BC%80%E7%9B%92%E5%AD%90%E4%B9%8B%E5%89%8D%EF%BC%8C%E8%BF%99%E5%8F%AA%E7%8C%AB%E7%AB%9F%E7%84%B6%E5%A4%84%E4%BA%8E%E6%97%A2%E6%AD%BB%E5%8F%88%E6%B4%BB%E7%9A%84%E5%8F%A0%E5%8A%A0%E6%80%81%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/intro-intro-3.speech?text=%E5%9C%A8%E6%89%93%E5%BC%80%E7%9B%92%E5%AD%90%E4%B9%8B%E5%89%8D%EF%BC%8C%E8%BF%99%E5%8F%AA%E7%8C%AB%E7%AB%9F%E7%84%B6%E5%A4%84%E4%BA%8E%E6%97%A2%E6%AD%BB%E5%8F%88%E6%B4%BB%E7%9A%84%E5%8F%A0%E5%8A%A0%E6%80%81%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "在打开盒子之前，这只猫竟然处于既死又活的叠加态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%9B%92%E5%AD%90%E9%87%8C%E6%9C%89%E6%94%BE%E5%B0%84%E6%80%A7%E5%8E%9F%E5%AD%90%EF%BC%8C%E5%AE%83%E6%9C%89%E4%B8%80%E5%AE%9A%E6%A6%82%E7%8E%87%E8%A1%B0%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/concept-concept-1.speech?text=%E7%9B%92%E5%AD%90%E9%87%8C%E6%9C%89%E6%94%BE%E5%B0%84%E6%80%A7%E5%8E%9F%E5%AD%90%EF%BC%8C%E5%AE%83%E6%9C%89%E4%B8%80%E5%AE%9A%E6%A6%82%E7%8E%87%E8%A1%B0%E5%8F%98%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "盒子里有放射性原子，它有一定概率衰变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E4%B8%80%E6%97%A6%E8%A1%B0%E5%8F%98%EF%BC%8C%E5%B0%B1%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%85%B3%E9%87%8A%E6%94%BE%E6%AF%92%E6%B0%94%EF%BC%8C%E7%8C%AB%E6%AD%BB%E4%BA%A1%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/concept-concept-2.speech?text=%E4%B8%80%E6%97%A6%E8%A1%B0%E5%8F%98%EF%BC%8C%E5%B0%B1%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%85%B3%E9%87%8A%E6%94%BE%E6%AF%92%E6%B0%94%EF%BC%8C%E7%8C%AB%E6%AD%BB%E4%BA%A1%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "一旦衰变，就触发机关释放毒气，猫死亡。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%8E%9F%E5%AD%90%E5%A4%84%E4%BA%8E%E8%A1%B0%E5%8F%98%E4%B8%8E%E6%9C%AA%E8%A1%B0%E5%8F%98%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E4%BA%8E%E6%98%AF%E7%8C%AB%E4%B9%9F%E5%A4%84%E4%BA%8E%E6%AD%BB%E4%B8%8E%E6%B4%BB%E7%9A%84%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/concept-concept-3.speech?text=%E5%8E%9F%E5%AD%90%E5%A4%84%E4%BA%8E%E8%A1%B0%E5%8F%98%E4%B8%8E%E6%9C%AA%E8%A1%B0%E5%8F%98%E7%9A%84%E5%8F%A0%E5%8A%A0%EF%BC%8C%E4%BA%8E%E6%98%AF%E7%8C%AB%E4%B9%9F%E5%A4%84%E4%BA%8E%E6%AD%BB%E4%B8%8E%E6%B4%BB%E7%9A%84%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "原子处于衰变与未衰变的叠加，于是猫也处于死与活的叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%8F%AA%E6%9C%89%E6%89%93%E5%BC%80%E7%9B%92%E5%AD%90%E8%A7%82%E6%B5%8B%EF%BC%8C%E5%8F%A0%E5%8A%A0%E6%80%81%E6%89%8D%E5%9D%8D%E7%BC%A9%E4%B8%BA%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%AD%BB%E6%88%96%E6%B4%BB%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/concept-concept-4.speech?text=%E5%8F%AA%E6%9C%89%E6%89%93%E5%BC%80%E7%9B%92%E5%AD%90%E8%A7%82%E6%B5%8B%EF%BC%8C%E5%8F%A0%E5%8A%A0%E6%80%81%E6%89%8D%E5%9D%8D%E7%BC%A9%E4%B8%BA%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%AD%BB%E6%88%96%E6%B4%BB%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "只有打开盒子观测，叠加态才坍缩为确定的死或活。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%8C%AB%E7%9A%84%E7%8A%B6%E6%80%81%E6%98%AF%E6%AD%BB%E4%B8%8E%E6%B4%BB%E7%9A%84%E9%87%8F%E5%AD%90%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/formula-formula-1.speech?text=%E7%8C%AB%E7%9A%84%E7%8A%B6%E6%80%81%E6%98%AF%E6%AD%BB%E4%B8%8E%E6%B4%BB%E7%9A%84%E9%87%8F%E5%AD%90%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "猫的状态是死与活的量子叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E8%A1%B0%E5%8F%98%E6%A6%82%E7%8E%87%E9%9A%8F%E6%97%B6%E9%97%B4%E5%A2%9E%E9%95%BF%EF%BC%8C%E5%8F%A0%E5%8A%A0%E6%9D%83%E9%87%8D%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/formula-formula-2.speech?text=%E8%A1%B0%E5%8F%98%E6%A6%82%E7%8E%87%E9%9A%8F%E6%97%B6%E9%97%B4%E5%A2%9E%E9%95%BF%EF%BC%8C%E5%8F%A0%E5%8A%A0%E6%9D%83%E9%87%8D%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "衰变概率随时间增长，叠加权重随之改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E8%A7%82%E6%B5%8B%E5%89%8D%EF%BC%8C%E6%B4%BB%E4%B8%8E%E6%AD%BB%E5%B9%B6%E5%AD%98%EF%BC%9B%E8%A7%82%E6%B5%8B%E7%9E%AC%E9%97%B4%EF%BC%8C%E4%BA%8C%E9%80%89%E4%B8%80%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/formula-formula-3.speech?text=%E8%A7%82%E6%B5%8B%E5%89%8D%EF%BC%8C%E6%B4%BB%E4%B8%8E%E6%AD%BB%E5%B9%B6%E5%AD%98%EF%BC%9B%E8%A7%82%E6%B5%8B%E7%9E%AC%E9%97%B4%EF%BC%8C%E4%BA%8C%E9%80%89%E4%B8%80%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "观测前，活与死并存；观测瞬间，二选一。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BF%99%E4%B8%AA%E6%82%96%E8%AE%BA%E6%8F%AD%E7%A4%BA%E4%BA%86%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E9%97%AE%E9%A2%98%E7%9A%84%E6%B7%B1%E5%88%BB%E6%80%A7%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/formula-formula-4.speech?text=%E8%BF%99%E4%B8%AA%E6%82%96%E8%AE%BA%E6%8F%AD%E7%A4%BA%E4%BA%86%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E9%97%AE%E9%A2%98%E7%9A%84%E6%B7%B1%E5%88%BB%E6%80%A7%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "这个悖论揭示了量子测量问题的深刻性。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E6%8E%A8%E8%BF%9B%E6%97%B6%E9%97%B4%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%A1%B0%E5%8F%98%E6%A6%82%E7%8E%87%E4%B8%8E%E5%8F%A0%E5%8A%A0%E6%9D%83%E9%87%8D%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/interaction-interaction-1.speech?text=%E6%8E%A8%E8%BF%9B%E6%97%B6%E9%97%B4%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%A1%B0%E5%8F%98%E6%A6%82%E7%8E%87%E4%B8%8E%E5%8F%A0%E5%8A%A0%E6%9D%83%E9%87%8D%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "推进时间，观察衰变概率与叠加权重的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%9C%A8%E6%89%93%E5%BC%80%E7%9B%92%E5%AD%90%E5%89%8D%EF%BC%8C%E7%8C%AB%E5%A7%8B%E7%BB%88%E6%98%AF%E6%AD%BB%E6%B4%BB%E5%8F%A0%E5%8A%A0%E7%9A%84%E6%9C%A6%E8%83%A7%E6%80%81%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/interaction-interaction-2.speech?text=%E5%9C%A8%E6%89%93%E5%BC%80%E7%9B%92%E5%AD%90%E5%89%8D%EF%BC%8C%E7%8C%AB%E5%A7%8B%E7%BB%88%E6%98%AF%E6%AD%BB%E6%B4%BB%E5%8F%A0%E5%8A%A0%E7%9A%84%E6%9C%A6%E8%83%A7%E6%80%81%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "在打开盒子前，猫始终是死活叠加的朦胧态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E7%82%B9%E5%87%BB%E5%BC%80%E7%9B%92%E8%A7%82%E6%B5%8B%EF%BC%8C%E8%AE%A9%E5%8F%A0%E5%8A%A0%E6%80%81%E5%9D%8D%E7%BC%A9%E4%B8%BA%E7%A1%AE%E5%AE%9A%E7%BB%93%E6%9E%9C%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/interaction-interaction-3.speech?text=%E7%82%B9%E5%87%BB%E5%BC%80%E7%9B%92%E8%A7%82%E6%B5%8B%EF%BC%8C%E8%AE%A9%E5%8F%A0%E5%8A%A0%E6%80%81%E5%9D%8D%E7%BC%A9%E4%B8%BA%E7%A1%AE%E5%AE%9A%E7%BB%93%E6%9E%9C%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "点击开盒观测，让叠加态坍缩为确定结果。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%E6%8E%A8%E5%8A%A8%E4%BA%86%E4%BA%BA%E4%BB%AC%E5%AF%B9%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E9%97%AE%E9%A2%98%E7%9A%84%E6%B7%B1%E5%85%A5%E6%80%9D%E8%80%83%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/application-application-1.speech?text=%E8%BF%99%E4%B8%AA%E5%AE%9E%E9%AA%8C%E6%8E%A8%E5%8A%A8%E4%BA%86%E4%BA%BA%E4%BB%AC%E5%AF%B9%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E9%97%AE%E9%A2%98%E7%9A%84%E6%B7%B1%E5%85%A5%E6%80%9D%E8%80%83%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "这个实验推动了人们对量子测量问题的深入思考。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%80%80%E7%9B%B8%E5%B9%B2%E7%90%86%E8%AE%BA%E8%A7%A3%E9%87%8A%E4%BA%86%E4%B8%BA%E4%BD%95%E5%AE%8F%E8%A7%82%E7%89%A9%E4%BD%93%E7%9C%8B%E4%B8%8D%E5%88%B0%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/application-application-2.speech?text=%E9%80%80%E7%9B%B8%E5%B9%B2%E7%90%86%E8%AE%BA%E8%A7%A3%E9%87%8A%E4%BA%86%E4%B8%BA%E4%BD%95%E5%AE%8F%E8%A7%82%E7%89%A9%E4%BD%93%E7%9C%8B%E4%B8%8D%E5%88%B0%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "退相干理论解释了为何宏观物体看不到叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%A6%82%E4%BB%8A%E7%A7%91%E5%AD%A6%E5%AE%B6%E5%B7%B2%E8%83%BD%E5%9C%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%88%B6%E9%80%A0%E5%B0%8F%E5%9E%8B%E7%9A%84%E7%8C%AB%E6%80%81%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/application-application-3.speech?text=%E5%A6%82%E4%BB%8A%E7%A7%91%E5%AD%A6%E5%AE%B6%E5%B7%B2%E8%83%BD%E5%9C%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%88%B6%E9%80%A0%E5%B0%8F%E5%9E%8B%E7%9A%84%E7%8C%AB%E6%80%81%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "如今科学家已能在实验室制造小型的猫态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E6%8A%8A%E5%BE%AE%E8%A7%82%E5%8F%A0%E5%8A%A0%E6%94%BE%E5%A4%A7%E5%88%B0%E5%AE%8F%E8%A7%82%EF%BC%8C%E5%BD%A2%E6%88%90%E6%97%A2%E6%AD%BB%E5%8F%88%E6%B4%BB%E7%9A%84%E6%82%96%E8%AE%BA%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/summary-summary-1.speech?text=%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E6%8A%8A%E5%BE%AE%E8%A7%82%E5%8F%A0%E5%8A%A0%E6%94%BE%E5%A4%A7%E5%88%B0%E5%AE%8F%E8%A7%82%EF%BC%8C%E5%BD%A2%E6%88%90%E6%97%A2%E6%AD%BB%E5%8F%88%E6%B4%BB%E7%9A%84%E6%82%96%E8%AE%BA%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "薛定谔的猫把微观叠加放大到宏观，形成既死又活的悖论。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E8%A7%82%E6%B5%8B%E5%AF%BC%E8%87%B4%E5%8F%A0%E5%8A%A0%E5%9D%8D%E7%BC%A9%E4%B8%BA%E7%A1%AE%E5%AE%9A%E7%8A%B6%E6%80%81%E3%80%82",
+      "path": "audio/narrations/schrodinger-cat/summary-summary-2.speech?text=%E8%A7%82%E6%B5%8B%E5%AF%BC%E8%87%B4%E5%8F%A0%E5%8A%A0%E5%9D%8D%E7%BC%A9%E4%B8%BA%E7%A1%AE%E5%AE%9A%E7%8A%B6%E6%80%81%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "观测导致叠加坍缩为确定状态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "schrodinger-cat",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E7%90%86%E8%A7%A3%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E7%9A%84%E7%BB%8F%E5%85%B8%E9%9A%90%E5%96%BB%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/schrodinger-cat/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E7%90%86%E8%A7%A3%E9%87%8F%E5%AD%90%E6%B5%8B%E9%87%8F%E7%9A%84%E7%BB%8F%E5%85%B8%E9%9A%90%E5%96%BB%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 6.88,
+      "size": 0,
+      "text": "它是理解量子测量的经典隐喻。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

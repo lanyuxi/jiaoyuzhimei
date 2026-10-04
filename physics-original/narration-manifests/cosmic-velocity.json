@@ -1,0 +1,229 @@
+{
+  "script_id": "cosmic-velocity",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 190.65,
+  "files": [
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E5%AE%9E%E9%AA%8C%EF%BC%81%E7%89%9B%E9%A1%BF%E6%9B%BE%E8%AE%BE%E6%83%B3%E5%9C%A8%E9%AB%98%E5%B1%B1%E4%B8%8A%E6%9E%B6%E4%B8%80%E9%97%A8%E5%A4%A7%E7%82%AE%EF%BC%8C%E6%B0%B4%E5%B9%B3%E5%8F%91%E5%B0%84%E7%82%AE%E5%BC%B9%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E5%AE%9E%E9%AA%8C%EF%BC%81%E7%89%9B%E9%A1%BF%E6%9B%BE%E8%AE%BE%E6%83%B3%E5%9C%A8%E9%AB%98%E5%B1%B1%E4%B8%8A%E6%9E%B6%E4%B8%80%E9%97%A8%E5%A4%A7%E7%82%AE%EF%BC%8C%E6%B0%B4%E5%B9%B3%E5%8F%91%E5%B0%84%E7%82%AE%E5%BC%B9%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "欢迎来到宇宙速度实验！牛顿曾设想在高山上架一门大炮，水平发射炮弹。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%BF%AB%EF%BC%8C%E7%82%AE%E5%BC%B9%E8%90%BD%E5%BE%97%E8%B6%8A%E8%BF%9C%EF%BC%9B%E5%BD%93%E9%80%9F%E5%BA%A6%E8%B6%B3%E5%A4%9F%E5%A4%A7%E6%97%B6%EF%BC%8C%E7%82%AE%E5%BC%B9%E7%AB%9F%E7%84%B6%E7%BB%95%E5%9C%B0%E7%90%83%E4%B8%80%E5%9C%88%E5%8F%88%E5%9B%9E%E5%88%B0%E5%8E%9F%E7%82%B9%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/intro-intro-2.speech?text=%E9%80%9F%E5%BA%A6%E8%B6%8A%E5%BF%AB%EF%BC%8C%E7%82%AE%E5%BC%B9%E8%90%BD%E5%BE%97%E8%B6%8A%E8%BF%9C%EF%BC%9B%E5%BD%93%E9%80%9F%E5%BA%A6%E8%B6%B3%E5%A4%9F%E5%A4%A7%E6%97%B6%EF%BC%8C%E7%82%AE%E5%BC%B9%E7%AB%9F%E7%84%B6%E7%BB%95%E5%9C%B0%E7%90%83%E4%B8%80%E5%9C%88%E5%8F%88%E5%9B%9E%E5%88%B0%E5%8E%9F%E7%82%B9%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "速度越快，炮弹落得越远；当速度足够大时，炮弹竟然绕地球一圈又回到原点。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E5%BC%95%E5%87%BA%E4%BA%86%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%8C%E5%86%B3%E5%AE%9A%E4%BA%86%E4%BA%BA%E7%B1%BB%E8%83%BD%E5%90%A6%E9%A3%9E%E5%90%91%E5%A4%AA%E7%A9%BA%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E5%BC%95%E5%87%BA%E4%BA%86%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%8C%E5%86%B3%E5%AE%9A%E4%BA%86%E4%BA%BA%E7%B1%BB%E8%83%BD%E5%90%A6%E9%A3%9E%E5%90%91%E5%A4%AA%E7%A9%BA%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "这就引出了宇宙速度的概念，决定了人类能否飞向太空。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%98%AF%E7%89%A9%E4%BD%93%E8%B4%B4%E7%9D%80%E5%9C%B0%E9%9D%A2%E7%8E%AF%E7%BB%95%E5%9C%B0%E7%90%83%E5%81%9A%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E6%89%80%E9%9C%80%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%BA%A6%207.9%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/concept-concept-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%98%AF%E7%89%A9%E4%BD%93%E8%B4%B4%E7%9D%80%E5%9C%B0%E9%9D%A2%E7%8E%AF%E7%BB%95%E5%9C%B0%E7%90%83%E5%81%9A%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E6%89%80%E9%9C%80%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%BA%A6%207.9%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E3%80%82",
+      "duration": 12.5,
+      "size": 0,
+      "text": "第一宇宙速度，是物体贴着地面环绕地球做圆周运动所需的速度，约 7.9 公里每秒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%98%AF%E7%89%A9%E4%BD%93%E5%BD%BB%E5%BA%95%E6%8C%A3%E8%84%B1%E5%9C%B0%E7%90%83%E5%BC%95%E5%8A%9B%E6%89%80%E9%9C%80%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%BA%A6%2011.2%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/concept-concept-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%98%AF%E7%89%A9%E4%BD%93%E5%BD%BB%E5%BA%95%E6%8C%A3%E8%84%B1%E5%9C%B0%E7%90%83%E5%BC%95%E5%8A%9B%E6%89%80%E9%9C%80%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%BA%A6%2011.2%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "第二宇宙速度，是物体彻底挣脱地球引力所需的速度，约 11.2 公里每秒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%98%AF%E9%A3%9E%E5%87%BA%E5%A4%AA%E9%98%B3%E7%B3%BB%E6%89%80%E9%9C%80%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%BA%A6%2016.7%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/concept-concept-3.speech?text=%E7%AC%AC%E4%B8%89%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%98%AF%E9%A3%9E%E5%87%BA%E5%A4%AA%E9%98%B3%E7%B3%BB%E6%89%80%E9%9C%80%E7%9A%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%BA%A6%2016.7%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "第三宇宙速度，是飞出太阳系所需的速度，约 16.7 公里每秒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%E4%B8%8D%E5%90%8C%EF%BC%8C%E7%89%A9%E4%BD%93%E7%9A%84%E8%BD%A8%E9%81%93%E4%BC%9A%E4%BB%8E%E6%8A%9B%E7%89%A9%E7%BA%BF%E3%80%81%E5%9C%86%E3%80%81%E6%A4%AD%E5%9C%86%E5%8F%98%E6%88%90%E9%80%83%E9%80%B8%E7%9A%84%E5%8F%8C%E6%9B%B2%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/concept-concept-4.speech?text=%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%E4%B8%8D%E5%90%8C%EF%BC%8C%E7%89%A9%E4%BD%93%E7%9A%84%E8%BD%A8%E9%81%93%E4%BC%9A%E4%BB%8E%E6%8A%9B%E7%89%A9%E7%BA%BF%E3%80%81%E5%9C%86%E3%80%81%E6%A4%AD%E5%9C%86%E5%8F%98%E6%88%90%E9%80%83%E9%80%B8%E7%9A%84%E5%8F%8C%E6%9B%B2%E7%BA%BF%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "发射速度不同，物体的轨道会从抛物线、圆、椭圆变成逃逸的双曲线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%94%B1%E5%BC%95%E5%8A%9B%E6%8F%90%E4%BE%9B%E5%90%91%E5%BF%83%E5%8A%9B%E5%BE%97%E5%88%B0%EF%BC%8C%E7%AD%89%E4%BA%8E%E6%A0%B9%E5%8F%B7%E4%B8%8B%20g%20%E4%B9%98%E4%BB%A5%E5%9C%B0%E7%90%83%E5%8D%8A%E5%BE%84%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/formula-formula-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%94%B1%E5%BC%95%E5%8A%9B%E6%8F%90%E4%BE%9B%E5%90%91%E5%BF%83%E5%8A%9B%E5%BE%97%E5%88%B0%EF%BC%8C%E7%AD%89%E4%BA%8E%E6%A0%B9%E5%8F%B7%E4%B8%8B%20g%20%E4%B9%98%E4%BB%A5%E5%9C%B0%E7%90%83%E5%8D%8A%E5%BE%84%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "第一宇宙速度由引力提供向心力得到，等于根号下 g 乘以地球半径。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%94%B1%E6%9C%BA%E6%A2%B0%E8%83%BD%E5%AE%88%E6%81%92%E5%BE%97%E5%88%B0%EF%BC%8C%E6%98%AF%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%9A%84%E6%A0%B9%E5%8F%B7%E4%BA%8C%E5%80%8D%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/formula-formula-2.speech?text=%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%94%B1%E6%9C%BA%E6%A2%B0%E8%83%BD%E5%AE%88%E6%81%92%E5%BE%97%E5%88%B0%EF%BC%8C%E6%98%AF%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E7%9A%84%E6%A0%B9%E5%8F%B7%E4%BA%8C%E5%80%8D%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "第二宇宙速度由机械能守恒得到，是第一宇宙速度的根号二倍。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%BD%93%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%E5%B0%8F%E4%BA%8E%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%89%A9%E4%BD%93%E4%BC%9A%E8%90%BD%E5%9B%9E%E5%9C%B0%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/formula-formula-3.speech?text=%E5%BD%93%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%E5%B0%8F%E4%BA%8E%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%89%A9%E4%BD%93%E4%BC%9A%E8%90%BD%E5%9B%9E%E5%9C%B0%E9%9D%A2%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "当发射速度小于第一宇宙速度，物体会落回地面。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E4%BB%8B%E4%BA%8E%E7%AC%AC%E4%B8%80%E4%B8%8E%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E6%97%B6%EF%BC%8C%E7%89%A9%E4%BD%93%E8%BF%9B%E5%85%A5%E6%A4%AD%E5%9C%86%E8%BD%A8%E9%81%93%E7%8E%AF%E7%BB%95%E5%9C%B0%E7%90%83%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/formula-formula-4.speech?text=%E4%BB%8B%E4%BA%8E%E7%AC%AC%E4%B8%80%E4%B8%8E%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E4%B9%8B%E9%97%B4%E6%97%B6%EF%BC%8C%E7%89%A9%E4%BD%93%E8%BF%9B%E5%85%A5%E6%A4%AD%E5%9C%86%E8%BD%A8%E9%81%93%E7%8E%AF%E7%BB%95%E5%9C%B0%E7%90%83%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "介于第一与第二宇宙速度之间时，物体进入椭圆轨道环绕地球。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E9%80%90%E6%B8%90%E5%A2%9E%E5%A4%A7%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%BD%A8%E9%81%93%E4%BB%8E%E5%9D%A0%E8%90%BD%E5%8F%98%E4%B8%BA%E7%8E%AF%E7%BB%95%EF%BC%8C%E5%86%8D%E5%88%B0%E9%80%83%E9%80%B8%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/interaction-interaction-1.speech?text=%E9%80%90%E6%B8%90%E5%A2%9E%E5%A4%A7%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%BD%A8%E9%81%93%E4%BB%8E%E5%9D%A0%E8%90%BD%E5%8F%98%E4%B8%BA%E7%8E%AF%E7%BB%95%EF%BC%8C%E5%86%8D%E5%88%B0%E9%80%83%E9%80%B8%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "逐渐增大发射速度，观察轨道从坠落变为环绕，再到逃逸。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%81%B0%E5%A5%BD%E8%BE%BE%E5%88%B0%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E6%97%B6%EF%BC%8C%E8%BD%A8%E9%81%93%E5%8F%98%E6%88%90%E8%B4%B4%E8%BF%91%E5%9C%B0%E8%A1%A8%E7%9A%84%E5%9C%86%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/interaction-interaction-2.speech?text=%E6%81%B0%E5%A5%BD%E8%BE%BE%E5%88%B0%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E6%97%B6%EF%BC%8C%E8%BD%A8%E9%81%93%E5%8F%98%E6%88%90%E8%B4%B4%E8%BF%91%E5%9C%B0%E8%A1%A8%E7%9A%84%E5%9C%86%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "恰好达到第一宇宙速度时，轨道变成贴近地表的圆。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E8%B6%85%E8%BF%87%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E6%97%B6%EF%BC%8C%E8%BD%A8%E9%81%93%E5%BC%A0%E5%BC%80%E6%88%90%E5%8F%8C%E6%9B%B2%E7%BA%BF%EF%BC%8C%E7%89%A9%E4%BD%93%E4%B8%80%E5%8E%BB%E4%B8%8D%E8%BF%94%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/interaction-interaction-3.speech?text=%E8%B6%85%E8%BF%87%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E6%97%B6%EF%BC%8C%E8%BD%A8%E9%81%93%E5%BC%A0%E5%BC%80%E6%88%90%E5%8F%8C%E6%9B%B2%E7%BA%BF%EF%BC%8C%E7%89%A9%E4%BD%93%E4%B8%80%E5%8E%BB%E4%B8%8D%E8%BF%94%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "超过第二宇宙速度时，轨道张开成双曲线，物体一去不返。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E4%BA%BA%E9%80%A0%E5%8D%AB%E6%98%9F%E5%BF%85%E9%A1%BB%E8%BE%BE%E5%88%B0%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%89%8D%E8%83%BD%E7%A8%B3%E5%AE%9A%E5%9C%B0%E7%BB%95%E5%9C%B0%E7%90%83%E8%BF%90%E8%A1%8C%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/application-application-1.speech?text=%E4%BA%BA%E9%80%A0%E5%8D%AB%E6%98%9F%E5%BF%85%E9%A1%BB%E8%BE%BE%E5%88%B0%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%89%8D%E8%83%BD%E7%A8%B3%E5%AE%9A%E5%9C%B0%E7%BB%95%E5%9C%B0%E7%90%83%E8%BF%90%E8%A1%8C%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "人造卫星必须达到第一宇宙速度，才能稳定地绕地球运行。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%8E%A2%E6%9C%88%E5%92%8C%E6%8E%A2%E7%81%AB%E9%A3%9E%E8%88%B9%E9%9C%80%E8%A6%81%E6%8E%A5%E8%BF%91%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%89%8D%E8%83%BD%E9%A3%9E%E7%A6%BB%E5%9C%B0%E7%90%83%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/application-application-2.speech?text=%E6%8E%A2%E6%9C%88%E5%92%8C%E6%8E%A2%E7%81%AB%E9%A3%9E%E8%88%B9%E9%9C%80%E8%A6%81%E6%8E%A5%E8%BF%91%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%89%8D%E8%83%BD%E9%A3%9E%E7%A6%BB%E5%9C%B0%E7%90%83%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "探月和探火飞船需要接近第二宇宙速度，才能飞离地球。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%97%85%E8%A1%8C%E8%80%85%E5%8F%B7%E6%8E%A2%E6%B5%8B%E5%99%A8%E5%80%9F%E5%8A%A9%E8%A1%8C%E6%98%9F%E5%BC%95%E5%8A%9B%E5%8A%A0%E9%80%9F%EF%BC%8C%E6%9C%80%E7%BB%88%E8%BE%BE%E5%88%B0%E7%AC%AC%E4%B8%89%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E9%A3%9E%E5%87%BA%E5%A4%AA%E9%98%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/application-application-3.speech?text=%E6%97%85%E8%A1%8C%E8%80%85%E5%8F%B7%E6%8E%A2%E6%B5%8B%E5%99%A8%E5%80%9F%E5%8A%A9%E8%A1%8C%E6%98%9F%E5%BC%95%E5%8A%9B%E5%8A%A0%E9%80%9F%EF%BC%8C%E6%9C%80%E7%BB%88%E8%BE%BE%E5%88%B0%E7%AC%AC%E4%B8%89%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E9%A3%9E%E5%87%BA%E5%A4%AA%E9%98%B3%E7%B3%BB%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "旅行者号探测器借助行星引力加速，最终达到第三宇宙速度飞出太阳系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%207.9%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E6%98%AF%E7%8E%AF%E7%BB%95%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%2011.2%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E6%98%AF%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/summary-summary-1.speech?text=%E7%AC%AC%E4%B8%80%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%207.9%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E6%98%AF%E7%8E%AF%E7%BB%95%E9%80%9F%E5%BA%A6%EF%BC%8C%E7%AC%AC%E4%BA%8C%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%2011.2%20%E5%85%AC%E9%87%8C%E6%AF%8F%E7%A7%92%E6%98%AF%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 13.44,
+      "size": 0,
+      "text": "第一宇宙速度 7.9 公里每秒是环绕速度，第二宇宙速度 11.2 公里每秒是逃逸速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E6%98%AF%E7%8E%AF%E7%BB%95%E9%80%9F%E5%BA%A6%E7%9A%84%E6%A0%B9%E5%8F%B7%E4%BA%8C%E5%80%8D%EF%BC%8C%E7%AC%AC%E4%B8%89%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E5%88%99%E5%8F%AF%E9%A3%9E%E5%87%BA%E5%A4%AA%E9%98%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/cosmic-velocity/summary-summary-2.speech?text=%E9%80%83%E9%80%B8%E9%80%9F%E5%BA%A6%E6%98%AF%E7%8E%AF%E7%BB%95%E9%80%9F%E5%BA%A6%E7%9A%84%E6%A0%B9%E5%8F%B7%E4%BA%8C%E5%80%8D%EF%BC%8C%E7%AC%AC%E4%B8%89%E5%AE%87%E5%AE%99%E9%80%9F%E5%BA%A6%E5%88%99%E5%8F%AF%E9%A3%9E%E5%87%BA%E5%A4%AA%E9%98%B3%E7%B3%BB%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "逃逸速度是环绕速度的根号二倍，第三宇宙速度则可飞出太阳系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "cosmic-velocity",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%E5%86%B3%E5%AE%9A%E8%BD%A8%E9%81%93%E5%BD%A2%E6%80%81%E3%80%82%E8%BF%99%E4%BA%9B%E9%80%9F%E5%BA%A6%E9%97%A8%E6%A7%9B%EF%BC%8C%E6%A0%87%E8%AE%B0%E7%9D%80%E4%BA%BA%E7%B1%BB%E8%BF%88%E5%90%91%E6%B7%B1%E7%A9%BA%E7%9A%84%E8%84%9A%E6%AD%A5%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/cosmic-velocity/summary-summary-3.speech?text=%E5%8F%91%E5%B0%84%E9%80%9F%E5%BA%A6%E5%86%B3%E5%AE%9A%E8%BD%A8%E9%81%93%E5%BD%A2%E6%80%81%E3%80%82%E8%BF%99%E4%BA%9B%E9%80%9F%E5%BA%A6%E9%97%A8%E6%A7%9B%EF%BC%8C%E6%A0%87%E8%AE%B0%E7%9D%80%E4%BA%BA%E7%B1%BB%E8%BF%88%E5%90%91%E6%B7%B1%E7%A9%BA%E7%9A%84%E8%84%9A%E6%AD%A5%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 12.19,
+      "size": 0,
+      "text": "发射速度决定轨道形态。这些速度门槛，标记着人类迈向深空的脚步。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

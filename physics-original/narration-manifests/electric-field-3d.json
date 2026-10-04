@@ -1,0 +1,174 @@
+{
+  "script_id": "electric-field-3d",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 121.28,
+  "files": [
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E4%B8%89%E7%BB%B4%E7%94%B5%E5%9C%BA%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%BF%99%E6%AC%A1%E6%88%91%E4%BB%AC%E8%B5%B0%E5%87%BA%E5%B9%B3%E9%9D%A2%EF%BC%8C%E5%9C%A8%E7%AB%8B%E4%BD%93%E7%A9%BA%E9%97%B4%E4%B8%AD%E8%A7%82%E5%AF%9F%E7%94%B5%E5%9C%BA%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E4%B8%89%E7%BB%B4%E7%94%B5%E5%9C%BA%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%BF%99%E6%AC%A1%E6%88%91%E4%BB%AC%E8%B5%B0%E5%87%BA%E5%B9%B3%E9%9D%A2%EF%BC%8C%E5%9C%A8%E7%AB%8B%E4%BD%93%E7%A9%BA%E9%97%B4%E4%B8%AD%E8%A7%82%E5%AF%9F%E7%94%B5%E5%9C%BA%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "欢迎来到三维电场实验！这次我们走出平面，在立体空间中观察电场。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%8B%96%E5%8A%A8%E6%97%8B%E8%BD%AC%E8%A7%86%E8%A7%92%EF%BC%8C%E4%BB%8E%E4%BB%BB%E6%84%8F%E6%96%B9%E5%90%91%E6%AC%A3%E8%B5%8F%E7%94%B5%E5%9C%BA%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/intro-intro-2.speech?text=%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%8B%96%E5%8A%A8%E6%97%8B%E8%BD%AC%E8%A7%86%E8%A7%92%EF%BC%8C%E4%BB%8E%E4%BB%BB%E6%84%8F%E6%96%B9%E5%90%91%E6%AC%A3%E8%B5%8F%E7%94%B5%E5%9C%BA%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "你可以拖动旋转视角，从任意方向欣赏电场的空间结构。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%94%B5%E5%9C%BA%E7%BA%BF%E6%98%AF%E4%B8%80%E6%97%8F%E7%A9%BA%E9%97%B4%E6%9B%B2%E7%BA%BF%EF%BC%8C%E5%88%87%E7%BA%BF%E6%96%B9%E5%90%91%E5%8D%B3%E8%AF%A5%E7%82%B9%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/concept-concept-1.speech?text=%E7%94%B5%E5%9C%BA%E7%BA%BF%E6%98%AF%E4%B8%80%E6%97%8F%E7%A9%BA%E9%97%B4%E6%9B%B2%E7%BA%BF%EF%BC%8C%E5%88%87%E7%BA%BF%E6%96%B9%E5%90%91%E5%8D%B3%E8%AF%A5%E7%82%B9%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "电场线是一族空间曲线，切线方向即该点电场强度的方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E7%94%B5%E5%9C%BA%E7%BA%BF%E4%BB%8E%E6%AD%A3%E7%94%B5%E8%8D%B7%E5%8F%91%E5%87%BA%EF%BC%8C%E7%BB%88%E6%AD%A2%E4%BA%8E%E8%B4%9F%E7%94%B5%E8%8D%B7%EF%BC%8C%E5%9C%A8%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4%E4%B8%AD%E5%90%91%E5%9B%9B%E9%9D%A2%E5%85%AB%E6%96%B9%E9%93%BA%E5%B1%95%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/concept-concept-2.speech?text=%E7%94%B5%E5%9C%BA%E7%BA%BF%E4%BB%8E%E6%AD%A3%E7%94%B5%E8%8D%B7%E5%8F%91%E5%87%BA%EF%BC%8C%E7%BB%88%E6%AD%A2%E4%BA%8E%E8%B4%9F%E7%94%B5%E8%8D%B7%EF%BC%8C%E5%9C%A8%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4%E4%B8%AD%E5%90%91%E5%9B%9B%E9%9D%A2%E5%85%AB%E6%96%B9%E9%93%BA%E5%B1%95%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "电场线从正电荷发出，终止于负电荷，在三维空间中向四面八方铺展。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%94%B5%E5%9C%BA%E7%BA%BF%E8%B6%8A%E5%AF%86%EF%BC%8C%E7%94%B5%E5%9C%BA%E8%B6%8A%E5%BC%BA%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/concept-concept-3.speech?text=%E7%94%B5%E5%9C%BA%E7%BA%BF%E8%B6%8A%E5%AF%86%EF%BC%8C%E7%94%B5%E5%9C%BA%E8%B6%8A%E5%BC%BA%E3%80%82",
+      "duration": 3.44,
+      "size": 0,
+      "text": "电场线越密，电场越强。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%82%B9%E7%94%B5%E8%8D%B7%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E6%B2%BF%E5%BE%84%E5%90%91%EF%BC%8C%E5%A4%A7%E5%B0%8F%E4%B8%8E%E8%B7%9D%E7%A6%BB%E5%B9%B3%E6%96%B9%E6%88%90%E5%8F%8D%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/formula-formula-1.speech?text=%E7%82%B9%E7%94%B5%E8%8D%B7%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6%E6%B2%BF%E5%BE%84%E5%90%91%EF%BC%8C%E5%A4%A7%E5%B0%8F%E4%B8%8E%E8%B7%9D%E7%A6%BB%E5%B9%B3%E6%96%B9%E6%88%90%E5%8F%8D%E6%AF%94%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "点电荷电场强度沿径向，大小与距离平方成反比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%94%B5%E5%8A%BF%E6%98%AF%E6%A0%87%E9%87%8F%EF%BC%8C%E7%AD%89%E4%BA%8E%20k%20%E4%B9%98%E4%BB%A5%20q%20%E9%99%A4%E4%BB%A5%20r%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/formula-formula-2.speech?text=%E7%94%B5%E5%8A%BF%E6%98%AF%E6%A0%87%E9%87%8F%EF%BC%8C%E7%AD%89%E4%BA%8E%20k%20%E4%B9%98%E4%BB%A5%20q%20%E9%99%A4%E4%BB%A5%20r%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "电势是标量，等于 k 乘以 q 除以 r。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%94%B5%E5%9C%BA%E6%98%AF%E7%94%B5%E5%8A%BF%E7%9A%84%E8%B4%9F%E6%A2%AF%E5%BA%A6%EF%BC%8C%E5%9B%A0%E6%AD%A4%E7%94%B5%E5%9C%BA%E7%BA%BF%E6%80%BB%E6%98%AF%E5%9E%82%E7%9B%B4%E7%A9%BF%E8%BF%87%E7%AD%89%E5%8A%BF%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/formula-formula-3.speech?text=%E7%94%B5%E5%9C%BA%E6%98%AF%E7%94%B5%E5%8A%BF%E7%9A%84%E8%B4%9F%E6%A2%AF%E5%BA%A6%EF%BC%8C%E5%9B%A0%E6%AD%A4%E7%94%B5%E5%9C%BA%E7%BA%BF%E6%80%BB%E6%98%AF%E5%9E%82%E7%9B%B4%E7%A9%BF%E8%BF%87%E7%AD%89%E5%8A%BF%E9%9D%A2%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "电场是电势的负梯度，因此电场线总是垂直穿过等势面。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E2%80%9C%E8%AF%95%E6%8E%A2%E7%94%B5%E8%8D%B7%E2%80%9D%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%BB%BF%E8%89%B2%E5%B0%8F%E7%90%83%E4%BC%9A%E6%B2%BF%E7%94%B5%E5%9C%BA%E5%8A%9B%E8%A2%AB%E6%8E%A8%E5%8A%A8%EF%BC%8C%E7%9B%B4%E8%A7%82%E6%98%BE%E7%A4%BA%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/interaction-interaction-1.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E2%80%9C%E8%AF%95%E6%8E%A2%E7%94%B5%E8%8D%B7%E2%80%9D%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%BB%BF%E8%89%B2%E5%B0%8F%E7%90%83%E4%BC%9A%E6%B2%BF%E7%94%B5%E5%9C%BA%E5%8A%9B%E8%A2%AB%E6%8E%A8%E5%8A%A8%EF%BC%8C%E7%9B%B4%E8%A7%82%E6%98%BE%E7%A4%BA%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "切换到“试探电荷”模式，绿色小球会沿电场力被推动，直观显示力的方向。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E2%80%9C%E7%AD%89%E5%8A%BF%E9%9D%A2%E2%80%9D%E6%A8%A1%E5%BC%8F%EF%BC%8C%E5%8D%8A%E9%80%8F%E6%98%8E%E7%90%83%E5%A3%B3%E5%B0%B1%E6%98%AF%E7%94%B5%E5%8A%BF%E7%9B%B8%E7%AD%89%E7%9A%84%E6%9B%B2%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/interaction-interaction-2.speech?text=%E5%88%87%E6%8D%A2%E5%88%B0%E2%80%9C%E7%AD%89%E5%8A%BF%E9%9D%A2%E2%80%9D%E6%A8%A1%E5%BC%8F%EF%BC%8C%E5%8D%8A%E9%80%8F%E6%98%8E%E7%90%83%E5%A3%B3%E5%B0%B1%E6%98%AF%E7%94%B5%E5%8A%BF%E7%9B%B8%E7%AD%89%E7%9A%84%E6%9B%B2%E9%9D%A2%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "切换到“等势面”模式，半透明球壳就是电势相等的曲面。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E5%B0%9D%E8%AF%95%E5%A2%9E%E5%88%A0%E7%94%B5%E8%8D%B7%E3%80%81%E7%BB%84%E6%88%90%E7%94%B5%E5%81%B6%E6%9E%81%E5%AD%90%E6%88%96%E5%90%8C%E5%8F%B7%E7%94%B5%E8%8D%B7%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4%E7%94%B5%E5%9C%BA%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/interaction-interaction-3.speech?text=%E5%B0%9D%E8%AF%95%E5%A2%9E%E5%88%A0%E7%94%B5%E8%8D%B7%E3%80%81%E7%BB%84%E6%88%90%E7%94%B5%E5%81%B6%E6%9E%81%E5%AD%90%E6%88%96%E5%90%8C%E5%8F%B7%E7%94%B5%E8%8D%B7%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4%E7%94%B5%E5%9C%BA%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "尝试增删电荷、组成电偶极子或同号电荷，观察空间电场如何变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E4%B8%89%E7%BB%B4%E7%94%B5%E5%9C%BA%E5%88%86%E6%9E%90%E6%98%AF%E8%AE%BE%E8%AE%A1%E7%94%B5%E5%AE%B9%E5%99%A8%E3%80%81%E4%BC%A0%E6%84%9F%E5%99%A8%E4%B8%8E%E7%B2%92%E5%AD%90%E5%8A%A0%E9%80%9F%E5%99%A8%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/application-application-1.speech?text=%E4%B8%89%E7%BB%B4%E7%94%B5%E5%9C%BA%E5%88%86%E6%9E%90%E6%98%AF%E8%AE%BE%E8%AE%A1%E7%94%B5%E5%AE%B9%E5%99%A8%E3%80%81%E4%BC%A0%E6%84%9F%E5%99%A8%E4%B8%8E%E7%B2%92%E5%AD%90%E5%8A%A0%E9%80%9F%E5%99%A8%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "三维电场分析是设计电容器、传感器与粒子加速器的基础。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E7%AD%89%E5%8A%BF%E9%9D%A2%E7%9A%84%E6%A6%82%E5%BF%B5%E5%9C%A8%E9%9D%99%E7%94%B5%E5%B1%8F%E8%94%BD%E4%B8%8E%E9%AB%98%E5%8E%8B%E8%AE%BE%E5%A4%87%E7%BB%9D%E7%BC%98%E4%B8%AD%E8%87%B3%E5%85%B3%E9%87%8D%E8%A6%81%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/application-application-2.speech?text=%E7%AD%89%E5%8A%BF%E9%9D%A2%E7%9A%84%E6%A6%82%E5%BF%B5%E5%9C%A8%E9%9D%99%E7%94%B5%E5%B1%8F%E8%94%BD%E4%B8%8E%E9%AB%98%E5%8E%8B%E8%AE%BE%E5%A4%87%E7%BB%9D%E7%BC%98%E4%B8%AD%E8%87%B3%E5%85%B3%E9%87%8D%E8%A6%81%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "等势面的概念在静电屏蔽与高压设备绝缘中至关重要。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E6%88%91%E4%BB%AC%E5%9C%A8%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4%E9%87%8C%E7%9C%8B%E6%B8%85%E4%BA%86%E7%94%B5%E5%9C%BA%E7%BA%BF%E3%80%81%E7%AD%89%E5%8A%BF%E9%9D%A2%E4%B8%8E%E8%AF%95%E6%8E%A2%E7%94%B5%E8%8D%B7%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/summary-summary-1.speech?text=%E6%88%91%E4%BB%AC%E5%9C%A8%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4%E9%87%8C%E7%9C%8B%E6%B8%85%E4%BA%86%E7%94%B5%E5%9C%BA%E7%BA%BF%E3%80%81%E7%AD%89%E5%8A%BF%E9%9D%A2%E4%B8%8E%E8%AF%95%E6%8E%A2%E7%94%B5%E8%8D%B7%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "我们在三维空间里看清了电场线、等势面与试探电荷三者的关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "electric-field-3d",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E8%AE%B0%E4%BD%8F%EF%BC%9A%E7%94%B5%E5%9C%BA%E6%98%AF%E7%9F%A2%E9%87%8F%E3%80%81%E7%94%B5%E5%8A%BF%E6%98%AF%E6%A0%87%E9%87%8F%EF%BC%8C%E7%94%B5%E5%9C%BA%E7%BA%BF%E6%B0%B8%E8%BF%9C%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%AD%89%E5%8A%BF%E9%9D%A2%E3%80%82",
+      "path": "audio/narrations/electric-field-3d/summary-summary-2.speech?text=%E8%AE%B0%E4%BD%8F%EF%BC%9A%E7%94%B5%E5%9C%BA%E6%98%AF%E7%9F%A2%E9%87%8F%E3%80%81%E7%94%B5%E5%8A%BF%E6%98%AF%E6%A0%87%E9%87%8F%EF%BC%8C%E7%94%B5%E5%9C%BA%E7%BA%BF%E6%B0%B8%E8%BF%9C%E5%9E%82%E7%9B%B4%E4%BA%8E%E7%AD%89%E5%8A%BF%E9%9D%A2%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "记住：电场是矢量、电势是标量，电场线永远垂直于等势面。",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

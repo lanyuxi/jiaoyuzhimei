@@ -1,0 +1,229 @@
+{
+  "script_id": "newton-rings",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 151.28,
+  "files": [
+    {
+      "script_id": "newton-rings",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%89%9B%E9%A1%BF%E7%8E%AF%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%8A%8A%E4%B8%80%E4%B8%AA%E5%B9%B3%E5%87%B8%E9%80%8F%E9%95%9C%E5%8E%8B%E5%9C%A8%E5%B9%B3%E6%9D%BF%E7%8E%BB%E7%92%83%E4%B8%8A%EF%BC%8C%E7%85%A7%E4%BB%A5%E5%8D%95%E8%89%B2%E5%85%89%EF%BC%8C%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%B8%80%E5%9C%88%E5%9C%88%E5%90%8C%E5%BF%83%E5%9C%86%E7%8E%AF%E3%80%82",
+      "path": "audio/narrations/newton-rings/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E7%89%9B%E9%A1%BF%E7%8E%AF%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%8A%8A%E4%B8%80%E4%B8%AA%E5%B9%B3%E5%87%B8%E9%80%8F%E9%95%9C%E5%8E%8B%E5%9C%A8%E5%B9%B3%E6%9D%BF%E7%8E%BB%E7%92%83%E4%B8%8A%EF%BC%8C%E7%85%A7%E4%BB%A5%E5%8D%95%E8%89%B2%E5%85%89%EF%BC%8C%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%B8%80%E5%9C%88%E5%9C%88%E5%90%8C%E5%BF%83%E5%9C%86%E7%8E%AF%E3%80%82",
+      "duration": 13.13,
+      "size": 0,
+      "text": "欢迎来到牛顿环实验！把一个平凸透镜压在平板玻璃上，照以单色光，会出现一圈圈同心圆环。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E6%98%8E%E6%9A%97%E7%9B%B8%E9%97%B4%E7%9A%84%E5%9C%86%E7%8E%AF%EF%BC%8C%E7%94%B1%E7%89%9B%E9%A1%BF%E9%A6%96%E5%85%88%E4%BB%94%E7%BB%86%E7%A0%94%E7%A9%B6%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%BE%97%E5%90%8D%E7%89%9B%E9%A1%BF%E7%8E%AF%E3%80%82",
+      "path": "audio/narrations/newton-rings/intro-intro-2.speech?text=%E8%BF%99%E4%BA%9B%E6%98%8E%E6%9A%97%E7%9B%B8%E9%97%B4%E7%9A%84%E5%9C%86%E7%8E%AF%EF%BC%8C%E7%94%B1%E7%89%9B%E9%A1%BF%E9%A6%96%E5%85%88%E4%BB%94%E7%BB%86%E7%A0%94%E7%A9%B6%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%BE%97%E5%90%8D%E7%89%9B%E9%A1%BF%E7%8E%AF%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "这些明暗相间的圆环，由牛顿首先仔细研究，因此得名牛顿环。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%AE%83%E6%98%AF%E7%AD%89%E5%8E%9A%E5%B9%B2%E6%B6%89%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E5%AE%83%E7%9A%84%E6%88%90%E5%9B%A0%E4%B8%8E%E8%A7%84%E5%BE%8B%E3%80%82",
+      "path": "audio/narrations/newton-rings/intro-intro-3.speech?text=%E5%AE%83%E6%98%AF%E7%AD%89%E5%8E%9A%E5%B9%B2%E6%B6%89%E7%9A%84%E7%BB%8F%E5%85%B8%E8%8C%83%E4%BE%8B%EF%BC%8C%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8E%A2%E7%B4%A2%E5%AE%83%E7%9A%84%E6%88%90%E5%9B%A0%E4%B8%8E%E8%A7%84%E5%BE%8B%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "它是等厚干涉的经典范例，今天我们就来探索它的成因与规律。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E9%80%8F%E9%95%9C%E5%87%B8%E9%9D%A2%E4%B8%8E%E5%B9%B3%E6%9D%BF%E4%B9%8B%E9%97%B4%E5%BD%A2%E6%88%90%E4%B8%80%E5%B1%82%E5%8E%9A%E5%BA%A6%E9%80%90%E6%B8%90%E5%8F%98%E5%8C%96%E7%9A%84%E7%A9%BA%E6%B0%94%E8%96%84%E8%86%9C%E3%80%82",
+      "path": "audio/narrations/newton-rings/concept-concept-1.speech?text=%E9%80%8F%E9%95%9C%E5%87%B8%E9%9D%A2%E4%B8%8E%E5%B9%B3%E6%9D%BF%E4%B9%8B%E9%97%B4%E5%BD%A2%E6%88%90%E4%B8%80%E5%B1%82%E5%8E%9A%E5%BA%A6%E9%80%90%E6%B8%90%E5%8F%98%E5%8C%96%E7%9A%84%E7%A9%BA%E6%B0%94%E8%96%84%E8%86%9C%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "透镜凸面与平板之间形成一层厚度逐渐变化的空气薄膜。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E4%BB%8E%E7%A9%BA%E6%B0%94%E8%86%9C%E4%B8%8A%E4%B8%8B%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E7%9A%84%E4%B8%A4%E6%9D%9F%E5%85%89%E5%8F%91%E7%94%9F%E5%B9%B2%E6%B6%89%E3%80%82",
+      "path": "audio/narrations/newton-rings/concept-concept-2.speech?text=%E4%BB%8E%E7%A9%BA%E6%B0%94%E8%86%9C%E4%B8%8A%E4%B8%8B%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E7%9A%84%E4%B8%A4%E6%9D%9F%E5%85%89%E5%8F%91%E7%94%9F%E5%B9%B2%E6%B6%89%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "从空气膜上下表面反射的两束光发生干涉。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%8E%9A%E5%BA%A6%E7%9B%B8%E5%90%8C%E7%9A%84%E5%9C%B0%E6%96%B9%E5%B9%B2%E6%B6%89%E6%95%88%E6%9E%9C%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%89%80%E4%BB%A5%E6%9D%A1%E7%BA%B9%E6%98%AF%E4%B8%80%E5%9C%88%E5%9C%88%E5%90%8C%E5%BF%83%E5%9C%86%E3%80%82",
+      "path": "audio/narrations/newton-rings/concept-concept-3.speech?text=%E5%8E%9A%E5%BA%A6%E7%9B%B8%E5%90%8C%E7%9A%84%E5%9C%B0%E6%96%B9%E5%B9%B2%E6%B6%89%E6%95%88%E6%9E%9C%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%89%80%E4%BB%A5%E6%9D%A1%E7%BA%B9%E6%98%AF%E4%B8%80%E5%9C%88%E5%9C%88%E5%90%8C%E5%BF%83%E5%9C%86%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "厚度相同的地方干涉效果相同，所以条纹是一圈圈同心圆。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E7%94%B1%E4%BA%8E%E5%8F%8D%E5%B0%84%E6%97%B6%E7%9A%84%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%EF%BC%8C%E6%AD%A3%E4%B8%AD%E5%BF%83%E6%8E%A5%E8%A7%A6%E7%82%B9%E5%A4%84%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9A%97%E6%96%91%E3%80%82",
+      "path": "audio/narrations/newton-rings/concept-concept-4.speech?text=%E7%94%B1%E4%BA%8E%E5%8F%8D%E5%B0%84%E6%97%B6%E7%9A%84%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%EF%BC%8C%E6%AD%A3%E4%B8%AD%E5%BF%83%E6%8E%A5%E8%A7%A6%E7%82%B9%E5%A4%84%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9A%97%E6%96%91%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "由于反射时的半波损失，正中心接触点处是一个暗斑。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E7%AC%AC%20k%20%E4%B8%AA%E6%9A%97%E7%8E%AF%E7%9A%84%E5%8D%8A%E5%BE%84%E7%94%B1%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E7%BB%99%E5%87%BA%E3%80%82",
+      "path": "audio/narrations/newton-rings/formula-formula-1.speech?text=%E7%AC%AC%20k%20%E4%B8%AA%E6%9A%97%E7%8E%AF%E7%9A%84%E5%8D%8A%E5%BE%84%E7%94%B1%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E7%BB%99%E5%87%BA%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "第 k 个暗环的半径由这个公式给出。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20R%20%E6%98%AF%E9%80%8F%E9%95%9C%E7%9A%84%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%EF%BC%8C%CE%BB%20%E6%98%AF%E5%85%89%E7%9A%84%E6%B3%A2%E9%95%BF%EF%BC%8Ck%20%E6%98%AF%E7%8E%AF%E7%9A%84%E5%BA%8F%E5%8F%B7%E3%80%82",
+      "path": "audio/narrations/newton-rings/formula-formula-2.speech?text=%E5%85%B6%E4%B8%AD%20R%20%E6%98%AF%E9%80%8F%E9%95%9C%E7%9A%84%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%EF%BC%8C%CE%BB%20%E6%98%AF%E5%85%89%E7%9A%84%E6%B3%A2%E9%95%BF%EF%BC%8Ck%20%E6%98%AF%E7%8E%AF%E7%9A%84%E5%BA%8F%E5%8F%B7%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "其中 R 是透镜的曲率半径，λ 是光的波长，k 是环的序号。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%8E%AF%E7%9A%84%E5%8D%8A%E5%BE%84%E4%B8%8E%E5%BA%8F%E5%8F%B7%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E6%89%80%E4%BB%A5%E8%B6%8A%E5%BE%80%E5%A4%96%E7%8E%AF%E8%B6%8A%E5%AF%86%E3%80%82",
+      "path": "audio/narrations/newton-rings/formula-formula-3.speech?text=%E7%8E%AF%E7%9A%84%E5%8D%8A%E5%BE%84%E4%B8%8E%E5%BA%8F%E5%8F%B7%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9%E6%88%90%E6%AD%A3%E6%AF%94%EF%BC%8C%E6%89%80%E4%BB%A5%E8%B6%8A%E5%BE%80%E5%A4%96%E7%8E%AF%E8%B6%8A%E5%AF%86%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "环的半径与序号的平方根成正比，所以越往外环越密。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E7%94%B1%E6%AD%A4%E6%B5%8B%E5%87%BA%E7%8E%AF%E5%8D%8A%E5%BE%84%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%8F%8D%E6%8E%A8%E9%80%8F%E9%95%9C%E7%9A%84%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%E6%88%96%E5%85%89%E7%9A%84%E6%B3%A2%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/newton-rings/formula-formula-4.speech?text=%E7%94%B1%E6%AD%A4%E6%B5%8B%E5%87%BA%E7%8E%AF%E5%8D%8A%E5%BE%84%EF%BC%8C%E5%B0%B1%E8%83%BD%E5%8F%8D%E6%8E%A8%E9%80%8F%E9%95%9C%E7%9A%84%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%E6%88%96%E5%85%89%E7%9A%84%E6%B3%A2%E9%95%BF%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "由此测出环半径，就能反推透镜的曲率半径或光的波长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%B3%A2%E9%95%BF%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%8E%AF%E7%9A%84%E9%A2%9C%E8%89%B2%E5%92%8C%E9%97%B4%E8%B7%9D%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/newton-rings/interaction-interaction-1.speech?text=%E8%B0%83%E6%95%B4%E6%B3%A2%E9%95%BF%EF%BC%8C%E8%A7%82%E5%AF%9F%E7%8E%AF%E7%9A%84%E9%A2%9C%E8%89%B2%E5%92%8C%E9%97%B4%E8%B7%9D%E5%A6%82%E4%BD%95%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "调整波长，观察环的颜色和间距如何变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E9%80%8F%E9%95%9C%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%20R%EF%BC%8C%E7%8E%AF%E4%BC%9A%E5%8F%98%E5%BE%97%E6%9B%B4%E7%A8%80%E7%96%8F%E3%80%82",
+      "path": "audio/narrations/newton-rings/interaction-interaction-2.speech?text=%E5%A2%9E%E5%A4%A7%E9%80%8F%E9%95%9C%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%20R%EF%BC%8C%E7%8E%AF%E4%BC%9A%E5%8F%98%E5%BE%97%E6%9B%B4%E7%A8%80%E7%96%8F%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "增大透镜曲率半径 R，环会变得更稀疏。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E4%B8%AD%E5%BF%83%E5%A7%8B%E7%BB%88%E6%98%AF%E6%9A%97%E6%96%91%EF%BC%8C%E7%8E%AF%E4%BB%8E%E5%86%85%E5%90%91%E5%A4%96%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%AF%86%E3%80%82",
+      "path": "audio/narrations/newton-rings/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E4%B8%AD%E5%BF%83%E5%A7%8B%E7%BB%88%E6%98%AF%E6%9A%97%E6%96%91%EF%BC%8C%E7%8E%AF%E4%BB%8E%E5%86%85%E5%90%91%E5%A4%96%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%AF%86%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "注意中心始终是暗斑，环从内向外越来越密。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E7%89%9B%E9%A1%BF%E7%8E%AF%E5%8F%AF%E4%BB%A5%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%87%8F%E9%80%8F%E9%95%9C%E7%9A%84%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%E3%80%82",
+      "path": "audio/narrations/newton-rings/application-application-1.speech?text=%E7%89%9B%E9%A1%BF%E7%8E%AF%E5%8F%AF%E4%BB%A5%E7%B2%BE%E5%AF%86%E6%B5%8B%E9%87%8F%E9%80%8F%E9%95%9C%E7%9A%84%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "牛顿环可以精密测量透镜的曲率半径。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%85%89%E5%AD%A6%E8%BD%A6%E9%97%B4%E7%94%A8%E5%B9%B2%E6%B6%89%E6%9D%A1%E7%BA%B9%E6%A3%80%E9%AA%8C%E9%95%9C%E9%9D%A2%E7%9A%84%E5%B9%B3%E6%95%B4%E5%BA%A6%E5%92%8C%E5%8A%A0%E5%B7%A5%E8%B4%A8%E9%87%8F%E3%80%82",
+      "path": "audio/narrations/newton-rings/application-application-2.speech?text=%E5%85%89%E5%AD%A6%E8%BD%A6%E9%97%B4%E7%94%A8%E5%B9%B2%E6%B6%89%E6%9D%A1%E7%BA%B9%E6%A3%80%E9%AA%8C%E9%95%9C%E9%9D%A2%E7%9A%84%E5%B9%B3%E6%95%B4%E5%BA%A6%E5%92%8C%E5%8A%A0%E5%B7%A5%E8%B4%A8%E9%87%8F%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "光学车间用干涉条纹检验镜面的平整度和加工质量。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%90%8C%E6%A0%B7%E7%9A%84%E5%8E%9F%E7%90%86%E4%B9%9F%E7%94%A8%E4%BA%8E%E6%A3%80%E6%B5%8B%E7%8E%BB%E7%92%83%E7%9A%84%E5%9D%87%E5%8C%80%E6%80%A7%E5%92%8C%E5%BA%94%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/newton-rings/application-application-3.speech?text=%E5%90%8C%E6%A0%B7%E7%9A%84%E5%8E%9F%E7%90%86%E4%B9%9F%E7%94%A8%E4%BA%8E%E6%A3%80%E6%B5%8B%E7%8E%BB%E7%92%83%E7%9A%84%E5%9D%87%E5%8C%80%E6%80%A7%E5%92%8C%E5%BA%94%E5%8A%9B%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "同样的原理也用于检测玻璃的均匀性和应力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%89%9B%E9%A1%BF%E7%8E%AF%E6%98%AF%E7%A9%BA%E6%B0%94%E8%96%84%E8%86%9C%E7%9A%84%E7%AD%89%E5%8E%9A%E5%B9%B2%E6%B6%89%EF%BC%8C%E5%BD%A2%E6%88%90%E5%90%8C%E5%BF%83%E5%9C%86%E7%8E%AF%E3%80%82",
+      "path": "audio/narrations/newton-rings/summary-summary-1.speech?text=%E7%89%9B%E9%A1%BF%E7%8E%AF%E6%98%AF%E7%A9%BA%E6%B0%94%E8%96%84%E8%86%9C%E7%9A%84%E7%AD%89%E5%8E%9A%E5%B9%B2%E6%B6%89%EF%BC%8C%E5%BD%A2%E6%88%90%E5%90%8C%E5%BF%83%E5%9C%86%E7%8E%AF%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "牛顿环是空气薄膜的等厚干涉，形成同心圆环。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E6%9A%97%E7%8E%AF%E5%8D%8A%E5%BE%84%20r%20%E7%AD%89%E4%BA%8E%E6%A0%B9%E5%8F%B7%E4%B8%8B%20k%20%CE%BB%20R%EF%BC%8C%E4%B8%AD%E5%BF%83%E5%9B%A0%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%E4%B8%BA%E6%9A%97%E6%96%91%E3%80%82",
+      "path": "audio/narrations/newton-rings/summary-summary-2.speech?text=%E6%9A%97%E7%8E%AF%E5%8D%8A%E5%BE%84%20r%20%E7%AD%89%E4%BA%8E%E6%A0%B9%E5%8F%B7%E4%B8%8B%20k%20%CE%BB%20R%EF%BC%8C%E4%B8%AD%E5%BF%83%E5%9B%A0%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1%E4%B8%BA%E6%9A%97%E6%96%91%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "暗环半径 r 等于根号下 k λ R，中心因半波损失为暗斑。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "newton-rings",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E6%B5%8B%E9%87%8F%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%E5%92%8C%E6%A3%80%E9%AA%8C%E5%85%89%E5%AD%A6%E9%9D%A2%E7%9A%84%E5%88%A9%E5%99%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/newton-rings/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E6%B5%8B%E9%87%8F%E6%9B%B2%E7%8E%87%E5%8D%8A%E5%BE%84%E5%92%8C%E6%A3%80%E9%AA%8C%E5%85%89%E5%AD%A6%E9%9D%A2%E7%9A%84%E5%88%A9%E5%99%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 8.13,
+      "size": 0,
+      "text": "它是测量曲率半径和检验光学面的利器。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "script_id": "joule-thomson",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 125.32,
+  "files": [
+    {
+      "script_id": "joule-thomson",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E4%BA%86%E8%A7%A3%E7%84%A6%E8%80%B3-%E6%B1%A4%E5%A7%86%E5%AD%99%E6%95%88%E5%BA%94%EF%BC%81%E6%8A%8A%E9%AB%98%E5%8E%8B%E6%B0%94%E4%BD%93%E4%BB%8E%E5%B0%8F%E5%AD%94%E6%94%BE%E5%87%BA%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%8F%98%E5%86%B7%E8%BF%98%E6%98%AF%E5%8F%98%E7%83%AD%EF%BC%9F",
+      "path": "audio/narrations/joule-thomson/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E4%BA%86%E8%A7%A3%E7%84%A6%E8%80%B3-%E6%B1%A4%E5%A7%86%E5%AD%99%E6%95%88%E5%BA%94%EF%BC%81%E6%8A%8A%E9%AB%98%E5%8E%8B%E6%B0%94%E4%BD%93%E4%BB%8E%E5%B0%8F%E5%AD%94%E6%94%BE%E5%87%BA%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%8F%98%E5%86%B7%E8%BF%98%E6%98%AF%E5%8F%98%E7%83%AD%EF%BC%9F",
+      "duration": 10.31,
+      "size": 0,
+      "text": "欢迎了解焦耳-汤姆孙效应！把高压气体从小孔放出，它会变冷还是变热？",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E7%AD%94%E6%A1%88%E5%8F%96%E5%86%B3%E4%BA%8E%E6%B0%94%E4%BD%93%E7%A7%8D%E7%B1%BB%E5%92%8C%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%BF%99%E8%83%8C%E5%90%8E%E8%97%8F%E7%9D%80%E5%88%86%E5%AD%90%E9%97%B4%E4%BD%9C%E7%94%A8%E5%8A%9B%E7%9A%84%E7%A7%98%E5%AF%86%E3%80%82",
+      "path": "audio/narrations/joule-thomson/intro-intro-2.speech?text=%E7%AD%94%E6%A1%88%E5%8F%96%E5%86%B3%E4%BA%8E%E6%B0%94%E4%BD%93%E7%A7%8D%E7%B1%BB%E5%92%8C%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%BF%99%E8%83%8C%E5%90%8E%E8%97%8F%E7%9D%80%E5%88%86%E5%AD%90%E9%97%B4%E4%BD%9C%E7%94%A8%E5%8A%9B%E7%9A%84%E7%A7%98%E5%AF%86%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "答案取决于气体种类和温度，这背后藏着分子间作用力的秘密。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E6%95%88%E5%BA%94%EF%BC%8C%E8%AE%A9%E4%BA%BA%E7%B1%BB%E5%BE%97%E4%BB%A5%E6%8A%8A%E7%A9%BA%E6%B0%94%E6%B6%B2%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/joule-thomson/intro-intro-3.speech?text=%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E6%95%88%E5%BA%94%EF%BC%8C%E8%AE%A9%E4%BA%BA%E7%B1%BB%E5%BE%97%E4%BB%A5%E6%8A%8A%E7%A9%BA%E6%B0%94%E6%B6%B2%E5%8C%96%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "正是这个效应，让人类得以把空气液化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E6%B0%94%E4%BD%93%E7%BC%93%E6%85%A2%E9%80%9A%E8%BF%87%E5%A4%9A%E5%AD%94%E5%A1%9E%E4%BB%8E%E9%AB%98%E5%8E%8B%E5%8C%BA%E6%B5%81%E5%90%91%E4%BD%8E%E5%8E%8B%E5%8C%BA%EF%BC%8C%E5%8F%AB%E8%8A%82%E6%B5%81%E8%86%A8%E8%83%80%E3%80%82",
+      "path": "audio/narrations/joule-thomson/concept-concept-1.speech?text=%E6%B0%94%E4%BD%93%E7%BC%93%E6%85%A2%E9%80%9A%E8%BF%87%E5%A4%9A%E5%AD%94%E5%A1%9E%E4%BB%8E%E9%AB%98%E5%8E%8B%E5%8C%BA%E6%B5%81%E5%90%91%E4%BD%8E%E5%8E%8B%E5%8C%BA%EF%BC%8C%E5%8F%AB%E8%8A%82%E6%B5%81%E8%86%A8%E8%83%80%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "气体缓慢通过多孔塞从高压区流向低压区，叫节流膨胀。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E7%BB%9D%E7%83%AD%E4%B8%94%E7%84%93%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/joule-thomson/concept-concept-2.speech?text=%E8%BF%99%E4%B8%AA%E8%BF%87%E7%A8%8B%E7%BB%9D%E7%83%AD%E4%B8%94%E7%84%93%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 4.06,
+      "size": 0,
+      "text": "这个过程绝热且焓保持不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E5%AF%B9%E5%AE%9E%E9%99%85%E6%B0%94%E4%BD%93%EF%BC%8C%E5%88%86%E5%AD%90%E9%97%B4%E5%AD%98%E5%9C%A8%E5%90%B8%E5%BC%95%E5%8A%9B%EF%BC%8C%E8%86%A8%E8%83%80%E6%97%B6%E8%A6%81%E5%85%8B%E6%9C%8D%E5%90%B8%E5%BC%95%E5%81%9A%E5%8A%9F%E3%80%82",
+      "path": "audio/narrations/joule-thomson/concept-concept-3.speech?text=%E5%AF%B9%E5%AE%9E%E9%99%85%E6%B0%94%E4%BD%93%EF%BC%8C%E5%88%86%E5%AD%90%E9%97%B4%E5%AD%98%E5%9C%A8%E5%90%B8%E5%BC%95%E5%8A%9B%EF%BC%8C%E8%86%A8%E8%83%80%E6%97%B6%E8%A6%81%E5%85%8B%E6%9C%8D%E5%90%B8%E5%BC%95%E5%81%9A%E5%8A%9F%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "对实际气体，分子间存在吸引力，膨胀时要克服吸引做功。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E4%BA%8E%E6%98%AF%E5%88%86%E5%AD%90%E5%B9%B3%E5%9D%87%E5%8A%A8%E8%83%BD%E4%B8%8B%E9%99%8D%EF%BC%8C%E6%B0%94%E4%BD%93%E6%B8%A9%E5%BA%A6%E9%99%8D%E4%BD%8E%E3%80%82",
+      "path": "audio/narrations/joule-thomson/concept-concept-4.speech?text=%E4%BA%8E%E6%98%AF%E5%88%86%E5%AD%90%E5%B9%B3%E5%9D%87%E5%8A%A8%E8%83%BD%E4%B8%8B%E9%99%8D%EF%BC%8C%E6%B0%94%E4%BD%93%E6%B8%A9%E5%BA%A6%E9%99%8D%E4%BD%8E%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "于是分子平均动能下降，气体温度降低。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%8A%82%E6%B5%81%E8%BF%87%E7%A8%8B%E7%84%93%E5%AE%88%E6%81%92%E3%80%82",
+      "path": "audio/narrations/joule-thomson/formula-formula-1.speech?text=%E8%8A%82%E6%B5%81%E8%BF%87%E7%A8%8B%E7%84%93%E5%AE%88%E6%81%92%E3%80%82",
+      "duration": 2.5,
+      "size": 0,
+      "text": "节流过程焓守恒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%84%A6%E6%B1%A4%E7%B3%BB%E6%95%B0%E6%8F%8F%E8%BF%B0%E6%B8%A9%E5%BA%A6%E9%9A%8F%E5%8E%8B%E5%BC%BA%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/joule-thomson/formula-formula-2.speech?text=%E7%84%A6%E6%B1%A4%E7%B3%BB%E6%95%B0%E6%8F%8F%E8%BF%B0%E6%B8%A9%E5%BA%A6%E9%9A%8F%E5%8E%8B%E5%BC%BA%E7%9A%84%E5%8F%98%E5%8C%96%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "焦汤系数描述温度随压强的变化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E7%B3%BB%E6%95%B0%E4%B8%BA%E6%AD%A3%E5%88%99%E8%86%A8%E8%83%80%E8%87%B4%E5%86%B7%EF%BC%8C%E4%B8%BA%E8%B4%9F%E5%88%99%E8%87%B4%E7%83%AD%E3%80%82",
+      "path": "audio/narrations/joule-thomson/formula-formula-3.speech?text=%E7%B3%BB%E6%95%B0%E4%B8%BA%E6%AD%A3%E5%88%99%E8%86%A8%E8%83%80%E8%87%B4%E5%86%B7%EF%BC%8C%E4%B8%BA%E8%B4%9F%E5%88%99%E8%87%B4%E7%83%AD%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "系数为正则膨胀致冷，为负则致热。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E4%B8%A4%E8%80%85%E7%9A%84%E5%88%86%E7%95%8C%E5%8F%AB%E8%BD%AC%E6%8D%A2%E6%B8%A9%E5%BA%A6%EF%BC%8C%E4%BD%8E%E4%BA%8E%E5%AE%83%E8%86%A8%E8%83%80%E6%89%8D%E4%BC%9A%E8%87%B4%E5%86%B7%E3%80%82",
+      "path": "audio/narrations/joule-thomson/formula-formula-4.speech?text=%E4%B8%A4%E8%80%85%E7%9A%84%E5%88%86%E7%95%8C%E5%8F%AB%E8%BD%AC%E6%8D%A2%E6%B8%A9%E5%BA%A6%EF%BC%8C%E4%BD%8E%E4%BA%8E%E5%AE%83%E8%86%A8%E8%83%80%E6%89%8D%E4%BC%9A%E8%87%B4%E5%86%B7%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "两者的分界叫转换温度，低于它膨胀才会致冷。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%88%9D%E5%A7%8B%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%8A%82%E6%B5%81%E5%90%8E%E6%98%AF%E8%87%B4%E5%86%B7%E8%BF%98%E6%98%AF%E8%87%B4%E7%83%AD%E3%80%82",
+      "path": "audio/narrations/joule-thomson/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E5%88%9D%E5%A7%8B%E6%B8%A9%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%8A%82%E6%B5%81%E5%90%8E%E6%98%AF%E8%87%B4%E5%86%B7%E8%BF%98%E6%98%AF%E8%87%B4%E7%83%AD%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "调节初始温度，观察节流后是致冷还是致热。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%8E%8B%E9%99%8D%EF%BC%8C%E7%9C%8B%E6%B8%A9%E5%BA%A6%E5%8F%98%E5%8C%96%E7%9A%84%E5%B9%85%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/joule-thomson/interaction-interaction-2.speech?text=%E6%94%B9%E5%8F%98%E5%8E%8B%E9%99%8D%EF%BC%8C%E7%9C%8B%E6%B8%A9%E5%BA%A6%E5%8F%98%E5%8C%96%E7%9A%84%E5%B9%85%E5%BA%A6%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "改变压降，看温度变化的幅度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%B8%A9%E5%BA%A6%E8%B7%A8%E8%BF%87%E8%BD%AC%E6%8D%A2%E6%B8%A9%E5%BA%A6%E6%97%B6%E6%95%88%E5%BA%94%E7%9A%84%E5%8F%8D%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/joule-thomson/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E6%B8%A9%E5%BA%A6%E8%B7%A8%E8%BF%87%E8%BD%AC%E6%8D%A2%E6%B8%A9%E5%BA%A6%E6%97%B6%E6%95%88%E5%BA%94%E7%9A%84%E5%8F%8D%E8%BD%AC%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "注意温度跨过转换温度时效应的反转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%9E%97%E5%BE%B7%E5%BE%AA%E7%8E%AF%E9%9D%A0%E7%84%A6%E6%B1%A4%E8%87%B4%E5%86%B7%E5%8F%8D%E5%A4%8D%E9%99%8D%E6%B8%A9%EF%BC%8C%E6%9C%80%E7%BB%88%E6%B6%B2%E5%8C%96%E7%A9%BA%E6%B0%94%E3%80%82",
+      "path": "audio/narrations/joule-thomson/application-application-1.speech?text=%E6%9E%97%E5%BE%B7%E5%BE%AA%E7%8E%AF%E9%9D%A0%E7%84%A6%E6%B1%A4%E8%87%B4%E5%86%B7%E5%8F%8D%E5%A4%8D%E9%99%8D%E6%B8%A9%EF%BC%8C%E6%9C%80%E7%BB%88%E6%B6%B2%E5%8C%96%E7%A9%BA%E6%B0%94%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "林德循环靠焦汤致冷反复降温，最终液化空气。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E6%98%AF%E5%B7%A5%E4%B8%9A%E4%B8%8A%E5%88%B6%E5%8F%96%E6%B6%B2%E6%B0%AE%E3%80%81%E6%B6%B2%E6%B0%A7%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "path": "audio/narrations/joule-thomson/application-application-2.speech?text=%E5%AE%83%E6%98%AF%E5%B7%A5%E4%B8%9A%E4%B8%8A%E5%88%B6%E5%8F%96%E6%B6%B2%E6%B0%AE%E3%80%81%E6%B6%B2%E6%B0%A7%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "它是工业上制取液氮、液氧的基础。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%B6%E7%94%A8%E5%86%B0%E7%AE%B1%E5%92%8C%E7%A9%BA%E8%B0%83%E7%9A%84%E5%88%B6%E5%86%B7%E4%B9%9F%E7%94%A8%E5%88%B0%E7%B1%BB%E4%BC%BC%E7%9A%84%E8%8A%82%E6%B5%81%E5%8E%9F%E7%90%86%E3%80%82",
+      "path": "audio/narrations/joule-thomson/application-application-3.speech?text=%E5%AE%B6%E7%94%A8%E5%86%B0%E7%AE%B1%E5%92%8C%E7%A9%BA%E8%B0%83%E7%9A%84%E5%88%B6%E5%86%B7%E4%B9%9F%E7%94%A8%E5%88%B0%E7%B1%BB%E4%BC%BC%E7%9A%84%E8%8A%82%E6%B5%81%E5%8E%9F%E7%90%86%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "家用冰箱和空调的制冷也用到类似的节流原理。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%84%A6%E8%80%B3-%E6%B1%A4%E5%A7%86%E5%AD%99%E6%95%88%E5%BA%94%E6%98%AF%E6%B0%94%E4%BD%93%E8%8A%82%E6%B5%81%E8%86%A8%E8%83%80%E6%97%B6%E7%9A%84%E6%B8%A9%E5%BA%A6%E5%8F%98%E5%8C%96%EF%BC%8C%E8%BF%87%E7%A8%8B%E7%84%93%E5%AE%88%E6%81%92%E3%80%82",
+      "path": "audio/narrations/joule-thomson/summary-summary-1.speech?text=%E7%84%A6%E8%80%B3-%E6%B1%A4%E5%A7%86%E5%AD%99%E6%95%88%E5%BA%94%E6%98%AF%E6%B0%94%E4%BD%93%E8%8A%82%E6%B5%81%E8%86%A8%E8%83%80%E6%97%B6%E7%9A%84%E6%B8%A9%E5%BA%A6%E5%8F%98%E5%8C%96%EF%BC%8C%E8%BF%87%E7%A8%8B%E7%84%93%E5%AE%88%E6%81%92%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "焦耳-汤姆孙效应是气体节流膨胀时的温度变化，过程焓守恒。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E7%84%A6%E6%B1%A4%E7%B3%BB%E6%95%B0%E6%AD%A3%E8%87%B4%E5%86%B7%E3%80%81%E8%B4%9F%E8%87%B4%E7%83%AD%EF%BC%8C%E5%88%86%E7%95%8C%E6%98%AF%E8%BD%AC%E6%8D%A2%E6%B8%A9%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/joule-thomson/summary-summary-2.speech?text=%E7%84%A6%E6%B1%A4%E7%B3%BB%E6%95%B0%E6%AD%A3%E8%87%B4%E5%86%B7%E3%80%81%E8%B4%9F%E8%87%B4%E7%83%AD%EF%BC%8C%E5%88%86%E7%95%8C%E6%98%AF%E8%BD%AC%E6%8D%A2%E6%B8%A9%E5%BA%A6%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "焦汤系数正致冷、负致热，分界是转换温度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "joule-thomson",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E6%B0%94%E4%BD%93%E6%B6%B2%E5%8C%96%E4%B8%8E%E5%88%B6%E5%86%B7%E6%8A%80%E6%9C%AF%E7%9A%84%E6%A0%B8%E5%BF%83%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/joule-thomson/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E6%B0%94%E4%BD%93%E6%B6%B2%E5%8C%96%E4%B8%8E%E5%88%B6%E5%86%B7%E6%8A%80%E6%9C%AF%E7%9A%84%E6%A0%B8%E5%BF%83%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.19,
+      "size": 0,
+      "text": "它是气体液化与制冷技术的核心。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

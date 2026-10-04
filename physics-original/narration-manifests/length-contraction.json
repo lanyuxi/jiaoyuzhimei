@@ -1,0 +1,229 @@
+{
+  "script_id": "length-contraction",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 118.16,
+  "files": [
+    {
+      "script_id": "length-contraction",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E7%BB%A7%E7%BB%AD%E7%9B%B8%E5%AF%B9%E8%AE%BA%E4%B9%8B%E6%97%85%EF%BC%81%E6%97%B6%E9%97%B4%E4%BC%9A%E5%8F%98%E6%85%A2%EF%BC%8C%E7%A9%BA%E9%97%B4%E4%B9%9F%E4%BC%9A%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/length-contraction/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E7%BB%A7%E7%BB%AD%E7%9B%B8%E5%AF%B9%E8%AE%BA%E4%B9%8B%E6%97%85%EF%BC%81%E6%97%B6%E9%97%B4%E4%BC%9A%E5%8F%98%E6%85%A2%EF%BC%8C%E7%A9%BA%E9%97%B4%E4%B9%9F%E4%BC%9A%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "欢迎继续相对论之旅！时间会变慢，空间也会改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%80%E4%B8%AA%E9%AB%98%E9%80%9F%E8%BF%90%E5%8A%A8%E7%9A%84%E7%89%A9%E4%BD%93%EF%BC%8C%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%E4%BC%9A%E5%8F%98%E7%9F%AD%E3%80%82",
+      "path": "audio/narrations/length-contraction/intro-intro-2.speech?text=%E4%B8%80%E4%B8%AA%E9%AB%98%E9%80%9F%E8%BF%90%E5%8A%A8%E7%9A%84%E7%89%A9%E4%BD%93%EF%BC%8C%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%E4%BC%9A%E5%8F%98%E7%9F%AD%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "一个高速运动的物体，在运动方向上会变短。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E9%95%BF%E5%BA%A6%E6%94%B6%E7%BC%A9%EF%BC%8C%E4%B8%8E%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E4%BA%92%E4%B8%BA%E8%A1%A8%E9%87%8C%E3%80%82",
+      "path": "audio/narrations/length-contraction/intro-intro-3.speech?text=%E8%BF%99%E5%B0%B1%E6%98%AF%E9%95%BF%E5%BA%A6%E6%94%B6%E7%BC%A9%EF%BC%8C%E4%B8%8E%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E4%BA%92%E4%B8%BA%E8%A1%A8%E9%87%8C%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "这就是长度收缩，与时间膨胀互为表里。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%89%A9%E4%BD%93%E9%9D%99%E6%AD%A2%E6%97%B6%E6%B5%8B%E5%BE%97%E7%9A%84%E9%95%BF%E5%BA%A6%E5%8F%AB%E5%9B%BA%E6%9C%89%E9%95%BF%E5%BA%A6%EF%BC%8C%E6%9C%80%E9%95%BF%E3%80%82",
+      "path": "audio/narrations/length-contraction/concept-concept-1.speech?text=%E7%89%A9%E4%BD%93%E9%9D%99%E6%AD%A2%E6%97%B6%E6%B5%8B%E5%BE%97%E7%9A%84%E9%95%BF%E5%BA%A6%E5%8F%AB%E5%9B%BA%E6%9C%89%E9%95%BF%E5%BA%A6%EF%BC%8C%E6%9C%80%E9%95%BF%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "物体静止时测得的长度叫固有长度，最长。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E5%BD%93%E7%89%A9%E4%BD%93%E9%AB%98%E9%80%9F%E6%8E%A0%E8%BF%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%80%85%E6%B5%8B%E5%BE%97%E7%9A%84%E9%95%BF%E5%BA%A6%E4%BC%9A%E5%8F%98%E7%9F%AD%E3%80%82",
+      "path": "audio/narrations/length-contraction/concept-concept-2.speech?text=%E5%BD%93%E7%89%A9%E4%BD%93%E9%AB%98%E9%80%9F%E6%8E%A0%E8%BF%87%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%80%85%E6%B5%8B%E5%BE%97%E7%9A%84%E9%95%BF%E5%BA%A6%E4%BC%9A%E5%8F%98%E7%9F%AD%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "当物体高速掠过，观察者测得的长度会变短。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%94%B6%E7%BC%A9%E5%8F%AA%E5%8F%91%E7%94%9F%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%EF%BC%8C%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/length-contraction/concept-concept-3.speech?text=%E6%94%B6%E7%BC%A9%E5%8F%AA%E5%8F%91%E7%94%9F%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%EF%BC%8C%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "收缩只发生在运动方向上，垂直方向不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BF%99%E4%B8%8D%E6%98%AF%E7%89%A9%E4%BD%93%E7%9C%9F%E8%A2%AB%E5%8E%8B%E6%89%81%EF%BC%8C%E8%80%8C%E6%98%AF%E6%97%B6%E7%A9%BA%E6%B5%8B%E9%87%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%95%88%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/length-contraction/concept-concept-4.speech?text=%E8%BF%99%E4%B8%8D%E6%98%AF%E7%89%A9%E4%BD%93%E7%9C%9F%E8%A2%AB%E5%8E%8B%E6%89%81%EF%BC%8C%E8%80%8C%E6%98%AF%E6%97%B6%E7%A9%BA%E6%B5%8B%E9%87%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%95%88%E5%BA%94%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "这不是物体真被压扁，而是时空测量的本质效应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%A7%82%E6%B5%8B%E9%95%BF%E5%BA%A6%E7%AD%89%E4%BA%8E%E5%9B%BA%E6%9C%89%E9%95%BF%E5%BA%A6%E9%99%A4%E4%BB%A5%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%9B%A0%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/length-contraction/formula-formula-1.speech?text=%E8%A7%82%E6%B5%8B%E9%95%BF%E5%BA%A6%E7%AD%89%E4%BA%8E%E5%9B%BA%E6%9C%89%E9%95%BF%E5%BA%A6%E9%99%A4%E4%BB%A5%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%9B%A0%E5%AD%90%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "观测长度等于固有长度除以洛伦兹因子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%9B%A0%E5%AD%90%E6%80%BB%E6%98%AF%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E%201%E3%80%82",
+      "path": "audio/narrations/length-contraction/formula-formula-2.speech?text=%E6%B4%9B%E4%BC%A6%E5%85%B9%E5%9B%A0%E5%AD%90%E6%80%BB%E6%98%AF%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E%201%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "洛伦兹因子总是大于等于 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E6%89%80%E4%BB%A5%E8%A7%82%E6%B5%8B%E9%95%BF%E5%BA%A6%E6%80%BB%E6%98%AF%E5%B0%8F%E4%BA%8E%E7%AD%89%E4%BA%8E%E5%9B%BA%E6%9C%89%E9%95%BF%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/length-contraction/formula-formula-3.speech?text=%E6%89%80%E4%BB%A5%E8%A7%82%E6%B5%8B%E9%95%BF%E5%BA%A6%E6%80%BB%E6%98%AF%E5%B0%8F%E4%BA%8E%E7%AD%89%E4%BA%8E%E5%9B%BA%E6%9C%89%E9%95%BF%E5%BA%A6%E3%80%82",
+      "duration": 5.31,
+      "size": 0,
+      "text": "所以观测长度总是小于等于固有长度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E9%80%9F%E5%BA%A6%E8%B6%8B%E8%BF%91%E5%85%89%E9%80%9F%E6%97%B6%EF%BC%8C%E9%95%BF%E5%BA%A6%E8%B6%8B%E5%90%91%E4%BA%8E%E9%9B%B6%E3%80%82",
+      "path": "audio/narrations/length-contraction/formula-formula-4.speech?text=%E9%80%9F%E5%BA%A6%E8%B6%8B%E8%BF%91%E5%85%89%E9%80%9F%E6%97%B6%EF%BC%8C%E9%95%BF%E5%BA%A6%E8%B6%8B%E5%90%91%E4%BA%8E%E9%9B%B6%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "速度趋近光速时，长度趋向于零。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E9%A3%9E%E8%88%B9%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%E8%A2%AB%E5%8E%8B%E7%BC%A9%E3%80%82",
+      "path": "audio/narrations/length-contraction/interaction-interaction-1.speech?text=%E8%B0%83%E8%8A%82%E9%80%9F%E5%BA%A6%EF%BC%8C%E8%A7%82%E5%AF%9F%E9%A3%9E%E8%88%B9%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%E8%A2%AB%E5%8E%8B%E7%BC%A9%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "调节速度，观察飞船在运动方向上被压缩。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E5%B0%BA%E5%AF%B8%E5%A7%8B%E7%BB%88%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/length-contraction/interaction-interaction-2.speech?text=%E6%B3%A8%E6%84%8F%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84%E5%B0%BA%E5%AF%B8%E5%A7%8B%E7%BB%88%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "注意垂直方向的尺寸始终不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%8A%8A%E9%80%9F%E5%BA%A6%E6%8E%A8%E5%88%B0%E6%8E%A5%E8%BF%91%E5%85%89%E9%80%9F%EF%BC%8C%E7%9C%8B%E9%A3%9E%E8%88%B9%E6%94%B6%E7%BC%A9%E6%88%90%E4%B8%80%E6%9D%A1%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/length-contraction/interaction-interaction-3.speech?text=%E6%8A%8A%E9%80%9F%E5%BA%A6%E6%8E%A8%E5%88%B0%E6%8E%A5%E8%BF%91%E5%85%89%E9%80%9F%EF%BC%8C%E7%9C%8B%E9%A3%9E%E8%88%B9%E6%94%B6%E7%BC%A9%E6%88%90%E4%B8%80%E6%9D%A1%E7%BA%BF%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "把速度推到接近光速，看飞船收缩成一条线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E4%BB%8E%CE%BC%E5%AD%90%E8%87%AA%E8%BA%AB%E7%9C%8B%EF%BC%8C%E6%98%AF%E5%A4%A7%E6%B0%94%E5%B1%82%E5%8E%9A%E5%BA%A6%E6%94%B6%E7%BC%A9%E4%BD%BF%E5%AE%83%E5%BE%97%E4%BB%A5%E7%A9%BF%E8%B6%8A%E3%80%82",
+      "path": "audio/narrations/length-contraction/application-application-1.speech?text=%E4%BB%8E%CE%BC%E5%AD%90%E8%87%AA%E8%BA%AB%E7%9C%8B%EF%BC%8C%E6%98%AF%E5%A4%A7%E6%B0%94%E5%B1%82%E5%8E%9A%E5%BA%A6%E6%94%B6%E7%BC%A9%E4%BD%BF%E5%AE%83%E5%BE%97%E4%BB%A5%E7%A9%BF%E8%B6%8A%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "从μ子自身看，是大气层厚度收缩使它得以穿越。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E9%95%BF%E5%BA%A6%E6%94%B6%E7%BC%A9%E4%B8%8E%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%9C%A8%E4%B8%8D%E5%90%8C%E5%8F%82%E8%80%83%E7%B3%BB%E4%B8%AD%E7%9B%B8%E4%BA%92%E5%AF%B9%E5%BA%94%E3%80%82",
+      "path": "audio/narrations/length-contraction/application-application-2.speech?text=%E9%95%BF%E5%BA%A6%E6%94%B6%E7%BC%A9%E4%B8%8E%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%9C%A8%E4%B8%8D%E5%90%8C%E5%8F%82%E8%80%83%E7%B3%BB%E4%B8%AD%E7%9B%B8%E4%BA%92%E5%AF%B9%E5%BA%94%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "长度收缩与时间膨胀在不同参考系中相互对应。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E5%AE%83%E6%98%AF%E7%90%86%E8%A7%A3%E7%9B%B8%E5%AF%B9%E8%AE%BA%E6%97%B6%E7%A9%BA%E8%A7%82%E7%9A%84%E9%87%8D%E8%A6%81%E4%B8%80%E7%8E%AF%E3%80%82",
+      "path": "audio/narrations/length-contraction/application-application-3.speech?text=%E5%AE%83%E6%98%AF%E7%90%86%E8%A7%A3%E7%9B%B8%E5%AF%B9%E8%AE%BA%E6%97%B6%E7%A9%BA%E8%A7%82%E7%9A%84%E9%87%8D%E8%A6%81%E4%B8%80%E7%8E%AF%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "它是理解相对论时空观的重要一环。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%BF%90%E5%8A%A8%E7%89%A9%E4%BD%93%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%E6%94%B6%E7%BC%A9%EF%BC%8CL%3DL%E2%82%80%2F%CE%B3%E3%80%82",
+      "path": "audio/narrations/length-contraction/summary-summary-1.speech?text=%E8%BF%90%E5%8A%A8%E7%89%A9%E4%BD%93%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B8%8A%E6%94%B6%E7%BC%A9%EF%BC%8CL%3DL%E2%82%80%2F%CE%B3%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "运动物体在运动方向上收缩，L=L₀/γ。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%8F%AA%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E6%94%B6%E7%BC%A9%EF%BC%8C%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E4%B8%8D%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/length-contraction/summary-summary-2.speech?text=%E5%8F%AA%E5%9C%A8%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E6%94%B6%E7%BC%A9%EF%BC%8C%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E4%B8%8D%E5%8F%98%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "只在运动方向收缩，垂直方向不变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "length-contraction",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E4%B8%8E%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%85%B1%E5%90%8C%E6%9E%84%E6%88%90%E7%9B%B8%E5%AF%B9%E8%AE%BA%E6%97%B6%E7%A9%BA%E8%A7%82%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/length-contraction/summary-summary-3.speech?text=%E5%AE%83%E4%B8%8E%E6%97%B6%E9%97%B4%E8%86%A8%E8%83%80%E5%85%B1%E5%90%8C%E6%9E%84%E6%88%90%E7%9B%B8%E5%AF%B9%E8%AE%BA%E6%97%B6%E7%A9%BA%E8%A7%82%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.81,
+      "size": 0,
+      "text": "它与时间膨胀共同构成相对论时空观。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

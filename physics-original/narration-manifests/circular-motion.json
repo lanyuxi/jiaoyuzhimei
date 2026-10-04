@@ -1,0 +1,229 @@
+{
+  "script_id": "circular-motion",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 193.47,
+  "files": [
+    {
+      "script_id": "circular-motion",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8E%E6%97%8B%E8%BD%AC%E7%9A%84%E6%91%A9%E5%A4%A9%E8%BD%AE%E5%88%B0%E7%BB%95%E5%9C%B0%E7%90%83%E9%A3%9E%E8%A1%8C%E7%9A%84%E5%8D%AB%E6%98%9F%EF%BC%8C%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E3%80%82",
+      "path": "audio/narrations/circular-motion/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E5%AE%9E%E9%AA%8C%EF%BC%81%E4%BB%8E%E6%97%8B%E8%BD%AC%E7%9A%84%E6%91%A9%E5%A4%A9%E8%BD%AE%E5%88%B0%E7%BB%95%E5%9C%B0%E7%90%83%E9%A3%9E%E8%A1%8C%E7%9A%84%E5%8D%AB%E6%98%9F%EF%BC%8C%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "欢迎来到圆周运动实验！从旋转的摩天轮到绕地球飞行的卫星，圆周运动无处不在。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%80%E4%B8%AA%E7%89%A9%E4%BD%93%E6%B2%BF%E5%9C%86%E5%BD%A2%E8%BD%A8%E9%81%93%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E5%8D%B3%E4%BD%BF%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E5%AE%83%E7%9A%84%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B9%9F%E5%9C%A8%E6%97%B6%E5%88%BB%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/circular-motion/intro-intro-2.speech?text=%E4%B8%80%E4%B8%AA%E7%89%A9%E4%BD%93%E6%B2%BF%E5%9C%86%E5%BD%A2%E8%BD%A8%E9%81%93%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E5%8D%B3%E4%BD%BF%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E5%AE%83%E7%9A%84%E8%BF%90%E5%8A%A8%E6%96%B9%E5%90%91%E4%B9%9F%E5%9C%A8%E6%97%B6%E5%88%BB%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "一个物体沿圆形轨道运动时，即使速度大小不变，它的运动方向也在时刻改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8F%AD%E7%A4%BA%EF%BC%8C%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%9B%E8%AE%A9%E7%89%A9%E4%BD%93%E4%B8%80%E7%9B%B4%E7%BB%95%E7%9D%80%E5%9C%86%E5%BF%83%E8%BD%AC%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BC%9A%E9%A3%9E%E5%87%BA%E5%8E%BB%E3%80%82",
+      "path": "audio/narrations/circular-motion/intro-intro-3.speech?text=%E4%BB%8A%E5%A4%A9%E6%88%91%E4%BB%AC%E5%B0%B1%E6%9D%A5%E6%8F%AD%E7%A4%BA%EF%BC%8C%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%9B%E8%AE%A9%E7%89%A9%E4%BD%93%E4%B8%80%E7%9B%B4%E7%BB%95%E7%9D%80%E5%9C%86%E5%BF%83%E8%BD%AC%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BC%9A%E9%A3%9E%E5%87%BA%E5%8E%BB%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "今天我们就来揭示，是什么力让物体一直绕着圆心转，而不会飞出去。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%89%A9%E4%BD%93%E5%81%9A%E5%8C%80%E9%80%9F%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E7%BA%BF%E9%80%9F%E5%BA%A6%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E4%BD%86%E6%96%B9%E5%90%91%E5%A7%8B%E7%BB%88%E6%B2%BF%E5%9C%86%E7%9A%84%E5%88%87%E7%BA%BF%E3%80%82",
+      "path": "audio/narrations/circular-motion/concept-concept-1.speech?text=%E7%89%A9%E4%BD%93%E5%81%9A%E5%8C%80%E9%80%9F%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E6%97%B6%EF%BC%8C%E7%BA%BF%E9%80%9F%E5%BA%A6%E7%9A%84%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E4%BD%86%E6%96%B9%E5%90%91%E5%A7%8B%E7%BB%88%E6%B2%BF%E5%9C%86%E7%9A%84%E5%88%87%E7%BA%BF%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "物体做匀速圆周运动时，线速度的大小不变，但方向始终沿圆的切线。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%A7%92%E9%80%9F%E5%BA%A6%20%CF%89%20%E6%8F%8F%E8%BF%B0%E8%BD%AC%E5%8A%A8%E7%9A%84%E5%BF%AB%E6%85%A2%EF%BC%8C%E8%A1%A8%E7%A4%BA%E5%8D%95%E4%BD%8D%E6%97%B6%E9%97%B4%E5%86%85%E8%BD%AC%E8%BF%87%E7%9A%84%E8%A7%92%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/circular-motion/concept-concept-2.speech?text=%E8%A7%92%E9%80%9F%E5%BA%A6%20%CF%89%20%E6%8F%8F%E8%BF%B0%E8%BD%AC%E5%8A%A8%E7%9A%84%E5%BF%AB%E6%85%A2%EF%BC%8C%E8%A1%A8%E7%A4%BA%E5%8D%95%E4%BD%8D%E6%97%B6%E9%97%B4%E5%86%85%E8%BD%AC%E8%BF%87%E7%9A%84%E8%A7%92%E5%BA%A6%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "角速度 ω 描述转动的快慢，表示单位时间内转过的角度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E7%BA%BF%E9%80%9F%E5%BA%A6%20v%20%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%20%CF%89%20%E7%9A%84%E5%85%B3%E7%B3%BB%E6%98%AF%20v%20%E7%AD%89%E4%BA%8E%20%CF%89%20%E4%B9%98%E4%BB%A5%E5%8D%8A%E5%BE%84%20r%E3%80%82",
+      "path": "audio/narrations/circular-motion/concept-concept-3.speech?text=%E7%BA%BF%E9%80%9F%E5%BA%A6%20v%20%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%20%CF%89%20%E7%9A%84%E5%85%B3%E7%B3%BB%E6%98%AF%20v%20%E7%AD%89%E4%BA%8E%20%CF%89%20%E4%B9%98%E4%BB%A5%E5%8D%8A%E5%BE%84%20r%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "线速度 v 与角速度 ω 的关系是 v 等于 ω 乘以半径 r。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E8%BD%AC%E4%B8%80%E5%9C%88%E6%89%80%E7%94%A8%E7%9A%84%E6%97%B6%E9%97%B4%E5%8F%AB%E5%81%9A%E5%91%A8%E6%9C%9F%20T%EF%BC%8C%E5%AE%83%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%BA%92%E4%B8%BA%E5%80%92%E6%95%B0%E5%85%B3%E7%B3%BB%E3%80%82",
+      "path": "audio/narrations/circular-motion/concept-concept-4.speech?text=%E8%BD%AC%E4%B8%80%E5%9C%88%E6%89%80%E7%94%A8%E7%9A%84%E6%97%B6%E9%97%B4%E5%8F%AB%E5%81%9A%E5%91%A8%E6%9C%9F%20T%EF%BC%8C%E5%AE%83%E4%B8%8E%E8%A7%92%E9%80%9F%E5%BA%A6%E4%BA%92%E4%B8%BA%E5%80%92%E6%95%B0%E5%85%B3%E7%B3%BB%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "转一圈所用的时间叫做周期 T，它与角速度互为倒数关系。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%90%91%E5%BF%83%E5%8A%A0%E9%80%9F%E5%BA%A6%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%EF%BC%8C%E5%A4%A7%E5%B0%8F%E7%AD%89%E4%BA%8E%20v%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20r%EF%BC%8C%E4%B9%9F%E7%AD%89%E4%BA%8E%20%CF%89%20%E5%B9%B3%E6%96%B9%E4%B9%98%E4%BB%A5%20r%E3%80%82",
+      "path": "audio/narrations/circular-motion/formula-formula-1.speech?text=%E5%90%91%E5%BF%83%E5%8A%A0%E9%80%9F%E5%BA%A6%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%EF%BC%8C%E5%A4%A7%E5%B0%8F%E7%AD%89%E4%BA%8E%20v%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20r%EF%BC%8C%E4%B9%9F%E7%AD%89%E4%BA%8E%20%CF%89%20%E5%B9%B3%E6%96%B9%E4%B9%98%E4%BB%A5%20r%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "向心加速度指向圆心，大小等于 v 平方除以 r，也等于 ω 平方乘以 r。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%A0%B9%E6%8D%AE%E7%89%9B%E9%A1%BF%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%EF%BC%8C%E5%90%91%E5%BF%83%E5%8A%9B%E7%AD%89%E4%BA%8E%E8%B4%A8%E9%87%8F%E4%B9%98%E4%BB%A5%E5%90%91%E5%BF%83%E5%8A%A0%E9%80%9F%E5%BA%A6%E3%80%82",
+      "path": "audio/narrations/circular-motion/formula-formula-2.speech?text=%E6%A0%B9%E6%8D%AE%E7%89%9B%E9%A1%BF%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B%EF%BC%8C%E5%90%91%E5%BF%83%E5%8A%9B%E7%AD%89%E4%BA%8E%E8%B4%A8%E9%87%8F%E4%B9%98%E4%BB%A5%E5%90%91%E5%BF%83%E5%8A%A0%E9%80%9F%E5%BA%A6%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "根据牛顿第二定律，向心力等于质量乘以向心加速度。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%85%B3%E9%94%AE%E5%9C%A8%E4%BA%8E%EF%BC%9A%E5%90%91%E5%BF%83%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%E5%A7%8B%E7%BB%88%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%EF%BC%8C%E5%AE%83%E5%8F%AA%E6%94%B9%E5%8F%98%E9%80%9F%E5%BA%A6%E6%96%B9%E5%90%91%EF%BC%8C%E4%B8%8D%E6%94%B9%E5%8F%98%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E3%80%82",
+      "path": "audio/narrations/circular-motion/formula-formula-3.speech?text=%E5%85%B3%E9%94%AE%E5%9C%A8%E4%BA%8E%EF%BC%9A%E5%90%91%E5%BF%83%E5%8A%9B%E7%9A%84%E6%96%B9%E5%90%91%E5%A7%8B%E7%BB%88%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%EF%BC%8C%E5%AE%83%E5%8F%AA%E6%94%B9%E5%8F%98%E9%80%9F%E5%BA%A6%E6%96%B9%E5%90%91%EF%BC%8C%E4%B8%8D%E6%94%B9%E5%8F%98%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E3%80%82",
+      "duration": 10.94,
+      "size": 0,
+      "text": "关键在于：向心力的方向始终指向圆心，它只改变速度方向，不改变速度大小。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E4%B8%80%E6%97%A6%E5%90%91%E5%BF%83%E5%8A%9B%E6%B6%88%E5%A4%B1%EF%BC%8C%E7%89%A9%E4%BD%93%E5%B0%B1%E4%BC%9A%E6%B2%BF%E5%88%87%E7%BA%BF%E6%96%B9%E5%90%91%E9%A3%9E%E5%87%BA%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E7%A6%BB%E5%BF%83%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/circular-motion/formula-formula-4.speech?text=%E4%B8%80%E6%97%A6%E5%90%91%E5%BF%83%E5%8A%9B%E6%B6%88%E5%A4%B1%EF%BC%8C%E7%89%A9%E4%BD%93%E5%B0%B1%E4%BC%9A%E6%B2%BF%E5%88%87%E7%BA%BF%E6%96%B9%E5%90%91%E9%A3%9E%E5%87%BA%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E7%A6%BB%E5%BF%83%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "一旦向心力消失，物体就会沿切线方向飞出，这就是离心现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%AF%95%E7%9D%80%E5%A2%9E%E5%A4%A7%E8%A7%92%E9%80%9F%E5%BA%A6%EF%BC%8C%E4%BD%A0%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%90%91%E5%BF%83%E5%8A%9B%E6%98%8E%E6%98%BE%E5%8F%98%E5%A4%A7%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%8A%9B%E4%B8%8E%20%CF%89%20%E7%9A%84%E5%B9%B3%E6%96%B9%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "path": "audio/narrations/circular-motion/interaction-interaction-1.speech?text=%E8%AF%95%E7%9D%80%E5%A2%9E%E5%A4%A7%E8%A7%92%E9%80%9F%E5%BA%A6%EF%BC%8C%E4%BD%A0%E4%BC%9A%E7%9C%8B%E5%88%B0%E5%90%91%E5%BF%83%E5%8A%9B%E6%98%8E%E6%98%BE%E5%8F%98%E5%A4%A7%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%8A%9B%E4%B8%8E%20%CF%89%20%E7%9A%84%E5%B9%B3%E6%96%B9%E6%88%90%E6%AD%A3%E6%AF%94%E3%80%82",
+      "duration": 10.63,
+      "size": 0,
+      "text": "试着增大角速度，你会看到向心力明显变大，因为力与 ω 的平方成正比。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E5%86%8D%E8%B0%83%E6%95%B4%E5%8D%8A%E5%BE%84%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%90%91%E5%BF%83%E5%8A%9B%E5%92%8C%E7%BA%BF%E9%80%9F%E5%BA%A6%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/circular-motion/interaction-interaction-2.speech?text=%E5%86%8D%E8%B0%83%E6%95%B4%E5%8D%8A%E5%BE%84%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%90%91%E5%BF%83%E5%8A%9B%E5%92%8C%E7%BA%BF%E9%80%9F%E5%BA%A6%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "再调整半径，观察向心力和线速度如何随之改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E7%94%BB%E9%9D%A2%E4%B8%AD%E9%82%A3%E6%9D%A1%E5%A7%8B%E7%BB%88%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%E7%9A%84%E7%BA%A2%E8%89%B2%E7%AE%AD%E5%A4%B4%EF%BC%8C%E5%AE%83%E5%B0%B1%E6%98%AF%E5%90%91%E5%BF%83%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/circular-motion/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E7%94%BB%E9%9D%A2%E4%B8%AD%E9%82%A3%E6%9D%A1%E5%A7%8B%E7%BB%88%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%E7%9A%84%E7%BA%A2%E8%89%B2%E7%AE%AD%E5%A4%B4%EF%BC%8C%E5%AE%83%E5%B0%B1%E6%98%AF%E5%90%91%E5%BF%83%E5%8A%9B%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "注意画面中那条始终指向圆心的红色箭头，它就是向心力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E6%B1%BD%E8%BD%A6%E8%BD%AC%E5%BC%AF%E6%97%B6%EF%BC%8C%E5%9C%B0%E9%9D%A2%E6%91%A9%E6%93%A6%E5%8A%9B%E6%8F%90%E4%BE%9B%E5%90%91%E5%BF%83%E5%8A%9B%EF%BC%9B%E5%BC%AF%E9%81%93%E8%AE%BE%E8%AE%A1%E6%88%90%E5%80%BE%E6%96%9C%EF%BC%8C%E6%AD%A3%E6%98%AF%E4%B8%BA%E4%BA%86%E5%B8%AE%E5%8A%A9%E6%8F%90%E4%BE%9B%E5%90%91%E5%BF%83%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/circular-motion/application-application-1.speech?text=%E6%B1%BD%E8%BD%A6%E8%BD%AC%E5%BC%AF%E6%97%B6%EF%BC%8C%E5%9C%B0%E9%9D%A2%E6%91%A9%E6%93%A6%E5%8A%9B%E6%8F%90%E4%BE%9B%E5%90%91%E5%BF%83%E5%8A%9B%EF%BC%9B%E5%BC%AF%E9%81%93%E8%AE%BE%E8%AE%A1%E6%88%90%E5%80%BE%E6%96%9C%EF%BC%8C%E6%AD%A3%E6%98%AF%E4%B8%BA%E4%BA%86%E5%B8%AE%E5%8A%A9%E6%8F%90%E4%BE%9B%E5%90%91%E5%BF%83%E5%8A%9B%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "汽车转弯时，地面摩擦力提供向心力；弯道设计成倾斜，正是为了帮助提供向心力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E4%BA%BA%E9%80%A0%E5%8D%AB%E6%98%9F%E7%BB%95%E5%9C%B0%E7%90%83%E9%A3%9E%E8%A1%8C%EF%BC%8C%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E6%81%B0%E5%A5%BD%E5%85%85%E5%BD%93%E5%90%91%E5%BF%83%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/circular-motion/application-application-2.speech?text=%E4%BA%BA%E9%80%A0%E5%8D%AB%E6%98%9F%E7%BB%95%E5%9C%B0%E7%90%83%E9%A3%9E%E8%A1%8C%EF%BC%8C%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E6%81%B0%E5%A5%BD%E5%85%85%E5%BD%93%E5%90%91%E5%BF%83%E5%8A%9B%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "人造卫星绕地球飞行，万有引力恰好充当向心力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%B4%97%E8%A1%A3%E6%9C%BA%E8%84%B1%E6%B0%B4%E6%97%B6%EF%BC%8C%E8%A1%A3%E7%89%A9%E8%A2%AB%E7%94%A9%E5%90%91%E6%A1%B6%E5%A3%81%EF%BC%8C%E6%B0%B4%E5%8D%B4%E4%BB%8E%E5%AD%94%E4%B8%AD%E9%A3%9E%E5%87%BA%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E5%90%91%E5%BF%83%E5%8A%9B%E4%B8%8D%E8%B6%B3%E7%9A%84%E7%A6%BB%E5%BF%83%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "path": "audio/narrations/circular-motion/application-application-3.speech?text=%E6%B4%97%E8%A1%A3%E6%9C%BA%E8%84%B1%E6%B0%B4%E6%97%B6%EF%BC%8C%E8%A1%A3%E7%89%A9%E8%A2%AB%E7%94%A9%E5%90%91%E6%A1%B6%E5%A3%81%EF%BC%8C%E6%B0%B4%E5%8D%B4%E4%BB%8E%E5%AD%94%E4%B8%AD%E9%A3%9E%E5%87%BA%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E5%90%91%E5%BF%83%E5%8A%9B%E4%B8%8D%E8%B6%B3%E7%9A%84%E7%A6%BB%E5%BF%83%E7%8E%B0%E8%B1%A1%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "洗衣机脱水时，衣物被甩向桶壁，水却从孔中飞出，这正是向心力不足的离心现象。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E5%8C%80%E9%80%9F%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E4%B8%AD%EF%BC%8C%E7%BA%BF%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E6%96%B9%E5%90%91%E6%B2%BF%E5%88%87%E7%BA%BF%E6%97%B6%E5%88%BB%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/circular-motion/summary-summary-1.speech?text=%E5%8C%80%E9%80%9F%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E4%B8%AD%EF%BC%8C%E7%BA%BF%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%8F%98%EF%BC%8C%E6%96%B9%E5%90%91%E6%B2%BF%E5%88%87%E7%BA%BF%E6%97%B6%E5%88%BB%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "匀速圆周运动中，线速度大小不变，方向沿切线时刻改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%90%91%E5%BF%83%E5%8A%A0%E9%80%9F%E5%BA%A6%20a%20%E7%AD%89%E4%BA%8E%20v%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20r%EF%BC%8C%E5%90%91%E5%BF%83%E5%8A%9B%20F%20%E7%AD%89%E4%BA%8E%20m%20v%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20r%E3%80%82",
+      "path": "audio/narrations/circular-motion/summary-summary-2.speech?text=%E5%90%91%E5%BF%83%E5%8A%A0%E9%80%9F%E5%BA%A6%20a%20%E7%AD%89%E4%BA%8E%20v%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20r%EF%BC%8C%E5%90%91%E5%BF%83%E5%8A%9B%20F%20%E7%AD%89%E4%BA%8E%20m%20v%20%E5%B9%B3%E6%96%B9%E9%99%A4%E4%BB%A5%20r%E3%80%82",
+      "duration": 12.5,
+      "size": 0,
+      "text": "向心加速度 a 等于 v 平方除以 r，向心力 F 等于 m v 平方除以 r。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "circular-motion",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%90%91%E5%BF%83%E5%8A%9B%E6%B0%B8%E8%BF%9C%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%EF%BC%8C%E6%98%AF%E7%BB%B4%E6%8C%81%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E7%9A%84%E5%85%B3%E9%94%AE%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E6%8E%8C%E6%8F%A1%E4%BA%86%E5%AE%83%EF%BC%81",
+      "path": "audio/narrations/circular-motion/summary-summary-3.speech?text=%E5%90%91%E5%BF%83%E5%8A%9B%E6%B0%B8%E8%BF%9C%E6%8C%87%E5%90%91%E5%9C%86%E5%BF%83%EF%BC%8C%E6%98%AF%E7%BB%B4%E6%8C%81%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E7%9A%84%E5%85%B3%E9%94%AE%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E5%B7%B2%E7%BB%8F%E6%8E%8C%E6%8F%A1%E4%BA%86%E5%AE%83%EF%BC%81",
+      "duration": 9.69,
+      "size": 0,
+      "text": "向心力永远指向圆心，是维持圆周运动的关键。希望你已经掌握了它！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

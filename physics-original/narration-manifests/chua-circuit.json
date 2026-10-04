@@ -1,0 +1,229 @@
+{
+  "script_id": "chua-circuit",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 172.53,
+  "files": [
+    {
+      "script_id": "chua-circuit",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%B7%B7%E6%B2%8C%E4%B8%8D%E5%8F%AA%E5%AD%98%E5%9C%A8%E4%BA%8E%E5%A4%A9%E6%B0%94%E5%92%8C%E5%8F%8C%E6%91%86%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%B5%E8%B7%AF%E4%B9%9F%E8%83%BD%E4%BA%A7%E7%94%9F%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "path": "audio/narrations/chua-circuit/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C%EF%BC%81%E6%B7%B7%E6%B2%8C%E4%B8%8D%E5%8F%AA%E5%AD%98%E5%9C%A8%E4%BA%8E%E5%A4%A9%E6%B0%94%E5%92%8C%E5%8F%8C%E6%91%86%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%B5%E8%B7%AF%E4%B9%9F%E8%83%BD%E4%BA%A7%E7%94%9F%E6%B7%B7%E6%B2%8C%E3%80%82",
+      "duration": 11.25,
+      "size": 0,
+      "text": "欢迎来到蔡氏电路实验！混沌不只存在于天气和双摆，简单的电路也能产生混沌。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=1983%20%E5%B9%B4%EF%BC%8C%E8%94%A1%E5%B0%91%E6%A3%A0%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BB%85%E5%90%AB%E5%87%A0%E4%B8%AA%E5%85%83%E4%BB%B6%E7%9A%84%E7%94%B5%E8%B7%AF%EF%BC%8C%E5%8D%B4%E8%83%BD%E4%BA%A7%E7%94%9F%E4%B8%B0%E5%AF%8C%E7%9A%84%E6%B7%B7%E6%B2%8C%E8%A1%8C%E4%B8%BA%E3%80%82",
+      "path": "audio/narrations/chua-circuit/intro-intro-2.speech?text=1983%20%E5%B9%B4%EF%BC%8C%E8%94%A1%E5%B0%91%E6%A3%A0%E8%AE%BE%E8%AE%A1%E5%87%BA%E4%B8%80%E4%B8%AA%E4%BB%85%E5%90%AB%E5%87%A0%E4%B8%AA%E5%85%83%E4%BB%B6%E7%9A%84%E7%94%B5%E8%B7%AF%EF%BC%8C%E5%8D%B4%E8%83%BD%E4%BA%A7%E7%94%9F%E4%B8%B0%E5%AF%8C%E7%9A%84%E6%B7%B7%E6%B2%8C%E8%A1%8C%E4%B8%BA%E3%80%82",
+      "duration": 11.56,
+      "size": 0,
+      "text": "1983 年，蔡少棠设计出一个仅含几个元件的电路，却能产生丰富的混沌行为。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E5%AE%83%E6%98%AF%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%A2%AB%E4%B8%A5%E6%A0%BC%E8%AF%81%E6%98%8E%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%B7%B7%E6%B2%8C%E7%9A%84%E7%89%A9%E7%90%86%E7%94%B5%E8%B7%AF%EF%BC%8C%E8%87%B3%E4%BB%8A%E4%BB%8D%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E7%9A%84%E5%85%B8%E8%8C%83%E3%80%82",
+      "path": "audio/narrations/chua-circuit/intro-intro-3.speech?text=%E5%AE%83%E6%98%AF%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%A2%AB%E4%B8%A5%E6%A0%BC%E8%AF%81%E6%98%8E%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%B7%B7%E6%B2%8C%E7%9A%84%E7%89%A9%E7%90%86%E7%94%B5%E8%B7%AF%EF%BC%8C%E8%87%B3%E4%BB%8A%E4%BB%8D%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E7%9A%84%E5%85%B8%E8%8C%83%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "它是第一个被严格证明会出现混沌的物理电路，至今仍是研究混沌的典范。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E7%94%B1%E4%B8%A4%E4%B8%AA%E7%94%B5%E5%AE%B9%E3%80%81%E4%B8%80%E4%B8%AA%E7%94%B5%E6%84%9F%E3%80%81%E4%B8%80%E4%B8%AA%E7%94%B5%E9%98%BB%E5%92%8C%E4%B8%80%E4%B8%AA%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%85%83%E4%BB%B6%E7%BB%84%E6%88%90%E3%80%82",
+      "path": "audio/narrations/chua-circuit/concept-concept-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E7%94%B1%E4%B8%A4%E4%B8%AA%E7%94%B5%E5%AE%B9%E3%80%81%E4%B8%80%E4%B8%AA%E7%94%B5%E6%84%9F%E3%80%81%E4%B8%80%E4%B8%AA%E7%94%B5%E9%98%BB%E5%92%8C%E4%B8%80%E4%B8%AA%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%85%83%E4%BB%B6%E7%BB%84%E6%88%90%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "蔡氏电路由两个电容、一个电感、一个电阻和一个非线性元件组成。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%BF%99%E4%B8%AA%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%85%83%E4%BB%B6%E5%8F%AB%E8%94%A1%E6%B0%8F%E4%BA%8C%E6%9E%81%E7%AE%A1%EF%BC%8C%E5%AE%83%E7%9A%84%E4%BC%8F%E5%AE%89%E7%89%B9%E6%80%A7%E6%98%AF%E5%88%86%E6%AE%B5%E7%BA%BF%E6%80%A7%E7%9A%84%E3%80%82",
+      "path": "audio/narrations/chua-circuit/concept-concept-2.speech?text=%E8%BF%99%E4%B8%AA%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%85%83%E4%BB%B6%E5%8F%AB%E8%94%A1%E6%B0%8F%E4%BA%8C%E6%9E%81%E7%AE%A1%EF%BC%8C%E5%AE%83%E7%9A%84%E4%BC%8F%E5%AE%89%E7%89%B9%E6%80%A7%E6%98%AF%E5%88%86%E6%AE%B5%E7%BA%BF%E6%80%A7%E7%9A%84%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "这个非线性元件叫蔡氏二极管，它的伏安特性是分段线性的。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E9%9D%9E%E7%BA%BF%E6%80%A7%EF%BC%8C%E8%AE%A9%E7%94%B5%E8%B7%AF%E7%9A%84%E7%94%B5%E5%8E%8B%E5%92%8C%E7%94%B5%E6%B5%81%E4%B8%8D%E5%86%8D%E5%91%A8%E6%9C%9F%E9%87%8D%E5%A4%8D%EF%BC%8C%E8%80%8C%E6%98%AF%E6%B7%B7%E6%B2%8C%E6%BC%94%E5%8C%96%E3%80%82",
+      "path": "audio/narrations/chua-circuit/concept-concept-3.speech?text=%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E9%9D%9E%E7%BA%BF%E6%80%A7%EF%BC%8C%E8%AE%A9%E7%94%B5%E8%B7%AF%E7%9A%84%E7%94%B5%E5%8E%8B%E5%92%8C%E7%94%B5%E6%B5%81%E4%B8%8D%E5%86%8D%E5%91%A8%E6%9C%9F%E9%87%8D%E5%A4%8D%EF%BC%8C%E8%80%8C%E6%98%AF%E6%B7%B7%E6%B2%8C%E6%BC%94%E5%8C%96%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "正是这个非线性，让电路的电压和电流不再周期重复，而是混沌演化。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%9C%A8%E7%9B%B8%E7%A9%BA%E9%97%B4%E4%B8%AD%EF%BC%8C%E8%BD%A8%E8%BF%B9%E7%BB%95%E7%9D%80%E4%B8%A4%E4%B8%AA%E4%B8%AD%E5%BF%83%E6%9D%A5%E5%9B%9E%E7%BC%A0%E7%BB%95%EF%BC%8C%E5%BD%A2%E6%88%90%E5%8F%8C%E6%B6%A1%E5%8D%B7%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "path": "audio/narrations/chua-circuit/concept-concept-4.speech?text=%E5%9C%A8%E7%9B%B8%E7%A9%BA%E9%97%B4%E4%B8%AD%EF%BC%8C%E8%BD%A8%E8%BF%B9%E7%BB%95%E7%9D%80%E4%B8%A4%E4%B8%AA%E4%B8%AD%E5%BF%83%E6%9D%A5%E5%9B%9E%E7%BC%A0%E7%BB%95%EF%BC%8C%E5%BD%A2%E6%88%90%E5%8F%8C%E6%B6%A1%E5%8D%B7%E5%90%B8%E5%BC%95%E5%AD%90%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "在相空间中，轨迹绕着两个中心来回缠绕，形成双涡卷吸引子。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E7%9A%84%E6%97%A0%E9%87%8F%E7%BA%B2%E6%96%B9%E7%A8%8B%E7%BB%84%E5%A6%82%E4%B8%8B%EF%BC%8Cx%E3%80%81y%E3%80%81z%20%E5%AF%B9%E5%BA%94%E7%94%B5%E5%8E%8B%E5%92%8C%E7%94%B5%E6%B5%81%E3%80%82",
+      "path": "audio/narrations/chua-circuit/formula-formula-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E7%9A%84%E6%97%A0%E9%87%8F%E7%BA%B2%E6%96%B9%E7%A8%8B%E7%BB%84%E5%A6%82%E4%B8%8B%EF%BC%8Cx%E3%80%81y%E3%80%81z%20%E5%AF%B9%E5%BA%94%E7%94%B5%E5%8E%8B%E5%92%8C%E7%94%B5%E6%B5%81%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "蔡氏电路的无量纲方程组如下，x、y、z 对应电压和电流。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E7%AC%AC%E4%BA%8C%E3%80%81%E4%B8%89%E4%B8%AA%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%E5%90%84%E5%8F%98%E9%87%8F%E7%9A%84%E8%80%A6%E5%90%88%E3%80%82",
+      "path": "audio/narrations/chua-circuit/formula-formula-2.speech?text=%E7%AC%AC%E4%BA%8C%E3%80%81%E4%B8%89%E4%B8%AA%E6%96%B9%E7%A8%8B%E6%8F%8F%E8%BF%B0%E5%90%84%E5%8F%98%E9%87%8F%E7%9A%84%E8%80%A6%E5%90%88%E3%80%82",
+      "duration": 5,
+      "size": 0,
+      "text": "第二、三个方程描述各变量的耦合。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=f(x)%20%E6%98%AF%E8%94%A1%E6%B0%8F%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%88%86%E6%AE%B5%E7%BA%BF%E6%80%A7%E7%89%B9%E6%80%A7%EF%BC%8C%E6%8F%90%E4%BE%9B%E5%BF%85%E8%A6%81%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E3%80%82",
+      "path": "audio/narrations/chua-circuit/formula-formula-3.speech?text=f(x)%20%E6%98%AF%E8%94%A1%E6%B0%8F%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%88%86%E6%AE%B5%E7%BA%BF%E6%80%A7%E7%89%B9%E6%80%A7%EF%BC%8C%E6%8F%90%E4%BE%9B%E5%BF%85%E8%A6%81%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "f(x) 是蔡氏二极管的分段线性特性，提供必要的非线性。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%B0%83%E6%95%B4%E5%8F%82%E6%95%B0%20%CE%B1%E3%80%81%CE%B2%EF%BC%8C%E7%B3%BB%E7%BB%9F%E4%BC%9A%E5%9C%A8%E5%91%A8%E6%9C%9F%E4%B8%8E%E6%B7%B7%E6%B2%8C%E4%B9%8B%E9%97%B4%E8%BD%AC%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/chua-circuit/formula-formula-4.speech?text=%E8%B0%83%E6%95%B4%E5%8F%82%E6%95%B0%20%CE%B1%E3%80%81%CE%B2%EF%BC%8C%E7%B3%BB%E7%BB%9F%E4%BC%9A%E5%9C%A8%E5%91%A8%E6%9C%9F%E4%B8%8E%E6%B7%B7%E6%B2%8C%E4%B9%8B%E9%97%B4%E8%BD%AC%E5%8F%98%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "调整参数 α、β，系统会在周期与混沌之间转变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%9B%B8%E7%A9%BA%E9%97%B4%E6%8A%95%E5%BD%B1%EF%BC%8C%E8%BD%A8%E8%BF%B9%E5%9C%A8%E4%B8%A4%E4%B8%AA%E6%B6%A1%E5%8D%B7%E4%B9%8B%E9%97%B4%E5%8F%8D%E5%A4%8D%E8%B7%B3%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/chua-circuit/interaction-interaction-1.speech?text=%E8%A7%82%E5%AF%9F%E7%9B%B8%E7%A9%BA%E9%97%B4%E6%8A%95%E5%BD%B1%EF%BC%8C%E8%BD%A8%E8%BF%B9%E5%9C%A8%E4%B8%A4%E4%B8%AA%E6%B6%A1%E5%8D%B7%E4%B9%8B%E9%97%B4%E5%8F%8D%E5%A4%8D%E8%B7%B3%E8%BD%AC%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "观察相空间投影，轨迹在两个涡卷之间反复跳转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E5%8F%82%E6%95%B0%20%CE%B1%EF%BC%8C%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BB%8E%E7%A8%B3%E5%AE%9A%E7%9A%84%E6%9E%81%E9%99%90%E7%8E%AF%E8%B5%B0%E5%90%91%E6%B7%B7%E6%B2%8C%E7%9A%84%E5%8F%8C%E6%B6%A1%E5%8D%B7%E3%80%82",
+      "path": "audio/narrations/chua-circuit/interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E5%8F%82%E6%95%B0%20%CE%B1%EF%BC%8C%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BB%8E%E7%A8%B3%E5%AE%9A%E7%9A%84%E6%9E%81%E9%99%90%E7%8E%AF%E8%B5%B0%E5%90%91%E6%B7%B7%E6%B2%8C%E7%9A%84%E5%8F%8C%E6%B6%A1%E5%8D%B7%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "调整参数 α，看系统从稳定的极限环走向混沌的双涡卷。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E4%BD%95%E6%97%B6%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%B6%A1%E5%8D%B7%E8%B7%B3%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%EF%BC%8C%E6%98%AF%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E7%9A%84%E3%80%82",
+      "path": "audio/narrations/chua-circuit/interaction-interaction-3.speech?text=%E4%BD%95%E6%97%B6%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%B6%A1%E5%8D%B7%E8%B7%B3%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%EF%BC%8C%E6%98%AF%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E7%9A%84%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "何时从一个涡卷跳到另一个，是完全不可预测的。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%EF%BC%8C%E5%8F%AF%E5%9C%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%BD%BB%E6%9D%BE%E6%90%AD%E5%BB%BA%E3%80%82",
+      "path": "audio/narrations/chua-circuit/application-application-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E6%98%AF%E7%A0%94%E7%A9%B6%E6%B7%B7%E6%B2%8C%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B3%E5%8F%B0%EF%BC%8C%E5%8F%AF%E5%9C%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E8%BD%BB%E6%9D%BE%E6%90%AD%E5%BB%BA%E3%80%82",
+      "duration": 8.75,
+      "size": 0,
+      "text": "蔡氏电路是研究混沌最方便的实验平台，可在实验室轻松搭建。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E5%AE%83%E8%A2%AB%E7%94%A8%E4%BA%8E%E6%B7%B7%E6%B2%8C%E4%BF%9D%E5%AF%86%E9%80%9A%E4%BF%A1%EF%BC%8C%E5%B0%86%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E5%9C%A8%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E4%B8%AD%E3%80%82",
+      "path": "audio/narrations/chua-circuit/application-application-2.speech?text=%E5%AE%83%E8%A2%AB%E7%94%A8%E4%BA%8E%E6%B7%B7%E6%B2%8C%E4%BF%9D%E5%AF%86%E9%80%9A%E4%BF%A1%EF%BC%8C%E5%B0%86%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E5%9C%A8%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E4%B8%AD%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "它被用于混沌保密通信，将信息隐藏在混沌信号中。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E6%B7%B7%E6%B2%8C%E7%94%B5%E8%B7%AF%E8%BF%98%E7%94%A8%E4%BA%8E%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%92%8C%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%95%99%E5%AD%A6%E6%BC%94%E7%A4%BA%E3%80%82",
+      "path": "audio/narrations/chua-circuit/application-application-3.speech?text=%E6%B7%B7%E6%B2%8C%E7%94%B5%E8%B7%AF%E8%BF%98%E7%94%A8%E4%BA%8E%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%92%8C%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%95%99%E5%AD%A6%E6%BC%94%E7%A4%BA%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "混沌电路还用于随机数生成和复杂系统的教学演示。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E6%98%AF%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%B7%B7%E6%B2%8C%E7%94%B5%E5%AD%90%E7%94%B5%E8%B7%AF%EF%BC%8C%E6%A0%B8%E5%BF%83%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%9A%84%E8%94%A1%E6%B0%8F%E4%BA%8C%E6%9E%81%E7%AE%A1%E3%80%82",
+      "path": "audio/narrations/chua-circuit/summary-summary-1.speech?text=%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E6%98%AF%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%B7%B7%E6%B2%8C%E7%94%B5%E5%AD%90%E7%94%B5%E8%B7%AF%EF%BC%8C%E6%A0%B8%E5%BF%83%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%9A%84%E8%94%A1%E6%B0%8F%E4%BA%8C%E6%9E%81%E7%AE%A1%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "蔡氏电路是最简单的混沌电子电路，核心是非线性的蔡氏二极管。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%AE%83%E7%9A%84%E7%9B%B8%E7%A9%BA%E9%97%B4%E8%BD%A8%E8%BF%B9%E5%BD%A2%E6%88%90%E5%8F%8C%E6%B6%A1%E5%8D%B7%E5%90%B8%E5%BC%95%E5%AD%90%EF%BC%8C%E5%9C%A8%E4%B8%A4%E4%B8%AA%E4%B8%AD%E5%BF%83%E9%97%B4%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E5%9C%B0%E8%B7%B3%E8%BD%AC%E3%80%82",
+      "path": "audio/narrations/chua-circuit/summary-summary-2.speech?text=%E5%AE%83%E7%9A%84%E7%9B%B8%E7%A9%BA%E9%97%B4%E8%BD%A8%E8%BF%B9%E5%BD%A2%E6%88%90%E5%8F%8C%E6%B6%A1%E5%8D%B7%E5%90%B8%E5%BC%95%E5%AD%90%EF%BC%8C%E5%9C%A8%E4%B8%A4%E4%B8%AA%E4%B8%AD%E5%BF%83%E9%97%B4%E4%B8%8D%E5%8F%AF%E9%A2%84%E6%B5%8B%E5%9C%B0%E8%B7%B3%E8%BD%AC%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "它的相空间轨迹形成双涡卷吸引子，在两个中心间不可预测地跳转。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "chua-circuit",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E7%AE%80%E5%8D%95%E7%94%B5%E8%B7%AF%E4%B9%9F%E8%83%BD%E5%AD%95%E8%82%B2%E6%B7%B7%E6%B2%8C%EF%BC%8C%E8%BF%99%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E4%B8%96%E7%95%8C%E7%9A%84%E5%8F%88%E4%B8%80%E4%BE%8B%E8%AF%81%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/chua-circuit/summary-summary-3.speech?text=%E7%AE%80%E5%8D%95%E7%94%B5%E8%B7%AF%E4%B9%9F%E8%83%BD%E5%AD%95%E8%82%B2%E6%B7%B7%E6%B2%8C%EF%BC%8C%E8%BF%99%E6%98%AF%E9%9D%9E%E7%BA%BF%E6%80%A7%E4%B8%96%E7%95%8C%E7%9A%84%E5%8F%88%E4%B8%80%E4%BE%8B%E8%AF%81%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 10,
+      "size": 0,
+      "text": "简单电路也能孕育混沌，这是非线性世界的又一例证。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

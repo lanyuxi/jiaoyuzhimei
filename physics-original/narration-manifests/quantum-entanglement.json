@@ -1,0 +1,229 @@
+{
+  "script_id": "quantum-entanglement",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 144.09,
+  "files": [
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%AE%A4%E8%AF%86%E9%87%8F%E5%AD%90%E7%BA%A0%E7%BC%A0%EF%BC%81%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%A7%B0%E5%AE%83%E4%B8%BA%E9%AC%BC%E9%AD%85%E8%88%AC%E7%9A%84%E8%B6%85%E8%B7%9D%E4%BD%9C%E7%94%A8%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E8%AE%A4%E8%AF%86%E9%87%8F%E5%AD%90%E7%BA%A0%E7%BC%A0%EF%BC%81%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%A7%B0%E5%AE%83%E4%B8%BA%E9%AC%BC%E9%AD%85%E8%88%AC%E7%9A%84%E8%B6%85%E8%B7%9D%E4%BD%9C%E7%94%A8%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "欢迎认识量子纠缠！爱因斯坦称它为鬼魅般的超距作用。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E4%B8%A4%E4%B8%AA%E7%BA%A0%E7%BC%A0%E7%9A%84%E7%B2%92%E5%AD%90%EF%BC%8C%E6%97%A0%E8%AE%BA%E7%9B%B8%E9%9A%94%E5%A4%9A%E8%BF%9C%EF%BC%8C%E6%B5%8B%E9%87%8F%E7%BB%93%E6%9E%9C%E9%83%BD%E7%9E%AC%E9%97%B4%E5%85%B3%E8%81%94%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/intro-intro-2.speech?text=%E4%B8%A4%E4%B8%AA%E7%BA%A0%E7%BC%A0%E7%9A%84%E7%B2%92%E5%AD%90%EF%BC%8C%E6%97%A0%E8%AE%BA%E7%9B%B8%E9%9A%94%E5%A4%9A%E8%BF%9C%EF%BC%8C%E6%B5%8B%E9%87%8F%E7%BB%93%E6%9E%9C%E9%83%BD%E7%9E%AC%E9%97%B4%E5%85%B3%E8%81%94%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "两个纠缠的粒子，无论相隔多远，测量结果都瞬间关联。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E6%B5%8B%E4%B8%80%E4%B8%AA%EF%BC%8C%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%9A%84%E7%8A%B6%E6%80%81%E7%AB%8B%E5%88%BB%E7%A1%AE%E5%AE%9A%EF%BC%8C%E8%BF%99%E8%BF%9D%E5%8F%8D%E6%88%91%E4%BB%AC%E7%9A%84%E6%97%A5%E5%B8%B8%E7%9B%B4%E8%A7%89%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/intro-intro-3.speech?text=%E6%B5%8B%E4%B8%80%E4%B8%AA%EF%BC%8C%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%9A%84%E7%8A%B6%E6%80%81%E7%AB%8B%E5%88%BB%E7%A1%AE%E5%AE%9A%EF%BC%8C%E8%BF%99%E8%BF%9D%E5%8F%8D%E6%88%91%E4%BB%AC%E7%9A%84%E6%97%A5%E5%B8%B8%E7%9B%B4%E8%A7%89%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "测一个，另一个的状态立刻确定，这违反我们的日常直觉。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%BA%A0%E7%BC%A0%E6%80%81%E6%97%A0%E6%B3%95%E6%8B%86%E6%88%90%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E7%B2%92%E5%AD%90%E5%90%84%E8%87%AA%E7%9A%84%E7%8A%B6%E6%80%81%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/concept-concept-1.speech?text=%E7%BA%A0%E7%BC%A0%E6%80%81%E6%97%A0%E6%B3%95%E6%8B%86%E6%88%90%E4%B8%A4%E4%B8%AA%E7%8B%AC%E7%AB%8B%E7%B2%92%E5%AD%90%E5%90%84%E8%87%AA%E7%9A%84%E7%8A%B6%E6%80%81%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "纠缠态无法拆成两个独立粒子各自的状态。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84%E7%BA%A0%E7%BC%A0%E6%80%81%E6%98%AF%E8%B4%9D%E5%B0%94%E6%80%81%EF%BC%8C%E4%B8%A4%E4%B8%AA%E6%AF%94%E7%89%B9%E8%A6%81%E4%B9%88%E9%83%BD%E6%98%AF%200%EF%BC%8C%E8%A6%81%E4%B9%88%E9%83%BD%E6%98%AF%201%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/concept-concept-2.speech?text=%E6%9C%80%E8%91%97%E5%90%8D%E7%9A%84%E7%BA%A0%E7%BC%A0%E6%80%81%E6%98%AF%E8%B4%9D%E5%B0%94%E6%80%81%EF%BC%8C%E4%B8%A4%E4%B8%AA%E6%AF%94%E7%89%B9%E8%A6%81%E4%B9%88%E9%83%BD%E6%98%AF%200%EF%BC%8C%E8%A6%81%E4%B9%88%E9%83%BD%E6%98%AF%201%E3%80%82",
+      "duration": 9.38,
+      "size": 0,
+      "text": "最著名的纠缠态是贝尔态，两个比特要么都是 0，要么都是 1。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E6%B5%8B%E9%87%8F%E5%89%8D%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%B2%92%E5%AD%90%E5%8D%95%E7%8B%AC%E7%9C%8B%E9%83%BD%E6%98%AF%E5%AE%8C%E5%85%A8%E9%9A%8F%E6%9C%BA%E7%9A%84%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/concept-concept-3.speech?text=%E6%B5%8B%E9%87%8F%E5%89%8D%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%B2%92%E5%AD%90%E5%8D%95%E7%8B%AC%E7%9C%8B%E9%83%BD%E6%98%AF%E5%AE%8C%E5%85%A8%E9%9A%8F%E6%9C%BA%E7%9A%84%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "测量前，每个粒子单独看都是完全随机的。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E4%B8%80%E6%97%A6%E6%B5%8B%E5%87%BA%E4%B8%80%E4%B8%AA%E6%98%AF%200%EF%BC%8C%E5%8F%A6%E4%B8%80%E4%B8%AA%E4%B8%8D%E7%AE%A1%E5%A4%9A%E8%BF%9C%E4%B9%9F%E5%BF%85%E7%84%B6%E6%98%AF%200%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/concept-concept-4.speech?text=%E4%B8%80%E6%97%A6%E6%B5%8B%E5%87%BA%E4%B8%80%E4%B8%AA%E6%98%AF%200%EF%BC%8C%E5%8F%A6%E4%B8%80%E4%B8%AA%E4%B8%8D%E7%AE%A1%E5%A4%9A%E8%BF%9C%E4%B9%9F%E5%BF%85%E7%84%B6%E6%98%AF%200%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "一旦测出一个是 0，另一个不管多远也必然是 0。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E8%B4%9D%E5%B0%94%E6%80%81%E6%98%AF%E4%B8%A4%E4%B8%AA%E6%AF%94%E7%89%B9%E7%9A%84%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/formula-formula-1.speech?text=%E8%B4%9D%E5%B0%94%E6%80%81%E6%98%AF%E4%B8%A4%E4%B8%AA%E6%AF%94%E7%89%B9%E7%9A%84%E5%9D%87%E7%AD%89%E5%8F%A0%E5%8A%A0%E3%80%82",
+      "duration": 4.38,
+      "size": 0,
+      "text": "贝尔态是两个比特的均等叠加。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E6%B5%8B%E5%BE%97%2000%20%E5%92%8C%E6%B5%8B%E5%BE%97%2011%20%E5%90%84%E5%8D%A0%E4%B8%80%E5%8D%8A%E6%A6%82%E7%8E%87%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/formula-formula-2.speech?text=%E6%B5%8B%E5%BE%97%2000%20%E5%92%8C%E6%B5%8B%E5%BE%97%2011%20%E5%90%84%E5%8D%A0%E4%B8%80%E5%8D%8A%E6%A6%82%E7%8E%87%E3%80%82",
+      "duration": 6.25,
+      "size": 0,
+      "text": "测得 00 和测得 11 各占一半概率。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E4%BD%86%E7%BB%9D%E4%B8%8D%E4%BC%9A%E5%87%BA%E7%8E%B0%2001%20%E6%88%96%2010%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E5%85%B3%E8%81%94%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/formula-formula-3.speech?text=%E4%BD%86%E7%BB%9D%E4%B8%8D%E4%BC%9A%E5%87%BA%E7%8E%B0%2001%20%E6%88%96%2010%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E5%85%B3%E8%81%94%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "但绝不会出现 01 或 10，这就是关联。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E8%BF%99%E7%A7%8D%E5%85%B3%E8%81%94%E5%BC%BA%E4%BA%8E%E4%BB%BB%E4%BD%95%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B%EF%BC%8C%E7%94%B1%E8%B4%9D%E5%B0%94%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%9A%84%E7%A0%B4%E5%9D%8F%E6%89%80%E8%AF%81%E5%AE%9E%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/formula-formula-4.speech?text=%E8%BF%99%E7%A7%8D%E5%85%B3%E8%81%94%E5%BC%BA%E4%BA%8E%E4%BB%BB%E4%BD%95%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B%EF%BC%8C%E7%94%B1%E8%B4%9D%E5%B0%94%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%9A%84%E7%A0%B4%E5%9D%8F%E6%89%80%E8%AF%81%E5%AE%9E%E3%80%82",
+      "duration": 8.13,
+      "size": 0,
+      "text": "这种关联强于任何经典模型，由贝尔不等式的破坏所证实。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%8F%8D%E5%A4%8D%E7%82%B9%E5%87%BB%E6%B5%8B%E9%87%8F%EF%BC%8C%E8%A7%82%E5%AF%9F%E4%B8%A4%E4%B8%AA%E7%B2%92%E5%AD%90%E6%80%BB%E6%98%AF%E7%BB%99%E5%87%BA%E7%9B%B8%E5%90%8C%E7%BB%93%E6%9E%9C%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/interaction-interaction-1.speech?text=%E5%8F%8D%E5%A4%8D%E7%82%B9%E5%87%BB%E6%B5%8B%E9%87%8F%EF%BC%8C%E8%A7%82%E5%AF%9F%E4%B8%A4%E4%B8%AA%E7%B2%92%E5%AD%90%E6%80%BB%E6%98%AF%E7%BB%99%E5%87%BA%E7%9B%B8%E5%90%8C%E7%BB%93%E6%9E%9C%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "反复点击测量，观察两个粒子总是给出相同结果。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E7%BB%9F%E8%AE%A1%E5%A4%9A%E6%AC%A1%E6%B5%8B%E9%87%8F%EF%BC%8C%E9%AA%8C%E8%AF%81%2000%20%E4%B8%8E%2011%20%E5%90%84%E7%BA%A6%E4%B8%80%E5%8D%8A%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/interaction-interaction-2.speech?text=%E7%BB%9F%E8%AE%A1%E5%A4%9A%E6%AC%A1%E6%B5%8B%E9%87%8F%EF%BC%8C%E9%AA%8C%E8%AF%81%2000%20%E4%B8%8E%2011%20%E5%90%84%E7%BA%A6%E4%B8%80%E5%8D%8A%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "统计多次测量，验证 00 与 11 各约一半。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8D%95%E7%9C%8B%E4%B8%80%E4%B8%AA%E7%B2%92%E5%AD%90%E6%98%AF%E9%9A%8F%E6%9C%BA%E7%9A%84%EF%BC%8C%E4%BD%86%E4%B8%A4%E8%80%85%E5%AE%8C%E5%85%A8%E5%90%8C%E6%AD%A5%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8D%95%E7%9C%8B%E4%B8%80%E4%B8%AA%E7%B2%92%E5%AD%90%E6%98%AF%E9%9A%8F%E6%9C%BA%E7%9A%84%EF%BC%8C%E4%BD%86%E4%B8%A4%E8%80%85%E5%AE%8C%E5%85%A8%E5%90%8C%E6%AD%A5%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "注意单看一个粒子是随机的，但两者完全同步。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E9%87%8F%E5%AD%90%E7%BA%A0%E7%BC%A0%E6%98%AF%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E5%92%8C%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E7%9A%84%E6%A0%B8%E5%BF%83%E8%B5%84%E6%BA%90%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/application-application-1.speech?text=%E9%87%8F%E5%AD%90%E7%BA%A0%E7%BC%A0%E6%98%AF%E9%87%8F%E5%AD%90%E9%9A%90%E5%BD%A2%E4%BC%A0%E6%80%81%E5%92%8C%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E7%9A%84%E6%A0%B8%E5%BF%83%E8%B5%84%E6%BA%90%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "量子纠缠是量子隐形传态和量子密钥分发的核心资源。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E6%88%91%E5%9B%BD%E7%9A%84%E5%A2%A8%E5%AD%90%E5%8F%B7%E5%8D%AB%E6%98%9F%E7%94%A8%E7%BA%A0%E7%BC%A0%E5%AE%9E%E7%8E%B0%E4%BA%86%E5%8D%83%E5%85%AC%E9%87%8C%E7%BA%A7%E9%87%8F%E5%AD%90%E9%80%9A%E4%BF%A1%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/application-application-2.speech?text=%E6%88%91%E5%9B%BD%E7%9A%84%E5%A2%A8%E5%AD%90%E5%8F%B7%E5%8D%AB%E6%98%9F%E7%94%A8%E7%BA%A0%E7%BC%A0%E5%AE%9E%E7%8E%B0%E4%BA%86%E5%8D%83%E5%85%AC%E9%87%8C%E7%BA%A7%E9%87%8F%E5%AD%90%E9%80%9A%E4%BF%A1%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "我国的墨子号卫星用纠缠实现了千公里级量子通信。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%BA%A0%E7%BC%A0%E4%B9%9F%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E8%B6%85%E8%B6%8A%E7%BB%8F%E5%85%B8%E7%9A%84%E5%85%B3%E9%94%AE%E6%89%80%E5%9C%A8%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/application-application-3.speech?text=%E7%BA%A0%E7%BC%A0%E4%B9%9F%E6%98%AF%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E8%B6%85%E8%B6%8A%E7%BB%8F%E5%85%B8%E7%9A%84%E5%85%B3%E9%94%AE%E6%89%80%E5%9C%A8%E3%80%82",
+      "duration": 5.63,
+      "size": 0,
+      "text": "纠缠也是量子计算超越经典的关键所在。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E9%87%8F%E5%AD%90%E7%BA%A0%E7%BC%A0%E8%AE%A9%E4%B8%A4%E4%B8%AA%E7%B2%92%E5%AD%90%E7%9A%84%E6%B5%8B%E9%87%8F%E7%BB%93%E6%9E%9C%E5%BC%BA%E5%85%B3%E8%81%94%EF%BC%8C%E6%97%A0%E6%B3%95%E7%8B%AC%E7%AB%8B%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/summary-summary-1.speech?text=%E9%87%8F%E5%AD%90%E7%BA%A0%E7%BC%A0%E8%AE%A9%E4%B8%A4%E4%B8%AA%E7%B2%92%E5%AD%90%E7%9A%84%E6%B5%8B%E9%87%8F%E7%BB%93%E6%9E%9C%E5%BC%BA%E5%85%B3%E8%81%94%EF%BC%8C%E6%97%A0%E6%B3%95%E7%8B%AC%E7%AB%8B%E6%8F%8F%E8%BF%B0%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "量子纠缠让两个粒子的测量结果强关联，无法独立描述。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E8%B4%9D%E5%B0%94%E6%80%81%E5%8F%AA%E7%BB%99%E5%87%BA%2000%20%E6%88%96%2011%EF%BC%8C%E5%90%84%E5%8D%A0%E4%B8%80%E5%8D%8A%EF%BC%8C%E7%BB%9D%E4%B8%8D%E5%87%BA%E7%8E%B0%2001%20%E6%88%96%2010%E3%80%82",
+      "path": "audio/narrations/quantum-entanglement/summary-summary-2.speech?text=%E8%B4%9D%E5%B0%94%E6%80%81%E5%8F%AA%E7%BB%99%E5%87%BA%2000%20%E6%88%96%2011%EF%BC%8C%E5%90%84%E5%8D%A0%E4%B8%80%E5%8D%8A%EF%BC%8C%E7%BB%9D%E4%B8%8D%E5%87%BA%E7%8E%B0%2001%20%E6%88%96%2010%E3%80%82",
+      "duration": 10.31,
+      "size": 0,
+      "text": "贝尔态只给出 00 或 11，各占一半，绝不出现 01 或 10。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "quantum-entanglement",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E9%87%8F%E5%AD%90%E9%80%9A%E4%BF%A1%E4%B8%8E%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/quantum-entanglement/summary-summary-3.speech?text=%E5%AE%83%E6%98%AF%E9%87%8F%E5%AD%90%E9%80%9A%E4%BF%A1%E4%B8%8E%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E7%9A%84%E5%9F%BA%E7%9F%B3%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 7.19,
+      "size": 0,
+      "text": "它是量子通信与量子计算的基石。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}

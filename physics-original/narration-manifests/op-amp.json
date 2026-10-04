@@ -1,0 +1,229 @@
+{
+  "script_id": "op-amp",
+  "voice": "browser-speech-synthesis",
+  "voice_key": "yunxi",
+  "fallback": "speechSynthesis",
+  "total_duration": 153.79,
+  "files": [
+    {
+      "script_id": "op-amp",
+      "section_id": "intro",
+      "line_id": "intro-1",
+      "filename": "intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%BF%90%E6%94%BE%E6%98%AF%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%80%E9%80%9A%E7%94%A8%E3%80%81%E6%9C%80%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%99%A8%E4%BB%B6%E3%80%82",
+      "path": "audio/narrations/op-amp/intro-intro-1.speech?text=%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8%E5%AE%9E%E9%AA%8C%EF%BC%81%E8%BF%90%E6%94%BE%E6%98%AF%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%80%E9%80%9A%E7%94%A8%E3%80%81%E6%9C%80%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%99%A8%E4%BB%B6%E3%80%82",
+      "duration": 9.69,
+      "size": 0,
+      "text": "欢迎来到运算放大器实验！运放是模拟电路中最通用、最强大的器件。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "intro",
+      "line_id": "intro-2",
+      "filename": "intro-intro-2.speech?text=%E5%AE%83%E6%9C%AC%E8%BA%AB%E7%9A%84%E6%94%BE%E5%A4%A7%E5%80%8D%E6%95%B0%E6%9E%81%E9%AB%98%EF%BC%8C%E4%BD%86%E9%80%9A%E8%BF%87%E5%A4%96%E5%8A%A0%E5%8F%8D%E9%A6%88%EF%BC%8C%E6%88%91%E4%BB%AC%E8%83%BD%E7%B2%BE%E7%A1%AE%E8%AE%BE%E8%AE%A1%E6%83%B3%E8%A6%81%E7%9A%84%E5%A2%9E%E7%9B%8A%E3%80%82",
+      "path": "audio/narrations/op-amp/intro-intro-2.speech?text=%E5%AE%83%E6%9C%AC%E8%BA%AB%E7%9A%84%E6%94%BE%E5%A4%A7%E5%80%8D%E6%95%B0%E6%9E%81%E9%AB%98%EF%BC%8C%E4%BD%86%E9%80%9A%E8%BF%87%E5%A4%96%E5%8A%A0%E5%8F%8D%E9%A6%88%EF%BC%8C%E6%88%91%E4%BB%AC%E8%83%BD%E7%B2%BE%E7%A1%AE%E8%AE%BE%E8%AE%A1%E6%83%B3%E8%A6%81%E7%9A%84%E5%A2%9E%E7%9B%8A%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "它本身的放大倍数极高，但通过外加反馈，我们能精确设计想要的增益。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "intro",
+      "line_id": "intro-3",
+      "filename": "intro-intro-3.speech?text=%E7%90%86%E8%A7%A3%E8%BF%90%E6%94%BE%EF%BC%8C%E5%85%B3%E9%94%AE%E5%9C%A8%E4%BA%8E%E4%B8%A4%E6%9D%A1%E9%BB%84%E9%87%91%E6%B3%95%E5%88%99%EF%BC%9A%E8%99%9A%E7%9F%AD%E5%92%8C%E8%99%9A%E6%96%AD%E3%80%82",
+      "path": "audio/narrations/op-amp/intro-intro-3.speech?text=%E7%90%86%E8%A7%A3%E8%BF%90%E6%94%BE%EF%BC%8C%E5%85%B3%E9%94%AE%E5%9C%A8%E4%BA%8E%E4%B8%A4%E6%9D%A1%E9%BB%84%E9%87%91%E6%B3%95%E5%88%99%EF%BC%9A%E8%99%9A%E7%9F%AD%E5%92%8C%E8%99%9A%E6%96%AD%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "理解运放，关键在于两条黄金法则：虚短和虚断。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "concept",
+      "line_id": "concept-1",
+      "filename": "concept-concept-1.speech?text=%E7%90%86%E6%83%B3%E8%BF%90%E6%94%BE%E6%9C%89%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E7%AB%AF%EF%BC%9A%E5%90%8C%E7%9B%B8%E7%AB%AF%E5%92%8C%E5%8F%8D%E7%9B%B8%E7%AB%AF%EF%BC%8C%E5%BC%80%E7%8E%AF%E5%A2%9E%E7%9B%8A%E8%B6%8B%E4%BA%8E%E6%97%A0%E7%A9%B7%E5%A4%A7%E3%80%82",
+      "path": "audio/narrations/op-amp/concept-concept-1.speech?text=%E7%90%86%E6%83%B3%E8%BF%90%E6%94%BE%E6%9C%89%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E7%AB%AF%EF%BC%9A%E5%90%8C%E7%9B%B8%E7%AB%AF%E5%92%8C%E5%8F%8D%E7%9B%B8%E7%AB%AF%EF%BC%8C%E5%BC%80%E7%8E%AF%E5%A2%9E%E7%9B%8A%E8%B6%8B%E4%BA%8E%E6%97%A0%E7%A9%B7%E5%A4%A7%E3%80%82",
+      "duration": 9.06,
+      "size": 0,
+      "text": "理想运放有两个输入端：同相端和反相端，开环增益趋于无穷大。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "concept",
+      "line_id": "concept-2",
+      "filename": "concept-concept-2.speech?text=%E8%99%9A%E7%9F%AD%EF%BC%9A%E5%9C%A8%E8%B4%9F%E5%8F%8D%E9%A6%88%E4%B8%8B%EF%BC%8C%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E7%AB%AF%E7%9A%84%E7%94%B5%E5%8E%8B%E5%87%A0%E4%B9%8E%E7%9B%B8%E7%AD%89%E3%80%82",
+      "path": "audio/narrations/op-amp/concept-concept-2.speech?text=%E8%99%9A%E7%9F%AD%EF%BC%9A%E5%9C%A8%E8%B4%9F%E5%8F%8D%E9%A6%88%E4%B8%8B%EF%BC%8C%E4%B8%A4%E4%B8%AA%E8%BE%93%E5%85%A5%E7%AB%AF%E7%9A%84%E7%94%B5%E5%8E%8B%E5%87%A0%E4%B9%8E%E7%9B%B8%E7%AD%89%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "虚短：在负反馈下，两个输入端的电压几乎相等。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "concept",
+      "line_id": "concept-3",
+      "filename": "concept-concept-3.speech?text=%E8%99%9A%E6%96%AD%EF%BC%9A%E8%BF%90%E6%94%BE%E8%BE%93%E5%85%A5%E7%AB%AF%E5%87%A0%E4%B9%8E%E4%B8%8D%E5%8F%96%E7%94%B5%E6%B5%81%EF%BC%8C%E8%BE%93%E5%85%A5%E9%98%BB%E6%8A%97%E6%9E%81%E9%AB%98%E3%80%82",
+      "path": "audio/narrations/op-amp/concept-concept-3.speech?text=%E8%99%9A%E6%96%AD%EF%BC%9A%E8%BF%90%E6%94%BE%E8%BE%93%E5%85%A5%E7%AB%AF%E5%87%A0%E4%B9%8E%E4%B8%8D%E5%8F%96%E7%94%B5%E6%B5%81%EF%BC%8C%E8%BE%93%E5%85%A5%E9%98%BB%E6%8A%97%E6%9E%81%E9%AB%98%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "虚断：运放输入端几乎不取电流，输入阻抗极高。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "concept",
+      "line_id": "concept-4",
+      "filename": "concept-concept-4.speech?text=%E5%88%A9%E7%94%A8%E8%BF%99%E4%B8%A4%E6%9D%A1%E6%B3%95%E5%88%99%EF%BC%8C%E7%BB%93%E5%90%88%E5%A4%96%E9%83%A8%E7%94%B5%E9%98%BB%EF%BC%8C%E5%B0%B1%E8%83%BD%E7%AE%97%E5%87%BA%E7%94%B5%E8%B7%AF%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%A2%9E%E7%9B%8A%E3%80%82",
+      "path": "audio/narrations/op-amp/concept-concept-4.speech?text=%E5%88%A9%E7%94%A8%E8%BF%99%E4%B8%A4%E6%9D%A1%E6%B3%95%E5%88%99%EF%BC%8C%E7%BB%93%E5%90%88%E5%A4%96%E9%83%A8%E7%94%B5%E9%98%BB%EF%BC%8C%E5%B0%B1%E8%83%BD%E7%AE%97%E5%87%BA%E7%94%B5%E8%B7%AF%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%A2%9E%E7%9B%8A%E3%80%82",
+      "duration": 8.44,
+      "size": 0,
+      "text": "利用这两条法则，结合外部电阻，就能算出电路的精确增益。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "formula",
+      "line_id": "formula-1",
+      "filename": "formula-formula-1.speech?text=%E5%8F%8D%E7%9B%B8%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%A2%9E%E7%9B%8A%E7%AD%89%E4%BA%8E%E8%B4%9F%E7%9A%84%E5%8F%8D%E9%A6%88%E7%94%B5%E9%98%BB%E9%99%A4%E4%BB%A5%E8%BE%93%E5%85%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "path": "audio/narrations/op-amp/formula-formula-1.speech?text=%E5%8F%8D%E7%9B%B8%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%A2%9E%E7%9B%8A%E7%AD%89%E4%BA%8E%E8%B4%9F%E7%9A%84%E5%8F%8D%E9%A6%88%E7%94%B5%E9%98%BB%E9%99%A4%E4%BB%A5%E8%BE%93%E5%85%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "duration": 7.5,
+      "size": 0,
+      "text": "反相放大电路的增益等于负的反馈电阻除以输入电阻。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "formula",
+      "line_id": "formula-2",
+      "filename": "formula-formula-2.speech?text=%E8%B4%9F%E5%8F%B7%E8%A1%A8%E7%A4%BA%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%85%A5%E5%8F%8D%E7%9B%B8%E3%80%82",
+      "path": "audio/narrations/op-amp/formula-formula-2.speech?text=%E8%B4%9F%E5%8F%B7%E8%A1%A8%E7%A4%BA%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%85%A5%E5%8F%8D%E7%9B%B8%E3%80%82",
+      "duration": 3.75,
+      "size": 0,
+      "text": "负号表示输出与输入反相。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "formula",
+      "line_id": "formula-3",
+      "filename": "formula-formula-3.speech?text=%E5%90%8C%E7%9B%B8%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%A2%9E%E7%9B%8A%E7%AD%89%E4%BA%8E%E4%B8%80%E5%8A%A0%E4%B8%8A%E5%8F%8D%E9%A6%88%E7%94%B5%E9%98%BB%E9%99%A4%E4%BB%A5%E8%BE%93%E5%85%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "path": "audio/narrations/op-amp/formula-formula-3.speech?text=%E5%90%8C%E7%9B%B8%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%A2%9E%E7%9B%8A%E7%AD%89%E4%BA%8E%E4%B8%80%E5%8A%A0%E4%B8%8A%E5%8F%8D%E9%A6%88%E7%94%B5%E9%98%BB%E9%99%A4%E4%BB%A5%E8%BE%93%E5%85%A5%E7%94%B5%E9%98%BB%E3%80%82",
+      "duration": 7.81,
+      "size": 0,
+      "text": "同相放大电路的增益等于一加上反馈电阻除以输入电阻。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "formula",
+      "line_id": "formula-4",
+      "filename": "formula-formula-4.speech?text=%E5%A2%9E%E7%9B%8A%E5%8F%AA%E7%94%B1%E5%A4%96%E9%83%A8%E7%94%B5%E9%98%BB%E5%86%B3%E5%AE%9A%EF%BC%8C%E4%B8%8E%E8%BF%90%E6%94%BE%E6%9C%AC%E8%BA%AB%E7%9A%84%E5%8F%82%E6%95%B0%E6%97%A0%E5%85%B3%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E8%B4%9F%E5%8F%8D%E9%A6%88%E7%9A%84%E5%A8%81%E5%8A%9B%E3%80%82",
+      "path": "audio/narrations/op-amp/formula-formula-4.speech?text=%E5%A2%9E%E7%9B%8A%E5%8F%AA%E7%94%B1%E5%A4%96%E9%83%A8%E7%94%B5%E9%98%BB%E5%86%B3%E5%AE%9A%EF%BC%8C%E4%B8%8E%E8%BF%90%E6%94%BE%E6%9C%AC%E8%BA%AB%E7%9A%84%E5%8F%82%E6%95%B0%E6%97%A0%E5%85%B3%EF%BC%8C%E8%BF%99%E6%AD%A3%E6%98%AF%E8%B4%9F%E5%8F%8D%E9%A6%88%E7%9A%84%E5%A8%81%E5%8A%9B%E3%80%82",
+      "duration": 10,
+      "size": 0,
+      "text": "增益只由外部电阻决定，与运放本身的参数无关，这正是负反馈的威力。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "interaction",
+      "line_id": "interaction-1",
+      "filename": "interaction-interaction-1.speech?text=%E5%88%87%E6%8D%A2%E5%8F%8D%E7%9B%B8%E5%92%8C%E5%90%8C%E7%9B%B8%E4%B8%A4%E7%A7%8D%E6%8E%A5%E6%B3%95%EF%BC%8C%E6%AF%94%E8%BE%83%E5%AE%83%E4%BB%AC%E7%9A%84%E5%A2%9E%E7%9B%8A%E5%92%8C%E7%9B%B8%E4%BD%8D%E3%80%82",
+      "path": "audio/narrations/op-amp/interaction-interaction-1.speech?text=%E5%88%87%E6%8D%A2%E5%8F%8D%E7%9B%B8%E5%92%8C%E5%90%8C%E7%9B%B8%E4%B8%A4%E7%A7%8D%E6%8E%A5%E6%B3%95%EF%BC%8C%E6%AF%94%E8%BE%83%E5%AE%83%E4%BB%AC%E7%9A%84%E5%A2%9E%E7%9B%8A%E5%92%8C%E7%9B%B8%E4%BD%8D%E3%80%82",
+      "duration": 7.19,
+      "size": 0,
+      "text": "切换反相和同相两种接法，比较它们的增益和相位。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "interaction",
+      "line_id": "interaction-2",
+      "filename": "interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E5%8F%8D%E9%A6%88%E7%94%B5%E9%98%BB%20Rf%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%A2%9E%E7%9B%8A%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "path": "audio/narrations/op-amp/interaction-interaction-2.speech?text=%E8%B0%83%E6%95%B4%E5%8F%8D%E9%A6%88%E7%94%B5%E9%98%BB%20Rf%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%A2%9E%E7%9B%8A%E5%A6%82%E4%BD%95%E9%9A%8F%E4%B9%8B%E6%94%B9%E5%8F%98%E3%80%82",
+      "duration": 6.56,
+      "size": 0,
+      "text": "调整反馈电阻 Rf，观察增益如何随之改变。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "interaction",
+      "line_id": "interaction-3",
+      "filename": "interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8F%8D%E7%9B%B8%E6%94%BE%E5%A4%A7%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%85%A5%E5%8F%8D%E7%9B%B8%EF%BC%8C%E5%90%8C%E7%9B%B8%E6%94%BE%E5%A4%A7%E5%88%99%E5%90%8C%E7%9B%B8%E3%80%82",
+      "path": "audio/narrations/op-amp/interaction-interaction-3.speech?text=%E6%B3%A8%E6%84%8F%E5%8F%8D%E7%9B%B8%E6%94%BE%E5%A4%A7%E8%BE%93%E5%87%BA%E4%B8%8E%E8%BE%93%E5%85%A5%E5%8F%8D%E7%9B%B8%EF%BC%8C%E5%90%8C%E7%9B%B8%E6%94%BE%E5%A4%A7%E5%88%99%E5%90%8C%E7%9B%B8%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "注意反相放大输出与输入反相，同相放大则同相。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "application",
+      "line_id": "application-1",
+      "filename": "application-application-1.speech?text=%E8%BF%90%E6%94%BE%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E4%BF%A1%E5%8F%B7%E6%94%BE%E5%A4%A7%E3%80%81%E6%BB%A4%E6%B3%A2%E3%80%81%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97%E5%92%8C%E6%AF%94%E8%BE%83%E3%80%82",
+      "path": "audio/narrations/op-amp/application-application-1.speech?text=%E8%BF%90%E6%94%BE%E5%B9%BF%E6%B3%9B%E7%94%A8%E4%BA%8E%E4%BF%A1%E5%8F%B7%E6%94%BE%E5%A4%A7%E3%80%81%E6%BB%A4%E6%B3%A2%E3%80%81%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97%E5%92%8C%E6%AF%94%E8%BE%83%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "运放广泛用于信号放大、滤波、加减运算和比较。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "application",
+      "line_id": "application-2",
+      "filename": "application-application-2.speech?text=%E4%BC%A0%E6%84%9F%E5%99%A8%E7%9A%84%E5%BE%AE%E5%BC%B1%E4%BF%A1%E5%8F%B7%E5%B8%B8%E5%85%88%E7%BB%8F%E8%BF%90%E6%94%BE%E6%94%BE%E5%A4%A7%E5%86%8D%E5%A4%84%E7%90%86%E3%80%82",
+      "path": "audio/narrations/op-amp/application-application-2.speech?text=%E4%BC%A0%E6%84%9F%E5%99%A8%E7%9A%84%E5%BE%AE%E5%BC%B1%E4%BF%A1%E5%8F%B7%E5%B8%B8%E5%85%88%E7%BB%8F%E8%BF%90%E6%94%BE%E6%94%BE%E5%A4%A7%E5%86%8D%E5%A4%84%E7%90%86%E3%80%82",
+      "duration": 5.94,
+      "size": 0,
+      "text": "传感器的微弱信号常先经运放放大再处理。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "application",
+      "line_id": "application-3",
+      "filename": "application-application-3.speech?text=%E7%A7%AF%E5%88%86%E5%99%A8%E3%80%81%E5%BE%AE%E5%88%86%E5%99%A8%E7%AD%89%E8%BF%90%E7%AE%97%E7%94%B5%E8%B7%AF%E6%98%AF%E6%A8%A1%E6%8B%9F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "path": "audio/narrations/op-amp/application-application-3.speech?text=%E7%A7%AF%E5%88%86%E5%99%A8%E3%80%81%E5%BE%AE%E5%88%86%E5%99%A8%E7%AD%89%E8%BF%90%E7%AE%97%E7%94%B5%E8%B7%AF%E6%98%AF%E6%A8%A1%E6%8B%9F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%9F%BA%E7%A1%80%E3%80%82",
+      "duration": 6.88,
+      "size": 0,
+      "text": "积分器、微分器等运算电路是模拟计算机的基础。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "summary",
+      "line_id": "summary-1",
+      "filename": "summary-summary-1.speech?text=%E7%90%86%E6%83%B3%E8%BF%90%E6%94%BE%E9%81%B5%E5%BE%AA%E8%99%9A%E7%9F%AD%E8%99%9A%E6%96%AD%E4%B8%A4%E6%9D%A1%E6%B3%95%E5%88%99%E3%80%82",
+      "path": "audio/narrations/op-amp/summary-summary-1.speech?text=%E7%90%86%E6%83%B3%E8%BF%90%E6%94%BE%E9%81%B5%E5%BE%AA%E8%99%9A%E7%9F%AD%E8%99%9A%E6%96%AD%E4%B8%A4%E6%9D%A1%E6%B3%95%E5%88%99%E3%80%82",
+      "duration": 4.69,
+      "size": 0,
+      "text": "理想运放遵循虚短虚断两条法则。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "summary",
+      "line_id": "summary-2",
+      "filename": "summary-summary-2.speech?text=%E5%8F%8D%E7%9B%B8%E5%A2%9E%E7%9B%8A%E4%B8%BA%20%E2%88%92Rf%2FRin%EF%BC%8C%E5%90%8C%E7%9B%B8%E5%A2%9E%E7%9B%8A%E4%B8%BA%201%2BRf%2FRin%EF%BC%8C%E5%8F%AA%E7%94%B1%E5%A4%96%E9%83%A8%E7%94%B5%E9%98%BB%E5%86%B3%E5%AE%9A%E3%80%82",
+      "path": "audio/narrations/op-amp/summary-summary-2.speech?text=%E5%8F%8D%E7%9B%B8%E5%A2%9E%E7%9B%8A%E4%B8%BA%20%E2%88%92Rf%2FRin%EF%BC%8C%E5%90%8C%E7%9B%B8%E5%A2%9E%E7%9B%8A%E4%B8%BA%201%2BRf%2FRin%EF%BC%8C%E5%8F%AA%E7%94%B1%E5%A4%96%E9%83%A8%E7%94%B5%E9%98%BB%E5%86%B3%E5%AE%9A%E3%80%82",
+      "duration": 11.88,
+      "size": 0,
+      "text": "反相增益为 −Rf/Rin，同相增益为 1+Rf/Rin，只由外部电阻决定。",
+      "generated_by": "speechSynthesisFallback"
+    },
+    {
+      "script_id": "op-amp",
+      "section_id": "summary",
+      "line_id": "summary-3",
+      "filename": "summary-summary-3.speech?text=%E8%B4%9F%E5%8F%8D%E9%A6%88%E8%AE%A9%E5%A2%9E%E7%9B%8A%E7%B2%BE%E7%A1%AE%E5%8F%AF%E6%8E%A7%E3%80%82%E8%BF%90%E6%94%BE%E6%98%AF%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E7%9A%84%E4%B8%87%E8%83%BD%E7%A7%AF%E6%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "path": "audio/narrations/op-amp/summary-summary-3.speech?text=%E8%B4%9F%E5%8F%8D%E9%A6%88%E8%AE%A9%E5%A2%9E%E7%9B%8A%E7%B2%BE%E7%A1%AE%E5%8F%AF%E6%8E%A7%E3%80%82%E8%BF%90%E6%94%BE%E6%98%AF%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E7%9A%84%E4%B8%87%E8%83%BD%E7%A7%AF%E6%9C%A8%E3%80%82%E5%B8%8C%E6%9C%9B%E4%BD%A0%E6%9C%89%E6%89%80%E6%94%B6%E8%8E%B7%EF%BC%81",
+      "duration": 10,
+      "size": 0,
+      "text": "负反馈让增益精确可控。运放是模拟电路的万能积木。希望你有所收获！",
+      "generated_by": "speechSynthesisFallback"
+    }
+  ]
+}
