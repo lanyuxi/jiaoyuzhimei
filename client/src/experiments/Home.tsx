@@ -1799,6 +1799,9 @@ function ExperimentCard({ experiment }: { experiment: Experiment }) {
           <span className={`rounded-[8px] px-3 py-1.5 text-xs font-semibold ${config.bgColor} ${config.color}`}>
             {config.label}
           </span>
+          <span className="rounded-[8px] bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
+            {experiment.topics.join(',')}
+          </span>
           {experiment.hasAnimation && (
             <span className="rounded-[8px] bg-violet-50 px-3 py-1.5 text-xs font-medium text-violet-600">
               动画
